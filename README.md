@@ -1,6 +1,8 @@
-# Turborepo starter
+# Typebot - Angular
 
-This is an official YarnV1 starter turborepo.
+Typebot-angular is an open-source alternative to typebot.io. It allows you to create conversational apps/forms (Lead qualification, Product launch, User onboarding, Customer support), embed them anywhere on your web/mobile apps, and collect results in real-time.
+
+Powered by Turborepo.
 
 ## What's inside?
 
