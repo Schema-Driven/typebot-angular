@@ -10,7 +10,9 @@
     "build": "turbo run build",
     "dev": "turbo run dev --parallel",
     "lint": "turbo run lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "builder": "yarn workspace builder",
+    "viewer": "yarn workspace viewer"
   },
   "devDependencies": {
     "prettier": "latest",
