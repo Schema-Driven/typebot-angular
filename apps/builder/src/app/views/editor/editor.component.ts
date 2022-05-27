@@ -1,17 +1,46 @@
-import { Component, AfterViewInit } from '@angular/core';
+import { Component, AfterViewInit, HostListener,Renderer2,ElementRef, OnDestroy } from '@angular/core';
 import {CdkDragDrop, moveItemInArray, transferArrayItem, copyArrayItem} from '@angular/cdk/drag-drop';
 import { jsPlumb } from 'jsplumb';
+
+export interface Block {
+  id ?: number | string,
+  name ?: string,
+  position ?: any,
+  endpoint ?: any
+}
 
 @Component({
   selector: 'editor',
   templateUrl: './editor.component.html',
   styleUrls: ['./editor.component.css']
 })
-export class EditorComponent implements AfterViewInit {
+export class EditorComponent implements AfterViewInit, OnDestroy {
+
+  // @HostListener('document:mousemove', ['$event']) 
+  // onMouseMove(e : any) {
+  //   console.log(e);
+  //   var left = e.offsetX;
+  //   var top = e.offsetY;
+  //   $(endpoint.canvas).css({"left":left, "top":top});
+  //   $(document).unbind("mousemove.adjust");
+  // }
+
+  constructor(
+    private renderer: Renderer2, 
+    private elementRef: ElementRef
+  ){}
+
+  removeEventListener: any
+
+  DocumentMouseMoveEventListener : any
 
   jsPlumbInstance :any;
   showConnectionToggle = false;
   buttonName = 'Connect';
+
+  // var endpointOptions = { isSource: true, isTarget: true };
+  // var d1 = jsPlumb.addEndpoint( $('#m1'), { anchor: "LeftMiddle" }, endpointOptions );
+  // var d2 = jsPlumb.addEndpoint( $('#m2'), { anchor: "LeftMiddle" }, endpointOptions );
 
   toolbar = [
     {
@@ -48,7 +77,7 @@ export class EditorComponent implements AfterViewInit {
     }
   ]
 
-  blocks = [
+  blocks : Block[] = [
     {
       id: 0,
       name: 'start',
@@ -56,6 +85,9 @@ export class EditorComponent implements AfterViewInit {
         x : 320,
         y : 120,
       },
+      endpoint : {
+        canvas : null
+      }
     },
     {
       id: 200,
@@ -64,6 +96,9 @@ export class EditorComponent implements AfterViewInit {
         x : 520,
         y : 120,
       },
+      endpoint : {
+        canvas : null
+      }
     },
     {
       id: 300,
@@ -72,11 +107,43 @@ export class EditorComponent implements AfterViewInit {
         x : 720,
         y : 120,
       },
+      endpoint : {
+        canvas : null
+      }
     }
   ]
 
   ngAfterViewInit() {
     this.jsPlumbInstance = jsPlumb.getInstance();
+    // this.blocks = this.blocks.map((b) => ({
+    //   ...b,
+    //   endpoint : this.jsPlumbInstance.addEndpoint(
+    //     'block-endpoint-'+b.id, 
+    //     { anchor: "LeftMiddle" },
+    //     { isTarget: true }
+    //   )
+    // }))
+    this.jsPlumbInstance.addEndpoint(
+      '0', 
+      { anchor: "LeftMiddle" },
+      { isTarget: true }
+    );
+
+    this.jsPlumbInstance.bind("endpointClick", function(endpoint :any , originalEvent :any) {
+      console.log(endpoint,originalEvent)
+    });
+    this.jsPlumbInstance.bind("mouseup", function(endpoint :any , originalEvent :any){
+      console.log(endpoint,originalEvent)
+    });
+    // this.jsPlumbInstance.bind('beforeDrop', (params : any) => {
+    //   this.jsPlumbInstance.getConnections().map((connection : any) => {
+    //     if (connection.targetId === params.targetId && connection.sourceId === params.sourceId) {
+    //       this.jsPlumbInstance.addConnection(connection);
+    //     }
+    //   });
+    // });
+
+    console.log('blocks',this.blocks)
     // this.showConnectOnClick();
   }
   
@@ -87,6 +154,38 @@ export class EditorComponent implements AfterViewInit {
       this.blocks[index].position.x = event.pointerPosition.x -40
       this.blocks[index].position.y = event.pointerPosition.y -40
     }
+  }
+
+  endpointMouseDown(eventMouseDown: any){
+    let endpoint_id = eventMouseDown.target.getAttribute('id');
+    let block_id = endpoint_id.split('-')[endpoint_id.split('-').length-1];
+    console.warn("the user mouseDown on endpoint.")
+    console.log(this.blocks[block_id].endpoint);
+    console.log(eventMouseDown);
+    this.DocumentMouseMoveEventListener = this.renderer.listen('document', 'mousemove', (eventMouseMove) => {
+      eventMouseMove.preventDefault();
+      console.log('movement',eventMouseMove);
+      var left = eventMouseMove.offsetX;
+      var top = eventMouseMove.offsetY;
+
+      this.blocks[block_id].endpoint.canvas.style.left = left;
+      this.blocks[block_id].endpoint.canvas.style.top = top;
+
+      console.log('endpoint_canvas',{
+       top : this.blocks[block_id].endpoint.canvas.style.top,
+       left: this.blocks[block_id].endpoint.canvas.style.left 
+      });
+      //this.removeEventListener();
+      //$(endpoint.canvas).css({"left":left, "top":top});  
+    });
+
+    // this.blocks[block_id].endpoint.dispatchEvent(eventMouseDown);
+
+    this.removeEventListener = this.renderer.listen('document', 'mouseup', (eventMouseUp) => {
+      eventMouseUp.preventDefault();
+      console.log('mouseUp',eventMouseUp);
+      this.DocumentMouseMoveEventListener();
+    });
   }
 
   drop(event: CdkDragDrop<any[]>) {
@@ -103,6 +202,9 @@ export class EditorComponent implements AfterViewInit {
           x : event.dropPoint.x,
           y : event.dropPoint.y,
         },
+        endpoint : {
+          canvas : null
+        }
       });
       console.log('after drop',this.blocks)
     }
@@ -171,7 +273,8 @@ export class EditorComponent implements AfterViewInit {
       ],
       source: '200',
       target: '300',
-      anchor: ["Right","Left","Top","Bottom"],
+      deleteEndpointsOnDetach:false,
+      anchor: ["Right"],
       paintStyle: { stroke: '#456', strokeWidth: 4 },
       overlays: [
         [
@@ -183,5 +286,9 @@ export class EditorComponent implements AfterViewInit {
         ],
       ],
     });
+  }
+
+  public ngOnDestroy() {
+    this.removeEventListener();
   }
 }

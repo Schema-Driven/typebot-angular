@@ -41,3 +41,14 @@
     border: 2px solid #456;
     background-color: #456;
   }
+  .after-circle-custom:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    width: 14px;
+    height: 14px;
+    background: #3b82f6;
+    border-radius: 100%;
+    right: -5px;
+    top: 38%;
+}
