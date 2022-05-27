@@ -84,8 +84,8 @@ export class EditorComponent implements AfterViewInit {
     //console.log(event);
     let index = this.blocks.findIndex(b => b.id == id);
     if(index !== -1){
-      this.blocks[index].position.x = event.pointerPosition.x
-      this.blocks[index].position.y = event.pointerPosition.y
+      this.blocks[index].position.x = event.pointerPosition.x -40
+      this.blocks[index].position.y = event.pointerPosition.y -40
     }
   }
 
@@ -117,6 +117,12 @@ export class EditorComponent implements AfterViewInit {
   cdkDragEnded(event : any){
     console.warn("the user stops dragging an item in the container.")
     console.log(event)
+    // let id = event.source.element.nativeElement.getAttribute('id');
+    // let index = this.blocks.findIndex(b => b.id.toString() === id );
+    // if(index != -1){
+    //   this.blocks[index].state.dragging = false;
+    //   console.log('id : '+id.toString()+ ' is start dragging')
+    // }
   }
 
   // Emits when the user has moved the item into a new container.
@@ -133,8 +139,8 @@ export class EditorComponent implements AfterViewInit {
 
   // Emits as the user is dragging the item. Use with caution, because this event will fire for every pixel that the user has dragged.
   cdkDragMoved(event : any,id : any){
-    //console.warn("the user is dragging the item. Use with caution, because this event will fire for every pixel that the user has dragged.")
-    //console.log(event)
+    console.warn("the user is dragging the item. Use with caution, because this event will fire for every pixel that the user has dragged.")
+    console.log(event)
     this.positioning(event,id);
     this.jsPlumbInstance.repaintEverything();
   }
@@ -149,6 +155,12 @@ export class EditorComponent implements AfterViewInit {
   cdkDragStarted(event : any){
     console.warn("the user starts dragging the item.")
     console.log(event)
+    // let id = event.source.element.nativeElement.getAttribute('id');
+    // let index = this.blocks.findIndex(b => b.id.toString() === id );
+    // if(index != -1){
+    //   this.blocks[index].state.dragging = true;
+    //   console.log('id : '+id.toString()+ ' is start dragging')
+    // }
   }
 
   connectSourceToTargetUsingJSPlumb() {
