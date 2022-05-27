@@ -5,6 +5,7 @@
   "main": "index.js",
   "files": [
     "base.json",
-    "tsconfig.json"
+    "apps/builder/tsconfig.json",
+    "apps/viewer/tsconfig.json"
   ]
 }
