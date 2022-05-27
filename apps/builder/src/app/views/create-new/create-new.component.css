@@ -10,7 +10,7 @@ header.container.mx-auto.header {width: 900px;margin-top: 26px;}
 .header-btn button {/* width: 210px; */border-radius: 4px; /* outline: 2px solid transparent; */ outline-offset: 2px; line-height: 1.2; border: 1px solid #e5e7eb; text-align: center; padding: 9px 17px; /* width: 330px; */ margin-top: 0.5rem;/* border: 1px solid #333; */margin: 0 5px;}
 
 span.b-icon svg {display: inline-block;margin-right: 11px;}
-
+svg{stroke: #111;}
 .four-boxes button {border-radius: 4px;
     outline-offset: 2px;
     line-height: 1.2;
@@ -36,7 +36,7 @@ span.b-icon svg {display: inline-block;margin-right: 11px;}
     padding: 0;
 }
 .col span {background: #0042da;width: 40px;display: inline-block;color: #fff;font-size: 14px;padding: 1px 0;position: relative;top: -2px;}
-svg{stroke: #111;}
+
 .col button:last-child {border: 1px solid #e5e7eb;padding: 5px;border-radius: 5px;}
 
 .col button:last-child svg {stroke: #111;}

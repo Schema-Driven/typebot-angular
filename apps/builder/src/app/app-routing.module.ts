@@ -11,6 +11,8 @@ import { Setting  } from './views/setting/setting.component';
 import { Preferences  } from './views/preferences/preferences.component';
 import { Members  } from './views/members/members.component';
 import { Accsetting  } from './views/acc-setting/acc-setting.component';
+import { Billing  } from './views/billing/billing.component';
+import { CreateNew  } from './views/create-new/create-new.component';
 
 
 const routes: Routes = [
@@ -23,6 +25,8 @@ const routes: Routes = [
   { path: 'preferences', component: Preferences },
   { path: 'members', component: Members },
   { path: 'acc-setting', component: Accsetting },
+  { path: 'billing', component: Billing },
+  { path: 'create-new', component: CreateNew },
 ];
 
 @NgModule({
