@@ -10,7 +10,8 @@ This turborepo uses [Yarn](https://classic.yarnpkg.com/lang/en/) as a package ma
 
 ### Apps and Packages
 
-- `web`: [Angular](https://angular.io) app
+- `builder`: [Angular](https://angular.io) app
+- `viewer`: [Angular](https://angular.io) app
 - `eslint-config-custom`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
 - `tsconfig`: `tsconfig.json`s used throughout the monorepo
 
