@@ -25,6 +25,10 @@ const routes: Routes = [
   { path: 'preferences', component: Preferences },
   { path: 'members', component: Members },
   { path: 'acc-setting', component: Accsetting },
+  { 
+    path: 'editor',
+    loadChildren: () => import('./views/editor/editor.module').then(m => m.EditorModule) 
+  },
   { path: 'billing', component: Billing },
   { path: 'create-new', component: CreateNew },
 ];
