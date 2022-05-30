@@ -1,9 +1,9 @@
-import { Component, AfterViewInit, HostListener,Renderer2,ElementRef, OnDestroy } from '@angular/core';
+import { Component, AfterViewInit, HostListener,Renderer2,ElementRef, OnDestroy, OnInit } from '@angular/core';
 import {CdkDragDrop, moveItemInArray, transferArrayItem, copyArrayItem} from '@angular/cdk/drag-drop';
 import { jsPlumb } from 'jsplumb';
 
 export interface Block {
-  id ?: number | string,
+  id : number | string,
   name ?: string,
   position ?: any,
   endpoint ?: any
@@ -14,7 +14,7 @@ export interface Block {
   templateUrl: './editor.component.html',
   styleUrls: ['./editor.component.css']
 })
-export class EditorComponent implements AfterViewInit, OnDestroy {
+export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
 
   // @HostListener('document:mousemove', ['$event']) 
   // onMouseMove(e : any) {
@@ -42,40 +42,8 @@ export class EditorComponent implements AfterViewInit, OnDestroy {
   // var d1 = jsPlumb.addEndpoint( $('#m1'), { anchor: "LeftMiddle" }, endpointOptions );
   // var d2 = jsPlumb.addEndpoint( $('#m2'), { anchor: "LeftMiddle" }, endpointOptions );
 
-  toolbar = [
-    {
-      id : 1,
-      name : 'Text',
-      position : {
-        x : 320,
-        y : 120,
-      },
-    },
-    {
-      id : 2,
-      name : 'Image',
-      position : {
-        x : 320,
-        y : 120,
-      },
-    },
-    {
-      id : 3,
-      name : 'Video',
-      position : {
-        x : 320,
-        y : 120,
-      },
-    },
-    {
-      id : 4,
-      name : 'Embed',
-      position : {
-        x : 320,
-        y : 120,
-      },
-    }
-  ]
+  endpoints : any[] = []
+  toolbar :any[] = []
 
   blocks : Block[] = [
     {
@@ -88,46 +56,38 @@ export class EditorComponent implements AfterViewInit, OnDestroy {
       endpoint : {
         canvas : null
       }
-    },
-    {
-      id: 200,
-      name: 'nodeA',
-      position : {
-        x : 520,
-        y : 120,
-      },
-      endpoint : {
-        canvas : null
-      }
-    },
-    {
-      id: 300,
-      name: 'nodeB',
-      position : {
-        x : 720,
-        y : 120,
-      },
-      endpoint : {
-        canvas : null
-      }
     }
   ]
 
-  ngAfterViewInit() {
-    this.jsPlumbInstance = jsPlumb.getInstance();
-    // this.blocks = this.blocks.map((b) => ({
-    //   ...b,
-    //   endpoint : this.jsPlumbInstance.addEndpoint(
-    //     'block-endpoint-'+b.id, 
-    //     { anchor: "LeftMiddle" },
-    //     { isTarget: true }
-    //   )
-    // }))
-    this.jsPlumbInstance.addEndpoint(
-      '0', 
-      { anchor: "LeftMiddle" },
-      { isTarget: true }
-    );
+  ngOnInit(): void {
+      ['Text','Image','Video','Embed'].forEach(text => {
+        this.toolbar.push({
+          id : (Math.random() * 10000000).toFixed(0).toString(),
+          name : text,
+          position : {
+            x : 320,
+            y : 120,
+          },
+        })
+      });
+  }
+
+  registerEndpoints(){
+    this.blocks.map((b)=>{
+      let index = this.endpoints.findIndex(e => e.identifier == b.id);
+      if(index === -1){
+        let block = document.getElementById(b.id.toString());
+        console.log('Attaching endpoint to block',block);
+        this.endpoints.push({
+          identifier : b.id.toString(),
+          object : this.jsPlumbInstance.addEndpoint(
+            b.id.toString(), 
+            { anchor: "RightMiddle" },
+            { isSource: true, isTarget: true }
+          )
+        });
+      }
+    });
 
     this.jsPlumbInstance.bind("endpointClick", function(endpoint :any , originalEvent :any) {
       console.log(endpoint,originalEvent)
@@ -135,6 +95,7 @@ export class EditorComponent implements AfterViewInit, OnDestroy {
     this.jsPlumbInstance.bind("mouseup", function(endpoint :any , originalEvent :any){
       console.log(endpoint,originalEvent)
     });
+
     // this.jsPlumbInstance.bind('beforeDrop', (params : any) => {
     //   this.jsPlumbInstance.getConnections().map((connection : any) => {
     //     if (connection.targetId === params.targetId && connection.sourceId === params.sourceId) {
@@ -142,9 +103,12 @@ export class EditorComponent implements AfterViewInit, OnDestroy {
     //     }
     //   });
     // });
+  }
 
+  ngAfterViewInit() {
+    this.jsPlumbInstance = jsPlumb.getInstance();
+    this.registerEndpoints();
     console.log('blocks',this.blocks)
-    // this.showConnectOnClick();
   }
   
   positioning(event : any,id : any){
@@ -206,6 +170,9 @@ export class EditorComponent implements AfterViewInit, OnDestroy {
           canvas : null
         }
       });
+      setTimeout(()=>{
+        this.registerEndpoints();
+      },100);
       console.log('after drop',this.blocks)
     }
   }
