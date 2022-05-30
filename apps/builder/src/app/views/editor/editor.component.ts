@@ -45,7 +45,7 @@ export class EditorComponent implements AfterViewInit, OnDestroy {
   toolbar = [
     {
       id : 1,
-      name : 'AButton',
+      name : 'Text',
       position : {
         x : 320,
         y : 120,
@@ -53,7 +53,7 @@ export class EditorComponent implements AfterViewInit, OnDestroy {
     },
     {
       id : 2,
-      name : 'SButton',
+      name : 'Image',
       position : {
         x : 320,
         y : 120,
@@ -61,7 +61,7 @@ export class EditorComponent implements AfterViewInit, OnDestroy {
     },
     {
       id : 3,
-      name : 'DButton',
+      name : 'Video',
       position : {
         x : 320,
         y : 120,
@@ -69,7 +69,7 @@ export class EditorComponent implements AfterViewInit, OnDestroy {
     },
     {
       id : 4,
-      name : 'FButton',
+      name : 'Embed',
       position : {
         x : 320,
         y : 120,

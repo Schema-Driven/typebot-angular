@@ -1,62 +1,66 @@
-<div class="flex flex-col h-screen bg-slate-400">
-    <div class="h-12 w-full bg-blue-500">
-      <button (click)="connectSourceToTargetUsingJSPlumb()">Connect</button>
-    </div>
-    <div class="flex flex-row w-full h-full bg-indigo-500">
-      <div class="absolute flex flex-col top-20  left-4 w-48 z-10 bg-orange-300"
-      [ngStyle]="{'height':'calc(100vh - 120px)'}"
-      cdkDropList
-      #todoList="cdkDropList"
-      [cdkDropListData]="toolbar"
-      [cdkDropListConnectedTo]="[doneList]"
-      (cdkDropListDropped)="drop($event)"
-      [cdkDropListSortingDisabled]="true"
-      >
-        <div class="w-full px-2 bg-slate-100" *ngFor="let item of toolbar">
-          <div class="p-4 bg-slate-100" cdkDrag [cdkDragFreeDragPosition]="{x:item.position.x,y:item.position.y}">
-            <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
-            <div class="w-full px-2">
-              {{item.name}}
+<div class="flex flex-col h-screen bg-slate-400 custom-bg">
+  <div class="h-12 w-full bg-blue-500">
+    <button (click)="connectSourceToTargetUsingJSPlumb()">Connect</button>
+  </div>
+  <div class="flex flex-row ">
+    <div class="absolute flex flex-col top-20 w-80  left-4 w-48 z-10 bg-orange-300 bg-white p-3"
+    [ngStyle]="{'height':'calc(100vh - 120px)'}"
+    cdkDropList
+    #todoList="cdkDropList"
+    [cdkDropListData]="toolbar"
+    [cdkDropListConnectedTo]="[doneList]"
+    (cdkDropListDropped)="drop($event)"
+    [cdkDropListSortingDisabled]="true"
+    >
+      <div class="">
+        <label class="font-base font-medium pb-2">Bubble</label>
+        <div class=" flex flex-wrap">
+          <div class="w-2/4 px-1.5 py-1.5 button-design" *ngFor="let item of toolbar">
+            <div class=" bg-slate-100" cdkDrag [cdkDragFreeDragPosition]="{x:item.position.x,y:item.position.y}">
+              <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
+              <div class="w-full px-2">
+                 {{item.name}} 
+              </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="relative pl-64 bg-slate-50 w-full"
-      cdkDropList
-      #doneList="cdkDropList"
-      [cdkDropListData]="blocks"
-      [cdkDropListConnectedTo]="[todoList]"
-      (cdkDropListDropped)="drop($event)"
-      [cdkDropListSortingDisabled]="true"
-      >
-        <!-- <div class="absolute px-2 bg-slate-100" *ngFor="let item of blocks" [ngStyle]="{'transform': 'translate(' +(item.position.x - 300)+ 'px, ' + (item.position.y - 80) + 'px)'}" [id]="item.id"> -->
-        <!-- <div class="absolute px-2 bg-slate-100" *ngFor="let item of blocks"> -->
-          <div 
-            class="absolute" 
-            *ngFor="let item of blocks" 
-            [style]="('top:'+item.position.y+'px;left:'+item.position.x+'px')"
-            [id]="item.id"
-          >
-          <div
+    </div>
+    <div class="relative pl-64 bg-slate-50 w-full"
+    cdkDropList
+    #doneList="cdkDropList"
+    [cdkDropListData]="blocks"
+    [cdkDropListConnectedTo]="[todoList]"
+    (cdkDropListDropped)="drop($event)"
+    [cdkDropListSortingDisabled]="true"
+    >
+      <!-- <div class="absolute px-2 bg-slate-100" *ngFor="let item of blocks" [ngStyle]="{'transform': 'translate(' +(item.position.x - 300)+ 'px, ' + (item.position.y - 80) + 'px)'}" [id]="item.id"> -->
+      <!-- <div class="absolute px-2 bg-slate-100" *ngFor="let item of blocks"> -->
+        <div 
+          class="absolute" 
+          *ngFor="let item of blocks" 
+          [style]="('top:'+item.position.y+'px;left:'+item.position.x+'px')"
           [id]="item.id"
-          class="p-4 bg-slate-100 relative" 
-          cdkDrag 
-          (cdkDragMoved)="cdkDragMoved($event,item.id)"
-          (cdkDragDropped)="cdkDragDropped($event)" 
-          (cdkDragEnded)="cdkDragEnded($event)" 
-          (cdkDragEntered)="cdkDragEntered($event)" 
-          (cdkDragExited)="cdkDragExited($event)" 
-          (cdkDragReleased)="cdkDragReleased($event)"
-          (cdkDragStarted)="cdkDragStarted($event)"
-          >
-            <!-- <div class="example-custom-placeholder" *cdkDragPlaceholder></div> -->
-            <div class="w-full px-2">
-                {{item.name}}
-            </div>
-        </div>
-        <div class="after-circle-custom" [id]="'block-endpoint-'+item.id" (mousedown)="endpointMouseDown($event)"></div>
-        </div>
+        >
+        <div
+        [id]="item.id"
+        class="p-4 bg-slate-100 relative" 
+        cdkDrag 
+        (cdkDragMoved)="cdkDragMoved($event,item.id)"
+        (cdkDragDropped)="cdkDragDropped($event)" 
+        (cdkDragEnded)="cdkDragEnded($event)" 
+        (cdkDragEntered)="cdkDragEntered($event)" 
+        (cdkDragExited)="cdkDragExited($event)" 
+        (cdkDragReleased)="cdkDragReleased($event)"
+        (cdkDragStarted)="cdkDragStarted($event)"
+        >
+          <!-- <div class="example-custom-placeholder" *cdkDragPlaceholder></div> -->
+          <div class="w-full px-2">
+              {{item.name}}
+          </div>
+      </div>
+      <div class="after-circle-custom" [id]="'block-endpoint-'+item.id" (mousedown)="endpointMouseDown($event)"></div>
       </div>
     </div>
   </div>
-  
+</div>
