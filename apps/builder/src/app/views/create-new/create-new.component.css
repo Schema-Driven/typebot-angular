@@ -63,3 +63,7 @@ button.c-n:hover {
     color: #fff;
     
 }
+@media only screen and (max-width: 1000px) {
+    .wrapper{width:100%;}
+
+}

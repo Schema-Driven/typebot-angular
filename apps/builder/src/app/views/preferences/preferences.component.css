@@ -118,3 +118,7 @@ margin: 0 auto 19px;
 .p-col p {margin-bottom: 12px;}
 
 .p-col .r-btn {display: block;margin: 0 auto;}
+@media only screen and (max-width: 900px) {
+    .wrapper{width:100%;}
+
+}

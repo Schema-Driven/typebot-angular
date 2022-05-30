@@ -95,3 +95,7 @@ input#email {
 .tokken input:focus {outline: none;}
 
 .tokken button {background: #f3f4f6;font-size: 12px;font-weight: 500;padding: 2px 7px;border-radius: 5px;letter-spacing: 0.5px;color: #111;position: relative;top: -1px;}
+@media only screen and (max-width: 900px) {
+    .wrapper{width:100%;}
+
+}
