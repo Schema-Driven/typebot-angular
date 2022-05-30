@@ -173,6 +173,7 @@
     </div>
     <div class="relative pl-64 w-full"
     cdkDropList
+    id="block-container"
     #doneList="cdkDropList"
     [cdkDropListData]="blocks"
     [cdkDropListConnectedTo]="[todoList]"
@@ -194,17 +195,9 @@
 
         <div
         [id]="item.id"
-        class="p-4 bg-slate-100 relative drap-bg-style" 
-        cdkDrag 
-        (cdkDragMoved)="cdkDragMoved($event,item.id)"
-        (cdkDragDropped)="cdkDragDropped($event)" 
-        (cdkDragEnded)="cdkDragEnded($event)" 
-        (cdkDragEntered)="cdkDragEntered($event)" 
-        (cdkDragExited)="cdkDragExited($event)" 
-        (cdkDragReleased)="cdkDragReleased($event)"
-        (cdkDragStarted)="cdkDragStarted($event)"
+        class="p-4 bg-slate-100 relative drap-bg-style"
         >
-          <!-- <div class="example-custom-placeholder" *cdkDragPlaceholder></div> -->
+          <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
           <div class="w-full px-2">
               {{item.name}}
           </div>
