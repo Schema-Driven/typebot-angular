@@ -187,9 +187,14 @@
           [style]="('top:'+item.position.y+'px;left:'+item.position.x+'px')"
           [id]="item.id"
         >
+      <div class="wrap-div w-72 bg-white p-4">
+        <div class="title-div pb-2"> 
+          <span class="font-sm font-normal ">Start</span>
+        </div>
+
         <div
         [id]="item.id"
-        class="p-4 bg-slate-100 relative" 
+        class="p-4 bg-slate-100 relative drap-bg-style" 
         cdkDrag 
         (cdkDragMoved)="cdkDragMoved($event,item.id)"
         (cdkDragDropped)="cdkDragDropped($event)" 
@@ -203,6 +208,8 @@
           <div class="w-full px-2">
               {{item.name}}
           </div>
+      </div>
+
       </div>
       <!-- <div class="after-circle-custom" [id]="'block-endpoint-'+item.id" (mousedown)="endpointMouseDown($event)"></div> -->
       </div>
