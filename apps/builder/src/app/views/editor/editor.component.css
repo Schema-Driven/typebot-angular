@@ -60,8 +60,8 @@ font-size: 14px;
 font-weight: 400;
 display: flex;
 align-items: center;
-justify-content: center;
-padding: 6px 0 10px;
+justify-content: flex-start;
+padding: 8px 12px 8px;
 border-radius: 0px;
 }
 .button-design .cdk-drag.bg-slate-100{
