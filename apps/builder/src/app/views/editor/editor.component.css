@@ -60,12 +60,27 @@ font-size: 14px;
 font-weight: 400;
 display: flex;
 align-items: center;
-justify-content: center;
-padding: 6px 0 10px;
+justify-content: flex-start;
+padding: 8px 12px 8px;
 border-radius: 0px;
 }
 .button-design .cdk-drag.bg-slate-100{
 background-color: #F9FAFB !important;
 border-radius: 6px;
 border: 1px solid #E5E7EB;
+}
+.drap-bg-style {
+  font-size: 14px;
+  font-weight: 400;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 8px 12px 8px;
+  background-color: #F9FAFB !important;
+  border-radius: 6px;
+  border: 1px solid #E5E7EB;
+}
+.wrap-div {
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 10%), 0 2px 4px -1px rgb(0 0 0 / 6%);
+  border-radius: 10px;
 }
