@@ -62,4 +62,15 @@
 .email-field .e-sub {background: #f3f4f6;width: 72px;padding: 6px 0;height: 40px;border-radius: 5px;font-size: 16px;font-weight: 600;}
 .email-field .e-sub:focus{border: 3px solid ;
     border-color: rgb(59 130 246 / 0.5); }
-  
+    svg {
+        width: 1em;
+        height: 1em;
+        display: inline-block;
+        line-height: 1em;
+        -webkit-flex-shrink: 0;
+        -ms-flex-negative: 0;
+        flex-shrink: 0;
+        color: currentColor;
+        fill: transparent !important;
+        vertical-align: middle; 
+      }

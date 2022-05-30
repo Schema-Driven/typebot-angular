@@ -103,7 +103,7 @@ padding: 40px;
 .wrapper .flex {
 display: block;
 }
-
+}
 @media only screen and (max-width: 900px) {
   .wrapper{width:100%;}
 
