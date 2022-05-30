@@ -1,3 +1,15 @@
+svg {
+    width: 1em;
+    height: 1em;
+    line-height: 1em;
+    -webkit-flex-shrink: 0;
+    -ms-flex-negative: 0;
+    flex-shrink: 0;
+    color: currentColor;
+    fill: transparent !important;
+    vertical-align: middle; 
+  }
+
 .wrapper{width:1000px; position: relative;}
 
 .header-btn {width: 490px;float: right;text-align: center;}
@@ -83,6 +95,8 @@ button.c-n:hover {
     
 }
 
+
+  
 @media only screen and (max-width: 1000px) {
     .wrapper{width:100%;}
 

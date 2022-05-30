@@ -1,3 +1,14 @@
+svg {
+  width: 1em;
+  height: 1em;
+  line-height: 1em;
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+  color: currentColor;
+  fill: transparent !important;
+  vertical-align: middle; 
+}
 .sm-wrapper{width:600px;
     display: -webkit-box;
     display: -webkit-flex;
@@ -63,7 +74,21 @@
       cursor:pointer;
 
     }
-
+   
+      @media only screen and (max-width: 800px) {
+      .sidebar {
+      border-right: 1px solid #e5e7eb;
+      padding: 30px 0 30px 0;
+      min-height: 100%;
+      padding: 40px;
+    }
+    .aside {
+      padding: 40px;
+    }
+    .wrapper .flex {
+      display: block;
+    }
+  }
     @media only screen and (max-width: 610px) {
         .wrapper{width:100%;}
     
