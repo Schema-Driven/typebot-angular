@@ -9,6 +9,11 @@ export interface Block {
   endpoint ?: any
 }
 
+export interface Endpoint {
+  identifier : string,
+  instance : any,
+}
+
 @Component({
   selector: 'editor',
   templateUrl: './editor.component.html',
@@ -80,7 +85,7 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
         console.log('Attaching endpoint to block',block);
         this.endpoints.push({
           identifier : b.id.toString(),
-          object : this.jsPlumbInstance.addEndpoint(
+          instance : this.jsPlumbInstance.addEndpoint(
             b.id.toString(), 
             { anchor: "RightMiddle" },
             { isSource: true, isTarget: true }
@@ -106,7 +111,31 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit() {
-    this.jsPlumbInstance = jsPlumb.getInstance();
+    
+    this.jsPlumbInstance = jsPlumb.getInstance({
+      Connector:[
+        'Flowchart',
+        { stub: [212, 67], cornerRadius: 5, alwaysRespectStubs: true },
+      ],
+      PaintStyle : {
+        strokeWidth:4,
+        stroke: '#456'
+      },
+      DragOptions : { cursor: "crosshair" },
+      Endpoints : [ [ "Dot", { radius:7 } ], [ "Dot", { radius:11 } ] ],
+      ConnectionOverlays: [
+        [
+          'Label',
+          {
+            location: 0.5,
+            cssClass: 'connectingConnectorLabel',
+          },
+        ],
+      ]
+    });
+    var surface = this.jsPlumbInstance.render({
+      container:"block-container",
+    });
     this.registerEndpoints();
     console.log('blocks',this.blocks)
   }
