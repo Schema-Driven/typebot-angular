@@ -9,8 +9,7 @@ svg {
     fill: transparent !important;
     vertical-align: middle; 
   }
-
-.wrapper{width:1000px; position: relative;}
+.wrapper{width:1000px;}
 
 .header-btn {width: 490px;float: right;text-align: center;}
 .header a {
@@ -19,29 +18,10 @@ svg {
 }
 header.container.mx-auto.header {width: 900px;margin-top: 26px;}
 
-.header-btn button {/* width: 210px; */border-radius: 4px; /* outline: 2px solid transparent; */ outline-offset: 2px; line-height: 1.2; border: 1px solid #e5e7eb; text-align: center; padding: 9px 17px; /* width: 330px; */ margin-top: 0.5rem;/* border: 1px solid #333; */margin: 0 5px;     float: left;}
-ul.dropdown {  width: 252px;
-    padding: 8px 15px;
-    position: absolute; 
-    right: 0;
-    background: #fff;
-    margin-top: 7px;
-    top: 42px;
-    margin-right: 15px;
-    float: right;
-    box-shadow: 1px 2px 9px #f1f1f1;
-    border: 1px solid #e5e7eb;
-}
+.header-btn button {/* width: 210px; */border-radius: 4px; /* outline: 2px solid transparent; */ outline-offset: 2px; line-height: 1.2; border: 1px solid #e5e7eb; text-align: center; padding: 9px 17px; /* width: 330px; */ margin-top: 0.5rem;/* border: 1px solid #333; */margin: 0 5px;}
 
-ul.dropdown li a {float: none !important;text-align: left;display: block;margin: 0 0 10px !important;}
-
-ul.dropdown li {display: block;padding: 0 !important;}
-ul.dropdown li svg{    display: inline-block;
-    width: 23px;
-}
-.logout, .logout svg{color: #e67200; stroke:#e67200 ;}
 span.b-icon svg {display: inline-block;margin-right: 11px;}
-
+svg{stroke: #111;}
 .four-boxes button {border-radius: 4px;
     outline-offset: 2px;
     line-height: 1.2;
@@ -67,7 +47,7 @@ span.b-icon svg {display: inline-block;margin-right: 11px;}
     padding: 0;
 }
 .col span {background: #0042da;width: 40px;display: inline-block;color: #fff;font-size: 14px;padding: 1px 0;position: relative;top: -2px;}
-svg{stroke: #111;}
+
 .col button:last-child {border: 1px solid #e5e7eb;padding: 5px;border-radius: 5px;}
 
 .col button:last-child svg {stroke: #111;}
@@ -94,49 +74,22 @@ button.c-n:hover {
     color: #fff;
     
 }
-
-
   
+  @media only screen and (max-width: 800px) {
+  .sidebar {
+  border-right: 1px solid #e5e7eb;
+  padding: 30px 0 30px 0;
+  min-height: 100%;
+  padding: 40px;
+}
+.aside {
+  padding: 40px;
+}
+.wrapper .flex {
+  display: block;
+}
+}
 @media only screen and (max-width: 1000px) {
     .wrapper{width:100%;}
 
-}
-@media only screen and (max-width: 650px) {
-    .flex {
-        display: block;
-    }
-    .header-btn {
-        width: 240px;
-        float: none;
-        text-align: center;
-        overflow: hidden; margin: 0 auto 20px;
-    }
-    .header-btn button.rounded-none.sign-up-btn {
-        margin-bottom: 9px !important;
-    }
-    button.rounded-none.sign-up-btnP{
-        width: 100%; margin-bottom: 20px;
-
-    } 
-    .col {
-        margin-bottom: 20px;
-        margin-right: 0;
-    }
-    .header a {
-        float: none;
-        margin: 0 auto 14px;
-        text-align: center;
-        width: 3em !important;
-        display: block;
-    } 
-    button.rounded-none.sign-up-btn {
-        margin: 0 auto !important;
-        width: 250px;
-        display: block;
-        overflow: hidden;
-    }
-    /* .header{
-        margin: 43px 0 0;
-    } */
-    
 }
