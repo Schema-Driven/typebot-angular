@@ -79,6 +79,7 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
 
   registerEndpoints(){
     this.blocks.map((b)=>{
+      
       let index = this.endpoints.findIndex(e => e.identifier == b.id);
       if(index === -1){
         let block = document.getElementById(b.id.toString());
@@ -87,11 +88,14 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
           identifier : b.id.toString(),
           instance : this.jsPlumbInstance.addEndpoint(
             b.id.toString(), 
-            { anchor: "RightMiddle" },
+            { anchor:"Continuous",maxConnections: 30, },
             { isSource: true, isTarget: true }
           )
         });
+        this.jsPlumbInstance.draggable(b.id.toString());
       }
+
+      
     });
 
     this.jsPlumbInstance.bind("endpointClick", function(endpoint :any , originalEvent :any) {
@@ -113,6 +117,7 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
   ngAfterViewInit() {
     
     this.jsPlumbInstance = jsPlumb.getInstance({
+      Container:'block-container',
       Connector:[
         'Flowchart',
         { stub: [212, 67], cornerRadius: 5, alwaysRespectStubs: true },
@@ -124,6 +129,7 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
       DragOptions : { cursor: "crosshair" },
       Endpoints : [ [ "Dot", { radius:7 } ], [ "Dot", { radius:11 } ] ],
       ConnectionOverlays: [
+        [ "Arrow", { width:30, length:30, location:1, id:"arrow" } ],
         [
           'Label',
           {
@@ -132,9 +138,6 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
           },
         ],
       ]
-    });
-    var surface = this.jsPlumbInstance.render({
-      container:"block-container",
     });
     this.registerEndpoints();
     console.log('blocks',this.blocks)
