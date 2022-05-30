@@ -38,8 +38,8 @@
   color: #FFFFFF;
   text-align: center;
   left: 49% !important;
-  border: 2px solid #456;
-  background-color: #456;
+  border: 2px solid #9CA3AF;
+  background-color: #9CA3AF;
 }
 .after-circle-custom:after {
   content: "";
@@ -83,4 +83,7 @@ border: 1px solid #E5E7EB;
 .wrap-div {
   box-shadow: 0 4px 6px -1px rgb(0 0 0 / 10%), 0 2px 4px -1px rgb(0 0 0 / 6%);
   border-radius: 10px;
+}
+.jtk-endpoint-anchor svg circle {
+  fill: #5045e4;
 }

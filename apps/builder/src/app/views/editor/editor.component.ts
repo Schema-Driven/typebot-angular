@@ -55,7 +55,7 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
       id: 0,
       name: 'start',
       position : {
-        x : 320,
+        x : 420,
         y : 120,
       },
       endpoint : {
@@ -123,13 +123,13 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
         { stub: [212, 67], cornerRadius: 5, alwaysRespectStubs: true },
       ],
       PaintStyle : {
-        strokeWidth:4,
-        stroke: '#456'
+        strokeWidth:2,
+        stroke: '#9CA3AF'
       },
       DragOptions : { cursor: "crosshair" },
-      Endpoints : [ [ "Dot", { radius:7 } ], [ "Dot", { radius:11 } ] ],
+      Endpoints : [ [ "Dot", { radius:4, cssClass:'connectingConnectorLabel' } ], [ "Dot", { radius:11 } ] ],
       ConnectionOverlays: [
-        [ "Arrow", { width:30, length:30, location:1, id:"arrow" } ],
+        [ "Arrow", { width:15, length:15, location:1, id:"arrow" } ],
         [
           'Label',
           {
