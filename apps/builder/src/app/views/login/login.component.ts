@@ -4,18 +4,16 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'home',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
 })
 export class Login implements OnInit {
-
   constructor(private router: Router) {
     // ...
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
-  navigate(links : any[]){
+  navigate(links: any[]) {
     this.router.navigate(links);
   }
 }

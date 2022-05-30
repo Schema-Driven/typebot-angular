@@ -4,19 +4,16 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'create',
   templateUrl: './create.component.html',
-  styleUrls: ['./create.component.css']
+  styleUrls: ['./create.component.css'],
 })
 export class Create implements OnInit {
-
   constructor(private router: Router) {
     // ...
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
-  navigate(links : any[]){
+  navigate(links: any[]) {
     this.router.navigate(links);
   }
-
 }

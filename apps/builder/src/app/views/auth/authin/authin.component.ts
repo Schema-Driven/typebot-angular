@@ -4,19 +4,16 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'authin',
   templateUrl: './authin.component.html',
-  styleUrls: ['./authin.component.css']
+  styleUrls: ['./authin.component.css'],
 })
 export class Authin implements OnInit {
-
   constructor(private router: Router) {
     // ...
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
-  navigate(links : any[]){
+  navigate(links: any[]) {
     this.router.navigate(links);
   }
-
 }
