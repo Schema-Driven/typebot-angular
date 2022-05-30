@@ -5,12 +5,12 @@
     margin-bottom: 3.75rem;
     border-radius: 6px;
     border: 1px solid #e5e7eb !important;
-    min-height: 600px;
+  
 } 
     .sidebar {
         border-right: 1px solid #e5e7eb;
         padding: 30px 0 30px 0; 
-        min-height: 94vh;
+        min-height: 650px;
     }
 .sidebar a {display: block;font-size: 17px;font-weight: 400;color: #6b7280;    margin-bottom: 15px; margin-left: 15px;}
 .sidebar button{
