@@ -1,3 +1,14 @@
+svg {
+    width: 1em;
+    height: 1em;
+    line-height: 1em;
+    -webkit-flex-shrink: 0;
+    -ms-flex-negative: 0;
+    flex-shrink: 0;
+    color: currentColor;
+    fill: transparent !important;
+    vertical-align: middle; 
+  }
 .wrapper{width: 890px;
     margin-top: 40px;
     box-shadow: 0 10px 15px -3px rgb(0 0 0 / 10%), 0 4px 6px -2px rgb(0 0 0 / 5%);
@@ -95,18 +106,7 @@ input#email {
 .tokken input:focus {outline: none;}
 
 .tokken button {background: #f3f4f6;font-size: 12px;font-weight: 500;padding: 2px 7px;border-radius: 5px;letter-spacing: 0.5px;color: #111;position: relative;top: -1px;}
-svg {
-    width: 1em;
-    height: 1em;
-    display: inline-block;
-    line-height: 1em;
-    -webkit-flex-shrink: 0;
-    -ms-flex-negative: 0;
-    flex-shrink: 0;
-    color: currentColor;
-    fill: transparent !important;
-    vertical-align: middle; 
-  }
+
   
 @media only screen and (max-width: 900px) {
     .wrapper{width:100%;}

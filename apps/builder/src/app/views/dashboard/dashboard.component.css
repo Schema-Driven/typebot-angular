@@ -1,4 +1,14 @@
-@import url('../style.css');
+svg {
+    width: 1em;
+    height: 1em;
+    line-height: 1em;
+    -webkit-flex-shrink: 0;
+    -ms-flex-negative: 0;
+    flex-shrink: 0;
+    color: currentColor;
+    fill: transparent !important;
+    vertical-align: middle; 
+  }
 
 .wrapper{width:1000px; position: relative;}
 
@@ -84,18 +94,7 @@ button.c-n:hover {
     color: #fff;
     
 }
-svg {
-    width: 1em;
-    height: 1em;
-    display: inline-block;
-    line-height: 1em;
-    -webkit-flex-shrink: 0;
-    -ms-flex-negative: 0;
-    flex-shrink: 0;
-    color: currentColor;
-    fill: transparent !important;
-    vertical-align: middle; 
-  }  
+
 
   
 @media only screen and (max-width: 1000px) {

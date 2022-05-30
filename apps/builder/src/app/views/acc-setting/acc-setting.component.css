@@ -1,3 +1,14 @@
+svg {
+  width: 1em;
+  height: 1em;
+  line-height: 1em;
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+  color: currentColor;
+  fill: transparent !important;
+  vertical-align: middle; 
+}
 .wrapper {
     width: 890px;
     margin-top: 40px;
@@ -115,18 +126,7 @@
             line-height: 18px;
             font-size: 15px;
         }
-        svg {
-          width: 1em;
-          height: 1em;
-          display: inline-block;
-          line-height: 1em;
-          -webkit-flex-shrink: 0;
-          -ms-flex-negative: 0;
-          flex-shrink: 0;
-          color: currentColor;
-          fill: transparent !important;
-          vertical-align: middle; 
-        }
+        
         @media only screen and (max-width: 900px) {
           .wrapper{width:100%;}
       
