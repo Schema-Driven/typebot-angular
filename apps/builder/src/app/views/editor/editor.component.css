@@ -72,10 +72,10 @@ font-weight: 400;
 display: flex;
 align-items: center;
 justify-content: flex-start;
-padding: 8px 12px 8px;
+/* padding: 8px 12px 8px; */
 border-radius: 0px;
 }
-.button-design .cdk-drag.bg-slate-100{
+.button-design .cdk-drag.hover-shadow{
 background-color: #F9FAFB !important;
 border-radius: 6px;
 border: 1px solid #E5E7EB;
@@ -115,4 +115,7 @@ transition: box-shadow 200ms ease 0s;
 }
 .wrap-div:hover{
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),0 4px 6px -2px rgba(0, 0, 0, 0.05)  !important;
+}
+border-gray-900{
+ border: 1px solid #E5E7EB !important;
 }

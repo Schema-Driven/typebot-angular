@@ -48,6 +48,120 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
   // var d2 = jsPlumb.addEndpoint( $('#m2'), { anchor: "LeftMiddle" }, endpointOptions );
 
   endpoints : any[] = []
+  bubbles :any[] = [
+    {
+      id : (Math.random() * 10000000).toFixed(0).toString(),
+      name : 'Text',
+      position : {
+        x : 320,
+        y : 120,
+      },
+      svg : `assets/svgs/text.svg`,
+    },
+    {
+      id : (Math.random() * 10000000).toFixed(0).toString(),
+      name : 'Image',
+      position : {
+        x : 320,
+        y : 120,
+      },
+      svg : `assets/svgs/image.svg`,
+    },
+    {
+      id : (Math.random() * 10000000).toFixed(0).toString(),
+      name : 'Video',
+      position : {
+        x : 320,
+        y : 120,
+      },
+      svg : `assets/svgs/video.svg`,
+    },
+    {
+      id : (Math.random() * 10000000).toFixed(0).toString(),
+      name : 'Embed',
+      position : {
+        x : 320,
+        y : 120,
+      },
+      svg : `assets/svgs/embed.svg`,
+    }
+  ]
+
+  inputs :any[] = [
+    {
+      id : (Math.random() * 10000000).toFixed(0).toString(),
+      name : 'Text',
+      position : {
+        x : 320,
+        y : 120,
+      },
+      svg : `assets/svgs/input-text.svg`,
+    },
+    {
+      id : (Math.random() * 10000000).toFixed(0).toString(),
+      name : 'Number',
+      position : {
+        x : 320,
+        y : 120,
+      },
+      svg : `assets/svgs/input-number.svg`,
+    },
+    {
+      id : (Math.random() * 10000000).toFixed(0).toString(),
+      name : 'Email',
+      position : {
+        x : 320,
+        y : 120,
+      },
+      svg : `assets/svgs/input-email.svg`,
+    },
+    {
+      id : (Math.random() * 10000000).toFixed(0).toString(),
+      name : 'Website',
+      position : {
+        x : 320,
+        y : 120,
+      },
+      svg : `assets/svgs/input-website.svg`,
+    },
+    {
+      id : (Math.random() * 10000000).toFixed(0).toString(),
+      name : 'Date',
+      position : {
+        x : 320,
+        y : 120,
+      },
+      svg : `assets/svgs/input-date.svg`,
+    },
+    {
+      id : (Math.random() * 10000000).toFixed(0).toString(),
+      name : 'Phone',
+      position : {
+        x : 320,
+        y : 120,
+      },
+      svg : `assets/svgs/input-phone.svg`,
+    },
+    {
+      id : (Math.random() * 10000000).toFixed(0).toString(),
+      name : 'Button',
+      position : {
+        x : 320,
+        y : 120,
+      },
+      svg : `assets/svgs/input-button.svg`,
+    },
+    {
+      id : (Math.random() * 10000000).toFixed(0).toString(),
+      name : 'Payment',
+      position : {
+        x : 320,
+        y : 120,
+      },
+      svg : `assets/svgs/input-payment.svg`,
+    }
+  ]
+
   toolbar :any[] = [
     {
       id : (Math.random() * 10000000).toFixed(0).toString(),
@@ -85,6 +199,75 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
       },
       svg : `assets/svgs/embed.svg`,
     }
+  ]
+
+  logics :any[] = [
+    {
+      id : (Math.random() * 10000000).toFixed(0).toString(),
+      name : 'Set variable',
+      position : {
+        x : 320,
+        y : 120,
+      },
+      svg : `assets/svgs/logic-variable.svg`,
+    },
+    {
+      id : (Math.random() * 10000000).toFixed(0).toString(),
+      name : 'Condition',
+      position : {
+        x : 320,
+        y : 120,
+      },
+      svg : `assets/svgs/logic-condition.svg`,
+    },
+    {
+      id : (Math.random() * 10000000).toFixed(0).toString(),
+      name : 'Redirect',
+      position : {
+        x : 320,
+        y : 120,
+      },
+      svg : `assets/svgs/logic-redirect.svg`,
+    },
+    {
+      id : (Math.random() * 10000000).toFixed(0).toString(),
+      name : 'Code',
+      position : {
+        x : 320,
+        y : 120,
+      },
+      svg : `assets/svgs/logic-code.svg`,
+    },
+    {
+      id : (Math.random() * 10000000).toFixed(0).toString(),
+      name : 'Typebot',
+      position : {
+        x : 320,
+        y : 120,
+      },
+      svg : `assets/svgs/logic-typebot.svg`,
+    }
+  ]
+
+  integerations :any[] = [
+    {
+      id : (Math.random() * 10000000).toFixed(0).toString(),
+      name : 'Webhook',
+      position : {
+        x : 320,
+        y : 120,
+      },
+      svg : `assets/svgs/integeration-webhook.svg`,
+    },
+    {
+      id : (Math.random() * 10000000).toFixed(0).toString(),
+      name : 'Email',
+      position : {
+        x : 320,
+        y : 120,
+      },
+      svg : `assets/svgs/integeration-email.svg`,
+    },
   ]
 
   blocks : Block[] = [
@@ -275,8 +458,8 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
   cdkDragReleased(event : any){
     console.warn("the user has released a drag item, before any animations have started.")
     console.log(event)
-    event.source.element.nativeElement.classList.remove('bg-slate-100')
-    event.source.element.nativeElement.classList.add('bg-white')
+    // event.source.element.nativeElement.classList.remove('bg-slate-100')
+    // event.source.element.nativeElement.classList.add('bg-white')
   }
  
   // Emits when the user starts dragging the item.
