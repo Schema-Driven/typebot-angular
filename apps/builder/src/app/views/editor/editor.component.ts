@@ -47,6 +47,8 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
   // var d1 = jsPlumb.addEndpoint( $('#m1'), { anchor: "LeftMiddle" }, endpointOptions );
   // var d2 = jsPlumb.addEndpoint( $('#m2'), { anchor: "LeftMiddle" }, endpointOptions );
 
+  deg : number = 3
+
   endpoints : any[] = []
   bubbles :any[] = [
     {
@@ -466,6 +468,7 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
   cdkDragStarted(event : any){
     console.warn("the user starts dragging the item.")
     console.log(event)
+    event.source._dragRef._initialTransform = `rotate(${this.deg}deg)`;
     // let id = event.source.element.nativeElement.getAttribute('id');
     // let index = this.blocks.findIndex(b => b.id.toString() === id );
     // if(index != -1){
