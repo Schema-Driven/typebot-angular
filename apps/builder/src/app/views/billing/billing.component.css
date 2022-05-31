@@ -1,3 +1,14 @@
+svg {
+  width: 1em;
+  height: 1em;
+  line-height: 1em;
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+  color: currentColor;
+  fill: transparent !important;
+  vertical-align: middle; 
+}
 .wrapper {
     width: 890px;
     margin-top: 40px;
@@ -9,11 +20,11 @@
     
   }
   .billing .flex{
-  height: 600px;
+  /* height: 600px; */
 }
   .sidebar {
     border-right: 1px solid #e5e7eb;
-    padding: 30px 0 30px 0;
+    padding: 30px 0 30px 0;min-height: 650px;
   }
   .sidebar a {
     display: block;
@@ -78,5 +89,22 @@
   width: 47px;
 
 }
+ 
+@media only screen and (max-width: 800px) {
+.sidebar {
+border-right: 1px solid #e5e7eb;
+padding: 30px 0 30px 0;
+min-height: 100%;
+padding: 40px;
+}
+.aside {
+padding: 40px;
+}
+.wrapper .flex {
+display: block;
+}
+}
+@media only screen and (max-width: 900px) {
+  .wrapper{width:100%;}
 
-  
+}

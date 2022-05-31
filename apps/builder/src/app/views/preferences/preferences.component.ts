@@ -4,18 +4,16 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'preferences',
   templateUrl: './preferences.component.html',
-  styleUrls: ['./preferences.component.css']
+  styleUrls: ['./preferences.component.css'],
 })
 export class Preferences implements OnInit {
-
   constructor(private router: Router) {
     // ...
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
-  navigate(links : any[]){
+  navigate(links: any[]) {
     this.router.navigate(links);
   }
 }

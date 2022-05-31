@@ -4,19 +4,16 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'acc-setting',
   templateUrl: './acc-setting.component.html',
-  styleUrls: ['./acc-setting.component.css']
+  styleUrls: ['./acc-setting.component.css'],
 })
 export class Accsetting implements OnInit {
-
   constructor(private router: Router) {
     // ...
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
-  navigate(links : any[]){
+  navigate(links: any[]) {
     this.router.navigate(links);
   }
-
 }
