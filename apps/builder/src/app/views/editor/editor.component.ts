@@ -48,7 +48,44 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
   // var d2 = jsPlumb.addEndpoint( $('#m2'), { anchor: "LeftMiddle" }, endpointOptions );
 
   endpoints : any[] = []
-  toolbar :any[] = []
+  toolbar :any[] = [
+    {
+      id : (Math.random() * 10000000).toFixed(0).toString(),
+      name : 'Text',
+      position : {
+        x : 320,
+        y : 120,
+      },
+      svg : `assets/svgs/text.svg`,
+    },
+    {
+      id : (Math.random() * 10000000).toFixed(0).toString(),
+      name : 'Image',
+      position : {
+        x : 320,
+        y : 120,
+      },
+      svg : `assets/svgs/image.svg`,
+    },
+    {
+      id : (Math.random() * 10000000).toFixed(0).toString(),
+      name : 'Video',
+      position : {
+        x : 320,
+        y : 120,
+      },
+      svg : `assets/svgs/video.svg`,
+    },
+    {
+      id : (Math.random() * 10000000).toFixed(0).toString(),
+      name : 'Embed',
+      position : {
+        x : 320,
+        y : 120,
+      },
+      svg : `assets/svgs/embed.svg`,
+    }
+  ]
 
   blocks : Block[] = [
     {
@@ -65,21 +102,11 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
   ]
 
   ngOnInit(): void {
-      ['Text','Image','Video','Embed'].forEach(text => {
-        this.toolbar.push({
-          id : (Math.random() * 10000000).toFixed(0).toString(),
-          name : text,
-          position : {
-            x : 320,
-            y : 120,
-          },
-        })
-      });
+    
   }
 
   registerEndpoints(){
     this.blocks.map((b)=>{
-      
       let index = this.endpoints.findIndex(e => e.identifier == b.id);
       if(index === -1){
         let block = document.getElementById(b.id.toString());
@@ -88,14 +115,12 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
           identifier : b.id.toString(),
           instance : this.jsPlumbInstance.addEndpoint(
             b.id.toString(), 
-            { anchor:"Continuous",maxConnections: 30, },
+            { anchor:["Continuous", { faces:[ "top", "left", "right", "bottom" ] } ],maxConnections: 99999, },
             { isSource: true, isTarget: true }
           )
         });
         this.jsPlumbInstance.draggable(b.id.toString());
       }
-
-      
     });
 
     this.jsPlumbInstance.bind("endpointClick", function(endpoint :any , originalEvent :any) {
@@ -127,7 +152,7 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
         stroke: '#9CA3AF'
       },
       DragOptions : { cursor: "crosshair" },
-      Endpoints : [ [ "Dot", { radius:4, cssClass:'connectingConnectorLabel' } ], [ "Dot", { radius:11 } ] ],
+      Endpoints : [ [ "Dot", { radius:4, cssClass:'connectingConnectorLabel' } ], [ "Dot", { radius:11, cssClass:'connectingConnectorLabel' } ] ],
       ConnectionOverlays: [
         [ "Arrow", { width:15, length:15, location:1, id:"arrow" } ],
         [
@@ -250,6 +275,8 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
   cdkDragReleased(event : any){
     console.warn("the user has released a drag item, before any animations have started.")
     console.log(event)
+    event.source.element.nativeElement.classList.remove('bg-slate-100')
+    event.source.element.nativeElement.classList.add('bg-white')
   }
  
   // Emits when the user starts dragging the item.
