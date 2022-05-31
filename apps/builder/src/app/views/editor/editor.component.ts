@@ -349,6 +349,9 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
         ],
       ]
     });
+    // this.jsPlumbInstance.setContainer({
+    //   container: 'block-container'
+    // })
     this.registerEndpoints();
     console.log('blocks',this.blocks)
   }
@@ -498,6 +501,81 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
         ],
       ],
     });
+  }
+
+  manageZoom(instance:any, listeningArea:any, elementToZoom:any){
+    var minZoom = 0.2,
+      maxZoom = 2.0,
+      zoomStep = 0.1;
+    var zoom = 1.0;
+
+    // From jsPlumb documentation
+    var zoomPlumb = function(zoom:any, instance:any, transformOrigin:any, element:any)
+    {
+      transformOrigin = transformOrigin || [ 0.5, 0.5 ];
+      instance = instance || jsPlumb;
+      element = element || instance.getContainer();
+
+      var vendors = [ "webkit-", "moz-", "ms-", "o-", "" ],
+        scale = "scale(" + zoom + ")",
+        origin = (transformOrigin[0] * 100) + "% " + (transformOrigin[1] * 100) + "%";
+
+      vendors.map(function (v)
+      {
+        element.style[v + "transform"] = scale;
+        element.style[v + "transform-origin"] = origin;
+      });
+
+      instance.setZoom(zoom);
+    };
+
+    document.getElementById(listeningArea)?.addEventListener('wheel', function(event : any){
+      var delta = event.originalEvent.wheelDelta > 0 || event.originalEvent.detail < 0 ? 1 : -1;
+      var offsetX = 0, offsetY = 0, boundingRect;
+
+      zoom = Math.max(minZoom, Math.min(maxZoom, zoom + zoomStep * delta));
+      boundingRect = listeningArea.getBoundingClientRect();
+      offsetX = event.originalEvent.clientX + listeningArea.scrollLeft;
+      offsetY = event.originalEvent.clientY + listeningArea.scrollTop;
+
+  //~ 		console.log(boundingRect);
+  //~ 		console.log(listeningArea.scrollWidth + " " + listeningArea.scrollHeight);
+  //~ 		console.log(offsetX + " " + offsetY);
+      // Not perfect...
+      var origin =
+      [
+        offsetX / listeningArea.scrollWidth,
+        offsetY / listeningArea.scrollHeight
+      ];
+  //~ 		console.log(origin);
+      zoomPlumb(zoom, instance, origin, elementToZoom);
+
+      return false;
+    });
+
+    // Also manage dragging the background
+    var mouseIsDown = false, clickX = 0, clickY = 0;
+    function updateScrollPosition(e : any){
+      let element = document.getElementById(listeningArea);
+      if(element){
+        element.scrollLeft = (clickX - e.pageX);
+        element.scrollTop = (clickX - e.pageX);
+      }
+    }
+    document.getElementById(listeningArea)?.addEventListener('mousemove',function(e :any) {
+      if (mouseIsDown)
+      {
+        updateScrollPosition(e);
+      }
+    })
+    document.getElementById(listeningArea)?.addEventListener('mousedown',function(e :any) {
+      mouseIsDown = true;
+      clickX = document.getElementById(listeningArea)?.scrollLeft + e.pageX;
+      clickY = document.getElementById(listeningArea)?.scrollTop + e.pageY;
+    })
+    document.getElementById(listeningArea)?.addEventListener('mouseup',function(e :any) {
+      mouseIsDown = false;
+    })
   }
 
   public ngOnDestroy() {
