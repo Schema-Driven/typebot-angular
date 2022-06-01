@@ -1,0 +1,197 @@
+
+.flex.head-left {width: 30%;}
+
+.top-header {
+    margin-top: 16px;
+}
+
+.menu {width: 50%;}
+
+.menu ul {width: 500px;} 
+
+
+.btn-center {
+    float: left;
+    display: flex;
+    width: 125px;
+    text-align: center;
+    align-items: center;
+    margin-right: 19px;
+    justify-content: space-between;
+    height: 49px;
+
+}
+
+.btn-center a:first-child:hover {
+    background: #f3f4f6;
+    padding: 10px;
+    display: block;
+    width: 52px;
+    text-align: center;
+    margin-right: 19px;
+    height: 49px;
+}
+.back-btn{
+    background: #f3f4f6;
+padding: 10px;
+display: block;
+width: 52px;
+text-align: center;
+margin-right: 19px;
+height: 49px;
+}
+
+
+.button-group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+.button-group button {margin: 0 5px;width: 32px;height: 32px;}
+
+.button-group button svg {width: 14px !important;height: 14px !important;}
+.back-btn svg {
+    width: 1.8em !important;
+    height: 1.8em !important;
+}
+.btn-center a svg {
+    width: 25px;
+    height: 25px;
+}
+.button-group button{ 
+    background: #f3f4f6;
+    padding: 10px;
+    display: block;
+    /* width: 52px; */
+    text-align: center;
+    opacity: 0.4;
+    cursor: not-allowed;
+    border-radius: 6px;
+
+}
+.menu ul li {padding: 0 5px;}
+
+.menu ul li a.active {color: #0036b4;border: 1px solid #0036b4;border-radius: 7px;}
+
+.menu ul li a {color: #000;font-weight: 600;font-size: 17px;} 
+.head-right{display: flex;}
+    
+.head-right .pro-btn{
+    background: #f3f4f6;
+    padding: 11px;
+    display: block;
+    width: 40px;
+    text-align: center;
+    margin-right: 10px;
+    height: 40px;
+    border-radius: 6px;
+} 
+.head-right button{
+background: #0042da;
+color: #fff;
+padding: 3px 11px;
+border-radius: 5px;
+opacity: 0.4;
+    cursor: not-allowed; 
+}
+.setting-btn button:first-child {
+    background: #0042da;
+}
+
+svg {
+    width: 1em;
+    height: 1em;
+    line-height: 1em;
+    -webkit-flex-shrink: 0;
+    -ms-flex-negative: 0;
+    flex-shrink: 0;
+    color: currentColor;
+    fill: transparent !important;
+    vertical-align: middle; 
+  }
+.wrapper{width:1000px;}
+
+.header-btn {width: 490px;float: right;text-align: center;}
+.header a {
+    float: left;
+    margin: 15px 0 0 22px;
+}
+header.container.mx-auto.header {width: 900px;margin-top: 26px;}
+
+.header-btn button {/* width: 210px; */border-radius: 4px; /* outline: 2px solid transparent; */ outline-offset: 2px; line-height: 1.2; border: 1px solid #e5e7eb; text-align: center; padding: 9px 17px; /* width: 330px; */ margin-top: 0.5rem;/* border: 1px solid #333; */margin: 0 5px;}
+
+span.b-icon svg {display: inline-block;margin-right: 11px;}
+svg{stroke: #111;}
+.four-boxes button {border-radius: 4px;
+    outline-offset: 2px;
+    line-height: 1.2;
+    border: 1px solid #e5e7eb;
+    text-align: center;
+    padding: 9px 17px;
+    
+    margin: 0;}
+
+.four-boxes button svg {display: inline-block;margin-right: 5px;}
+
+.four-boxes button span {background: #ffd7ae;padding: 1px 7px;font-size: 14px;border-radius: 5px;font-weight: 500;}
+
+.header {overflow: hidden;margin: 43px 0 18px;}
+.btn-h span {
+    margin: 0 65px 0 59px;
+} 
+.btn-h {
+    margin-top: 15px;
+}
+.col {border: 1px solid #e5e7eb;text-align: center;min-height: 250px;padding: 15px 0;    border-radius: 6px}
+.col:first-child {
+    padding: 0;
+}
+.col span {background: #0042da;width: 40px;display: inline-block;color: #fff;font-size: 14px;padding: 1px 0;position: relative;top: -2px;}
+
+.col button:last-child {border: 1px solid #e5e7eb;padding: 5px;border-radius: 5px;}
+
+.col button:last-child svg {stroke: #111;}
+
+.col button:first-child svg {stroke: #0042da;}
+.col .c-svg {margin: 45px auto 0;width: 35px;height: 35px;}
+
+.col h2 {font-size: 17px;font-weight: 600;color: #222;margin-top: 8px;}
+.c-n{
+    background: #0042da;
+    width: 100%;
+    margin: 0;
+    height: 270px;
+    border-radius: 6px
+}
+button.c-n:hover {
+    background: #0036b4;
+}
+.c-n svg {
+    stroke: #fff !important;
+    margin-top: 0 !important; 
+}
+.c-n h2 {
+    color: #fff;
+    
+}
+  
+  @media only screen and (max-width: 800px) {
+  .sidebar {
+  border-right: 1px solid #e5e7eb;
+  padding: 30px 0 30px 0;
+  min-height: 100%;
+  padding: 40px;
+}
+.aside {
+  padding: 40px;
+}
+.wrapper .flex {
+  display: block;
+}
+}
+@media only screen and (max-width: 1000px) {
+    .wrapper{width:100%;}
+
+}

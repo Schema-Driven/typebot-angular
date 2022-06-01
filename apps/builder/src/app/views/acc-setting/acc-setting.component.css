@@ -126,7 +126,12 @@ svg {
             line-height: 18px;
             font-size: 15px;
         }
-        
+        input.sub-btn {
+          margin-top: 16px;
+          border-color: #C53030 !important;
+          color: #C53030;
+          border-radius: 6px !important;
+      }
         @media only screen and (max-width: 900px) {
           .wrapper{width:100%;}
       
