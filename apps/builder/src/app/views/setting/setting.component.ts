@@ -7,12 +7,10 @@ import { Router } from '@angular/router';
   styleUrls: ['./setting.component.css'],
 })
 export class Setting implements OnInit {
-  
-  constructor(private router: Router) {
-    }
+  constructor(private router: Router) {}
 
-  myAccount:boolean = true;
-  myPreference:boolean = false;
+  myAccount: boolean = true;
+  myPreference: boolean = false;
   ngOnInit(): void {
     this.myAccount = true;
     this.myPreference = false;
@@ -21,15 +19,15 @@ export class Setting implements OnInit {
   navigate(links: any[]) {
     this.router.navigate(links);
   }
-  myAccountDetail(){
-    console.log("my account");
-    
+  myAccountDetail() {
+    console.log('my account');
+
     this.myAccount = true;
     this.myPreference = false;
   }
-  myPreferenceDetail(){
-    console.log("my preference");
-    
+  myPreferenceDetail() {
+    console.log('my preference');
+
     this.myPreference = true;
     this.myAccount = false;
   }

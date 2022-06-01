@@ -9,7 +9,13 @@ import { FormsModule } from '@angular/forms';
 })
 export class Dashboard implements OnInit {
   constructor(private router: Router) {}
+  menu: boolean = false;
+  bill: boolean = false;
   popup: boolean = false;
+  account: boolean = true;
+  pref: boolean = false;
+  setting: boolean = false;
+  member: boolean = false;
   ngOnInit(): void {
     this.popup = false;
   }
@@ -19,5 +25,43 @@ export class Dashboard implements OnInit {
   }
   popUpSet() {
     this.popup = true;
+  }
+  myAccount() {
+    this.account = true;
+    this.pref = false;
+    this.setting = false;
+    this.member = false;
+    this.bill = false;
+  }
+  myPreference() {
+    this.pref = true;
+    this.account = false;
+    this.setting = false;
+    this.member = false;
+    this.bill = false;
+  }
+  mySetting() {
+    this.setting = true;
+    this.account = false;
+    this.pref = false;
+    this.member = false;
+    this.bill = false;
+  }
+  myMember() {
+    this.member = true;
+    this.setting = false;
+    this.account = false;
+    this.pref = false;
+    this.bill = false;
+  }
+  myBilling() {
+    this.bill = true;
+    this.member = false;
+    this.setting = false;
+    this.account = false;
+    this.pref = false;
+  }
+  menuOffOn() {
+    this.menu = !this.menu;
   }
 }

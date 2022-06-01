@@ -9,6 +9,12 @@ svg {
   fill: transparent !important;
   vertical-align: middle; 
 }
+input.sub-btn {
+  margin-top: 16px;
+  border-color: #C53030 !important;
+  color: #C53030;
+  border-radius: 6px !important;
+}
 .wrapper {
     width: 890px;
     margin-top: 40px;

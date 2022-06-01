@@ -1,4 +1,4 @@
-  <div class="wrapper mx-auto">
+  <div class="dashboard mx-auto ">
     <header class="w-full mx-auto header">
       <div class="">
         <a href="#" class="w-8">
@@ -19,8 +19,8 @@
               </svg>
             </span>Settings & Members 
           </button>       
-          <div class="drop">
-            <button class="rounded-none sign-up-btn">
+          <div class="drop" >
+            <button (click)="menuOffOn()" class="rounded-none sign-up-btn">
               <span class="b-icon">
                 <svg viewBox="0 0 24 24" focusable="false" class="chakra-icon css-1x41ssi" stroke-width="2px" stroke-linecap="round" stroke-linejoin="round">
                   <line x1="22" y1="12" x2="2" y2="12"></line>
@@ -28,39 +28,42 @@
                   <line x1="6" y1="16" x2="6.01" y2="16"></line>
                   <line x1="10" y1="16" x2="10.01" y2="16"></line>
                 </svg>
-              </span>example's workspace </button>
-            <ul class="dropdown">
-              <li>
-                <a href="#">
-                  <span>
-                    <svg viewBox="0 0 24 24" focusable="false" class="chakra-icon css-cxumsd" stroke-width="2px" stroke-linecap="round" stroke-linejoin="round">
-                      <line x1="22" y1="12" x2="2" y2="12"></line>
-                      <path d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"></path>
-                      <line x1="6" y1="16" x2="6.01" y2="16"></line>
-                      <line x1="10" y1="16" x2="10.01" y2="16"></line>
-                    </svg>
-                  </span> nomikhokher's workspace </a>
-              </li>
-              <li>
-                <a href="#">
-                  <span>
-                    <svg viewBox="0 0 24 24" focusable="false" class="chakra-icon chakra-menu__icon css-1k8v1e7" stroke-width="2px" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                      <line x1="12" y1="5" x2="12" y2="19"></line>
-                      <line x1="5" y1="12" x2="19" y2="12"></line>
-                    </svg> </span>New workspace </a>
-              </li>
-              <li class="logout">
-                <a href="#"> 
-                  <span>
-                    <svg viewBox="0 0 24 24" focusable="false" class="chakra-icon chakra-menu__icon css-1k8v1e7" stroke-width="2px" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                      <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
-                      <polyline points="16 17 21 12 16 7"></polyline>
-                      <line x1="21" y1="12" x2="9" y2="12"></line>
-                    </svg>
-                  </span>
-                Log out </a>
-              </li>
-            </ul>
+              </span>example's workspace 
+            </button>
+            <div>
+              <ul *ngIf="menu" class="dropdown">
+                <li>
+                  <a href="#">
+                    <span>
+                      <svg viewBox="0 0 24 24" focusable="false" class="chakra-icon css-cxumsd" stroke-width="2px" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="22" y1="12" x2="2" y2="12"></line>
+                        <path d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"></path>
+                        <line x1="6" y1="16" x2="6.01" y2="16"></line>
+                        <line x1="10" y1="16" x2="10.01" y2="16"></line>
+                      </svg>
+                    </span> nomikhokher's workspace </a>
+                </li>
+                <li>
+                  <a href="#">
+                    <span>
+                      <svg viewBox="0 0 24 24" focusable="false" class="chakra-icon chakra-menu__icon css-1k8v1e7" stroke-width="2px" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                      </svg> </span>New workspace </a>
+                </li>
+                <li class="logout">
+                  <a href="#"> 
+                    <span>
+                      <svg viewBox="0 0 24 24" focusable="false" class="chakra-icon chakra-menu__icon css-1k8v1e7" stroke-width="2px" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                        <polyline points="16 17 21 12 16 7"></polyline>
+                        <line x1="21" y1="12" x2="9" y2="12"></line>
+                      </svg>
+                    </span>
+                  Log out </a>
+                </li>
+              </ul>
+          </div>
           </div>
         </div>
       </div>
@@ -160,31 +163,33 @@
           <div class="fixed z-10 inset-0 overflow-y-auto">
             <div class="flex items-end sm:items-center justify-center min-h-full p-4 text-center sm:p-0">
               <div class="flex bg-white modal-box">
-                <div class="w-1/4 sidebar">
-                    <a href="#">example@email.com</a>
-                    <button class="rounded-none active">
+                <div class="w-1/4  sidebar ">
+                    <a>example@email.com</a>
+                    <button (click)="myAccount()" class="rounded-none active">
                         <svg viewBox="0 0 24 24" focusable="false" class="chakra-icon css-1k8v1e7" stroke-width="2px" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
                         My Account 
                     </button>
-                    <button class="rounded-none ">
+                    <button (click)="myPreference()" class="rounded-none ">
                         <svg viewBox="0 0 24 24" focusable="false" class="chakra-icon css-1k8v1e7" stroke-width="2px" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
                         Preferences
                     </button>
                     <h3>Workspace</h3>
-                    <button class="rounded-none ">
+                    <button (click)="mySetting()" class="rounded-none ">
                         <svg viewBox="0 0 24 24" focusable="false" class="chakra-icon css-18myi7" stroke-width="2px" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="12" x2="2" y2="12"></line><path d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"></path><line x1="6" y1="16" x2="6.01" y2="16"></line><line x1="10" y1="16" x2="10.01" y2="16"></line></svg>
                         Setting 
                     </button>
-                    <button class="rounded-none ">
+                    <button (click)="myMember()" class="rounded-none ">
                         <svg viewBox="0 0 24 24" focusable="false" class="chakra-icon css-1k8v1e7" stroke-width="2px" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
                         Members 
                     </button>
-                    <button class="rounded-none ">
+                    <button (click)="myBilling()" class="rounded-none ">
                         <svg viewBox="0 0 24 24" focusable="false" class="chakra-icon css-1k8v1e7" stroke-width="2px" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
                         Billing
                     </button>
                 </div>
                 <div class="w-3/4 aside">
+
+                  <div *ngIf="account">
                     <div class="profile">
                         <img src="https://avatars.githubusercontent.com/u/4618863?v=4?">
                         <div class="file-upload">
@@ -211,6 +216,20 @@
                                 </div>
                             </div>
                     </form>
+                  </div>
+                  <div *ngIf="pref">
+                    <preferences></preferences>
+                  </div>
+                  <div *ngIf="setting">
+                    <acc-setting></acc-setting>
+                  </div>
+                  <div *ngIf="member">
+                    <members></members>
+                  </div>
+                  <div *ngIf="bill">
+                    <billing></billing>
+                  </div>
+
                 </div>
               </div>
           </div>
