@@ -1,3 +1,4 @@
+
 svg {
     width: 1em;
     height: 1em;
@@ -10,8 +11,10 @@ svg {
     vertical-align: middle; 
   }
 
-.wrapper{width:1000px; position: relative;}
-
+  .dashboard {
+    width: 1000px;
+    position: relative;
+}
 .header-btn {width: 490px;float: right;text-align: center;}
 .header a {
     float: left;
@@ -152,7 +155,7 @@ button.c-n:hover {
     .sidebar {
         border-right: 1px solid #e5e7eb;
         padding: 30px 0 30px 0; 
-        min-height: 650px;
+        min-height: 585px;
     }
 .sidebar a {display: block;font-size: 17px;font-weight: 400;color: #6b7280;    margin-bottom: 15px; margin-left: 15px;}
 .sidebar button{
@@ -240,6 +243,7 @@ input#email {
 .modal-box {
     width: 55%;
     text-align: left;
+    border-radius: 5px;
 }
 @media only screen and (max-width: 900px) {
     .modal-box {

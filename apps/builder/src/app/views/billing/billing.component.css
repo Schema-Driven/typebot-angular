@@ -89,7 +89,44 @@ svg {
   width: 47px;
 
 }
- 
+.billing-btn button {
+  width: 49%;
+  height: 40px;
+  border: 1px solid #e5e7eb;
+  border-radius: 4px;
+  padding: 0 8px;
+  line-height: 18px;
+  font-size: 15px;
+  font-weight: 600;
+  
+}
+
+.billing-btn {
+  margin-top:20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.billing-btn button:first-child {
+  border-color: #b45800;
+  color: #b45800;
+}
+.billing-btn button:last-child {
+  border-color: #6b46c1;
+  color: #6b46c1;
+}
+
+.title a { 
+  background: #f3f4f6;
+  color: #1f2937;
+  font-size: 13px;
+  padding: 1px 11px 3px;
+  font-weight: 500;
+  border-radius: 6px;
+  height: 24px;
+  text-align: center;
+  display: inline-block;
+}
 @media only screen and (max-width: 800px) {
 .sidebar {
 border-right: 1px solid #e5e7eb;

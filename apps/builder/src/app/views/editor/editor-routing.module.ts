@@ -3,19 +3,18 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { EditorComponent } from './editor.component';
 
-
 const routes: Routes = [
   {
     path: '',
     component: EditorComponent,
     children: [
-        //add child-paths here ...
-    ]
-  }
+      //add child-paths here ...
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class EditorRoutingModule { }
+export class EditorRoutingModule {}

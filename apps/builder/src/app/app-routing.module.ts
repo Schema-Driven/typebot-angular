@@ -13,6 +13,10 @@ import { Members } from './views/members/members.component';
 import { Accsetting } from './views/acc-setting/acc-setting.component';
 import { Billing } from './views/billing/billing.component';
 import { CreateNew } from './views/create-new/create-new.component';
+import { Share } from './views/share/share.component';
+import { Theme } from './views/theme/theme.component';
+
+
 
 const routes: Routes = [
   { path: '', component: Authin },
@@ -24,9 +28,12 @@ const routes: Routes = [
   { path: 'preferences', component: Preferences },
   { path: 'members', component: Members },
   { path: 'acc-setting', component: Accsetting },
+  { path: 'share', component: Share },
+  { path: 'theme', component: Theme },
   { 
     path: 'editor',
-    loadChildren: () => import('./views/editor/editor.module').then(m => m.EditorModule) 
+    loadChildren: () =>
+      import('./views/editor/editor.module').then((m) => m.EditorModule),
   },
   { path: 'billing', component: Billing },
   { path: 'create-new', component: CreateNew },
