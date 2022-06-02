@@ -28,13 +28,9 @@ const routes: Routes = [
   { path: 'preferences', component: Preferences },
   { path: 'members', component: Members },
   { path: 'acc-setting', component: Accsetting },
-<<<<<<< HEAD
-  {
-=======
   { path: 'share', component: Share },
   { path: 'theme', component: Theme },
   { 
->>>>>>> 851c063f53cb5fd3c50b738b8697ec051e43cff1
     path: 'editor',
     loadChildren: () =>
       import('./views/editor/editor.module').then((m) => m.EditorModule),
