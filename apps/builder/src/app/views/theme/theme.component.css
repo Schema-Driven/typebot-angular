@@ -309,8 +309,8 @@ button.c-n:hover {
     border-radius: 100%;
 }
 .chat span {
-    font-size: 1.1em;
-    font-weight: 600;
+    /* font-size: 1.1em;
+    font-weight: 600; */
     color: #000;
 }
 a.color-picker {

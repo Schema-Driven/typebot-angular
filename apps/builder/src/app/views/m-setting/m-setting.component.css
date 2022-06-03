@@ -209,38 +209,14 @@ button.c-n:hover {
 .c-n h2 {
     color: #fff;
 }
-    input.text-box {
-        height: 40px;
-        border: 1px solid #e5e7eb;
-        border-radius: 4px;
-        padding: 0 8px;
-        line-height: 18px;
-        font-size: 15px;
-        width: 222px;
-    }
-    .form label {
-        font-size: 18px;
-    }
-    .color-btn{
-        background:#ff8b1a;
-       }
-       .accordian-custom-btn svg {
-        margin-right: 6px;
-    }
-    .accordian-custom-btn svg {
-        width: 20px;
-        height: 20px;
-    }
-    .accordian-custom-btn button {
-        font-size: 18px;
-        font-weight: 700 !important;
-    } 
-    
-    .label-group label {display: block;}
-
-.label-group {background: #f5f5f5;padding: 0 8px;border-radius: 5px 0 0 5px;border: 1px solid rgb(209 213 219);border-right: 0;}
-
-.fields-cus textarea {border-radius: 0 5px 5px 0 !important;}
+  
+.chat em {
+    background: #ffd7ae;
+    padding: 1px 7px;
+    font-size: 14px;
+    border-radius: 4px;
+    font-style: normal;
+}
 .switch {
     position: relative;
     display: inline-block;
@@ -309,8 +285,7 @@ button.c-n:hover {
     border-radius: 100%;
 }
 .chat span {
-    font-size: 1.1em;
-    font-weight: 600;
+
     color: #000;
 }
 a.color-picker {
@@ -321,6 +296,15 @@ a.color-picker {
 .accordian-custom-btn  .dark {
     fill: #333 !important;
 }
+
+.chat[_ngcontent-biy-c28] span[_ngcontent-biy-c28] {
+    font-size: 1em;
+    font-weight: 500;
+    color: #000;
+}
+
+
+
   @media only screen and (max-width: 800px) {
   .sidebar {
   border-right: 1px solid #e5e7eb;
