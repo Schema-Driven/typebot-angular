@@ -303,7 +303,16 @@ a.color-picker {
     color: #000;
 }
 
-
+.dots {
+    display: inline-block;
+    line-height: 1em;
+    flex-shrink: 0;
+    color: currentcolor;
+    vertical-align: middle;
+    fill: none;
+    stroke: currentcolor;
+    transform: rotate(90deg);
+}
 
   @media only screen and (max-width: 800px) {
   .sidebar {
