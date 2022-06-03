@@ -15,6 +15,7 @@ import { Billing } from './views/billing/billing.component';
 import { CreateNew } from './views/create-new/create-new.component';
 import { Share } from './views/share/share.component';
 import { Theme } from './views/theme/theme.component';
+import { MSetting } from './views/m-setting/m-setting.component';
 
 
 
@@ -30,6 +31,7 @@ const routes: Routes = [
   { path: 'acc-setting', component: Accsetting },
   { path: 'share', component: Share },
   { path: 'theme', component: Theme },
+  { path: 'm-setting', component: MSetting }, 
   { 
     path: 'editor',
     loadChildren: () =>
