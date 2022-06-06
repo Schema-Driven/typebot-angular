@@ -448,6 +448,9 @@ textarea#message {
   font-size: 21px;
 }
 
+button.icon-dropdown {width: 40px;height: 40px;background: #f3f4f6;text-align: center;    margin-top: 38px; border-radius: 4px;}
+
+button.icon-dropdown svg {margin: 2px auto 0;display: block;}
 
   @media only screen and (max-width: 800px) {
   .sidebar {
