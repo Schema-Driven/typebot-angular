@@ -16,6 +16,4 @@ export class Theme implements OnInit {
   navigate(links: any[]) {
     this.router.navigate(links);
   }
-
-  
 }

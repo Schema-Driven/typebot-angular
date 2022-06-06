@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'm-setting',
-  templateUrl: './m-setting.component.html',
-  styleUrls: ['./m-setting.component.css'],
+  selector: 'header-bar',
+  templateUrl: './header-bar.component.html',
+  styleUrls: ['./header-bar.component.css'],
 })
-export class MSetting implements OnInit {
+export class HeaderBarComponent implements OnInit {
   constructor(private router: Router) {
     // ...
   }

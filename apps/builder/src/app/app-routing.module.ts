@@ -17,8 +17,6 @@ import { Share } from './views/share/share.component';
 import { Theme } from './views/theme/theme.component';
 import { MSetting } from './views/m-setting/m-setting.component';
 
-
-
 const routes: Routes = [
   { path: '', component: Authin },
   { path: 'authin', component: Authin },
@@ -31,12 +29,17 @@ const routes: Routes = [
   { path: 'acc-setting', component: Accsetting },
   { path: 'share', component: Share },
   { path: 'theme', component: Theme },
-  { path: 'm-setting', component: MSetting }, 
-  { 
+  { path: 'm-setting', component: MSetting },
+  {
     path: 'editor',
     loadChildren: () =>
       import('./views/editor/editor.module').then((m) => m.EditorModule),
   },
+  // {
+  //   path: 'header',
+  //   loadChildren: () =>
+  //     import('./views/header/header.module').then((m) => m.HeaderModule),
+  // },
   { path: 'billing', component: Billing },
   { path: 'create-new', component: CreateNew },
 ];
