@@ -399,6 +399,44 @@ input[type=number]::-webkit-outer-spin-button {
 
 .upload-img label a {padding-top: 5px;display: block;}
 
+.file-upload{
+      
+  top: -7px;
+
+  position:relative;
+  
+  display: inline-block;
+} 
+  .file-upload  input[type='file']{
+
+   
+    position:absolute;
+    top:0;
+    left:0;
+    opacity:0;
+    cursor:pointer;
+
+  }
+  .file-upload svg {display: inline-block;stroke: #000;margin-right: 4px;margin-top: -2px;}
+
+  .file-upload {padding: 5px 7px;font-size: 15px;border-radius: 5px;margin-left: 13px; font-weight: 600;}
+
+.file-upload:last-child {background: #0042da;color: #fff;padding: 7px 7px; font-size: 14px;}
+
+
+/* .file-upload:first-child {
+  background: transparent;
+  padding: 0;
+} */
+
+
+
+
+
+
+
+
+
 
   @media only screen and (max-width: 800px) {
   .sidebar {
