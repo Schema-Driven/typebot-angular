@@ -53,7 +53,7 @@
 	<div class="flex">
 		<div class="w-1/4 overflow-y-scroll h-screen sidebar pb-6">
 			<div class="mx-5">
-				<h2 class="center">Settings</h2>
+				<h2 class="text-center font-semibold">Settings</h2>
 				<div id="accordion-open" data-accordion="open" class="">
 					<h2 id="accordion-open-heading-1" class="accordian-custom-btn">
               <button type="button" class="flex justify-between items-center pl-0 pr-0 p-5 w-full font-medium text-left focus:ring-4 " data-accordion-target="#accordion-open-body-1" aria-expanded="true" aria-controls="accordion-open-body-1">
@@ -93,17 +93,17 @@
 
 
 
-        <div id="accordion-open" data-accordion="open" class="">
+        <div id="accordion-open" data-accordion="open" class="type-em">
 					<h2 id="accordion-open-heading-1" class="accordian-custom-btn">
               <button type="button" class="flex justify-between items-center pl-0 pr-0 p-5 w-full font-medium text-left focus:ring-4 " data-accordion-target="#accordion-open-body-1" aria-expanded="true" aria-controls="accordion-open-body-1">
-                <span class="flex items-center inline-block"> Typing emulation</span>
+                <span class="flex items-center inline-block"><svg viewBox="0 0 24 24" focusable="false" style="width:16px; height:16px;" class=" mr-2 mt-1 chakra-icon inline w-3 h-3" stroke-width="2px" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg> Typing emulation</span>
                 <svg data-accordion-icon class="w-6 h-6 rotate-180 shrink-0 dark" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
               </button> 
             </h2>
 					<div id="accordion-open-body-1" class="" aria-labelledby="accordion-open-heading-1">
 						<form class="form">
 							<div class="chat flex justify-between align-middle items-center mb-4 ">
-								<div> <span class="mr-4 font-medium text-base">Typing emulation <em class="">Pro</em></span> </div>
+								<div> <span class="mr-4 font-medium text-base"> Typing emulation <em class="">Pro</em></span> </div>
 								<label class="switch">
 									<input type="checkbox"> <span class="slider round"></span> </label>
 							</div>
@@ -134,7 +134,7 @@
         <div id="accordion-open" data-accordion="open" class="">
 					<h2 id="accordion-open-heading-1" class="accordian-custom-btn">
               <button type="button" class="flex justify-between items-center pl-0 pr-0 p-5 w-full font-medium text-left focus:ring-4 " data-accordion-target="#accordion-open-body-1" aria-expanded="true" aria-controls="accordion-open-body-1">
-                <span class="flex items-center inline-block"> Typing emulation</span>
+                <span class="flex items-center inline-block"><svg viewBox="0 0 24 24" focusable="false" class="chakra-icon mr-2 " stroke-width="2px" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>  Metadata</span>
                 <svg data-accordion-icon class="w-6 h-6 rotate-180 shrink-0 dark" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
               </button> 
             </h2>
@@ -149,7 +149,7 @@
 										<input type="file" />
 										Upload 
 									</div>
-									<div class="file-btn w-36 bg-transparent px-0 py-0">
+									<div class="file-btn w-36 bg-transparent px-0 py-0 mt-9">
 									<div class="file-upload block mb-4">
 										<input type="file" />
 										Embed link 
@@ -174,7 +174,7 @@
 		<button class=""></button>
 	</div> 
 	<label class="pb-3 block mt-5"> Description: </label> 
-	<div clasa="form-field">
+	<div clasa="form-field flex justify-between align-middle">
 		<textarea
       class="
         form-control
@@ -199,11 +199,11 @@
     >
 	Build beautiful conversational forms and embed them directly in your applications without a line of code. Triple your response rate and collect answers that has more value compared to a traditional form.
 </textarea> 
-		<button class=""></button>
+		<button class="icon-dropdown"><svg viewBox="0 0 24 24" focusable="false" class="chakra-icon css-1k8v1e7" stroke-width="2px" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></button>
 	</div> 
 	
-</div>
-              <div>
+</div> 
+              <div class="custom-css">
 				<label class="pb-3 block mt-5"> Custom head code: <svg viewBox="0 0 24 24" focusable="false" class="chakra-icon inline" stroke-width="2px" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></label> 
 				
 					
@@ -216,7 +216,7 @@
 							 <label>2</label>
 							 <label>3</label>
 						   </div>
-						   <textarea id="message" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500  dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" ></textarea>
+						   <textarea id="message" rows="4" class=" h-60 block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500  dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" ></textarea>
 		
 		
 						 </div>
