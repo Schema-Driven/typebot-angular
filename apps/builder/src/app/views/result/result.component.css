@@ -144,6 +144,7 @@ svg {
     color: currentColor;
     fill: transparent !important;
     vertical-align: middle; 
+    stroke: #000;
   }
 .wrapper{width:1000px;}
 
@@ -156,8 +157,36 @@ header.container.mx-auto.header {width: 900px;margin-top: 26px;}
 
 .header-btn button {/* width: 210px; */border-radius: 4px; /* outline: 2px solid transparent; */ outline-offset: 2px; line-height: 1.2; border: 1px solid #e5e7eb; text-align: center; padding: 9px 17px; /* width: 330px; */ margin-top: 0.5rem;/* border: 1px solid #333; */margin: 0 5px;}
 
-
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+  }
   
+  td, th {
+    border: 1px solid #E5E7EB;
+    text-align: left;
+    padding: 8px;
+  }
+  
+  .table-wrap p {
+    font-weight: 400 !important;
+    color: #111;
+    padding-top: 1px;
+}
+.button-group a:first-child {
+    border: 1px solid #0036b4;
+color: #0036b4;
+padding: 6px 7px;
+border-radius: 5px;
+}
+.btn-g a:first-child {
+    color: #0036b4;
+    border: 1px solid #0036b4;
+    border-radius: 6px;
+    padding: 5px 10px;
+    text-align: center;
+}
   @media only screen and (max-width: 800px) {
   .sidebar {
   border-right: 1px solid #e5e7eb;
