@@ -8,6 +8,7 @@ import { PreferencesModule } from './views/preferences/preferences.module';
 import { AccSettingModule } from './views/acc-setting/acc-setting.module';
 import { MembersModule } from './views/members/members.module';
 import { BillingModule } from './views/billing/billing.module';
+import { HeaderBarModule } from './views/header/header-bar.module';
 @NgModule({
   declarations: [AppComponent, Dashboard],
   imports: [
