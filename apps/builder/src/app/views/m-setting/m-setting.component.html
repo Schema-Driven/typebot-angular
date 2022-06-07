@@ -1,245 +1,293 @@
-<div class="top-header w-full px-2 ">
-	<div class="flex justify-between items-center ">
-		<div class="flex head-left">
-			<a class="back-btn" href="">
-				<svg viewBox="0 0 24 24" focusable="false" class="chakra-icon css-czfm8o" stroke-width="2px" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-					<polyline points="15 18 9 12 15 6"></polyline>
-				</svg>
-			</a> <span class="btn-center">
-          <a class=""  href="">
-          <svg viewBox="0 0 24 24" focusable="false" class="chakra-icon css-1f4mbjb" stroke-width="2px" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
-          </a>
-
-          <a href="#">My typebot</a> 
-      </span>
-			<div class="button-group">
-				<button class="rounded-none sign-up-btn">
-					<svg viewBox="0 0 24 24" focusable="false" class="chakra-icon css-1k8v1e7" stroke-width="2px" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-						<path d="M3 7v6h6"></path>
-						<path d="M21 17a9 9 0 00-9-9 9 9 0 00-6 2.3L3 13"></path>
-					</svg>
-				</button>
-				<button class="rounded-none sign-up-btn">
-					<svg viewBox="0 0 24 24" focusable="false" class="chakra-icon css-1k8v1e7" stroke-width="2px" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-						<path d="M21 7v6h-6"></path>
-						<path d="M3 17a9 9 0 019-9 9 9 0 016 2.3l3 2.7"></path>
-					</svg>
-				</button>
-			</div>
-		</div>
-		<div class="menu ">
-			<ul class="flex">
-				<li class="flex-1 mr-2"> <a class="block py-2 px-4 text-gray-400 cursor-not-allowed" href="#">Flow</a> </li>
-				<li class="flex-1 mr-2"> <a class="text-center block border border-white rounded hover:border-gray-200  py-2 px-4" href="#">Theme</a> </li>
-				<li class="text-center flex-1"> <a class="text-center block border border-blue-500 rounded py-2 px-4 active text-white" href="#">Settings</a> </li>
-				<li class="text-center flex-1"> <a class="block py-2 px-4 text-gray-400 cursor-not-allowed" href="#">Results</a> </li>
-				<li class="text-center flex-1"> <a class="block py-2 px-4 text-gray-400 cursor-not-allowed" href="#">Results</a> </li>
-			</ul>
-		</div>
-		<div class="head-right">
-			<a class="pro-btn" href="">
-				<svg viewBox="0 0 24 24" focusable="false" class="chakra-icon css-1k8v1e7" stroke-width="2px" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-					<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-					<circle cx="9" cy="7" r="4"></circle>
-					<path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-					<path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-				</svg>
-			</a>
-			<button disabled="" type="button" class="pub-btn">Published</button>
-		</div>
-	</div>
-</div>
-<div class="main mx-full mt-11 pl-3 pr-4">  
+<header-bar></header-bar>
+<div class="main mx-full mt-11 pl-3 pr-4">
 	<div class="flex">
 		<div class="w-1/4 overflow-y-scroll h-screen sidebar pb-6">
 			<div class="mx-5">
 				<h2 class="text-center font-semibold">Settings</h2>
 				<div id="accordion-open" data-accordion="open" class="">
 					<h2 id="accordion-open-heading-1" class="accordian-custom-btn">
-              <button type="button" class="flex justify-between items-center pl-0 pr-0 p-5 w-full font-medium text-left focus:ring-4 " data-accordion-target="#accordion-open-body-1" aria-expanded="true" aria-controls="accordion-open-body-1">
-                <span class="flex items-center inline-block"><svg viewBox="0 0 24 24" focusable="false" class="dots mr-1" stroke-width="2px" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="19" r="1"></circle></svg> General</span>
-                <svg data-accordion-icon class="w-6 h-6 rotate-180 shrink-0 dark" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-              </button> 
-            </h2>
+						<button type="button" class="flex justify-between items-center pl-0 pr-0
+							p-5 w-full font-medium text-left focus:ring-4" data-accordion-target="#accordion-open-body-1"
+							aria-expanded="true" aria-controls="accordion-open-body-1">
+							<span class="flex items-center inline-block"><svg viewBox="0 0 24 24" focusable="false"
+									class="dots mr-1" stroke-width="2px" stroke-linecap="round" stroke-linejoin="round">
+									<circle cx="12" cy="12" r="1"></circle>
+									<circle cx="12" cy="5" r="1"></circle>
+									<circle cx="12" cy="19" r="1"></circle>
+								</svg> General</span>
+							<svg data-accordion-icon class="w-6 h-6 rotate-180 shrink-0 dark" fill="currentColor"
+								viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+								<path fill-rule="evenodd" d="M5.293
+									7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1
+									1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+							</svg>
+						</button>
+					</h2>
 					<div id="accordion-open-body-1" class="" aria-labelledby="accordion-open-heading-1">
 						<form class="form">
-							<div class="chat flex justify-between align-middle items-center mb-4 ">
-								<div> <span class="mr-4 font-medium text-base">Typebot.io branding <em class="">Pro</em></span> </div>
+							<div class="chat flex justify-between align-middle items-center mb-4">
+								<div> <span class="mr-4 font-medium text-base">Typebot.io branding <em
+											class="">Pro</em></span> </div>
 								<label class="switch">
 									<input type="checkbox"> <span class="slider round"></span> </label>
 							</div>
 							<div class="chat flex justify-between align-middle items-center mb-4">
 								<div> <span class="mr-4 font-medium text-base">Prefill input
-                  <svg viewBox="0 0 24 24" focusable="false" class="chakra-icon inline" stroke-width="2px" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></span> </div>
+										<svg viewBox="0 0 24 24" focusable="false" class="chakra-icon inline"
+											stroke-width="2px" stroke-linecap="round" stroke-linejoin="round">
+											<circle cx="12" cy="12" r="10"></circle>
+											<path d="M9.09 9a3 3 0 0 1 5.83 1c0
+												2-3 3-3 3"></path>
+											<line x1="12" y1="17" x2="12.01" y2="17"></line>
+										</svg></span>
+								</div>
 								<label class="switch">
 									<input type="checkbox"> <span class="slider round"></span> </label>
 							</div>
-              <div class="chat flex justify-between align-middle items-center mb-4">
-								<div> <span class="mr-4 font-medium text-base">Create new session on page refresh
-                  </span> </div>
+							<div class="chat flex justify-between align-middle items-center mb-4">
+								<div> <span class="mr-4 font-medium text-base">Create new session on
+										page refresh
+									</span> </div>
 								<label class="switch">
 									<input type="checkbox"> <span class="slider round"></span> </label>
 							</div>
-              <div class="chat flex justify-between align-middle items-center mb-4">
-								<div> <span class="mr-4 font-medium text-base">Hide query params on bot start
-                  <svg viewBox="0 0 24 24" focusable="false" class="chakra-icon inline" stroke-width="2px" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></span> </div>
+							<div class="chat flex justify-between align-middle items-center mb-4">
+								<div> <span class="mr-4 font-medium text-base">Hide query params on bot
+										start
+										<svg viewBox="0 0 24 24" focusable="false" class="chakra-icon inline"
+											stroke-width="2px" stroke-linecap="round" stroke-linejoin="round">
+											<circle cx="12" cy="12" r="10"></circle>
+											<path d="M9.09 9a3 3 0 0 1 5.83 1c0
+												2-3 3-3 3"></path>
+											<line x1="12" y1="17" x2="12.01" y2="17"></line>
+										</svg></span>
+								</div>
 								<label class="switch">
 									<input type="checkbox"> <span class="slider round"></span> </label>
 							</div>
 						</form>
 					</div>
-          
+
 				</div>
 
 
 
-        <div id="accordion-open" data-accordion="open" class="type-em">
+				<div id="accordion-open" data-accordion="open" class="type-em">
 					<h2 id="accordion-open-heading-1" class="accordian-custom-btn">
-              <button type="button" class="flex justify-between items-center pl-0 pr-0 p-5 w-full font-medium text-left focus:ring-4 " data-accordion-target="#accordion-open-body-1" aria-expanded="true" aria-controls="accordion-open-body-1">
-                <span class="flex items-center inline-block"><svg viewBox="0 0 24 24" focusable="false" style="width:16px; height:16px;" class=" mr-2 mt-1 chakra-icon inline w-3 h-3" stroke-width="2px" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg> Typing emulation</span>
-                <svg data-accordion-icon class="w-6 h-6 rotate-180 shrink-0 dark" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-              </button> 
-            </h2>
+						<button type="button" class="flex justify-between items-center pl-0 pr-0
+							p-5 w-full font-medium text-left focus:ring-4" data-accordion-target="#accordion-open-body-1"
+							aria-expanded="true" aria-controls="accordion-open-body-1">
+							<span class="flex items-center inline-block"><svg viewBox="0 0 24 24" focusable="false"
+									style="width:16px; height:16px;" class="mr-2 mt-1
+									chakra-icon inline w-3 h-3" stroke-width="2px" stroke-linecap="round" stroke-linejoin="round">
+									<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0
+										1 2-2h14a2 2 0 0 1 2 2z"></path>
+								</svg> Typing emulation</span>
+							<svg data-accordion-icon class="w-6 h-6 rotate-180 shrink-0 dark" fill="currentColor"
+								viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+								<path fill-rule="evenodd" d="M5.293
+									7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1
+									1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+							</svg>
+						</button>
+					</h2>
 					<div id="accordion-open-body-1" class="" aria-labelledby="accordion-open-heading-1">
 						<form class="form">
-							<div class="chat flex justify-between align-middle items-center mb-4 ">
-								<div> <span class="mr-4 font-medium text-base"> Typing emulation <em class="">Pro</em></span> </div>
+							<div class="chat flex justify-between align-middle items-center mb-4">
+								<div> <span class="mr-4 font-medium text-base"> Typing emulation <em
+											class="">Pro</em></span> </div>
 								<label class="switch">
 									<input type="checkbox"> <span class="slider round"></span> </label>
 							</div>
 
-              <div class="chat flex justify-between align-middle items-center mb-2 ">
-								<div> <span class="mr-4 font-medium text-base">Words per minutes: </span> </div>
-                <div class="quantity">
-                  <input type="number" min="1" max="9" step="1" value="1"><div class="quantity-nav">
-                    <div class="quantity-button quantity-up"><svg viewBox="0 0 24 24" focusable="false" class="chakra-icon css-onkibi"><path fill="currentColor" d="M12.8,5.4c-0.377-0.504-1.223-0.504-1.6,0l-9,12c-0.228,0.303-0.264,0.708-0.095,1.047 C2.275,18.786,2.621,19,3,19h18c0.379,0,0.725-0.214,0.895-0.553c0.169-0.339,0.133-0.744-0.095-1.047L12.8,5.4z"></path></svg></div><div class="quantity-button quantity-down"><svg viewBox="0 0 24 24" focusable="false" class="chakra-icon css-onkibi"><path fill="currentColor" d="M21,5H3C2.621,5,2.275,5.214,2.105,5.553C1.937,5.892,1.973,6.297,2.2,6.6l9,12 c0.188,0.252,0.485,0.4,0.8,0.4s0.611-0.148,0.8-0.4l9-12c0.228-0.303,0.264-0.708,0.095-1.047C21.725,5.214,21.379,5,21,5z"></path></svg></div></div>
-                </div>
-							</div>
-              <div class="chat flex justify-between align-middle items-center mb-4 ">
-								<div> <span class="mr-4 font-medium text-base">Max delay (in seconds): </span> </div>
-                <div class="quantity">
-                  <input type="number" min="1" max="9" step="1" value="1"><div class="quantity-nav">
-                    <div class="quantity-button quantity-up"><svg viewBox="0 0 24 24" focusable="false" class="chakra-icon css-onkibi"><path fill="currentColor" d="M12.8,5.4c-0.377-0.504-1.223-0.504-1.6,0l-9,12c-0.228,0.303-0.264,0.708-0.095,1.047 C2.275,18.786,2.621,19,3,19h18c0.379,0,0.725-0.214,0.895-0.553c0.169-0.339,0.133-0.744-0.095-1.047L12.8,5.4z"></path></svg></div><div class="quantity-button quantity-down"><svg viewBox="0 0 24 24" focusable="false" class="chakra-icon css-onkibi"><path fill="currentColor" d="M21,5H3C2.621,5,2.275,5.214,2.105,5.553C1.937,5.892,1.973,6.297,2.2,6.6l9,12 c0.188,0.252,0.485,0.4,0.8,0.4s0.611-0.148,0.8-0.4l9-12c0.228-0.303,0.264-0.708,0.095-1.047C21.725,5.214,21.379,5,21,5z"></path></svg></div></div>
-                </div>
-							</div>
-							
-						</form>
-					</div>
-          
-				</div>
-
-
-
-
-        <div id="accordion-open" data-accordion="open" class="">
-					<h2 id="accordion-open-heading-1" class="accordian-custom-btn">
-              <button type="button" class="flex justify-between items-center pl-0 pr-0 p-5 w-full font-medium text-left focus:ring-4 " data-accordion-target="#accordion-open-body-1" aria-expanded="true" aria-controls="accordion-open-body-1">
-                <span class="flex items-center inline-block"><svg viewBox="0 0 24 24" focusable="false" class="chakra-icon mr-2 " stroke-width="2px" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>  Metadata</span>
-                <svg data-accordion-icon class="w-6 h-6 rotate-180 shrink-0 dark" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-              </button> 
-            </h2>
-					<div id="accordion-open-body-1" class="" aria-labelledby="accordion-open-heading-1">
-						<form class="form">
-							<div class="upload-img mb-4 ">
-							 <span class="mr-4 font-medium text-base">Metadata <em class="">Pro</em></span> 
-
-							 <div>
-								<div class="flex justify-between align-middle items-center w-56 bg-white">
-									<div class="file-upload bg-gray-200">
-										<input type="file" />
-										Upload 
-									</div>
-									<div class="file-btn w-36 bg-transparent px-0 py-0 mt-9">
-									<div class="file-upload block mb-4">
-										<input type="file" />
-										Embed link 
-									</div>
-									<div class="file-upload">
-										<input type="file" />
-										Choose an image
+							<div class="chat flex justify-between align-middle items-center mb-2">
+								<div> <span class="mr-4 font-medium text-base">Words per minutes:
+									</span> </div>
+								<div class="quantity">
+									<input type="number" min="1" max="9" step="1" value="1">
+									<div class="quantity-nav">
+										<div class="quantity-button quantity-up"><svg viewBox="0 0 24 24"
+												focusable="false" class="chakra-icon css-onkibi">
+												<path fill="currentColor"
+													d="M12.8,5.4c-0.377-0.504-1.223-0.504-1.6,0l-9,12c-0.228,0.303-0.264,0.708-0.095,1.047
+													C2.275,18.786,2.621,19,3,19h18c0.379,0,0.725-0.214,0.895-0.553c0.169-0.339,0.133-0.744-0.095-1.047L12.8,5.4z"></path>
+											</svg></div>
+										<div class="quantity-button quantity-down"><svg viewBox="0 0 24 24"
+												focusable="false" class="chakra-icon css-onkibi">
+												<path fill="currentColor"
+													d="M21,5H3C2.621,5,2.275,5.214,2.105,5.553C1.937,5.892,1.973,6.297,2.2,6.6l9,12
+													c0.188,0.252,0.485,0.4,0.8,0.4s0.611-0.148,0.8-0.4l9-12c0.228-0.303,0.264-0.708,0.095-1.047C21.725,5.214,21.379,5,21,5z"></path>
+											</svg></div>
 									</div>
 								</div>
 							</div>
-								<label class=""> Icon:
-									<a href="#"><img src="https://app.typebot.io/favicon.png"></a> </label>
-									<label class=""> Image:
-										<a href="#"><img src="https://app.typebot.io/viewer-preview.png"></a> </label> 
+							<div class="chat flex justify-between align-middle items-center mb-4">
+								<div> <span class="mr-4 font-medium text-base">Max delay (in seconds):
+									</span> </div>
+								<div class="quantity">
+									<input type="number" min="1" max="9" step="1" value="1">
+									<div class="quantity-nav">
+										<div class="quantity-button quantity-up"><svg viewBox="0 0 24 24"
+												focusable="false" class="chakra-icon css-onkibi">
+												<path fill="currentColor"
+													d="M12.8,5.4c-0.377-0.504-1.223-0.504-1.6,0l-9,12c-0.228,0.303-0.264,0.708-0.095,1.047
+													C2.275,18.786,2.621,19,3,19h18c0.379,0,0.725-0.214,0.895-0.553c0.169-0.339,0.133-0.744-0.095-1.047L12.8,5.4z"></path>
+											</svg></div>
+										<div class="quantity-button quantity-down"><svg viewBox="0 0 24 24"
+												focusable="false" class="chakra-icon css-onkibi">
+												<path fill="currentColor"
+													d="M21,5H3C2.621,5,2.275,5.214,2.105,5.553C1.937,5.892,1.973,6.297,2.2,6.6l9,12
+													c0.188,0.252,0.485,0.4,0.8,0.4s0.611-0.148,0.8-0.4l9-12c0.228-0.303,0.264-0.708,0.095-1.047C21.725,5.214,21.379,5,21,5z"></path>
+											</svg></div>
 									</div>
-										
+								</div>
 							</div>
-<div>
-	<label class="pb-3 block"> Title: </label>
-	<div clasa="form-field">
-		<input class=" appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" value="My typebot">
-		<button class=""></button>
-	</div> 
-	<label class="pb-3 block mt-5"> Description: </label> 
-	<div class="form-field flex justify-between align-middle relative">
-		<textarea
-      class="
-        form-control
-        block
-        w-full
-        px-3
-        py-1.5
-        text-base
-        font-normal text-left
-        text-gray-700
-        bg-white bg-clip-padding
-        border border-solid border-gray-300
-        rounded
-        transition
-        ease-in-out
-        m-0
-        focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none h-20
-      "
-      id="cus-css"
-      rows="3"
-      placeholder="Your message"
-    >
-	Build beautiful conversational forms and embed them directly in your applications without a line of code. Triple your response rate and collect answers that has more value compared to a traditional form.
-</textarea> 
-		<button class="icon-dropdown ml-3"><svg viewBox="0 0 24 24" focusable="false" class="chakra-icon css-1k8v1e7" stroke-width="2px" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></button>
-		<div class="search-btn">
-			<input class=" appearance-none border rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" placeholder="Search for a variable">
-		</div>
-	</div> 
-	
-</div> 
-              <div class="custom-css">
-				<label class="pb-3 block mt-5"> Custom head code: <svg viewBox="0 0 24 24" focusable="false" class="chakra-icon inline" stroke-width="2px" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></label> 
-				
-					
-					
-					  <div class="form">
-					   
-						 <div class="fields-cus flex justify-between">
-						   <div class="label-group">
-							 <label>1</label>
-							 <label>2</label>
-							 <label>3</label>
-						   </div>
-						   <textarea id="message" rows="4" class=" h-60 block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500  dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" ></textarea>
-		
-		
-						 </div>
-		
-						 
-		
-		
-					
-					  </div>
-					
-					
-				
-				  
 
-
-			  </div>
-							
 						</form>
-					</div> 
-          
+					</div>
+
+				</div>
+
+
+
+
+				<div id="accordion-open" data-accordion="open" class="">
+					<h2 id="accordion-open-heading-1" class="accordian-custom-btn">
+						<button type="button" class="flex justify-between items-center pl-0 pr-0
+							p-5 w-full font-medium text-left focus:ring-4" data-accordion-target="#accordion-open-body-1"
+							aria-expanded="true" aria-controls="accordion-open-body-1">
+							<span class="flex items-center inline-block"><svg viewBox="0 0 24 24" focusable="false"
+									class="chakra-icon mr-2" stroke-width="2px" stroke-linecap="round"
+									stroke-linejoin="round">
+									<polyline points="16 18
+										22 12 16 6"></polyline>
+									<polyline points="8 6 2 12 8 18"></polyline>
+								</svg>
+								Metadata</span>
+							<svg data-accordion-icon class="w-6 h-6 rotate-180 shrink-0 dark" fill="currentColor"
+								viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+								<path fill-rule="evenodd" d="M5.293
+									7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1
+									1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+							</svg>
+						</button>
+					</h2>
+					<div id="accordion-open-body-1" class="" aria-labelledby="accordion-open-heading-1">
+						<form class="form">
+							<div class="upload-img mb-4">
+								<span class="mr-4 font-medium text-base">Metadata <em class="">Pro</em></span>
+								<div>
+									<div class="flex justify-between align-middle items-center w-56
+										bg-white">
+										<div class="file-upload bg-gray-200">
+											<input type="file" />
+											Upload
+										</div>
+										<div class="file-btn w-36 bg-transparent px-0 py-0 mt-9">
+											<div class="file-upload block mb-4">
+												<input type="file" />
+												Embed link
+											</div>
+											<div class="file-upload">
+												<input type="file" />
+												Choose an image
+											</div>
+										</div>
+									</div>
+									<label class=""> Icon:
+										<a href="#"><img src="https://app.typebot.io/favicon.png"></a>
+									</label>
+									<label class=""> Image:
+										<a href="#"><img src="https://app.typebot.io/viewer-preview.png"></a>
+									</label>
+								</div>
+
+							</div>
+							<div>
+								<label class="pb-3 block"> Title: </label>
+								<div clasa="form-field">
+									<input class="appearance-none border rounded w-full py-2 px-3
+										text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text"
+										value="My typebot">
+									<button class=""></button>
+								</div>
+								<label class="pb-3 block mt-5"> Description: </label>
+								<div class="form-field flex justify-between align-middle relative">
+									<textarea class="form-control
+										block
+										w-full
+										px-3
+										py-1.5
+										text-base
+										font-normal text-left
+										text-gray-700
+										bg-white bg-clip-padding
+										border border-solid border-gray-300
+										rounded
+										transition
+										ease-in-out
+										m-0
+										focus:text-gray-700 focus:bg-white focus:border-blue-600
+										focus:outline-none h-20" id="cus-css" rows="3" placeholder="Your message">
+										Build beautiful conversational forms and embed them directly in your
+										applications without a line of code. Triple your response rate and
+										collect answers that has more value compared to a traditional form.
+									</textarea>
+									<button class="icon-dropdown ml-3"><svg viewBox="0 0 24 24" focusable="false"
+											class="chakra-icon css-1k8v1e7" stroke-width="2px" stroke-linecap="round"
+											stroke-linejoin="round" aria-hidden="true">
+											<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+											<circle cx="12" cy="7" r="4"></circle>
+										</svg></button>
+									<div class="search-btn">
+										<input class="appearance-none border rounded-md w-full py-2 px-3
+											text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text"
+											placeholder="Search for a variable">
+									</div>
+								</div>
+
+							</div>
+							<div class="custom-css">
+								<label class="pb-3 block mt-5"> Custom head code: <svg viewBox="0 0 24
+										24" focusable="false" class="chakra-icon inline" stroke-width="2px" stroke-linecap="round"
+										stroke-linejoin="round">
+										<circle cx="12" cy="12" r="10"></circle>
+										<path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+										<line x1="12" y1="17" x2="12.01" y2="17"></line>
+									</svg></label>
+
+
+
+								<div class="form">
+
+									<div class="fields-cus flex justify-between">
+										<div class="label-group">
+											<label>1</label>
+											<label>2</label>
+											<label>3</label>
+										</div>
+										<textarea id="message" rows="4" class="h-60 block p-2.5 w-full text-sm
+											text-gray-900 bg-gray-50 rounded-lg border border-gray-300
+											focus:ring-blue-500 focus:border-blue-500 dark:placeholder-gray-400
+											dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"></textarea>
+									</div>
+
+
+
+
+
+								</div>
+
+
+
+
+
+
+							</div>
+
+						</form>
+					</div>
+
 				</div>
 
 

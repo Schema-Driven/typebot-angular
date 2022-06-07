@@ -6,7 +6,7 @@ import { HeaderBarModule } from '../header/header-bar.module';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
-  imports: [CommonModule, EditorRoutingModule, DragDropModule, HeaderBarModule],
+  imports: [CommonModule, HeaderBarModule, EditorRoutingModule, DragDropModule],
   declarations: [EditorComponent],
 })
 export class EditorModule {}
