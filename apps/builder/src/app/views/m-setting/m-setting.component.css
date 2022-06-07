@@ -429,15 +429,29 @@ input[type=number]::-webkit-outer-spin-button {
   padding: 0;
 } */
 
+textarea#message {
+  color: #000;
+}
+.label-group label {display: block;}
+
+.label-group {background: #f5f5f5;padding: 0 8px;border-radius: 5px 0 0 5px;border: 1px solid rgb(209 213 219);border-right: 0;}
+.fields-cus textarea {border-radius: 0 5px 5px 0 !important;}
+
+.custom-css label {
+  font-weight: 600;
+  font-size: 1em;
+}
 
 
+.sidebar #accordion-open-heading-1 span {
+  font-weight: 600;
+  font-size: 21px;
+}
 
+button.icon-dropdown {width: 40px;height: 40px;background: #f3f4f6;text-align: center;    margin-top: 38px; border-radius: 4px;}
 
-
-
-
-
-
+button.icon-dropdown svg {margin: 2px auto 0;display: block;}
+.search-btn {width: 200px;position: absolute;right: 0;top: 100%;}
   @media only screen and (max-width: 800px) {
   .sidebar {
   border-right: 1px solid #e5e7eb;
