@@ -240,7 +240,7 @@ button.c-n:hover {
 
 .label-group {background: #f5f5f5;padding: 0 8px;border-radius: 5px 0 0 5px;border: 1px solid rgb(209 213 219);border-right: 0;}
 
-.fields-cus textarea {border-radius: 0 5px 5px 0 !important;}
+.fields-cus textarea {border-radius: 5px !important;}
 .switch {
     position: relative;
     display: inline-block;
@@ -279,7 +279,7 @@ button.c-n:hover {
   }
   
   input:checked + .slider {
-    background-color: #2196F3;
+    background-color: #0042da;
   }
   
   input:focus + .slider {
@@ -334,4 +334,33 @@ a.color-picker {
 .wrapper .flex {
   display: block;
 }
+}
+#accordion-open{
+    border-top:1px solid #e5e7eb
+}
+.heading-text{
+    text-align: center;
+    margin-bottom: 30px;
+}
+.last-btn{
+    border-bottom:1px solid #e5e7eb 
+}
+div#accordion-open-body-1{
+    padding: 1.25rem;
+}
+button{
+    box-shadow: none !important;
+}
+span.mr-4.font-medium.text-base {
+    font-weight: bold;
+    font-size: 18px;
+}
+.form .chat {
+    border-radius: 5px;
+    padding:15px;
+    border:1px solid #e5e7eb;
+}
+#message{
+    min-height: 250px;
+    resize: none;
 }
