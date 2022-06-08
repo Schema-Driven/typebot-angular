@@ -255,7 +255,7 @@ button.c-n:hover {
   }
   
   input:checked + .slider {
-    background-color: #2196F3;
+    background-color: #0042da;
   }
   
   input:focus + .slider {
@@ -435,7 +435,7 @@ textarea#message {
 .label-group label {display: block;}
 
 .label-group {background: #f5f5f5;padding: 0 8px;border-radius: 5px 0 0 5px;border: 1px solid rgb(209 213 219);border-right: 0;}
-.fields-cus textarea {border-radius: 0 5px 5px 0 !important;}
+.fields-cus textarea {border-radius: 5px !important; resize: none;}
 
 .custom-css label {
   font-weight: 600;
@@ -467,4 +467,24 @@ button.icon-dropdown svg {margin: 2px auto 0;display: block;}
 .wrapper .flex {
   display: block;
 }
+}
+#accordion-open {
+  border-top: 1px solid #e5e7eb;
+}
+.h-screen button.flex {
+  padding: 1.25rem;
+  box-shadow: none !important;
+}
+.h-screen .heading-text{
+  text-align: center;
+    margin-bottom: 30px;
+}
+.h-screen form.form {
+  padding: 1.25rem;
+}
+.form .chat {
+  padding-left: 50px;
+}
+#accordion-open:last-child {
+  border-bottom: 1px solid #e5e7eb;
 }

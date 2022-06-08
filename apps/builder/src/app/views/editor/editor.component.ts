@@ -635,6 +635,6 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   public ngOnDestroy() {
-    this.removeEventListener();
+    //this.removeEventListener();
   }
 }

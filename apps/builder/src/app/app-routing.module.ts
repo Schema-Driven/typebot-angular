@@ -26,13 +26,31 @@ const routes: Routes = [
   { path: 'preferences', component: Preferences },
   { path: 'members', component: Members },
   { path: 'acc-setting', component: Accsetting },
-  { path: 'share', component: Share },
-  { path: 'theme', component: Theme },
-  { path: 'm-setting', component: MSetting }, 
-  { path: 'result', component: Result },  
-  { path: 'editor',
+  //{ path: 'share', component: Share },
+  //{ path: 'theme', component: Theme },
+  //{ path: 'm-setting', component: MSetting },
+  { path: 'result', component: Result },
+  {
+    path: 'editor',
     loadChildren: () =>
       import('./views/editor/editor.module').then((m) => m.EditorModule),
+  },
+  {
+    path: 'theme',
+    loadChildren: () =>
+      import('./views/theme/theme.module').then((m) => m.ThemeModule),
+  },
+  {
+    path: 'msetting',
+    loadChildren: () =>
+      import('./views/m-setting/m-setting.module').then(
+        (m) => m.MSettingModule
+      ),
+  },
+  {
+    path: 'share',
+    loadChildren: () =>
+      import('./views/share/share.module').then((m) => m.ShareModule),
   },
   { path: 'billing', component: Billing },
   { path: 'create-new', component: CreateNew },

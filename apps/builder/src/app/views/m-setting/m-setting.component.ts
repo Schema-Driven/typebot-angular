@@ -10,10 +10,30 @@ export class MSetting implements OnInit {
   constructor(private router: Router) {
     // ...
   }
-
+  generalUp: boolean = false;
+  typingUp: boolean = false;
+  metaDataUp: boolean = false;
   ngOnInit(): void {}
 
   navigate(links: any[]) {
     this.router.navigate(links);
+  }
+  generalUpStatus() {
+    this.generalUp = false;
+  }
+  generalDownStatus() {
+    this.generalUp = true;
+  }
+  typingUpStatus() {
+    this.typingUp = false;
+  }
+  typingDownStatus() {
+    this.typingUp = true;
+  }
+  metaDataUpStatus() {
+    this.metaDataUp = false;
+  }
+  metaDataDownStatus() {
+    this.metaDataUp = true;
   }
 }
