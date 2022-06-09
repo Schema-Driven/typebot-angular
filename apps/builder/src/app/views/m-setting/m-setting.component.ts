@@ -18,22 +18,13 @@ export class MSetting implements OnInit {
   navigate(links: any[]) {
     this.router.navigate(links);
   }
-  generalUpStatus() {
-    this.generalUp = false;
+  generalStatusButton() {
+    this.generalUp = !this.generalUp;
   }
-  generalDownStatus() {
-    this.generalUp = true;
+  typingStatusButton() {
+    this.typingUp = !this.typingUp;
   }
-  typingUpStatus() {
-    this.typingUp = false;
-  }
-  typingDownStatus() {
-    this.typingUp = true;
-  }
-  metaDataUpStatus() {
-    this.metaDataUp = false;
-  }
-  metaDataDownStatus() {
-    this.metaDataUp = true;
+  metaDataStatusButton() {
+    this.metaDataUp = !this.metaDataUp;
   }
 }
