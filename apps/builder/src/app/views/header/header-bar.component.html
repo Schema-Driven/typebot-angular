@@ -45,24 +45,32 @@
             </button>
           </div>
           <nav class="hidden md:flex space-x-6">
-            <button 
-              class="active text-base font-medium text-black py-1.5 px-4 rounded-md hover:bg-gray-100 hover:text-gray-900"
-              (click)="navigate(['/', 'editor'])">    
-              Flow
+            <button
+              [ngClass]="{'active': flowAct}"
+              class= "text-base font-medium text-black py-1.5 px-4 rounded-md hover:bg-gray-100 hover:text-gray-900"
+              (click)="navigate(['/', 'editor'])"
+              >    
+              Flow 
             </button>
             <button 
+              [ngClass]="{'active': themeAct}"
               class="text-base font-medium text-black py-1.5 px-4 rounded-md hover:bg-gray-100 hover:text-gray-900"
-              (click)="navigate(['/', 'theme'])">    
+              (click)="navigate(['/', 'theme'])"
+              >    
               Theme
             </button>
             <button 
+              [ngClass]="{'active': settingAct}"
               class="text-base font-medium text-black py-1.5 px-4 rounded-md hover:bg-gray-100 hover:text-gray-900"
-              (click)="navigate(['/', 'msetting'])">    
+              (click)="navigate(['/', 'msetting'])"
+              >    
               Setting
             </button>
             <button 
+              [ngClass]="{'active': shareAct}"
               class="text-base font-medium text-black py-1.5 px-4 rounded-md hover:bg-gray-100 hover:text-gray-900"
-              (click)="navigate(['/', 'share'])">    
+              (click)="navigate(['/', 'share'])"
+              >    
               Share
             </button>
           </nav>

@@ -302,7 +302,7 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
       let index = this.endpoints.findIndex((e) => e.identifier == b.id);
       if (index === -1) {
         let block = document.getElementById(b.id.toString());
-        console.log('Attaching endpoint to block', block);
+        // console.log('Attaching endpoint to block', block);
         this.endpoints.push({
           identifier: b.id.toString(),
           instance: this.jsPlumbInstance.addEndpoint(
@@ -324,13 +324,13 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
     this.jsPlumbInstance.bind(
       'endpointClick',
       function (endpoint: any, originalEvent: any) {
-        console.log(endpoint, originalEvent);
+        // console.log(endpoint, originalEvent);
       }
     );
     this.jsPlumbInstance.bind(
       'mouseup',
       function (endpoint: any, originalEvent: any) {
-        console.log(endpoint, originalEvent);
+        // console.log(endpoint, originalEvent);
       }
     );
 
@@ -374,7 +374,7 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
     //   container: 'block-container'
     // })
     this.registerEndpoints();
-    console.log('blocks', this.blocks);
+    // console.log('blocks', this.blocks);
   }
 
   positioning(event: any, id: any) {
@@ -390,24 +390,24 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
     let endpoint_id = eventMouseDown.target.getAttribute('id');
     let block_id = endpoint_id.split('-')[endpoint_id.split('-').length - 1];
     console.warn('the user mouseDown on endpoint.');
-    console.log(this.blocks[block_id].endpoint);
-    console.log(eventMouseDown);
+    // console.log(this.blocks[block_id].endpoint);
+    // console.log(eventMouseDown);
     this.DocumentMouseMoveEventListener = this.renderer.listen(
       'document',
       'mousemove',
       (eventMouseMove) => {
         eventMouseMove.preventDefault();
-        console.log('movement', eventMouseMove);
+        // console.log('movement', eventMouseMove);
         var left = eventMouseMove.offsetX;
         var top = eventMouseMove.offsetY;
 
         this.blocks[block_id].endpoint.canvas.style.left = left;
         this.blocks[block_id].endpoint.canvas.style.top = top;
 
-        console.log('endpoint_canvas', {
-          top: this.blocks[block_id].endpoint.canvas.style.top,
-          left: this.blocks[block_id].endpoint.canvas.style.left,
-        });
+        // console.log('endpoint_canvas', {
+        //   top: this.blocks[block_id].endpoint.canvas.style.top,
+        //   left: this.blocks[block_id].endpoint.canvas.style.left,
+        // });
         //this.removeEventListener();
         //$(endpoint.canvas).css({"left":left, "top":top});
       }
@@ -420,16 +420,16 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
       'mouseup',
       (eventMouseUp) => {
         eventMouseUp.preventDefault();
-        console.log('mouseUp', eventMouseUp);
+        // console.log('mouseUp', eventMouseUp);
         this.DocumentMouseMoveEventListener();
       }
     );
   }
 
   drop(event: CdkDragDrop<any[]>) {
-    console.log('before drop', this.blocks);
-    console.warn('toolbar dropped');
-    console.log(event);
+    // console.log('before drop', this.blocks);
+    // console.warn('toolbar dropped');
+    // console.log(event);
     if (event.previousContainer === event.container) {
       moveItemInArray(
         event.container.data,
@@ -451,19 +451,19 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
       setTimeout(() => {
         this.registerEndpoints();
       }, 100);
-      console.log('after drop', this.blocks);
+      // console.log('after drop', this.blocks);
     }
   }
 
   // Emits when the user drops the item inside a container.
   cdkDragDropped(event: any) {
-    console.warn('the user drops the item inside a container.');
-    console.log(event);
+    // console.warn('the user drops the item inside a container.');
+    // console.log(event);
   }
   // Emits when the user stops dragging an item in the container.
   cdkDragEnded(event: any) {
-    console.warn('the user stops dragging an item in the container.');
-    console.log(event);
+    // console.warn('the user stops dragging an item in the container.');
+    // console.log(event);
     // let id = event.source.element.nativeElement.getAttribute('id');
     // let index = this.blocks.findIndex(b => b.id.toString() === id );
     // if(index != -1){
@@ -475,7 +475,7 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
   // Emits when the user has moved the item into a new container.
   cdkDragEntered(event: any) {
     console.warn('the user has moved the item into a new container.');
-    console.log(event);
+    // console.log(event);
   }
 
   // Emits when the user removes the item its container by dragging it into another container.
@@ -483,7 +483,7 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
     console.warn(
       'the user removes the item its container by dragging it into another container.'
     );
-    console.log(event);
+    // console.log(event);
   }
 
   // Emits as the user is dragging the item. Use with caution, because this event will fire for every pixel that the user has dragged.
@@ -491,7 +491,7 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
     console.warn(
       'the user is dragging the item. Use with caution, because this event will fire for every pixel that the user has dragged.'
     );
-    console.log(event);
+    // console.log(event);
     this.positioning(event, id);
     this.jsPlumbInstance.repaintEverything();
   }
@@ -501,7 +501,7 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
     console.warn(
       'the user has released a drag item, before any animations have started.'
     );
-    console.log(event);
+    // console.log(event);
     // event.source.element.nativeElement.classList.remove('bg-slate-100')
     // event.source.element.nativeElement.classList.add('bg-white')
   }
@@ -509,7 +509,7 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
   // Emits when the user starts dragging the item.
   cdkDragStarted(event: any) {
     console.warn('the user starts dragging the item.');
-    console.log(event);
+    // console.log(event);
     event.source._dragRef._initialTransform = `rotate(${this.deg}deg)`;
     // let id = event.source.element.nativeElement.getAttribute('id');
     // let index = this.blocks.findIndex(b => b.id.toString() === id );

@@ -1,19 +1,27 @@
-
 <header-bar></header-bar>
-<div class="wrapper mx-auto mt-11">
+<div class="wrapper mx-auto mt-11"> 
     <div class="four-boxes w-full mx-auto">
         <h3>Your typebot link</h3>
-        <div class="setting-btn">
-            <a href="#">https://typebot.io/</a>
-            <button class="rounded-none link-btn">my-typebot-b9n96pd </button>
-            <button class="rounded-none"> 
-                <svg viewBox="0 0 24 24" focusable="false" class="chakra-icon css-1k8v1e7"
-                stroke-width="2px" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>
-                </svg>
-                edit 
+        <div class="setting-btn"> 
+            <a href="#" #userinput>https://typebot.io/</a> 
+            <input #userinput 
+            (click)="changeColor()"
+            (focusout)="changeColor1()"
+            [ngClass]="{'bg-blue-600' : toggle==false, 'bg-white': toggle==true}"
+            class="rounded-sm text-sm" id="username" type="my-typebot" value="my-typebot-b9n96pd">
+            <!-- <button class="rounded-none link-btn">my-typebot-b9n96pd </button> -->
+            <button
+            (click)="changeColor()"
+            *ngIf="toggle==false" class="rounded-none"> 
+            <svg viewBox="0 0 24 24" focusable="false" class="chakra-icon css-1k8v1e7"
+            stroke-width="2px" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>
+            </svg>
+            edit 
             </button>
-            <button class="rounded-none">copy</button>
+            <button value="copy"
+            (click)="copyInputMessage(userinput,val)"
+            class="rounded-none" #val>copy</button>
         </div>
         <button class="rounded-none sign-up-btn">
             <svg viewBox="0 0 24 24" focusable="false" class="chakra-icon b-icon" stroke-width="2px" stroke-linecap="round" stroke-linejoin="round">

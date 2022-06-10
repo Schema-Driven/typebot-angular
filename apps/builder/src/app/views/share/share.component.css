@@ -111,13 +111,13 @@ opacity: 0.4;
 .setting-btn button {margin: 0 4px !important;padding: 6px 7px !important;text-align: center;font-size: 15px;border-radius: 6px !important;    border:none;}
 .setting-btn button:hover{     background: #f3f4f6;}
 
-.link-btn {font-size: 16px !important;font-weight: 700;/* padding: 5px 0 !important; */     background: #0042da !important; color:#fff;} 
+.link-btn {font-size: 16px !important;font-weight: 500;/* padding: 5px 0 !important; */     background: #0445da !important; color:#fff;} 
 
 .setting-btn button svg {margin-right: 0 !important;}
 .four-boxes h3 {
     font-size: 1.4rem;
     font-weight: 600;
-}
+} 
 .btn-h {
     margin-top: 0 !important;
 }

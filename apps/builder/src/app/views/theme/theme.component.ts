@@ -18,22 +18,13 @@ export class Theme implements OnInit {
   navigate(links: any[]) {
     this.router.navigate(links);
   }
-  generalUpStatus() {
-    this.generalUp = false;
+  generalStatusButton() {
+    this.generalUp = !this.generalUp;
   }
-  generalDownStatus() {
-    this.generalUp = true;
+  chatStatusButton() {
+    this.chatUp = !this.chatUp;
   }
-  chatUpStatus() {
-    this.chatUp = false;
-  }
-  chatDownStatus() {
-    this.chatUp = true;
-  }
-  customCssUpStatus() {
-    this.customCss = false;
-  }
-  customCssDownStatus() {
-    this.customCss = true;
+  customCssButton() {
+    this.customCss = !this.customCss;
   }
 }
