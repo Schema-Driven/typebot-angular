@@ -210,6 +210,10 @@ button.c-n:hover {
     color: #fff;
     
 }
+
+.modal-popup.wordpress h4 {
+    background: #e0edff;
+}
   
   @media only screen and (max-width: 800px) {
   .sidebar {
