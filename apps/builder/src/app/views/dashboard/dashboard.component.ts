@@ -64,4 +64,11 @@ export class Dashboard implements OnInit {
   menuOffOn() {
     this.menu = !this.menu;
   }
+  ClickedOut(event: any) {
+    if(event.target.className === "flex items-end sm:items-center justify-center min-h-full p-4 text-center sm:p-0") 
+    {
+      this.popup = false;
+      console.log("OuteSide Click");
+    } 
+ }
 }
