@@ -42,7 +42,7 @@ export class Share implements OnInit {
   ClickedOut(event: any) {
     if (
       event.target.className ===
-      'flex items-end sm:items-center justify-center min-h-full p-4 text-center sm:p-0'
+      'flex items-end sm:items-center justify-center mt-14 p-4 text-center sm:p-0'
     ) {
       this.popup = false;
       console.log('OuteSide Click');

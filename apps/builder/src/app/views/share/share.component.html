@@ -471,15 +471,15 @@
                 css-1bv7he3" aria-label="Show My typebot menu" data-testid="more-button" id="menu-button-:rd:"
                     aria-expanded="false" aria-haspopup="menu" aria-controls="menu-list-:rd:">
                 </button>
-            </div>
+            </div> 
         </div>
         <div *ngIf="popup">
-        <div class="relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+        <div class="relative z-10 " aria-labelledby="modal-title" role="dialog" aria-modal="true">
             <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
             <div (click)="ClickedOut($event)" class="fixed z-10 inset-0 overflow-y-auto">
                 <div class="flex items-end sm:items-center justify-center mt-14  p-4 text-center sm:p-0">
-                    <div (click)="ClickedOut($event)" class="flex bg-white modal-box ">
-                        <div class="modal-popup  px-5 py-3  ">
+                    <div (click)="ClickedOut($event)" class="flex bg-white modal-box ProPlan rounded-md "> 
+                        <div class="modal-popup  pb-5 pt-10 px-5  w-full ">  
                             <h4 class="flex justify-left font-normal align-middle px-3 py-3 mb-3 wp-title rounded-md">
                                 <svg viewBox="0 0 24 24" focusable="false" class="mr-2 mt-1 text-white">
                                     <path fill="currentColor"
@@ -501,9 +501,9 @@
                                     d="M406.451 267.742C388.635 267.742 374.193 282.184 374.193 300C374.193 317.815 388.635 332.258 406.451 332.258C424.267 332.258 438.709 317.815 438.709 300C438.709 282.184 424.267 267.742 406.451 267.742Z"
                                     fill="white"></path>
                             </svg>
-                            <h3 class="font-bold text-2xl text-left">Upgrade to <span style="color:#ff8b1a;">Personal Pro</span>
+                            <h3 class="font-bold text-2xl text-left mb-3">Upgrade to <span style="color:#ff8b1a;">Personal Pro</span>
                                 plan</h3>
-                            <p class=" text-lg text-left">For solo creators who want to do even more.</p>
+                            <p class=" text-md text-gray-500 text-left">For solo creators who want to do even more.</p>
                             <div class="flex justify-left align-bottom  my-3">
                                 <h5 class="font-bold text-4xl">$39 </h5>
                                 <span class="text-base pt-3 font-semibold"> / month</span>
@@ -569,7 +569,7 @@
 
 </div>
 
-
+ 
 
 
 
