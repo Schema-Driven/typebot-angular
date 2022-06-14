@@ -126,7 +126,7 @@ margin: 0 auto 19px;
 
 .p-col h4 {font-weight: 500;font-size: 17px;margin-bottom: 6px;}
 
-.p-col p {margin-bottom: 12px;}
+.p-col p {margin-bottom: 12px;min-height: 80px;}
 
 .p-col .r-btn {display: block;margin: 0 auto;}
 
