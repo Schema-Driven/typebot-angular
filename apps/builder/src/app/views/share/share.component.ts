@@ -12,7 +12,7 @@ export class Share implements OnInit {
   }
   toggle: boolean = false;
   ngOnInit(): void {}
-
+  popup = false;
   navigate(links: any[]) {
     this.router.navigate(links);
   }
@@ -36,4 +36,16 @@ export class Share implements OnInit {
   //   }.bind(this), 5000);
   //   console.log('test');
   // };
+  popUpSet() {
+    this.popup = true;
+  }
+  ClickedOut(event: any) {
+    if (
+      event.target.className ===
+      'flex items-end sm:items-center justify-center min-h-full p-4 text-center sm:p-0'
+    ) {
+      this.popup = false;
+      console.log('OuteSide Click');
+    }
+  }
 }

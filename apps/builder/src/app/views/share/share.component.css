@@ -223,6 +223,7 @@ button.c-n:hover {
     color: #0042da;
 }
 .wc{    border: 1px solid #e5e7eb;}
+.plan{width: 448px;}
   @media only screen and (max-width: 800px) {
   .sidebar {
   border-right: 1px solid #e5e7eb;
@@ -239,5 +240,10 @@ button.c-n:hover {
 }
 @media only screen and (max-width: 1000px) {
     .wrapper{width:100%;}
+
+}
+
+@media only screen and (max-width: 480px) {
+    .plan{width: 448px;}
 
 }
