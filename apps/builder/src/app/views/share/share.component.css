@@ -179,9 +179,9 @@ svg{stroke: #111;}
     margin-top: 15px;
 }
 .col {border: 1px solid #e5e7eb;text-align: center;min-height: 250px;padding: 15px 0;    border-radius: 6px}
-.col:first-child {
+/*.col:first-child {
     padding: 0;
-}
+}*/ 
 .col span {background: #0042da;width: 40px;display: inline-block;color: #fff;font-size: 14px;padding: 1px 0;position: relative;top: -2px;}
 
 .col button:last-child {border: 1px solid #e5e7eb;padding: 5px;border-radius: 5px;}
