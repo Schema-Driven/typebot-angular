@@ -10,7 +10,7 @@ export class HeaderBarComponent implements OnInit {
   constructor(private router: Router) {
     // ...
   }
-  flowAct: boolean = true;
+  flowAct: boolean = false;
   themeAct: boolean = false;
   settingAct: boolean = false;
   shareAct: boolean = false;
@@ -29,24 +29,29 @@ export class HeaderBarComponent implements OnInit {
     }
   }
   flowClick() {
+    console.log('Flow click');
     this.flowAct = true;
     this.themeAct = false;
     this.settingAct = false;
     this.shareAct = false;
   }
+
   themeClick() {
+    console.log('Theme click');
     this.flowAct = false;
     this.themeAct = true;
     this.settingAct = false;
     this.shareAct = false;
   }
   settingClick() {
+    console.log('Setting click');
     this.flowAct = false;
     this.themeAct = false;
     this.settingAct = true;
     this.shareAct = false;
   }
   shareClick() {
+    console.log('Share click');
     this.flowAct = false;
     this.themeAct = false;
     this.settingAct = false;
