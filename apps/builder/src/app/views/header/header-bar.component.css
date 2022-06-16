@@ -2,3 +2,24 @@
     border: 1px solid #0036b4;
     color: #0036b4;
 }
+
+.h-left svg {
+    width: 25px;
+     height: 25px;
+     display: inline-block;
+     line-height: 1em;
+     -webkit-flex-shrink: 0;
+     -ms-flex-negative: 0;
+     flex-shrink: 0;
+     color: currentColor;
+     vertical-align: middle;
+     fill: none;
+     stroke: currentColor;
+   }
+   .rg-btn a {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+.ceb-nav button {
+    margin-left: 13px !important;
+}
