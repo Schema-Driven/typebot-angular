@@ -11,7 +11,14 @@
 
 .menu ul {width: 500px;} 
 
-
+.setting-btn input#username {
+    padding: 4px 6px;
+    border-radius: 6px;
+    margin: 0 4px 0 8px;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+}
 .btn-center {
     float: left;
     display: flex;
