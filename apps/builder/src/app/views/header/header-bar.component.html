@@ -1,9 +1,9 @@
 <div class="h-12 w-full bg-blue-500">
     <div class="relative bg-white">
-      <div class="mx-auto px-4 sm:px-6">
+      <div class="mx-auto  sm:px-4 pr-6">
         <div class="flex justify-between items-center border-b-2 border-gray-100
           py-2 md:justify-start md:space-x-10">
-          <div class="flex justify-start lg:w-0 lg:flex-1">
+          <div class="flex justify-start lg:w-0 lg:flex-1 h-left">
 
             <a class="bg-gray-100 rounded-lg p-0.5 w-10 h-10 flex
               items-center justify-center">
@@ -14,11 +14,11 @@
               </svg>
             </a>
             <a class="text-base font-normal text-black
-                hover:text-gray-900 flex items-center ml-4 justify-center">
-              <img src="assets/svgs/setting.svg" class="w-7 h-7 mr-2 mt-1.5">
+                hover:text-gray-900 flex items-center ml-4 justify-center font-medium">
+              <img src="assets/svgs/setting.svg" class="w-7 h-7 mr-2 mt-1.5 ">
               My Typebot</a>
-            <div class="flex items-center ml-3">
-              <a href="#" class="bg-gray-100 rounded-md p-0.5 w-7 h-7 mr-2
+            <div class="flex items-center ml-3 rg-btn">
+              <a href="#" class="bg-gray-100 rounded-md p-0.5 w-7 h-7 mr-2 
                   flex items-center justify-center">
                 <img src="assets/svgs/reverse.svg" class="h-3.5 w-3.5">
 
@@ -44,7 +44,7 @@
               </svg>
             </button>
           </div>
-          <nav class="hidden md:flex space-x-6">
+          <nav class="hidden md:flex space-x-6 ceb-nav">
             <button
               [ngClass]="{'active': flowAct}"
               class= "text-base font-medium text-black py-1.5 px-4 rounded-md hover:bg-gray-100 hover:text-gray-900"
