@@ -23,10 +23,10 @@ export class Share implements OnInit {
     this.toggle = false;
   }
   copyInputMessage(inputElement: any, val: any) {
+    console.log(inputElement);
+
     inputElement.select();
-    //document.execCommand('copy');
     inputElement.setSelectionRange(0, 0);
-    //console.log(inputElement.value);
   }
   // changeValue(val:any) {
   //   console.log(val.value);
