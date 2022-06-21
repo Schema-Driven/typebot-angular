@@ -251,5 +251,54 @@ input#email {
         
     }
     .wrapper{width:100%;}
-
+}
+.modal-popup  .wp-title[_ngcontent-qta-c29] {
+    font-size: 17px;
+    background: #e0edff;
+}
+.modal-popup.px-5.py-3 {
+    width: 500px;
+}
+.modal-popup svg.mr-2.mt-1.text-white{
+    border-radius: 100%;
+    width: 24px;
+    height: 24px;
+}
+.modal-popup h3.font-bold.text-2xl.text-left{
+    font-size: 30px;
+}
+.modal-popup p.text-lg.text-left.my-4{
+    font-size: 20px;
+}
+.modal-popup .flex.bg-white.modal-box{
+    border-radius: 5px
+}
+.modal-popup ul{
+    font-size: 19px;
+}
+.modal-popup h5.font-bold.text-4xl{
+    font-size: 38px;
+}
+.modal-popup span.text-base.pt-3.font-bold{
+    font-size: 20px;
+}
+.wp-title{
+    background: #e0edff;
+}
+.sec-popup .modal-box {
+    width: auto;
+    text-align: left;
+    border-radius: 5px;
+}
+.sec-popup svg{
+    stroke:#fff
+}
+.sec-popup svg path{
+    color:#0042da;
+}
+.sec-popup h4 { 
+    font-size: 20px;
+}
+.sec-popup ul li svg{
+    stroke:#000
 }
