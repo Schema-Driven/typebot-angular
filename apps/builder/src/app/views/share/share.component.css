@@ -11,7 +11,16 @@
 
 .menu ul {width: 500px;} 
 
+.setting-btn input#username {
+    padding: 4px 0;
+    border-radius: 6px;
+    margin: 0 4px 0 8px;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    text-align: center;
 
+}
 .btn-center {
     float: left;
     display: flex;
@@ -179,9 +188,9 @@ svg{stroke: #111;}
     margin-top: 15px;
 }
 .col {border: 1px solid #e5e7eb;text-align: center;min-height: 250px;padding: 15px 0;    border-radius: 6px}
-.col:first-child {
+/*.col:first-child {
     padding: 0;
-}
+}*/ 
 .col span {background: #0042da;width: 40px;display: inline-block;color: #fff;font-size: 14px;padding: 1px 0;position: relative;top: -2px;}
 
 .col button:last-child {border: 1px solid #e5e7eb;padding: 5px;border-radius: 5px;}
@@ -230,8 +239,8 @@ button.c-n:hover {
   padding: 30px 0 30px 0;
   min-height: 100%;
   padding: 40px;
-}
-.aside {
+} 
+.aside { 
   padding: 40px;
 }
 .wrapper .flex {
@@ -246,4 +255,46 @@ button.c-n:hover {
 @media only screen and (max-width: 480px) {
     .plan{width: 448px;}
 
+}
+@media only screen and (max-width: 767px) {
+    .modal-popup.px-5.py-3 {
+        width: 100% !important;
+    }
+    .wrapper[_ngcontent-lju-c29]   .flex[_ngcontent-lju-c29] {
+        width: 100%;
+    }
+    h3.font-bold.text-2xl.text-left.mt-3 {
+        font-size: 21px !important;
+    }
+}
+.modal-popup  .wp-title[_ngcontent-qta-c29] {
+    font-size: 17px;
+    background: #e0edff;
+}
+.modal-popup.px-5.py-3 {
+    width: 500px;
+}
+.modal-popup svg.mr-2.mt-1.text-white{
+    border-radius: 100%;
+    width: 24px;
+    height: 24px;
+}
+.modal-popup h3.font-bold.text-2xl.text-left{
+    font-size: 30px;
+}
+.modal-popup p.text-lg.text-left.my-4{
+    font-size: 20px;
+}
+.modal-popup .flex.bg-white.modal-box{
+    border-radius: 5px
+}
+.modal-popup ul{
+    font-size: 19px;
+}
+.modal-popup h5.font-bold.text-4xl{
+    font-size: 38px;
+}
+.modal-popup span.text-base.pt-3.font-bold{
+    font-size: 20px;
+}
 } 

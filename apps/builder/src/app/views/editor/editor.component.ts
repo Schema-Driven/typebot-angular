@@ -294,7 +294,7 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
       },
     },
   ];
-
+  popup = false;
   ngOnInit(): void {}
 
   registerEndpoints() {

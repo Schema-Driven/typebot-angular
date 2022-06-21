@@ -37,9 +37,11 @@ export class Share implements OnInit {
   //   console.log('test');
   // };
   popUpSet() {
-    this.popup = true;
+    this.popup = !this.popup;
   }
   ClickedOut(event: any) {
+    console.log(event);
+
     if (
       event.target.className ===
       'flex items-end sm:items-center justify-center mt-14 p-4 text-center sm:p-0'
