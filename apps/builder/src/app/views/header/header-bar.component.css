@@ -23,3 +23,20 @@
 .ceb-nav button {
     margin-left: 13px !important;
 }
+
+@media (min-width: 1925px) and (max-width : 2600px) {
+.header .text-base {
+    font-size: 1.3rem;
+    line-height: 1rem;
+}
+.header .lg-s{
+    font-size: 1.2rem;
+}
+.header span.text-sm {
+    font-size: 1.1rem;
+}
+.header .r-btn a, .header .r-btn button {
+    padding: 18px 16px;
+}
+
+}
