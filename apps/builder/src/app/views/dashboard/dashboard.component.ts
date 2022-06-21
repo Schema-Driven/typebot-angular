@@ -16,8 +16,10 @@ export class Dashboard implements OnInit {
   pref: boolean = false;
   setting: boolean = false;
   member: boolean = false;
+  popup1: boolean = false;
   ngOnInit(): void {
     this.popup = false;
+    this.popup1 = false;
   }
 
   navigate(links: any[]) {
@@ -25,6 +27,20 @@ export class Dashboard implements OnInit {
   }
   popUpSet() {
     this.popup = true;
+  }
+  popUpSet1() {
+    this.popup1 = !this.popup1;
+  }
+  ClickedOut1(event: any) {
+    console.log(event);
+
+    if (
+      event.target.className ===
+      'flex items-end sm:items-center justify-center mt-14 p-4 text-center sm:p-0'
+    ) {
+      this.popup1 = false;
+      console.log('OuteSide Click');
+    }
   }
   myAccount() {
     this.account = true;
@@ -62,7 +78,10 @@ export class Dashboard implements OnInit {
     this.pref = false;
   }
   menuOffOn() {
+    console.log('menu click');
+
     this.menu = !this.menu;
+    this.popup1 = !this.popup1;
   }
   ClickedOut(event: any) {
     if (
