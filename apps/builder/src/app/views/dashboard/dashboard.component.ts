@@ -36,7 +36,7 @@ export class Dashboard implements OnInit {
 
     if (
       event.target.className ===
-      'flex items-end sm:items-center justify-center mt-14 p-4 text-center sm:p-0'
+      'sec-popup flex items-end sm:items-center justify-center mt-14 p-4 text-center sm:p-0'
     ) {
       this.popup1 = false;
       console.log('OuteSide Click');
@@ -81,9 +81,11 @@ export class Dashboard implements OnInit {
     console.log('menu click');
 
     this.menu = !this.menu;
-    this.popup1 = !this.popup1;
+    //this.popup1 = !this.popup1;
   }
   ClickedOut(event: any) {
+    console.log(event);
+
     if (
       event.target.className ===
       'flex items-end sm:items-center justify-center min-h-full p-4 text-center sm:p-0'
