@@ -142,6 +142,9 @@ button.c-n:hover {
     width: 44px;
 	
 	}
+    .c-n {
+        height: 300px;
+    }
 
 }
   
