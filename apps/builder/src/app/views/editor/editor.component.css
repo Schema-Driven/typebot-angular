@@ -120,7 +120,26 @@ border-gray-900{
 .custom-shadow::-webkit-scrollbar {
   width: 0px;
 }
+@media (min-width: 1925px) and (max-width : 2600px) {
+.button-design .w-full.px-2{
+  font-size: 17px;
+}
+.drap-bg-style {
+  font-size: 18px;
+}
 
-.cdk-drag-preview{
- 
+.title-div.pb-4 span {
+  font-size: 19px;
+}
+.sidebar {
+  width: 23.5rem;
+}
+
+
+
+
+
+
+
+
 }
