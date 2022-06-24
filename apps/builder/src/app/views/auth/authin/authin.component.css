@@ -74,3 +74,59 @@ svg {
 .email-field .e-sub:focus{border: 3px solid ;
     border-color: rgb(59 130 246 / 0.5); }
    
+    @media (min-width: 1925px) and (max-width : 2600px) {
+        .sign-up-btn span {
+
+            top: 3px;
+        }
+    .sign-up-btn {
+       
+        padding: 19px 0;
+        width: 401px;
+        font-size: 19px;
+        margin-top: 0.5rem;
+    }
+    .sign-in p {
+        margin: 6px 0;
+        font-size: 21px;
+    }
+    
+    
+    .sign-in h2 {
+        font-size: 40px;
+    }
+    
+    
+    .email-title::after {
+        right: 5px;
+    }
+    
+    .email-title::before {
+    
+        left: 4px;
+    }
+    
+    .email-title {
+       
+        font-size: 20px;
+    }
+    
+    .email-field .text-box {
+        width: 300px;
+        height: 52px;
+        border-radius: 3px;
+        padding: 0 10px;
+        margin-right: 12px;
+    }
+    
+    .email-field .e-sub {
+        background: #f3f4f6;
+        width: 89px;
+        padding: 6px 0;
+        height: 45px;
+        border-radius: 5px;
+        font-size: 17px;
+        font-weight: 600;
+    }
+
+}
