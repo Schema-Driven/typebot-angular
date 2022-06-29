@@ -100,6 +100,37 @@ svg {
       display: block;
     }
   }
+
+.popup-temp{width: 1150px;}
+  .sidebar h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    padding-left: 25px;
+}
+.aside ul li a {
+    border-radius: 4px;
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+    line-height: 1.2;
+    border: none;
+    text-align: left;
+    padding: 10px 10px;
+    font-weight: 600;
+    width: 100%;
+    display: block;
+    margin-top: 6px;
+    font-size: 19px;
+}
+
+.aside ul li a span {
+    margin-right: 11px; 
+}
+
+.aside  ul li a:hover {
+    background: #f3f4f6;
+}
+
+
     @media only screen and (max-width: 610px) {
         .wrapper{width:100%;}
     
