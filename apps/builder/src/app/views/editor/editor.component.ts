@@ -1,7 +1,6 @@
 import {
   Component,
   AfterViewInit,
-  HostListener,
   Renderer2,
   ElementRef,
   OnDestroy,
@@ -14,6 +13,7 @@ import {
   copyArrayItem,
 } from '@angular/cdk/drag-drop';
 import { jsPlumb } from 'jsplumb';
+import { Item } from './item';
 
 export interface Block {
   id: number | string;
@@ -42,20 +42,86 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
   //   $(document).unbind("mousemove.adjust");
   // }
 
-  constructor(private renderer: Renderer2, private elementRef: ElementRef) {}
+  constructor(private renderer: Renderer2, private elementRef: ElementRef) {
+    this.parentItem = new Item({ name: 'parent-item' });
+  }
+
+  //addArray Method st
+
+  public parentItem: Item;
+  public itm?: Item;
+  public get dragDisabled(): boolean {
+    return !this.parentItem;
+  }
+
+  public get dragDisabledItem(): boolean {
+    return !this.itm;
+  }
+
+  public get parentItemId(): string {
+    return this.dragDisabled ? '' : this.parentItem.uId;
+  }
+
+  public set connectedDropListsIds(ids: string[]) {
+    this.allDropListsIds = ids;
+  }
+  public allDropListsIds?: string[];
+
+  public onDragDrop(event: any) {
+    event.container.element.nativeElement.classList.remove('active');
+    if (this.canBeDropped(event)) {
+      const movingItem: Item = event.item.data;
+      event.container.data.children.push(movingItem);
+      event.previousContainer.data.children =
+        event.previousContainer.data.children.filter();
+    } else {
+      moveItemInArray(
+        event.container.data.children,
+        event.previousIndex,
+        event.currentIndex
+      );
+    }
+  }
+
+  private getIdsRecursive(item: Item): string[] {
+    let ids = [item.uId];
+    item.children.forEach((childItem) => {
+      ids = ids.concat(this.getIdsRecursive(childItem));
+    });
+    return ids;
+  }
+
+  private canBeDropped(event: CdkDragDrop<Item, Item>): boolean {
+    const movingItem: Item = event.item.data;
+
+    return (
+      event.previousContainer.id !== event.container.id &&
+      this.isNotSelfDrop(event) &&
+      !this.hasChild(movingItem, event.container.data)
+    );
+  }
+
+  private isNotSelfDrop(event: any): boolean {
+    return event.container.data.uId !== event.item.data.uId;
+  }
+
+  private hasChild(parentItem: Item, childItem: Item): boolean {
+    const hasChild = parentItem.children.some(
+      (item) => item.uId === childItem.uId
+    );
+    return hasChild
+      ? true
+      : parentItem.children.some((item) => this.hasChild(item, childItem));
+  }
+
+  //addArray End
 
   removeEventListener: any;
-
   DocumentMouseMoveEventListener: any;
 
   jsPlumbInstance: any;
   showConnectionToggle = false;
   buttonName = 'Connect';
-
-  // var endpointOptions = { isSource: true, isTarget: true };
-  // var d1 = jsPlumb.addEndpoint( $('#m1'), { anchor: "LeftMiddle" }, endpointOptions );
-  // var d2 = jsPlumb.addEndpoint( $('#m2'), { anchor: "LeftMiddle" }, endpointOptions );
-
   deg: number = 3;
 
   endpoints: any[] = [];
@@ -294,7 +360,10 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
       },
     },
   ];
+
+  addArray: boolean = false;
   popup = false;
+
   ngOnInit(): void {}
 
   registerEndpoints() {
@@ -460,6 +529,7 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
     // console.warn('the user drops the item inside a container.');
     // console.log(event);
   }
+
   // Emits when the user stops dragging an item in the container.
   cdkDragEnded(event: any) {
     // console.warn('the user stops dragging an item in the container.');
