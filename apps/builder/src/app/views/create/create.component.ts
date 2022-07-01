@@ -11,9 +11,25 @@ export class Create implements OnInit {
     // ...
   }
 
+  popupAct: boolean = false;
   ngOnInit(): void {}
 
   navigate(links: any[]) {
     this.router.navigate(links);
+  }
+
+  popUpSet() {
+    this.popupAct = !this.popupAct;
+    console.log('popUpset function');
+  }
+  ClickedOut(event: any) {
+    console.log(event);
+    if (
+      event.target.className ===
+      'sec-popup flex items-end sm:items-center justify-center mt-14 p-4 text-center sm:p-0'
+    ) {
+      this.popupAct = false;
+      console.log('OuteSide Click');
+    }
   }
 }

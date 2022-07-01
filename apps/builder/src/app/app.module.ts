@@ -9,6 +9,7 @@ import { AccSettingModule } from './views/acc-setting/acc-setting.module';
 import { MembersModule } from './views/members/members.module';
 import { BillingModule } from './views/billing/billing.module';
 import { HeaderBarModule } from './views/header/header-bar.module';
+import { CreateModule } from './views/create/create.module';
 @NgModule({
   declarations: [AppComponent, Dashboard],
   imports: [
@@ -19,6 +20,7 @@ import { HeaderBarModule } from './views/header/header-bar.module';
     AccSettingModule,
     MembersModule,
     BillingModule,
+    CreateModule,
   ],
   exports: [AppRoutingModule, CommonModule],
   providers: [],
