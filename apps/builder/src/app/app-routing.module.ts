@@ -23,6 +23,7 @@ const routes: Routes = [
   { path: 'dashboard', component: Dashboard },
   { path: 'create', component: Create },
   { path: 'setting', component: Setting },
+
   { path: 'preferences', component: Preferences },
   { path: 'members', component: Members },
   { path: 'acc-setting', component: Accsetting },
