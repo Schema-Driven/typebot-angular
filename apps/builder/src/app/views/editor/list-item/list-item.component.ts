@@ -1,11 +1,4 @@
-import {
-  CdkDragDrop,
-  moveItemInArray,
-  transferArrayItem,
-  copyArrayItem,
-  CdkDragEnter,
-  CdkDragExit,
-} from '@angular/cdk/drag-drop';
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Item } from '../item';
 
@@ -18,9 +11,9 @@ export class ListItemComponent {
   @Input() item?: Item;
   @Input() parentItem?: Item;
   @Input() public set connectedDropListsIds(ids: string[]) {
+    console.log('list item ', ids);
     this.allDropListsIds = ids;
   }
-
   public get connectedDropListsIds(): string[] {
     return this.allDropListsIds.filter((id) => id !== this.item?.uId);
   }
@@ -38,7 +31,7 @@ export class ListItemComponent {
     return this.dragDisabled ? '' : this.parentItem ? this.parentItem.uId : '';
   }
 
-  @Output() itemDrop: EventEmitter<CdkDragDrop<Item>>;
+  @Output() itemDrop: EventEmitter<any>;
 
   constructor() {
     this.allDropListsIds = [];
