@@ -62,8 +62,9 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
     return this.dragDisabled ? '' : this.parentItem.uId;
   }
 
-  public set connectedDropListsIds(ids: string[]) {
-    this.allDropListsIds = ids;
+  public get connectedDropListsIds(): string[] {
+    // We reverse ids here to respect items nesting hierarchy
+    return this.getIdsRecursive(this.parentItem).reverse();
   }
   public allDropListsIds?: string[];
 
@@ -364,7 +365,33 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
   addArray: boolean = false;
   popup = false;
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.parentItem.children.push(
+      new Item({
+        name: 'test1',
+        children: [
+          new Item({ name: 'subItem1' }),
+          new Item({ name: 'subItem2' }),
+          new Item({ name: 'subItem3' }),
+        ],
+      })
+    );
+    this.parentItem.children.push(
+      new Item({
+        name: 'test2',
+        children: [
+          new Item({ name: 'subItem4' }),
+          new Item({ name: 'subItem5' }),
+          new Item({
+            name: 'subItem6',
+            children: [new Item({ name: 'subItem8' })],
+          }),
+        ],
+      })
+    );
+    this.parentItem.children.push(new Item({ name: 'test3' }));
+    console.log(this.parentItem);
+  }
 
   registerEndpoints() {
     this.blocks.map((b) => {

@@ -16,7 +16,7 @@ li {
 .item {
   &-dropzone {
     border: 1px dashed grey;
-    min-height: 20px;
+    min-height: 800px;
 
     &.parent {
       border: none
@@ -27,6 +27,8 @@ li {
     &-handle {
       display: inline-flex;
       align-items: center;
+      margin-left: 15px;
+      margin-top: 10px;;
     }
 
     &-preview {
