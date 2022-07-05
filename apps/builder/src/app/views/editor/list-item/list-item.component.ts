@@ -15,6 +15,7 @@ export class ListItemComponent {
     this.allDropListsIds = ids;
   }
   public get connectedDropListsIds(): string[] {
+    console.log('item', this.item);
     return this.allDropListsIds.filter((id) => id !== this.item?.uId);
   }
 

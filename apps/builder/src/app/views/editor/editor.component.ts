@@ -62,8 +62,9 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
     return this.dragDisabled ? '' : this.parentItem.uId;
   }
 
-  public set connectedDropListsIds(ids: string[]) {
-    this.allDropListsIds = ids;
+  public get connectedDropListsIds(): string[] {
+    // We reverse ids here to respect items nesting hierarchy
+    return this.getIdsRecursive(this.parentItem).reverse();
   }
   public allDropListsIds?: string[];
 
