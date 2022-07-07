@@ -28,14 +28,7 @@ export class Share implements OnInit {
     inputElement.select();
     inputElement.setSelectionRange(0, 0);
   }
-  // changeValue(val:any) {
-  //   console.log(val.value);
-  //   val = 'copied';
-  //   setTimeout(function () {
-  //     val='copy';
-  //   }.bind(this), 5000);
-  //   console.log('test');
-  // };
+
   popUpSet() {
     this.popup = !this.popup;
   }

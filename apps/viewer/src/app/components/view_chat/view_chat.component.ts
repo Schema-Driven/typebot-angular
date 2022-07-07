@@ -7,49 +7,79 @@ import { Router } from '@angular/router';
 })
 export class ViewChat implements OnInit {
   constructor(private router: Router) {}
-
-  items = ['test 01', 'test 02', 'test 03'];
-  currentItem: any;
-  newarray = [];
-  private pointer: number = 0;
-  private interval: any;
-
-  loader: boolean = false;
   ngOnInit() {}
 
   navigate(links: any[]) {
     this.router.navigate(links);
   }
-
+  loader: boolean = false;
   sms = [
     {
       text: 'Hi',
+      icon: true,
     },
+  ];
+  myArray = [
     {
       text: 'How are you?',
+      icon: true,
+    },
+    {
+      text: 'I am fine!',
+      icon: true,
+    },
+    {
+      text: 'And how are you?',
+      icon: true,
+    },
+    {
+      text: 'I am also fine!',
+      icon: true,
     },
     {
       text: 'What are you doing?',
+      icon: true,
+    },
+    {
+      text: 'Nothing just working in office!',
+      icon: true,
+    },
+    {
+      text: 'Oh really?',
+      icon: true,
+    },
+    {
+      text: 'Yes dude!',
+      icon: true,
+    },
+    {
+      text: 'Ok Take Care!',
+      icon: true,
+    },
+    {
+      text: 'Ok Take Care! and By',
+      icon: true,
     },
   ];
+  i = 0;
 
-  test = setInterval(() => {
-    this.loader = false;
-    this.currentItem = this.sms[this.pointer];
-    this.pointer++;
-    if (this.pointer > 2) {
-      this.pointer = 0;
+  myInterval = setInterval(() => {
+    if (this.myArray.length == this.i) {
+      clearInterval(this.myInterval);
+    } else {
       this.loader = true;
-      this.stop();
+      this.sms[this.i].icon = false;
+      this.addNewMessage(this.myArray[this.i]);
+      this.i++;
     }
-  }, 2000);
+  }, 3000);
 
-  stop() {
-    clearInterval(this.test);
-    this.loader = false;
+  addNewMessage(data: any) {
+    setTimeout(() => {
+      this.loader = false;
+    }, 2000);
+    this.sms.push(data);
+    console.log(data);
+    console.log('Sms Detail', this.sms);
   }
-  // test=setInterval(() => {
-  //   this.loader=true;
-  //   console.log(this.loader);
-  //   }, 5000)
 }
