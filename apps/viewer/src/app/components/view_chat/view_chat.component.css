@@ -1,0 +1,81 @@
+.loading {
+    font-size: 20px;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 800;
+    text-align: left;
+}
+.typebot-chat-view {
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.typebot-chat-view h1{
+    background-color: #f7f8ff;
+    margin-bottom: 0.5rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    border-radius: 0.5rem;
+    width:auto;
+    display: table;
+    color:#303235
+}
+.typebot-chat-view .loading.loading04 {
+    background-color: #f7f8ff !important;
+    display: flex;
+    margin-bottom: 0;
+    padding-top: 6px;
+    padding-bottom: 20px;
+    width: 8%;
+    justify-content: center;
+    margin-left: 48px;
+    border-radius: 0.5rem;
+}
+.typebot-chat-view .loading.loading04 svg{
+    width: 14px;
+    height: 8px;
+    fill:#c3c3c3
+}
+
+.loading span {
+    display: inline-block;
+    margin: 0 -0.05em;
+}
+      
+      /* code #4 */
+       .loading04 span {
+        animation: loading04 0.8s infinite;
+    }
+
+    .loading04 span:nth-child(2) {
+        animation-delay: 0.2s;
+    }
+
+    .loading04 span:nth-child(3) {
+        animation-delay: 0.3s;
+    }
+
+    
+
+    @keyframes loading04 {
+
+        0%,
+        100% {
+            transform: translateY(0);
+        }
+
+        50% {
+            transform: translateY(15px);
+        }
+    }
+    svg {
+        width: 5px;
+        height: 5px;
+    }
+
+    @media only screen and (max-width: 1199px) {
+        .typebot-chat-view {
+            max-width: 100% !important;
+      }
+    }
