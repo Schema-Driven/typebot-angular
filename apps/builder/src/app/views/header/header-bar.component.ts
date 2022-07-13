@@ -14,6 +14,7 @@ export class HeaderBarComponent implements OnInit {
   themeAct: boolean = false;
   settingAct: boolean = false;
   shareAct: boolean = false;
+  showComp: boolean = false;
   ngOnInit(): void {}
 
   navigate(links: any[]) {
@@ -35,7 +36,6 @@ export class HeaderBarComponent implements OnInit {
     this.settingAct = false;
     this.shareAct = false;
   }
-
   themeClick() {
     console.log('Theme click');
     this.flowAct = false;
@@ -56,5 +56,9 @@ export class HeaderBarComponent implements OnInit {
     this.themeAct = false;
     this.settingAct = false;
     this.shareAct = true;
+  }
+  onPress() {
+    this.showComp = true;
+    //this.router.navigateByUrl('/previewchat');
   }
 }
