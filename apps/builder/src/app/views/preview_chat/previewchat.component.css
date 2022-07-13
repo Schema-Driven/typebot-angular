@@ -1,0 +1,197 @@
+.comp-render{
+    position: absolute;
+    z-index: 99999;
+    background-color: #fff;
+    top: 57px;
+    width: 500px;
+    height: 90vh;
+    padding: 30px;
+    right: 0px;
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 10%), 0 2px 4px -1px rgb(0 0 0 / 6%);
+    margin-top: 2px;    
+    overflow: hidden;
+}
+.css-onkibi {
+    width: 1em;
+    height: 1em;
+    display: inline-block;
+    line-height: 1em;
+    flex-shrink: 0;
+    color: currentcolor;
+    vertical-align: middle;
+}
+.css-dmsrvy {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    flex-direction: column;
+    width:100%;
+}
+.css-e03czl {
+    display: flex;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    width: 100%;
+}
+.css-1d0ox2v {
+    display: -webkit-inline-box;
+    display: -webkit-inline-flex;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -ms-appearance: none;
+    appearance: none;
+    -webkit-align-items: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    position: relative;
+    white-space: nowrap;
+    vertical-align: middle;
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+    line-height: 1.2;
+    background-color: #f3f4f6;
+    height: 2.5rem;
+    font-size: 1rem;
+    border-radius: 5px;
+    padding: 0px 20px;
+    font-weight: 600    ;
+}
+.css-1ebs9oc {
+    outline: transparent solid 2px;
+    outline-offset: 2px;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    border-radius: 0.375rem;
+    --close-button-size: 32px;
+    font-size: 12px;
+}
+.css-muvlrb {
+    display: flex;
+    border-width: 1px;
+    border-radius:0.5rem;
+    height: calc(89vh - 100px);
+    width: 100%;
+    pointer-events: auto;
+    margin-top: 1rem;
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+    padding-top: 2.5rem;    
+    min-height: 100%;
+}
+#lite-badge{
+    top: auto;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    justify-content: center;
+    display: table;
+    align-items: center;
+    position: absolute;
+    z-index: 99999;
+    bottom: 50px;
+}
+
+.loading {
+    font-size: 20px;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 800;
+    text-align: left;
+}
+.typebot-chat-view {
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.typebot-chat-view h1{
+    background-color: #f7f8ff;
+    margin-bottom: 0.5rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    border-radius: 0.5rem;
+    width:auto;
+    display: table;
+    color:#303235
+}
+.typebot-chat-view .loading.loading04 {
+    background-color: #f7f8ff !important;
+    display: flex;
+    margin-bottom: 0;
+    padding-top: 6px;
+    padding-bottom: 20px;
+    width: 8%;
+    justify-content: center;
+    margin-left: 48px;
+    border-radius: 0.5rem;
+}
+.typebot-chat-view .loading.loading04 svg{
+    width: 14px;
+    height: 8px;
+    fill:#c3c3c3
+}
+
+.loading span {
+    display: inline-block;
+    margin: 0 -0.05em;
+}
+      
+      /* code #4 */
+       .loading04 span {
+        animation: loading04 0.8s infinite;
+    }
+
+    .loading04 span:nth-child(2) {
+        animation-delay: 0.2s;
+    }
+
+    .loading04 span:nth-child(3) {
+        animation-delay: 0.3s;
+    }
+
+    
+
+    @keyframes loading04 {
+
+        0%,
+        100% {
+            transform: translateY(0);
+        }
+
+        50% {
+            transform: translateY(15px);
+        }
+    }
+    svg {
+        width: 5px;
+        height: 5px;
+    }
+
+    @media only screen and (max-width: 1199px) {
+        .typebot-chat-view {
+            max-width: 100% !important;
+      }
+    }
+    .loading.loading04{
+        width: 16% !important;
+    }
