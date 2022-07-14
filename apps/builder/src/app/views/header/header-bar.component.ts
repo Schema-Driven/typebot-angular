@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -10,6 +10,7 @@ export class HeaderBarComponent implements OnInit {
   constructor(private router: Router) {
     // ...
   }
+
   flowAct: boolean = false;
   themeAct: boolean = false;
   settingAct: boolean = false;
@@ -60,5 +61,9 @@ export class HeaderBarComponent implements OnInit {
   onPress() {
     this.showComp = true;
     //this.router.navigateByUrl('/previewchat');
+  }
+  receiveChildData(data: any) {
+    console.log(data);
+    this.showComp = data;
   }
 }

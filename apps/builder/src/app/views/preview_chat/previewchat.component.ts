@@ -1,4 +1,11 @@
-import { Component, OnInit, ElementRef, Input } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ElementRef,
+  Input,
+  Output,
+  EventEmitter,
+} from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -10,7 +17,9 @@ export class PreviewChat implements OnInit {
   constructor(private router: Router) {
     // ...
   }
+  @Output() outputFromChild: EventEmitter<boolean> = new EventEmitter();
   @Input() showComp: boolean = false;
+  outputText = false;
   toggle: boolean = false;
   ngOnInit(): void {
     console.log('preview Click');
@@ -91,5 +100,9 @@ export class PreviewChat implements OnInit {
   compoClose() {
     this.showComp = false;
     console.log(this.showComp);
+  }
+
+  sendDataToParent() {
+    this.outputFromChild.emit(this.outputText);
   }
 }
