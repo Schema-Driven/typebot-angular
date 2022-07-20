@@ -5,9 +5,12 @@ import {
   ElementRef,
   OnDestroy,
   OnInit,
+  ViewChild,
 } from '@angular/core';
 import {
   CdkDragDrop,
+  CdkDragEnter,
+  CdkDragMove,
   moveItemInArray,
   transferArrayItem,
   copyArrayItem,
@@ -33,21 +36,16 @@ export interface Endpoint {
   styleUrls: ['./editor.component.css'],
 })
 export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
-  // @HostListener('document:mousemove', ['$event'])
-  // onMouseMove(e : any) {
-  //   console.log(e);
-  //   var left = e.offsetX;
-  //   var top = e.offsetY;
-  //   $(endpoint.canvas).css({"left":left, "top":top});
-  //   $(document).unbind("mousemove.adjust");
-  // }
-
+  @ViewChild('dropListContainer') dropListContainer?: ElementRef;
+  dropListReceiverElement?: HTMLElement;
   constructor(private renderer: Renderer2, private elementRef: ElementRef) {
     this.parentItem = new Item({ name: 'parent-item' });
   }
-
-  //addArray Method st
-
+  dragDropInfo?: {
+    dragIndex: number;
+    dropIndex: number;
+  };
+  public items: Array<number> = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
   public parentItem: Item;
   public itm?: Item;
   public get dragDisabled(): boolean {
@@ -733,5 +731,72 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
 
   public ngOnDestroy() {
     //this.removeEventListener();
+  }
+
+  cdkDroptest1(event: CdkDragDrop<string[]>) {
+    if (event.previousContainer === event.container) {
+      moveItemInArray(
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex
+      );
+    } else {
+      transferArrayItem(
+        event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex
+      );
+    }
+  }
+
+  dragEnteredtest1(event: CdkDragEnter<number>) {
+    const drag = event.item;
+    const dropList = event.container;
+    const dragIndex = drag.data;
+    const dropIndex = dropList.data;
+
+    this.dragDropInfo = { dragIndex, dropIndex };
+
+    const phContainer = dropList.element.nativeElement;
+    const phElement = phContainer.querySelector('.cdk-drag-placeholder');
+
+    if (phElement) {
+      phContainer.removeChild(phElement);
+      phContainer.parentElement?.insertBefore(phElement, phContainer);
+
+      moveItemInArray(this.items, dragIndex, dropIndex);
+    }
+  }
+
+  dragMovedtest1(event: CdkDragMove<number>) {
+    if (!this.dropListContainer || !this.dragDropInfo) return;
+
+    const placeholderElement =
+      this.dropListContainer.nativeElement.querySelector(
+        '.cdk-drag-placeholder'
+      );
+
+    const receiverElement =
+      this.dragDropInfo.dragIndex > this.dragDropInfo.dropIndex
+        ? placeholderElement?.nextElementSibling
+        : placeholderElement?.previousElementSibling;
+
+    if (!receiverElement) {
+      return;
+    }
+
+    receiverElement.style.display = 'none';
+    this.dropListReceiverElement = receiverElement;
+  }
+
+  dragDroppedtest1(event: CdkDragDrop<number>) {
+    if (!this.dropListReceiverElement) {
+      return;
+    }
+
+    this.dropListReceiverElement.style.removeProperty('display');
+    this.dropListReceiverElement = undefined;
+    this.dragDropInfo = undefined;
   }
 }
