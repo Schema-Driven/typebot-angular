@@ -448,7 +448,7 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
   groupRenderedBlocks : GroupRendered[] = [
     {
       id : parseFloat((Math.random() * 10000000).toFixed(0)),
-      draggable : false,
+      draggable : true,
       uuid : this.uuid(),
       name : 'Start',
       position: {
@@ -520,13 +520,19 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
           instance: this.jsPlumbInstance.addEndpoint(
             gr.id.toString(),
             {
-              anchor : [ 
-                0, // x
-                0.27, // y
-                0, // dy
-                0, // dx
-                // 0, // __translate_x
-                // 0  // __translate_y
+              // anchor : [ 
+              //   0, // x
+              //   0.27, // y
+              //   0, // dy
+              //   0, // dx
+              // ],
+              anchor : [
+                0,
+                0,
+                0,
+                0,
+                0,
+                30
               ],
               maxConnections: 99999,
             },
@@ -541,9 +547,11 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
             {
               anchor : [
                 1,
-                0.73,
                 1,
-                0
+                1,
+                0,
+                0,
+                -45
               ],
               maxConnections: 99999,
             },
@@ -695,7 +703,7 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
           let nextIndex = ++lastIndex;
           this.groupRenderedBlocks.push({
             id : parseFloat((Math.random() * 10000000).toFixed(0)),
-            draggable : false,
+            draggable : true,
             uuid : this.uuid(),
             name : `Group # ${nextIndex}`,
             position: {
@@ -741,6 +749,16 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
           event.currentIndex,
           event.previousIndex
         );
+        if(event.previousContainer.data.length == 0){
+          let index = this.groupRenderedBlocks.findIndex(gr => gr.uuid === event.previousContainer.id);
+          if(index !== -1){
+            this.endpoints.filter(e => e.identifier == this.groupRenderedBlocks[index].id).forEach((endpoint)=>{
+              console.log({endpoint})
+              this.jsPlumbInstance.deleteEndpoint(endpoint.instance)
+            })
+            this.groupRenderedBlocks.splice(index, 1);
+          }
+        }
         break;
     }
   }
