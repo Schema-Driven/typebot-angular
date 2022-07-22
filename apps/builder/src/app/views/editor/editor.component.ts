@@ -713,7 +713,7 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
             blocks : [
               {
                 ...event.previousContainer.data[event.previousIndex],
-                id: Math.random(),
+                id: parseFloat((Math.random() * 10000000).toFixed(0)),
                 position: {
                   x: event.dropPoint.x,
                   y: event.dropPoint.y,
@@ -724,18 +724,6 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
               }
             ]
           });
-          
-          // this.blocks.push({
-          //   ...event.previousContainer.data[event.previousIndex],
-          //   id: Math.random(),
-          //   position: {
-          //     x: event.dropPoint.x,
-          //     y: event.dropPoint.y,
-          //   },
-          //   endpoint: {
-          //     canvas: null,
-          //   },
-          // });
     
           setTimeout(() => {
             this.registerEndpoints();
