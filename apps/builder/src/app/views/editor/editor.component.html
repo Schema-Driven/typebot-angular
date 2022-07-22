@@ -57,34 +57,43 @@
       id="ReceiverContainer"
       class="relative pl-64 w-full"
       cdkDropList
-      [cdkDropListData]="blocks"
+      [cdkDropListData]="groupRenderedBlocks"
       [cdkDropListConnectedTo]="structuredBlocksConnector()"
       (cdkDropListDropped)="drop($event,'Receiver')"
       [cdkDropListSortingDisabled]="true"
     >
       <div
         class="absolute"
-        *ngFor="let item of blocks"
-        [style]="('top:'+item.position.y+'px;left:'+item.position.x+'px')"
-        [id]="item.id"
+        *ngFor="let group of groupRenderedBlocks"
+        [style]="('top:'+group.position.y+'px;left:'+group.position.x+'px')"
+        [id]="group.id"
       >
-        <div class="wrap-div w-72 bg-white p-4">
-          <div class="title-div pb-4"> 
-            <img [src]="item.svg" class="toolbar-svg"/>
-            <span class="font-sm font-normal ">{{item.name}}</span>
-          </div>
+      <div class="wrap-div w-72 bg-white p-4">
+        <div class="title-div pb-4"> 
+          <span class="font-sm font-normal ">{{group.name}}</span>
+        </div>
           <div
-            [id]="item.id"
-            class="p-4 bg-slate-100 relative drap-bg-style"
+            cdkDropList
+            [id]="group.uuid"
+            [cdkDropListData]="group.blocks"
+            (cdkDropListDropped)="drop($event,'ReceiverOriginator')"
+            [cdkDropListConnectedTo]="allReceiverOriginatorBlocksConnector()"
+            [cdkDropListSortingDisabled]="true"
           >
-          <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
-            <div class="w-full px-2">
-            {{item.name}}
+            <div
+              [id]="block.id"
+              class="p-4 bg-slate-100 relative drap-bg-style"
+              *ngFor="let block of group.blocks"
+              cdkDrag
+            >
+              <div class="w-full px-2">
+              {{block.name}}
+              </div>
             </div>
           </div>
-        </div>
       </div>
     </div>
+  </div>
     <!--ReceiverContainer:<RenderedBlock> - ends -->
 
     <!-- ZOOM BUTTONS - [begins] -->

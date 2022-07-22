@@ -31,7 +31,7 @@ export interface Block {
 
 export interface StructuredBlock{
   id : number
-  uuid?: string
+  uuid: string
   name?: string
   position?: any
   svg?: string
@@ -41,6 +41,14 @@ export interface GroupStructuredBlock {
   uuid : string
   name : string
   blocks : StructuredBlock[]
+}
+
+export interface GroupRendered {
+  id: number
+  uuid: string
+  name: string
+  position : any
+  blocks : Block[]
 }
 
 export interface Endpoint {
@@ -436,6 +444,19 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
     },
   ];
 
+  groupRenderedBlocks : GroupRendered[] = [
+    {
+      id : parseFloat((Math.random() * 10000000).toFixed(0)),
+      uuid : this.uuid(),
+      name : 'Start',
+      position: {
+        x: 420,
+        y: 120,
+      },
+      blocks : []
+    },
+  ] 
+
   addArray: boolean = false;
   popup = false;
 
@@ -471,16 +492,31 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
     return this.structuredBlocks.map(sb => sb.uuid)
   }
 
+  receiverOriginatorBlocksConnector(group_id : number){
+    let renderedGrouped = this.groupRenderedBlocks.find(gr => gr.id === group_id);
+    if(renderedGrouped !== undefined){
+      return renderedGrouped.blocks.map(b => b.uuid);
+    }
+    return [];
+  }
+
+  allReceiverOriginatorBlocksConnector(){
+    let structredblocks_ids = this.structuredBlocksConnector();
+    let group_ids = this.groupRenderedBlocks.map(gr => gr.uuid);
+    group_ids.push(...structredblocks_ids);
+    return group_ids;
+  }
+
   registerEndpoints() {
-    this.blocks.map((b) => {
-      let index = this.endpoints.findIndex((e) => e.identifier == b.id);
+    this.groupRenderedBlocks.map((gr) => {
+      let index = this.endpoints.findIndex((e) => e.identifier == gr.id);
       if (index === -1) {
-        let block = document.getElementById(b.id.toString());
+        let block = document.getElementById(gr.id.toString());
         // console.log('Attaching endpoint to block', block);
         this.endpoints.push({
-          identifier: b.id.toString(),
+          identifier: gr.id.toString(),
           instance: this.jsPlumbInstance.addEndpoint(
-            b.id.toString(),
+            gr.id.toString(),
             {
               anchor : [ 
                 0, // x
@@ -497,9 +533,9 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
         });
 
         this.endpoints.push({
-          identifier: b.id.toString(),
+          identifier: gr.id.toString(),
           instance: this.jsPlumbInstance.addEndpoint(
-            b.id.toString(),
+            gr.id.toString(),
             {
               anchor : [
                 1,
@@ -513,7 +549,7 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
           )
         });
 
-        this.jsPlumbInstance.draggable(b.id.toString());
+        this.jsPlumbInstance.draggable(gr.id.toString());
       }
     });
 
@@ -636,22 +672,55 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
             event.currentIndex
           );
         }else{
-          this.blocks.push({
-            ...event.previousContainer.data[event.previousIndex],
-            id: Math.random(),
+          let lastIndex = this.groupRenderedBlocks.length;
+          let nextIndex = ++lastIndex;
+          this.groupRenderedBlocks.push({
+            id : parseFloat((Math.random() * 10000000).toFixed(0)),
+            uuid : this.uuid(),
+            name : `Group # ${nextIndex}`,
             position: {
               x: event.dropPoint.x,
               y: event.dropPoint.y,
             },
-            endpoint: {
-              canvas: null,
-            },
+            blocks : [
+              {
+                ...event.previousContainer.data[event.previousIndex],
+                id: Math.random(),
+                position: {
+                  x: event.dropPoint.x,
+                  y: event.dropPoint.y,
+                },
+                endpoint: {
+                  canvas: null,
+                },
+              }
+            ]
           });
+          
+          // this.blocks.push({
+          //   ...event.previousContainer.data[event.previousIndex],
+          //   id: Math.random(),
+          //   position: {
+          //     x: event.dropPoint.x,
+          //     y: event.dropPoint.y,
+          //   },
+          //   endpoint: {
+          //     canvas: null,
+          //   },
+          // });
     
           setTimeout(() => {
             this.registerEndpoints();
           }, 100);
         }
+        break;
+      case 'ReceiverOriginator':
+        transferArrayItem(
+          event.previousContainer.data,
+          event.container.data,
+          event.currentIndex,
+          event.previousIndex
+        );
         break;
     }
   }
