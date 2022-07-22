@@ -64,18 +64,6 @@ export class PreviewChat implements OnInit {
       text: 'Oh really?',
       icon: true,
     },
-    // {
-    //   text: 'Yes dude!',
-    //   icon: true,
-    // },
-    // {
-    //   text: 'Ok Take Care!',
-    //   icon: true,
-    // },
-    // {
-    //   text: 'Ok Take Care! and By',
-    //   icon: true,
-    // },
   ];
   i = 0;
   myInterval = setInterval(() => {

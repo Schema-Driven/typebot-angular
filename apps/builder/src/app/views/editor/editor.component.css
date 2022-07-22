@@ -134,12 +134,9 @@ border-gray-900{
 .sidebar {
   width: 23.5rem;
 }
+}
 
-
-
-
-
-
-
-
+.ReceiverContainerChild {
+  min-height: 40px;
+  background-color: #efefef;
 }
