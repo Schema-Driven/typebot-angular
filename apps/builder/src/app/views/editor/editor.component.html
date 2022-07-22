@@ -14,16 +14,17 @@
         </a>
       </div>
 
+      <!--OriginatorContainer:<StructuredBlock> - begins -->
       <!-- GroupStructuredBlockWrapper - begins -->
       <div cdkDropListGroup>
         <!-- GroupStructuredBlock[] - begins  -->
-        <!-- (cdkDropListDropped)="drop($event)" -->
         <div 
         cdkDropList
         *ngFor="let structuredBlock of structuredBlocks"
         [id]="structuredBlock.uuid"
         [cdkDropListData]="structuredBlock.blocks"
-        [cdkDropListConnectedTo]="['block-container']"
+        (cdkDropListDropped)="drop($event,'Originator')"
+        [cdkDropListConnectedTo]="['ReceiverContainer']"
         [cdkDropListSortingDisabled]="true">
         <div class="pb-5">
             <label class="font-base text-gray-600 font-medium pb-2 pl-1.5">{{ structuredBlock.name }}</label>
@@ -47,39 +48,45 @@
         <!-- GroupStructuredBlock[] - ends  -->
       </div>
       <!-- GroupStructuredBlockWrapper - ends -->
+      <!--OriginatorContainer:<StructuredBlock> - ends -->
       
     </div>
-
-    <div class="relative pl-64 w-full"
+    
+    <!--ReceiverContainer:<RenderedBlock> - begins -->
+    <div 
+      id="ReceiverContainer"
+      class="relative pl-64 w-full"
       cdkDropList
-      id="block-container"
       [cdkDropListData]="blocks"
       [cdkDropListConnectedTo]="structuredBlocksConnector()"
-      (cdkDropListDropped)="drop($event)"
+      (cdkDropListDropped)="drop($event,'Receiver')"
       [cdkDropListSortingDisabled]="true"
+    >
+      <div
+        class="absolute"
+        *ngFor="let item of blocks"
+        [style]="('top:'+item.position.y+'px;left:'+item.position.x+'px')"
+        [id]="item.id"
       >
-        <div 
-          class="absolute" 
-          *ngFor="let item of blocks" 
-          [style]="('top:'+item.position.y+'px;left:'+item.position.x+'px')"
-          [id]="item.id"
-        >
-          <div class="wrap-div w-72 bg-white p-4">
-            <div class="title-div pb-4"> 
-              <span class="font-sm font-normal ">{{item.name}}</span>
-            </div>
-            <div
-              [id]="item.id"
-              class="p-4 bg-slate-100 relative drap-bg-style"
-            >
-              <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
-                <div class="w-full px-2">
-                {{item.name}}
-                </div>
-              </div>
+        <div class="wrap-div w-72 bg-white p-4">
+          <div class="title-div pb-4"> 
+            <img [src]="item.svg" class="toolbar-svg"/>
+            <span class="font-sm font-normal ">{{item.name}}</span>
+          </div>
+          <div
+            [id]="item.id"
+            class="p-4 bg-slate-100 relative drap-bg-style"
+          >
+          <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
+            <div class="w-full px-2">
+            {{item.name}}
             </div>
           </div>
+        </div>
+      </div>
     </div>
+    <!--ReceiverContainer:<RenderedBlock> - ends -->
+
     <!-- ZOOM BUTTONS - [begins] -->
     <div class="absolute top-20 right-6">
       <div class="custom-shadow-icon">
@@ -104,20 +111,5 @@
     </div>
     <!-- ZOOM BUTTONS - [ends] -->
   </div>
-  <div *ngIf="addArray">
-    <list-item [item]="parentItem"
-      [connectedDropListsIds]="connectedDropListsIds"
-      (itemDrop)="onDragDrop($event)">
-    </list-item>
-
-    <div
-      cdkDropList
-      #doneList="cdkDropList"
-      class="example-list"
-      (cdkDropListDropped)="drop($event)">
-      <div class="example-box" cdkDrag>
-        
-      </div>
-    </div>
-  </div>
+  
 </div>

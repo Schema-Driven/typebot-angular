@@ -22,6 +22,7 @@ export interface Block {
   id: number
   uuid: string
   name?: string
+  svg?: string
   position?: any
   endpoint?: any
   rendered : boolean
@@ -29,17 +30,17 @@ export interface Block {
 }
 
 export interface StructuredBlock{
-  id : number,
+  id : number
   uuid?: string
-  name?: string,
-  position?: any,
-  svg?: string,
+  name?: string
+  position?: any
+  svg?: string
 }
 
 export interface GroupStructuredBlock {
   uuid : string
-  name : string 
-  blocks : StructuredBlock[],
+  name : string
+  blocks : StructuredBlock[]
 }
 
 export interface Endpoint {
@@ -421,252 +422,6 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   ]
 
-  bubbles: StructuredBlock[] = [
-    {
-      id: parseFloat((Math.random() * 10000000).toFixed(0)),
-      uuid : this.uuid(),
-      name: 'Text',
-      position: {
-        x: 320,
-        y: 120,
-      },
-      svg: `assets/svgs/text.svg`,
-    },
-    {
-      id: parseFloat((Math.random() * 10000000).toFixed(0)),
-      uuid : this.uuid(),
-      name: 'Image',
-      position: {
-        x: 320,
-        y: 120,
-      },
-      svg: `assets/svgs/image.svg`,
-    },
-    {
-      id: parseFloat((Math.random() * 10000000).toFixed(0)),
-      uuid : this.uuid(),
-      name: 'Video',
-      position: {
-        x: 320,
-        y: 120,
-      },
-      svg: `assets/svgs/video.svg`,
-    },
-    {
-      id: parseFloat((Math.random() * 10000000).toFixed(0)),
-      uuid : this.uuid(),
-      name: 'Embed',
-      position: {
-        x: 320,
-        y: 120,
-      },
-      svg: `assets/svgs/embed.svg`,
-    },
-  ];
-
-  inputs: StructuredBlock[] = [
-    {
-      id: parseFloat((Math.random() * 10000000).toFixed(0)),
-      uuid : this.uuid(),
-      name: 'Text',
-      position: {
-        x: 320,
-        y: 120,
-      },
-      svg: `assets/svgs/input-text.svg`,
-    },
-    {
-      id: parseFloat((Math.random() * 10000000).toFixed(0)),
-      uuid : this.uuid(),
-      name: 'Number',
-      position: {
-        x: 320,
-        y: 120,
-      },
-      svg: `assets/svgs/input-number.svg`,
-    },
-    {
-      id: parseFloat((Math.random() * 10000000).toFixed(0)),
-      uuid : this.uuid(),
-      name: 'Email',
-      position: {
-        x: 320,
-        y: 120,
-      },
-      svg: `assets/svgs/input-email.svg`,
-    },
-    {
-      id: parseFloat((Math.random() * 10000000).toFixed(0)),
-      uuid : this.uuid(),
-      name: 'Website',
-      position: {
-        x: 320,
-        y: 120,
-      },
-      svg: `assets/svgs/input-website.svg`,
-    },
-    {
-      id: parseFloat((Math.random() * 10000000).toFixed(0)),
-      uuid : this.uuid(),
-      name: 'Date',
-      position: {
-        x: 320,
-        y: 120,
-      },
-      svg: `assets/svgs/input-date.svg`,
-    },
-    {
-      id: parseFloat((Math.random() * 10000000).toFixed(0)),
-      uuid : this.uuid(),
-      name: 'Phone',
-      position: {
-        x: 320,
-        y: 120,
-      },
-      svg: `assets/svgs/input-phone.svg`,
-    },
-    {
-      id: parseFloat((Math.random() * 10000000).toFixed(0)),
-      uuid : this.uuid(),
-      name: 'Button',
-      position: {
-        x: 320,
-        y: 120,
-      },
-      svg: `assets/svgs/input-button.svg`,
-    },
-    {
-      id: parseFloat((Math.random() * 10000000).toFixed(0)),
-      uuid : this.uuid(),
-      name: 'Payment',
-      position: {
-        x: 320,
-        y: 120,
-      },
-      svg: `assets/svgs/input-payment.svg`,
-    },
-  ];
-
-  toolbar: StructuredBlock[] = [
-    {
-      id: parseFloat((Math.random() * 10000000).toFixed(0)),
-      uuid : this.uuid(),
-      name: 'Text',
-      position: {
-        x: 320,
-        y: 120,
-      },
-      svg: `assets/svgs/text.svg`,
-    },
-    {
-      id: parseFloat((Math.random() * 10000000).toFixed(0)),
-      uuid : this.uuid(),
-      name: 'Image',
-      position: {
-        x: 320,
-        y: 120,
-      },
-      svg: `assets/svgs/image.svg`,
-    },
-    {
-      id: parseFloat((Math.random() * 10000000).toFixed(0)),
-      uuid : this.uuid(),
-      name: 'Video',
-      position: {
-        x: 320,
-        y: 120,
-      },
-      svg: `assets/svgs/video.svg`,
-    },
-    {
-      id: parseFloat((Math.random() * 10000000).toFixed(0)),
-      uuid : this.uuid(),
-      name: 'Embed',
-      position: {
-        x: 320,
-        y: 120,
-      },
-      svg: `assets/svgs/embed.svg`,
-    },
-  ];
-
-  logics: StructuredBlock[] = [
-    {
-      id: parseFloat((Math.random() * 10000000).toFixed(0)),
-      uuid : this.uuid(),
-      name: 'Set variable',
-      position: {
-        x: 320,
-        y: 120,
-      },
-      svg: `assets/svgs/logic-variable.svg`,
-    },
-    {
-      id: parseFloat((Math.random() * 10000000).toFixed(0)),
-      uuid : this.uuid(),
-      name: 'Condition',
-      position: {
-        x: 320,
-        y: 120,
-      },
-      svg: `assets/svgs/logic-condition.svg`,
-    },
-    {
-      id: parseFloat((Math.random() * 10000000).toFixed(0)),
-      uuid : this.uuid(),
-      name: 'Redirect',
-      position: {
-        x: 320,
-        y: 120,
-      },
-      svg: `assets/svgs/logic-redirect.svg`,
-    },
-    {
-      id: parseFloat((Math.random() * 10000000).toFixed(0)),
-      uuid : this.uuid(),
-      name: 'Code',
-      position: {
-        x: 320,
-        y: 120,
-      },
-      svg: `assets/svgs/logic-code.svg`,
-    },
-    {
-      id: parseFloat((Math.random() * 10000000).toFixed(0)),
-      uuid : this.uuid(),
-      name: 'Typebot',
-      position: {
-        x: 320,
-        y: 120,
-      },
-      svg: `assets/svgs/logic-typebot.svg`,
-    },
-  ];
-
-  integerations: StructuredBlock[] = [
-    {
-      id: parseFloat((Math.random() * 10000000).toFixed(0)),
-      uuid : this.uuid(),
-      name: 'Webhook',
-      position: {
-        x: 320,
-        y: 120,
-      },
-      svg: `assets/svgs/integeration-webhook.svg`,
-    },
-    {
-      id: parseFloat((Math.random() * 10000000).toFixed(0)),
-      uuid : this.uuid(),
-      name: 'Email',
-      position: {
-        x: 320,
-        y: 120,
-      },
-      svg: `assets/svgs/integeration-email.svg`,
-    },
-  ];
-
-
   blocks : any[] = [
     {
       id: 0,
@@ -680,8 +435,6 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
       },
     },
   ];
-
-  
 
   addArray: boolean = false;
   popup = false;
@@ -729,15 +482,37 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
           instance: this.jsPlumbInstance.addEndpoint(
             b.id.toString(),
             {
-              anchor: [
-                'Continuous',
-                { faces: ['top', 'left', 'right', 'bottom'] },
+              anchor : [ 
+                0, // x
+                0.27, // y
+                0, // dy
+                0, // dx
+                // 0, // __translate_x
+                // 0  // __translate_y
               ],
               maxConnections: 99999,
             },
-            { isSource: true, isTarget: true }
-          ),
+            { isTarget: true }
+          )
         });
+
+        this.endpoints.push({
+          identifier: b.id.toString(),
+          instance: this.jsPlumbInstance.addEndpoint(
+            b.id.toString(),
+            {
+              anchor : [
+                1,
+                0.73,
+                1,
+                0
+              ],
+              maxConnections: 99999,
+            },
+            { isSource: true }
+          )
+        });
+
         this.jsPlumbInstance.draggable(b.id.toString());
       }
     });
@@ -847,30 +622,37 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
     );
   }
 
-  drop(event: CdkDragDrop<any[]>) {
-    console.log({event});
-    if(event.previousContainer === event.container){
-      moveItemInArray(
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex
-      );
-    }else{
-      this.blocks.push({
-        ...event.previousContainer.data[event.previousIndex],
-        id: Math.random(),
-        position: {
-          x: event.dropPoint.x,
-          y: event.dropPoint.y,
-        },
-        endpoint: {
-          canvas: null,
-        },
-      });
-
-      setTimeout(() => {
-        this.registerEndpoints();
-      }, 100);
+  drop(event: CdkDragDrop<any[]>,container : string) {
+    console.log({event,container});
+    switch (container) {
+      case 'Originator':
+        // do-nothing
+        break;
+      case 'Receiver':
+        if(event.previousContainer === event.container){
+          moveItemInArray(
+            event.container.data,
+            event.previousIndex,
+            event.currentIndex
+          );
+        }else{
+          this.blocks.push({
+            ...event.previousContainer.data[event.previousIndex],
+            id: Math.random(),
+            position: {
+              x: event.dropPoint.x,
+              y: event.dropPoint.y,
+            },
+            endpoint: {
+              canvas: null,
+            },
+          });
+    
+          setTimeout(() => {
+            this.registerEndpoints();
+          }, 100);
+        }
+        break;
     }
   }
 
