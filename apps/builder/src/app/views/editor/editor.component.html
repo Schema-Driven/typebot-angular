@@ -14,111 +14,47 @@
         </a>
       </div>
 
-      <div cdkDropList
-        #todoList="cdkDropList"
-        [cdkDropListData]="toolbar"
-        [cdkDropListConnectedTo]="[doneList]"
-        (cdkDropListDropped)="drop($event)"
+      <!-- GroupStructuredBlockWrapper - begins -->
+      <div cdkDropListGroup>
+        <!-- GroupStructuredBlock[] - begins  -->
+        <!-- (cdkDropListDropped)="drop($event)" -->
+        <div 
+        cdkDropList
+        *ngFor="let structuredBlock of structuredBlocks"
+        [id]="structuredBlock.uuid"
+        [cdkDropListData]="structuredBlock.blocks"
+        [cdkDropListConnectedTo]="['block-container']"
         [cdkDropListSortingDisabled]="true">
-          <div class="pb-5">
-            <label class="font-base text-gray-600 font-medium pb-2 pl-1.5">Bubbles</label>
+        <div class="pb-5">
+            <label class="font-base text-gray-600 font-medium pb-2 pl-1.5">{{ structuredBlock.name }}</label>
             <div class=" flex flex-wrap">
-              <div class="w-2/4 px-1.5 py-1.5 button-design" *ngFor="let item of bubbles">
+              <!-- StructuredBlock[] -begins -->
+              <div class="w-2/4 px-1.5 py-1.5 button-design" *ngFor="let block of structuredBlock.blocks">
                 <div class="bg-slate-100   hover-shadow w-42 h-10 rounded-lg">
-                  <div class=" bg-white  border border-slate-300 hover-shadow w-42 py-2 px-3 h-10 rounded-lg" cdkDrag (cdkDragStarted)="cdkDragStarted($event)" [cdkDragFreeDragPosition]="{x:item.position.x,y:item.position.y}" [id]="item.id">
+                  <div class=" bg-white  border border-slate-300 hover-shadow w-42 py-2 px-3 h-10 rounded-lg" cdkDrag (cdkDragStarted)="cdkDragStarted($event)" [cdkDragFreeDragPosition]="{x:block.position.x,y:block.position.y}" [id]="block.id">
                     <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
                     <div class="w-full text-sm px-2">
-                      <img [src]="item.svg" class="toolbar-svg"/>
-                      {{item.name}} 
+                      <img [src]="block.svg" class="toolbar-svg"/>
+                      {{block.name}} 
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-      </div>
-    
-      <div cdkDropList
-      #todoList="cdkDropList"
-      [cdkDropListData]="toolbar"
-      [cdkDropListConnectedTo]="[doneList]"
-      (cdkDropListDropped)="drop($event)"
-      [cdkDropListSortingDisabled]="true">
-        <div class="pb-5">
-          <label class="font-base text-gray-600 font-medium pb-2 pl-1.5">Inputs</label>
-          <div class=" flex flex-wrap">
-            <div class="w-2/4 px-1.5 py-1.5 button-design" *ngFor="let item of inputs">
-              <div class="bg-slate-100 hover-shadow w-42 h-10 rounded-lg">
-                <div class=" bg-white  border border-slate-300 hover-shadow w-42 py-2 px-3 h-10 rounded-lg" cdkDrag (cdkDragStarted)="cdkDragStarted($event)" [cdkDragFreeDragPosition]="{x:item.position.x,y:item.position.y}" [id]="item.id">
-                  <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
-                  <div class="w-full text-sm px-2">
-                    <img [src]="item.svg" class="toolbar-svg"/>
-                    {{item.name}} 
-                  </div>
-                </div>
-              </div>
+              <!-- StructuredBlock[] -ends -->
             </div>
           </div>
         </div>
+        <!-- GroupStructuredBlock[] - ends  -->
       </div>
-
-      <div cdkDropList
-        #todoList="cdkDropList"
-        [cdkDropListData]="toolbar"
-        [cdkDropListConnectedTo]="[doneList]"
-        (cdkDropListDropped)="drop($event)"
-        [cdkDropListSortingDisabled]="true">
-          <div class="pb-5">
-            <label class="font-base text-gray-600 font-medium pb-2 pl-1.5">Logic</label>
-            <div class=" flex flex-wrap">
-              <div class="w-2/4 px-1.5 py-1.5 button-design" *ngFor="let item of logics">
-                <div class="bg-slate-100 hover-shadow w-42 h-10 rounded-lg">
-                  <div class=" bg-white  border border-slate-300 hover-shadow w-42 py-2 px-2 h-10 rounded-lg" cdkDrag (cdkDragStarted)="cdkDragStarted($event)" [cdkDragFreeDragPosition]="{x:item.position.x,y:item.position.y}" [id]="item.id">
-                    <div class="example-custom-placeholder" *cdkDragPlaceholder>
-                    </div>
-                    <div class="w-full text-sm px-2">
-                    <img [src]="item.svg" class="toolbar-svg"/>
-                    {{item.name}} 
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div cdkDropList
-        #todoList="cdkDropList"
-        [cdkDropListData]="toolbar"
-        [cdkDropListConnectedTo]="[doneList]"
-        (cdkDropListDropped)="drop($event)"
-        [cdkDropListSortingDisabled]="true">
-          <div class="pb-5">
-            <label class="font-base text-gray-600 font-medium pb-2 pl-1.5">Integerations</label>
-            <div class=" flex flex-wrap">
-              <div class="w-2/4 px-1.5 py-1.5 button-design" *ngFor="let item of integerations">
-                <div class="bg-slate-100 hover-shadow w-42 h-10 rounded-lg">
-                  <div class=" bg-white  border border-slate-300 hover-shadow w-42 py-2 px-3 h-10 rounded-lg" cdkDrag (cdkDragStarted)="cdkDragStarted($event)" [cdkDragFreeDragPosition]="{x:item.position.x,y:item.position.y}" [id]="item.id">
-                    <div class="example-custom-placeholder" *cdkDragPlaceholder>
-                    </div>
-                    <div class="w-full text-sm px-2">
-                      <img [src]="item.svg" class="toolbar-svg"/>
-                      {{item.name}} 
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-      </div>
+      <!-- GroupStructuredBlockWrapper - ends -->
+      
     </div>
 
     <div class="relative pl-64 w-full"
       cdkDropList
       id="block-container"
-      #doneList="cdkDropList"
       [cdkDropListData]="blocks"
-      [cdkDropListConnectedTo]="[todoList]"
+      [cdkDropListConnectedTo]="structuredBlocksConnector()"
       (cdkDropListDropped)="drop($event)"
       [cdkDropListSortingDisabled]="true"
       >
@@ -144,7 +80,7 @@
             </div>
           </div>
     </div>
-
+    <!-- ZOOM BUTTONS - [begins] -->
     <div class="absolute top-20 right-6">
       <div class="custom-shadow-icon">
         <a href="#" class="bg-white rounded-md p-0.5 w-8 h-8 flex items-center justify-center">
@@ -166,9 +102,8 @@
         </a>
       </div>
     </div>
-
+    <!-- ZOOM BUTTONS - [ends] -->
   </div>
-
   <div *ngIf="addArray">
     <list-item [item]="parentItem"
       [connectedDropListsIds]="connectedDropListsIds"
@@ -176,54 +111,13 @@
     </list-item>
 
     <div
-    cdkDropList
-    #doneList="cdkDropList"
-    class="example-list"
-    (cdkDropListDropped)="drop($event)">
-    <div class="example-box" cdkDrag>
-      
+      cdkDropList
+      #doneList="cdkDropList"
+      class="example-list"
+      (cdkDropListDropped)="drop($event)">
+      <div class="example-box" cdkDrag>
+        
+      </div>
     </div>
   </div>
-  </div>
-  
-  <!-- <div *ngIf="addArray"> 
-    <div cdkDropList
-    class="item-dropzone parent"
-    [id]="parentItemId"
-    [cdkDropListData]="parentItem"
-    (cdkDropListDropped)="onDragDrop($event)">
-    <div cdkDrag
-        [id]="itm?.uId"
-        [cdkDragData]="itm"
-        [cdkDragDisabled]="dragDisabled">
-        <div title="Drag this item with children"
-            class="item-drag-handle"
-            cdkDragHandle>
-            {{itm?.name}} 
-            <i *ngIf="!dragDisabled"
-                class="material-icons">
-                drag_indicator
-            </i>
-        </div>
-        <div class="item-drag-preview"
-            *cdkDragPreview>
-            {{itm?.name}} with {{itm?.children?.length}} child item(s)
-        </div>
-    </div>
-    <ul cdkDropList
-        class="item-dropzone"
-        [id]="itm ? itm.uId : ''"
-        [cdkDropListConnectedTo]="connectedDropListsIds"
-        [cdkDropListData]="itm"
-        (cdkDropListDropped)="onDragDrop($event)">
-        <li *ngFor="let subItem of itm?.children">
-            <list-item [item]="subItem"
-                [parentItem]="item"
-                (itemDrop)="onDragDrop($event)">
-            </list-item>
-        </li>
-      </ul>
-    </div> 
-  </div>-->
-  
 </div>

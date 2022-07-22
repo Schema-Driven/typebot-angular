@@ -19,10 +19,27 @@ import { jsPlumb } from 'jsplumb';
 import { Item } from './item';
 
 export interface Block {
-  id: number | string;
-  name?: string;
-  position?: any;
-  endpoint?: any;
+  id: number
+  uuid: string
+  name?: string
+  position?: any
+  endpoint?: any
+  rendered : boolean
+  blocks?: Block[]
+}
+
+export interface StructuredBlock{
+  id : number,
+  uuid?: string
+  name?: string,
+  position?: any,
+  svg?: string,
+}
+
+export interface GroupStructuredBlock {
+  uuid : string
+  name : string 
+  blocks : StructuredBlock[],
 }
 
 export interface Endpoint {
@@ -50,6 +67,22 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
   public itm?: Item;
   public get dragDisabled(): boolean {
     return !this.parentItem;
+  }
+
+  public uuid() {
+    var d = new Date().getTime();//Timestamp
+    var d2 = ((typeof performance !== 'undefined') && performance.now && (performance.now()*1000)) || 0;//Time in microseconds since page-load or 0 if unsupported
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        var r = Math.random() * 16;//random number between 0 and 16
+        if(d > 0){//Use timestamp until depleted
+            r = (d + r)%16 | 0;
+            d = Math.floor(d/16);
+        } else {//Use microseconds since page-load if supported
+            r = (d2 + r)%16 | 0;
+            d2 = Math.floor(d2/16);
+        }
+        return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+    });
   }
 
   public get dragDisabledItem(): boolean {
@@ -124,9 +157,274 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
   deg: number = 3;
 
   endpoints: any[] = [];
-  bubbles: any[] = [
+
+  structuredBlocks : GroupStructuredBlock[] = [
     {
-      id: (Math.random() * 10000000).toFixed(0).toString(),
+      uuid : this.uuid(),
+      name : 'bubbles',
+      blocks : [
+        {
+          id: parseFloat((Math.random() * 10000000).toFixed(0)),
+          uuid : this.uuid(),
+          name: 'Text',
+          position: {
+            x: 320,
+            y: 120,
+          },
+          svg: `assets/svgs/text.svg`,
+        },
+        {
+          id: parseFloat((Math.random() * 10000000).toFixed(0)),
+          uuid : this.uuid(),
+          name: 'Image',
+          position: {
+            x: 320,
+            y: 120,
+          },
+          svg: `assets/svgs/image.svg`,
+        },
+        {
+          id: parseFloat((Math.random() * 10000000).toFixed(0)),
+          uuid : this.uuid(),
+          name: 'Video',
+          position: {
+            x: 320,
+            y: 120,
+          },
+          svg: `assets/svgs/video.svg`,
+        },
+        {
+          id: parseFloat((Math.random() * 10000000).toFixed(0)),
+          uuid : this.uuid(),
+          name: 'Embed',
+          position: {
+            x: 320,
+            y: 120,
+          },
+          svg: `assets/svgs/embed.svg`,
+        },
+      ]
+    },
+    {
+      uuid : this.uuid(),
+      name : "inputs",
+      blocks : [
+        {
+          id: parseFloat((Math.random() * 10000000).toFixed(0)),
+          uuid : this.uuid(),
+          name: 'Text',
+          position: {
+            x: 320,
+            y: 120,
+          },
+          svg: `assets/svgs/input-text.svg`,
+        },
+        {
+          id: parseFloat((Math.random() * 10000000).toFixed(0)),
+          uuid : this.uuid(),
+          name: 'Number',
+          position: {
+            x: 320,
+            y: 120,
+          },
+          svg: `assets/svgs/input-number.svg`,
+        },
+        {
+          id: parseFloat((Math.random() * 10000000).toFixed(0)),
+          uuid : this.uuid(),
+          name: 'Email',
+          position: {
+            x: 320,
+            y: 120,
+          },
+          svg: `assets/svgs/input-email.svg`,
+        },
+        {
+          id: parseFloat((Math.random() * 10000000).toFixed(0)),
+          uuid : this.uuid(),
+          name: 'Website',
+          position: {
+            x: 320,
+            y: 120,
+          },
+          svg: `assets/svgs/input-website.svg`,
+        },
+        {
+          id: parseFloat((Math.random() * 10000000).toFixed(0)),
+          uuid : this.uuid(),
+          name: 'Date',
+          position: {
+            x: 320,
+            y: 120,
+          },
+          svg: `assets/svgs/input-date.svg`,
+        },
+        {
+          id: parseFloat((Math.random() * 10000000).toFixed(0)),
+          uuid : this.uuid(),
+          name: 'Phone',
+          position: {
+            x: 320,
+            y: 120,
+          },
+          svg: `assets/svgs/input-phone.svg`,
+        },
+        {
+          id: parseFloat((Math.random() * 10000000).toFixed(0)),
+          uuid : this.uuid(),
+          name: 'Button',
+          position: {
+            x: 320,
+            y: 120,
+          },
+          svg: `assets/svgs/input-button.svg`,
+        },
+        {
+          id: parseFloat((Math.random() * 10000000).toFixed(0)),
+          uuid : this.uuid(),
+          name: 'Payment',
+          position: {
+            x: 320,
+            y: 120,
+          },
+          svg: `assets/svgs/input-payment.svg`,
+        },
+      ]
+    },
+    {
+      uuid : this.uuid(),
+      name : 'toolbar',
+      blocks : [
+        {
+          id: parseFloat((Math.random() * 10000000).toFixed(0)),
+          uuid : this.uuid(),
+          name: 'Text',
+          position: {
+            x: 320,
+            y: 120,
+          },
+          svg: `assets/svgs/text.svg`,
+        },
+        {
+          id: parseFloat((Math.random() * 10000000).toFixed(0)),
+          uuid : this.uuid(),
+          name: 'Image',
+          position: {
+            x: 320,
+            y: 120,
+          },
+          svg: `assets/svgs/image.svg`,
+        },
+        {
+          id: parseFloat((Math.random() * 10000000).toFixed(0)),
+          uuid : this.uuid(),
+          name: 'Video',
+          position: {
+            x: 320,
+            y: 120,
+          },
+          svg: `assets/svgs/video.svg`,
+        },
+        {
+          id: parseFloat((Math.random() * 10000000).toFixed(0)),
+          uuid : this.uuid(),
+          name: 'Embed',
+          position: {
+            x: 320,
+            y: 120,
+          },
+          svg: `assets/svgs/embed.svg`,
+        },
+      ]
+    },
+    {
+      uuid : this.uuid(),
+      name : 'logics',
+      blocks : [
+        {
+          id: parseFloat((Math.random() * 10000000).toFixed(0)),
+          uuid : this.uuid(),
+          name: 'Set variable',
+          position: {
+            x: 320,
+            y: 120,
+          },
+          svg: `assets/svgs/logic-variable.svg`,
+        },
+        {
+          id: parseFloat((Math.random() * 10000000).toFixed(0)),
+          uuid : this.uuid(),
+          name: 'Condition',
+          position: {
+            x: 320,
+            y: 120,
+          },
+          svg: `assets/svgs/logic-condition.svg`,
+        },
+        {
+          id: parseFloat((Math.random() * 10000000).toFixed(0)),
+          uuid : this.uuid(),
+          name: 'Redirect',
+          position: {
+            x: 320,
+            y: 120,
+          },
+          svg: `assets/svgs/logic-redirect.svg`,
+        },
+        {
+          id: parseFloat((Math.random() * 10000000).toFixed(0)),
+          uuid : this.uuid(),
+          name: 'Code',
+          position: {
+            x: 320,
+            y: 120,
+          },
+          svg: `assets/svgs/logic-code.svg`,
+        },
+        {
+          id: parseFloat((Math.random() * 10000000).toFixed(0)),
+          uuid : this.uuid(),
+          name: 'Typebot',
+          position: {
+            x: 320,
+            y: 120,
+          },
+          svg: `assets/svgs/logic-typebot.svg`,
+        },
+      ]
+    },
+    {
+      uuid : this.uuid(),
+      name : 'integerations',
+      blocks : [
+        {
+          id: parseFloat((Math.random() * 10000000).toFixed(0)),
+          uuid : this.uuid(),
+          name: 'Webhook',
+          position: {
+            x: 320,
+            y: 120,
+          },
+          svg: `assets/svgs/integeration-webhook.svg`,
+        },
+        {
+          id: parseFloat((Math.random() * 10000000).toFixed(0)),
+          uuid : this.uuid(),
+          name: 'Email',
+          position: {
+            x: 320,
+            y: 120,
+          },
+          svg: `assets/svgs/integeration-email.svg`,
+        },
+      ]
+    }
+  ]
+
+  bubbles: StructuredBlock[] = [
+    {
+      id: parseFloat((Math.random() * 10000000).toFixed(0)),
+      uuid : this.uuid(),
       name: 'Text',
       position: {
         x: 320,
@@ -135,7 +433,8 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
       svg: `assets/svgs/text.svg`,
     },
     {
-      id: (Math.random() * 10000000).toFixed(0).toString(),
+      id: parseFloat((Math.random() * 10000000).toFixed(0)),
+      uuid : this.uuid(),
       name: 'Image',
       position: {
         x: 320,
@@ -144,7 +443,8 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
       svg: `assets/svgs/image.svg`,
     },
     {
-      id: (Math.random() * 10000000).toFixed(0).toString(),
+      id: parseFloat((Math.random() * 10000000).toFixed(0)),
+      uuid : this.uuid(),
       name: 'Video',
       position: {
         x: 320,
@@ -153,7 +453,8 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
       svg: `assets/svgs/video.svg`,
     },
     {
-      id: (Math.random() * 10000000).toFixed(0).toString(),
+      id: parseFloat((Math.random() * 10000000).toFixed(0)),
+      uuid : this.uuid(),
       name: 'Embed',
       position: {
         x: 320,
@@ -163,9 +464,10 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
     },
   ];
 
-  inputs: any[] = [
+  inputs: StructuredBlock[] = [
     {
-      id: (Math.random() * 10000000).toFixed(0).toString(),
+      id: parseFloat((Math.random() * 10000000).toFixed(0)),
+      uuid : this.uuid(),
       name: 'Text',
       position: {
         x: 320,
@@ -174,7 +476,8 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
       svg: `assets/svgs/input-text.svg`,
     },
     {
-      id: (Math.random() * 10000000).toFixed(0).toString(),
+      id: parseFloat((Math.random() * 10000000).toFixed(0)),
+      uuid : this.uuid(),
       name: 'Number',
       position: {
         x: 320,
@@ -183,7 +486,8 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
       svg: `assets/svgs/input-number.svg`,
     },
     {
-      id: (Math.random() * 10000000).toFixed(0).toString(),
+      id: parseFloat((Math.random() * 10000000).toFixed(0)),
+      uuid : this.uuid(),
       name: 'Email',
       position: {
         x: 320,
@@ -192,7 +496,8 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
       svg: `assets/svgs/input-email.svg`,
     },
     {
-      id: (Math.random() * 10000000).toFixed(0).toString(),
+      id: parseFloat((Math.random() * 10000000).toFixed(0)),
+      uuid : this.uuid(),
       name: 'Website',
       position: {
         x: 320,
@@ -201,7 +506,8 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
       svg: `assets/svgs/input-website.svg`,
     },
     {
-      id: (Math.random() * 10000000).toFixed(0).toString(),
+      id: parseFloat((Math.random() * 10000000).toFixed(0)),
+      uuid : this.uuid(),
       name: 'Date',
       position: {
         x: 320,
@@ -210,7 +516,8 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
       svg: `assets/svgs/input-date.svg`,
     },
     {
-      id: (Math.random() * 10000000).toFixed(0).toString(),
+      id: parseFloat((Math.random() * 10000000).toFixed(0)),
+      uuid : this.uuid(),
       name: 'Phone',
       position: {
         x: 320,
@@ -219,7 +526,8 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
       svg: `assets/svgs/input-phone.svg`,
     },
     {
-      id: (Math.random() * 10000000).toFixed(0).toString(),
+      id: parseFloat((Math.random() * 10000000).toFixed(0)),
+      uuid : this.uuid(),
       name: 'Button',
       position: {
         x: 320,
@@ -228,7 +536,8 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
       svg: `assets/svgs/input-button.svg`,
     },
     {
-      id: (Math.random() * 10000000).toFixed(0).toString(),
+      id: parseFloat((Math.random() * 10000000).toFixed(0)),
+      uuid : this.uuid(),
       name: 'Payment',
       position: {
         x: 320,
@@ -238,9 +547,10 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
     },
   ];
 
-  toolbar: any[] = [
+  toolbar: StructuredBlock[] = [
     {
-      id: (Math.random() * 10000000).toFixed(0).toString(),
+      id: parseFloat((Math.random() * 10000000).toFixed(0)),
+      uuid : this.uuid(),
       name: 'Text',
       position: {
         x: 320,
@@ -249,7 +559,8 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
       svg: `assets/svgs/text.svg`,
     },
     {
-      id: (Math.random() * 10000000).toFixed(0).toString(),
+      id: parseFloat((Math.random() * 10000000).toFixed(0)),
+      uuid : this.uuid(),
       name: 'Image',
       position: {
         x: 320,
@@ -258,7 +569,8 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
       svg: `assets/svgs/image.svg`,
     },
     {
-      id: (Math.random() * 10000000).toFixed(0).toString(),
+      id: parseFloat((Math.random() * 10000000).toFixed(0)),
+      uuid : this.uuid(),
       name: 'Video',
       position: {
         x: 320,
@@ -267,7 +579,8 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
       svg: `assets/svgs/video.svg`,
     },
     {
-      id: (Math.random() * 10000000).toFixed(0).toString(),
+      id: parseFloat((Math.random() * 10000000).toFixed(0)),
+      uuid : this.uuid(),
       name: 'Embed',
       position: {
         x: 320,
@@ -277,9 +590,10 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
     },
   ];
 
-  logics: any[] = [
+  logics: StructuredBlock[] = [
     {
-      id: (Math.random() * 10000000).toFixed(0).toString(),
+      id: parseFloat((Math.random() * 10000000).toFixed(0)),
+      uuid : this.uuid(),
       name: 'Set variable',
       position: {
         x: 320,
@@ -288,7 +602,8 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
       svg: `assets/svgs/logic-variable.svg`,
     },
     {
-      id: (Math.random() * 10000000).toFixed(0).toString(),
+      id: parseFloat((Math.random() * 10000000).toFixed(0)),
+      uuid : this.uuid(),
       name: 'Condition',
       position: {
         x: 320,
@@ -297,7 +612,8 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
       svg: `assets/svgs/logic-condition.svg`,
     },
     {
-      id: (Math.random() * 10000000).toFixed(0).toString(),
+      id: parseFloat((Math.random() * 10000000).toFixed(0)),
+      uuid : this.uuid(),
       name: 'Redirect',
       position: {
         x: 320,
@@ -306,7 +622,8 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
       svg: `assets/svgs/logic-redirect.svg`,
     },
     {
-      id: (Math.random() * 10000000).toFixed(0).toString(),
+      id: parseFloat((Math.random() * 10000000).toFixed(0)),
+      uuid : this.uuid(),
       name: 'Code',
       position: {
         x: 320,
@@ -315,7 +632,8 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
       svg: `assets/svgs/logic-code.svg`,
     },
     {
-      id: (Math.random() * 10000000).toFixed(0).toString(),
+      id: parseFloat((Math.random() * 10000000).toFixed(0)),
+      uuid : this.uuid(),
       name: 'Typebot',
       position: {
         x: 320,
@@ -325,9 +643,10 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
     },
   ];
 
-  integerations: any[] = [
+  integerations: StructuredBlock[] = [
     {
-      id: (Math.random() * 10000000).toFixed(0).toString(),
+      id: parseFloat((Math.random() * 10000000).toFixed(0)),
+      uuid : this.uuid(),
       name: 'Webhook',
       position: {
         x: 320,
@@ -336,7 +655,8 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
       svg: `assets/svgs/integeration-webhook.svg`,
     },
     {
-      id: (Math.random() * 10000000).toFixed(0).toString(),
+      id: parseFloat((Math.random() * 10000000).toFixed(0)),
+      uuid : this.uuid(),
       name: 'Email',
       position: {
         x: 320,
@@ -346,7 +666,8 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
     },
   ];
 
-  blocks: Block[] = [
+
+  blocks : any[] = [
     {
       id: 0,
       name: 'start',
@@ -359,6 +680,8 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
       },
     },
   ];
+
+  
 
   addArray: boolean = false;
   popup = false;
@@ -389,6 +712,10 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
     );
     this.parentItem.children.push(new Item({ name: 'test3' }));
     console.log(this.parentItem);
+  }
+
+  structuredBlocksConnector(){
+    return this.structuredBlocks.map(sb => sb.uuid)
   }
 
   registerEndpoints() {
@@ -521,18 +848,16 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   drop(event: CdkDragDrop<any[]>) {
-    // console.log('before drop', this.blocks);
-    // console.warn('toolbar dropped');
-    // console.log(event);
-    if (event.previousContainer === event.container) {
+    console.log({event});
+    if(event.previousContainer === event.container){
       moveItemInArray(
         event.container.data,
         event.previousIndex,
         event.currentIndex
       );
-    } else {
+    }else{
       this.blocks.push({
-        ...this.toolbar[event.previousIndex],
+        ...event.previousContainer.data[event.previousIndex],
         id: Math.random(),
         position: {
           x: event.dropPoint.x,
@@ -542,10 +867,10 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
           canvas: null,
         },
       });
+
       setTimeout(() => {
         this.registerEndpoints();
       }, 100);
-      // console.log('after drop', this.blocks);
     }
   }
 
