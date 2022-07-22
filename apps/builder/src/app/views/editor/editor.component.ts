@@ -45,6 +45,7 @@ export interface GroupStructuredBlock {
 
 export interface GroupRendered {
   id: number
+  draggable : boolean
   uuid: string
   name: string
   position : any
@@ -447,6 +448,7 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
   groupRenderedBlocks : GroupRendered[] = [
     {
       id : parseFloat((Math.random() * 10000000).toFixed(0)),
+      draggable : false,
       uuid : this.uuid(),
       name : 'Start',
       position: {
@@ -556,13 +558,13 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
     this.jsPlumbInstance.bind(
       'endpointClick',
       function (endpoint: any, originalEvent: any) {
-        // console.log(endpoint, originalEvent);
+        console.log(endpoint, originalEvent);
       }
     );
     this.jsPlumbInstance.bind(
       'mouseup',
       function (endpoint: any, originalEvent: any) {
-        // console.log(endpoint, originalEvent);
+        console.log(endpoint, originalEvent);
       }
     );
 
@@ -574,6 +576,8 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
     //   });
     // });
   }
+
+  
 
   ngAfterViewInit() {
     this.jsPlumbInstance = jsPlumb.getInstance({
@@ -658,6 +662,21 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
     );
   }
 
+  draggable(element_id:string | number,draggable : boolean){
+    let index = this.groupRenderedBlocks.findIndex(gr => gr.id === element_id);
+    if(index !== -1){
+      let f = this.groupRenderedBlocks[index].draggable
+      console.log({
+        element_id,
+        draggable,
+        index,
+        groupRenderedBlocks : f
+      })
+      this.jsPlumbInstance.setDraggable([document.getElementById(element_id.toString())], draggable);
+      this.groupRenderedBlocks[index].draggable = draggable;
+    }
+  }
+
   drop(event: CdkDragDrop<any[]>,container : string) {
     console.log({event,container});
     switch (container) {
@@ -676,6 +695,7 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
           let nextIndex = ++lastIndex;
           this.groupRenderedBlocks.push({
             id : parseFloat((Math.random() * 10000000).toFixed(0)),
+            draggable : false,
             uuid : this.uuid(),
             name : `Group # ${nextIndex}`,
             position: {
