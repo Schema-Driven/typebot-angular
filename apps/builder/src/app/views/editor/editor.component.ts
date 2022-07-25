@@ -19,37 +19,37 @@ import { jsPlumb } from 'jsplumb';
 import { Item } from './item';
 
 export interface Block {
-  id: number
-  uuid: string
-  name?: string
-  svg?: string
-  position?: any
-  endpoint?: any
-  rendered : boolean
-  blocks?: Block[]
+  id: number;
+  uuid: string;
+  name?: string;
+  svg?: string;
+  position?: any;
+  endpoint?: any;
+  rendered: boolean;
+  blocks?: Block[];
 }
 
-export interface StructuredBlock{
-  id : number
-  uuid: string
-  name?: string
-  position?: any
-  svg?: string
+export interface StructuredBlock {
+  id: number;
+  uuid: string;
+  name?: string;
+  position?: any;
+  svg?: string;
 }
 
 export interface GroupStructuredBlock {
-  uuid : string
-  name : string
-  blocks : StructuredBlock[]
+  uuid: string;
+  name: string;
+  blocks: StructuredBlock[];
 }
 
 export interface GroupRendered {
-  id: number
-  draggable : boolean
-  uuid: string
-  name: string
-  position : any
-  blocks : Block[]
+  id: number;
+  draggable: boolean;
+  uuid: string;
+  name: string;
+  position: any;
+  blocks: Block[];
 }
 
 export interface Endpoint {
@@ -80,19 +80,28 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   public uuid() {
-    var d = new Date().getTime();//Timestamp
-    var d2 = ((typeof performance !== 'undefined') && performance.now && (performance.now()*1000)) || 0;//Time in microseconds since page-load or 0 if unsupported
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-        var r = Math.random() * 16;//random number between 0 and 16
-        if(d > 0){//Use timestamp until depleted
-            r = (d + r)%16 | 0;
-            d = Math.floor(d/16);
-        } else {//Use microseconds since page-load if supported
-            r = (d2 + r)%16 | 0;
-            d2 = Math.floor(d2/16);
+    var d = new Date().getTime(); //Timestamp
+    var d2 =
+      (typeof performance !== 'undefined' &&
+        performance.now &&
+        performance.now() * 1000) ||
+      0; //Time in microseconds since page-load or 0 if unsupported
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(
+      /[xy]/g,
+      function (c) {
+        var r = Math.random() * 16; //random number between 0 and 16
+        if (d > 0) {
+          //Use timestamp until depleted
+          r = (d + r) % 16 | 0;
+          d = Math.floor(d / 16);
+        } else {
+          //Use microseconds since page-load if supported
+          r = (d2 + r) % 16 | 0;
+          d2 = Math.floor(d2 / 16);
         }
-        return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
-    });
+        return (c === 'x' ? r : (r & 0x3) | 0x8).toString(16);
+      }
+    );
   }
 
   public get dragDisabledItem(): boolean {
@@ -168,14 +177,14 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
 
   endpoints: any[] = [];
 
-  structuredBlocks : GroupStructuredBlock[] = [
+  structuredBlocks: GroupStructuredBlock[] = [
     {
-      uuid : this.uuid(),
-      name : 'bubbles',
-      blocks : [
+      uuid: this.uuid(),
+      name: 'bubbles',
+      blocks: [
         {
           id: parseFloat((Math.random() * 10000000).toFixed(0)),
-          uuid : this.uuid(),
+          uuid: this.uuid(),
           name: 'Text',
           position: {
             x: 320,
@@ -185,7 +194,7 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
         },
         {
           id: parseFloat((Math.random() * 10000000).toFixed(0)),
-          uuid : this.uuid(),
+          uuid: this.uuid(),
           name: 'Image',
           position: {
             x: 320,
@@ -195,7 +204,7 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
         },
         {
           id: parseFloat((Math.random() * 10000000).toFixed(0)),
-          uuid : this.uuid(),
+          uuid: this.uuid(),
           name: 'Video',
           position: {
             x: 320,
@@ -205,7 +214,7 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
         },
         {
           id: parseFloat((Math.random() * 10000000).toFixed(0)),
-          uuid : this.uuid(),
+          uuid: this.uuid(),
           name: 'Embed',
           position: {
             x: 320,
@@ -213,15 +222,15 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
           },
           svg: `assets/svgs/embed.svg`,
         },
-      ]
+      ],
     },
     {
-      uuid : this.uuid(),
-      name : "inputs",
-      blocks : [
+      uuid: this.uuid(),
+      name: 'inputs',
+      blocks: [
         {
           id: parseFloat((Math.random() * 10000000).toFixed(0)),
-          uuid : this.uuid(),
+          uuid: this.uuid(),
           name: 'Text',
           position: {
             x: 320,
@@ -231,7 +240,7 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
         },
         {
           id: parseFloat((Math.random() * 10000000).toFixed(0)),
-          uuid : this.uuid(),
+          uuid: this.uuid(),
           name: 'Number',
           position: {
             x: 320,
@@ -241,7 +250,7 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
         },
         {
           id: parseFloat((Math.random() * 10000000).toFixed(0)),
-          uuid : this.uuid(),
+          uuid: this.uuid(),
           name: 'Email',
           position: {
             x: 320,
@@ -251,7 +260,7 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
         },
         {
           id: parseFloat((Math.random() * 10000000).toFixed(0)),
-          uuid : this.uuid(),
+          uuid: this.uuid(),
           name: 'Website',
           position: {
             x: 320,
@@ -261,7 +270,7 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
         },
         {
           id: parseFloat((Math.random() * 10000000).toFixed(0)),
-          uuid : this.uuid(),
+          uuid: this.uuid(),
           name: 'Date',
           position: {
             x: 320,
@@ -271,7 +280,7 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
         },
         {
           id: parseFloat((Math.random() * 10000000).toFixed(0)),
-          uuid : this.uuid(),
+          uuid: this.uuid(),
           name: 'Phone',
           position: {
             x: 320,
@@ -281,7 +290,7 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
         },
         {
           id: parseFloat((Math.random() * 10000000).toFixed(0)),
-          uuid : this.uuid(),
+          uuid: this.uuid(),
           name: 'Button',
           position: {
             x: 320,
@@ -291,7 +300,7 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
         },
         {
           id: parseFloat((Math.random() * 10000000).toFixed(0)),
-          uuid : this.uuid(),
+          uuid: this.uuid(),
           name: 'Payment',
           position: {
             x: 320,
@@ -299,15 +308,15 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
           },
           svg: `assets/svgs/input-payment.svg`,
         },
-      ]
+      ],
     },
     {
-      uuid : this.uuid(),
-      name : 'toolbar',
-      blocks : [
+      uuid: this.uuid(),
+      name: 'toolbar',
+      blocks: [
         {
           id: parseFloat((Math.random() * 10000000).toFixed(0)),
-          uuid : this.uuid(),
+          uuid: this.uuid(),
           name: 'Text',
           position: {
             x: 320,
@@ -317,7 +326,7 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
         },
         {
           id: parseFloat((Math.random() * 10000000).toFixed(0)),
-          uuid : this.uuid(),
+          uuid: this.uuid(),
           name: 'Image',
           position: {
             x: 320,
@@ -327,7 +336,7 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
         },
         {
           id: parseFloat((Math.random() * 10000000).toFixed(0)),
-          uuid : this.uuid(),
+          uuid: this.uuid(),
           name: 'Video',
           position: {
             x: 320,
@@ -337,7 +346,7 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
         },
         {
           id: parseFloat((Math.random() * 10000000).toFixed(0)),
-          uuid : this.uuid(),
+          uuid: this.uuid(),
           name: 'Embed',
           position: {
             x: 320,
@@ -345,15 +354,15 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
           },
           svg: `assets/svgs/embed.svg`,
         },
-      ]
+      ],
     },
     {
-      uuid : this.uuid(),
-      name : 'logics',
-      blocks : [
+      uuid: this.uuid(),
+      name: 'logics',
+      blocks: [
         {
           id: parseFloat((Math.random() * 10000000).toFixed(0)),
-          uuid : this.uuid(),
+          uuid: this.uuid(),
           name: 'Set variable',
           position: {
             x: 320,
@@ -363,7 +372,7 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
         },
         {
           id: parseFloat((Math.random() * 10000000).toFixed(0)),
-          uuid : this.uuid(),
+          uuid: this.uuid(),
           name: 'Condition',
           position: {
             x: 320,
@@ -373,7 +382,7 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
         },
         {
           id: parseFloat((Math.random() * 10000000).toFixed(0)),
-          uuid : this.uuid(),
+          uuid: this.uuid(),
           name: 'Redirect',
           position: {
             x: 320,
@@ -383,7 +392,7 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
         },
         {
           id: parseFloat((Math.random() * 10000000).toFixed(0)),
-          uuid : this.uuid(),
+          uuid: this.uuid(),
           name: 'Code',
           position: {
             x: 320,
@@ -393,7 +402,7 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
         },
         {
           id: parseFloat((Math.random() * 10000000).toFixed(0)),
-          uuid : this.uuid(),
+          uuid: this.uuid(),
           name: 'Typebot',
           position: {
             x: 320,
@@ -401,15 +410,15 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
           },
           svg: `assets/svgs/logic-typebot.svg`,
         },
-      ]
+      ],
     },
     {
-      uuid : this.uuid(),
-      name : 'integerations',
-      blocks : [
+      uuid: this.uuid(),
+      name: 'integerations',
+      blocks: [
         {
           id: parseFloat((Math.random() * 10000000).toFixed(0)),
-          uuid : this.uuid(),
+          uuid: this.uuid(),
           name: 'Webhook',
           position: {
             x: 320,
@@ -419,7 +428,7 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
         },
         {
           id: parseFloat((Math.random() * 10000000).toFixed(0)),
-          uuid : this.uuid(),
+          uuid: this.uuid(),
           name: 'Email',
           position: {
             x: 320,
@@ -427,11 +436,11 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
           },
           svg: `assets/svgs/integeration-email.svg`,
         },
-      ]
-    }
-  ]
+      ],
+    },
+  ];
 
-  blocks : any[] = [
+  blocks: any[] = [
     {
       id: 0,
       name: 'start',
@@ -445,19 +454,24 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
     },
   ];
 
-  groupRenderedBlocks : GroupRendered[] = [
+  groupRenderedBlocks: GroupRendered[] = [
     {
-      id : parseFloat((Math.random() * 10000000).toFixed(0)),
-      draggable : true,
-      uuid : this.uuid(),
-      name : 'Start',
+      id: parseFloat((Math.random() * 10000000).toFixed(0)),
+      draggable: true,
+      uuid: this.uuid(),
+      name: 'Start',
       position: {
         x: 420,
         y: 120,
       },
-      blocks : []
+      blocks: [],
     },
-  ] 
+  ];
+
+  sidePanel: boolean = false;
+  sidePanelClick() {
+    console.log('Side Panel Click');
+  }
 
   addArray: boolean = false;
   popup = false;
@@ -490,21 +504,23 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
     console.log(this.parentItem);
   }
 
-  structuredBlocksConnector(){
-    return this.structuredBlocks.map(sb => sb.uuid)
+  structuredBlocksConnector() {
+    return this.structuredBlocks.map((sb) => sb.uuid);
   }
 
-  receiverOriginatorBlocksConnector(group_id : number){
-    let renderedGrouped = this.groupRenderedBlocks.find(gr => gr.id === group_id);
-    if(renderedGrouped !== undefined){
-      return renderedGrouped.blocks.map(b => b.uuid);
+  receiverOriginatorBlocksConnector(group_id: number) {
+    let renderedGrouped = this.groupRenderedBlocks.find(
+      (gr) => gr.id === group_id
+    );
+    if (renderedGrouped !== undefined) {
+      return renderedGrouped.blocks.map((b) => b.uuid);
     }
     return [];
   }
 
-  allReceiverOriginatorBlocksConnector(){
+  allReceiverOriginatorBlocksConnector() {
     let structredblocks_ids = this.structuredBlocksConnector();
-    let group_ids = this.groupRenderedBlocks.map(gr => gr.uuid);
+    let group_ids = this.groupRenderedBlocks.map((gr) => gr.uuid);
     group_ids.push(...structredblocks_ids);
     return group_ids;
   }
@@ -520,24 +536,17 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
           instance: this.jsPlumbInstance.addEndpoint(
             gr.id.toString(),
             {
-              // anchor : [ 
+              // anchor : [
               //   0, // x
               //   0.27, // y
               //   0, // dy
               //   0, // dx
               // ],
-              anchor : [
-                0,
-                0,
-                0,
-                0,
-                0,
-                30
-              ],
+              anchor: [0, 0, 0, 0, 0, 30],
               maxConnections: 99999,
             },
             { isTarget: true }
-          )
+          ),
         });
 
         this.endpoints.push({
@@ -545,18 +554,11 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
           instance: this.jsPlumbInstance.addEndpoint(
             gr.id.toString(),
             {
-              anchor : [
-                1,
-                1,
-                1,
-                0,
-                0,
-                -45
-              ],
+              anchor: [1, 1, 1, 0, 0, -45],
               maxConnections: 99999,
             },
             { isSource: true }
-          )
+          ),
         });
 
         this.jsPlumbInstance.draggable(gr.id.toString());
@@ -584,8 +586,6 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
     //   });
     // });
   }
-
-  
 
   ngAfterViewInit() {
     this.jsPlumbInstance = jsPlumb.getInstance({
@@ -670,47 +670,54 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
     );
   }
 
-  draggable(element_id:string | number,draggable : boolean){
-    let index = this.groupRenderedBlocks.findIndex(gr => gr.id === element_id);
-    if(index !== -1){
-      let f = this.groupRenderedBlocks[index].draggable
+  draggable(element_id: string | number, draggable: boolean) {
+    console.log(element_id), draggable;
+
+    let index = this.groupRenderedBlocks.findIndex(
+      (gr) => gr.id === element_id
+    );
+    if (index !== -1) {
+      let f = this.groupRenderedBlocks[index].draggable;
       console.log({
         element_id,
         draggable,
         index,
-        groupRenderedBlocks : f
-      })
-      this.jsPlumbInstance.setDraggable([document.getElementById(element_id.toString())], draggable);
+        groupRenderedBlocks: f,
+      });
+      this.jsPlumbInstance.setDraggable(
+        [document.getElementById(element_id.toString())],
+        draggable
+      );
       this.groupRenderedBlocks[index].draggable = draggable;
     }
   }
 
-  drop(event: CdkDragDrop<any[]>,container : string) {
-    console.log({event,container});
+  drop(event: CdkDragDrop<any[]>, container: string) {
+    console.log({ event, container });
     switch (container) {
       case 'Originator':
         // do-nothing
         break;
       case 'Receiver':
-        if(event.previousContainer === event.container){
+        if (event.previousContainer === event.container) {
           moveItemInArray(
             event.container.data,
             event.previousIndex,
             event.currentIndex
           );
-        }else{
+        } else {
           let lastIndex = this.groupRenderedBlocks.length;
           let nextIndex = ++lastIndex;
           this.groupRenderedBlocks.push({
-            id : parseFloat((Math.random() * 10000000).toFixed(0)),
-            draggable : true,
-            uuid : this.uuid(),
-            name : `Group # ${nextIndex}`,
+            id: parseFloat((Math.random() * 10000000).toFixed(0)),
+            draggable: true,
+            uuid: this.uuid(),
+            name: `Group # ${nextIndex}`,
             position: {
               x: event.dropPoint.x,
               y: event.dropPoint.y,
             },
-            blocks : [
+            blocks: [
               {
                 ...event.previousContainer.data[event.previousIndex],
                 id: parseFloat((Math.random() * 10000000).toFixed(0)),
@@ -721,10 +728,10 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
                 endpoint: {
                   canvas: null,
                 },
-              }
-            ]
+              },
+            ],
           });
-    
+
           setTimeout(() => {
             this.registerEndpoints();
           }, 100);
@@ -735,15 +742,19 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
           event.previousContainer.data,
           event.container.data,
           event.previousIndex,
-          event.currentIndex,
+          event.currentIndex
         );
-        if(event.previousContainer.data.length == 0){
-          let index = this.groupRenderedBlocks.findIndex(gr => gr.uuid === event.previousContainer.id);
-          if(index !== -1){
-            this.endpoints.filter(e => e.identifier == this.groupRenderedBlocks[index].id).forEach((endpoint)=>{
-              console.log({endpoint})
-              this.jsPlumbInstance.deleteEndpoint(endpoint.instance)
-            })
+        if (event.previousContainer.data.length == 0) {
+          let index = this.groupRenderedBlocks.findIndex(
+            (gr) => gr.uuid === event.previousContainer.id
+          );
+          if (index !== -1) {
+            this.endpoints
+              .filter((e) => e.identifier == this.groupRenderedBlocks[index].id)
+              .forEach((endpoint) => {
+                console.log({ endpoint });
+                this.jsPlumbInstance.deleteEndpoint(endpoint.instance);
+              });
             this.groupRenderedBlocks.splice(index, 1);
           }
         }
