@@ -734,8 +734,8 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
         transferArrayItem(
           event.previousContainer.data,
           event.container.data,
+          event.previousIndex,
           event.currentIndex,
-          event.previousIndex
         );
         if(event.previousContainer.data.length == 0){
           let index = this.groupRenderedBlocks.findIndex(gr => gr.uuid === event.previousContainer.id);
