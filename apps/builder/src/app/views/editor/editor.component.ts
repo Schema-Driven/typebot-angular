@@ -470,7 +470,8 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
 
   sidePanel: boolean = false;
   sidePanelClick() {
-    console.log('Side Panel Click');
+    console.log('Side Panel Click', this.sidePanel);
+    this.sidePanel = !this.sidePanel;
   }
 
   addArray: boolean = false;
@@ -531,21 +532,18 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
       if (index === -1) {
         let block = document.getElementById(gr.id.toString());
         // console.log('Attaching endpoint to block', block);
+
         this.endpoints.push({
           identifier: gr.id.toString(),
           instance: this.jsPlumbInstance.addEndpoint(
             gr.id.toString(),
             {
-              // anchor : [
-              //   0, // x
-              //   0.27, // y
-              //   0, // dy
-              //   0, // dx
-              // ],
-              anchor: [0, 0, 0, 0, 0, 30],
+              anchor: [0, 0, 0, 0, 0, 30, 'fooColor'],
               maxConnections: 99999,
+              // cssClass:"foo",
             },
             { isTarget: true }
+            // { cssClass: "fooColor" },
           ),
         });
 
@@ -554,8 +552,9 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
           instance: this.jsPlumbInstance.addEndpoint(
             gr.id.toString(),
             {
-              anchor: [1, 1, 1, 0, 0, -45],
+              anchor: [1, 1, 1, 0, 0, -45, 'fooColor'],
               maxConnections: 99999,
+              // Class:"foo"
             },
             { isSource: true }
           ),
@@ -1009,7 +1008,6 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     this.dropListReceiverElement.style.removeProperty('display');
-    this.dropListReceiverElement = undefined;
     this.dragDropInfo = undefined;
   }
 }
