@@ -538,9 +538,9 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
           instance: this.jsPlumbInstance.addEndpoint(
             gr.id.toString(),
             {
-              anchor: [0, 0, 0, 0, 0, 30, 'fooColor'],
+              anchor: [0, 0, 0, 0, 0, 30, 'outline'],
               maxConnections: 99999,
-              // cssClass:"foo",
+              Class: 'fooColor',
             },
             { isTarget: true }
             // { cssClass: "fooColor" },
@@ -552,9 +552,37 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
           instance: this.jsPlumbInstance.addEndpoint(
             gr.id.toString(),
             {
-              anchor: [1, 1, 1, 0, 0, -45, 'fooColor'],
+              anchor: [1, 1, 1, 0, 0, -45, 'outline'],
+              connectorOverlays: [
+                [
+                  'Arrow',
+                  {
+                    width: 30,
+                    length: 30,
+                    location: 1,
+                    id: 'arrow',
+                  },
+                ],
+              ],
               maxConnections: 99999,
-              // Class:"foo"
+              Class: 'fooColor',
+              ports: {
+                default: {
+                  paintStyle: { fill: '#f76258' }, // the endpoint's appearance
+                  hoverPaintStyle: { fill: '#434343' }, // appearance when mouse hovering on endpoint or connection
+                  edgeType: 'common', // the type of edge for connections from this port type
+                  maxConnections: -1, // no limit on connections
+                  dropOptions: {
+                    //drop options for the port. here we attach a css class.
+                    hoverClass: 'drop-hover',
+                  },
+                  events: {
+                    dblclick: (p: any) => {
+                      console.log(p);
+                    },
+                  },
+                },
+              },
             },
             { isSource: true }
           ),
@@ -576,6 +604,17 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
         console.log(endpoint, originalEvent);
       }
     );
+    this.jsPlumbInstance.connect({
+      connector: [
+        'Flowchart',
+        { stub: [212, 67], cornerRadius: 1, alwaysRespectStubs: true },
+      ],
+      source: 'Source',
+      target: 'Target1',
+      anchor: ['Right', 'Left'],
+      paintStyle: { stroke: '#456', strokeWidth: 4, cssClass: 'outline' },
+      overlays: [['svg', { location: 0.5, cssClass: 'fooColor' }]],
+    });
 
     // this.jsPlumbInstance.bind('beforeDrop', (params : any) => {
     //   this.jsPlumbInstance.getConnections().map((connection : any) => {

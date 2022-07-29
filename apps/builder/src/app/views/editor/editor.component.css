@@ -81,6 +81,106 @@
   fill:red;
   stroke:yellow;
 }
+.jtk-connector-outline{
+  display: none;
+}
+.grag_able{
+    position:absolute;
+    width:30px;
+    height:30px;
+    border:1px solid black;
+    font-size:12px;
+    border-radius:3px;
+    text-align:center;
+    background-color:WhiteSmoke;
+    opacity:0.7;
+    z-index:10;
+    color:black;
+    cursor:move;
+}
+.grag_able:hover {
+  background-color:#629f8d;
+}
+.group-container {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  border-radius: 12px;
+  background-color: WhiteSmoke;
+  font-size: 12px;
+  cursor:move;
+}
+
+.group-container ul {
+  margin-left:25px;
+  padding: 0;
+}
+
+.group-container ul li {
+  list-style-type:circle;
+  margin-bottom: 7px;
+}
+.large {
+  width:600px;
+  height:600px;
+}
+
+.group-container.collapsed {
+  height:40px;
+}
+
+.title {
+  background-color:#ABC1BB;
+  padding-right:16px;
+  font-size:13px;
+  height:30px;
+}
+.jtk-connector path {
+  stroke-width:1;
+}
+
+.jtk-group-collapsed .w, .jtk-group-collapsed ul, .jtk-group-collapsed .container, .jtk-group-collapsed .name {
+  display:none;
+}
+
+.jtk-drag-hover {
+  outline:4px solid cornflowerblue;
+}
+
+.katavorio-ghost-proxy {
+  outline:2px solid red;
+}
+.events {
+  position:absolute;
+  right:0;
+  top:0;
+  border-left:4px solid #58775d;
+  bottom:0;
+  width:156px;
+  font-size: 11px;
+  padding-left:11px;
+  background-color: white;
+}
+
+#events {
+  position: absolute;
+  right: 0;
+  top: 0;
+  border-left: 1px solid #58775d;
+  bottom: 0;
+  width: 256px;
+  font-size: 11px;
+  padding-left: 11px;
+  background-color: white;
+}
+
+
+
+
+
+
+
+
 .connectingConnectorLabel {
   height: 28px;
   width: 140px;
