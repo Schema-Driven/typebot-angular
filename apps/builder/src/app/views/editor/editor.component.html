@@ -102,7 +102,7 @@
           <!-- [cdkDropListSortingDisabled]="true" -->
           <div
             cdkDropList
-            [id]="group.uuid"
+            [id]="(group.name == 'Start' ? '0' : group.uuid)"
             [cdkDropListData]="group.blocks"
             (cdkDropListDropped)="drop($event,'ReceiverOriginator')"
             [cdkDropListConnectedTo]="allReceiverOriginatorBlocksConnector()"
@@ -113,7 +113,7 @@
               class="p-4 bg-slate-100 relative drap-bg-style my-1"
               *ngFor="let block of group.blocks"
               cdkDrag
-
+              [cdkDragDisabled]="block.id === 0"
             >
               <div class="w-full px-2">
               {{block.name}}

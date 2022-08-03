@@ -464,7 +464,19 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
         x: 420,
         y: 120,
       },
-      blocks: [],
+      blocks: [
+        {
+          id: 0,
+          uuid: this.uuid(),
+          name: 'Start',
+          position: {
+            x: 420,
+            y: 120,
+          },
+          rendered: true,
+          svg: `assets/svgs/text.svg`,
+        }
+      ],
     },
   ];
 
