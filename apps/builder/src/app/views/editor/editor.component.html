@@ -114,6 +114,7 @@
               *ngFor="let block of group.blocks"
               cdkDrag
               [cdkDragDisabled]="block.id === 0"
+              (cdkDragStarted)="cdkDragStarted($event)"
             >
               <div class="w-full px-2">
               {{block.name}}
