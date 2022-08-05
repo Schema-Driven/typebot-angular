@@ -16,7 +16,7 @@ import {
   copyArrayItem,
 } from '@angular/cdk/drag-drop';
 import { jsPlumb } from 'jsplumb';
-import { Item } from './item';
+import { Item } from '../item';
 
 export interface Block {
   id: number;
@@ -58,11 +58,11 @@ export interface Endpoint {
 }
 
 @Component({
-  selector: 'editor',
+  selector: 'editorv2',
   templateUrl: './editor.component.html',
   styleUrls: ['./editor.component.css'],
 })
-export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
+export class Editorv2Component implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('dropListContainer') dropListContainer?: ElementRef;
   dropListReceiverElement?: HTMLElement;
   constructor(private renderer: Renderer2, private elementRef: ElementRef) {

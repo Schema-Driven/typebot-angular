@@ -14,10 +14,12 @@ export class DropTestComponent {
 
   done = ['Get up', 'Brush teeth', 'Take a shower', 'Check e-mail', 'Walk dog'];
 
-  drop(event: CdkDragDrop<string[]>) {
+  drop(event: CdkDragDrop<string[]>, container: string) {
+    console.log("container", container);
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
+      console.log("event.container.data", event.container.data)
       transferArrayItem(
         event.previousContainer.data,
         event.container.data,

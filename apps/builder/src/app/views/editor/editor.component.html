@@ -102,22 +102,22 @@
           <!-- [cdkDropListSortingDisabled]="true" -->
           <div
             cdkDropList
-            [id]="(group.name == 'Start' ? '0' : group.uuid)"
             [cdkDropListData]="group.blocks"
             (cdkDropListDropped)="drop($event,'ReceiverOriginator')"
             [cdkDropListConnectedTo]="allReceiverOriginatorBlocksConnector()"
             class=" min-h-24 ReceiverContainerChild p-2 rounded-lg"
+            [id]="(group.name == 'Start' ? '0' : group.uuid)"
           >
             <div
-              [id]="block.id"
-              class="p-4 bg-slate-100 relative drap-bg-style my-1"
-              *ngFor="let block of group.blocks"
               cdkDrag
               [cdkDragDisabled]="block.id === 0"
               (cdkDragStarted)="cdkDragStarted($event)"
+              *ngFor="let block of group.blocks"
+              class="p-4 bg-slate-100 relative drap-bg-style my-1"
+              [id]="block.id"
             >
               <div class="w-full px-2">
-              {{block.name}}
+                {{block.name}}
               </div>
             </div>
           </div>
