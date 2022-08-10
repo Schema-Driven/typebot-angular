@@ -464,7 +464,19 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
         x: 420,
         y: 120,
       },
-      blocks: [],
+      blocks: [
+        {
+          id: 0,
+          uuid: this.uuid(),
+          name: 'Start',
+          position: {
+            x: 420,
+            y: 120,
+          },
+          rendered: true,
+          svg: `assets/svgs/text.svg`,
+        }
+      ],
     },
   ];
 
@@ -506,7 +518,14 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   structuredBlocksConnector() {
-    return this.structuredBlocks.map((sb) => sb.uuid);
+    // return this.structuredBlocks.map((sb) => sb.uuid);
+    let ids:any = [];
+    this.structuredBlocks.map((sb) => {
+      let block_ids = sb.blocks.map((block) => block.uuid);
+      ids.push(...block_ids);
+    });
+    // console.log("structuredBlocksConnector", ids)
+    return ids;
   }
 
   receiverOriginatorBlocksConnector(group_id: number) {
@@ -520,6 +539,7 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   allReceiverOriginatorBlocksConnector() {
+    // console.log("this.groupRenderedBlocks", this.groupRenderedBlocks);
     let structredblocks_ids = this.structuredBlocksConnector();
     let group_ids = this.groupRenderedBlocks.map((gr) => gr.uuid);
     group_ids.push(...structredblocks_ids);
@@ -744,6 +764,14 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
             event.currentIndex
           );
         } else {
+          console.log("event.previousContainer.data", event.previousContainer.data);
+          console.log("event.container.data", event.container.data);
+          // copyArrayItem(
+          //   event.previousContainer.data,
+          //   event.container.data,
+          //   event.previousIndex,
+          //   event.currentIndex
+          // );
           let lastIndex = this.groupRenderedBlocks.length;
           let nextIndex = ++lastIndex;
           this.groupRenderedBlocks.push({
@@ -776,6 +804,8 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
         }
         break;
       case 'ReceiverOriginator':
+        console.log("ReceiverOriginator: event.previousContainer.data", event.previousContainer.data);
+        console.log("ReceiverOriginator: event.container.data", event.container.data);
         transferArrayItem(
           event.previousContainer.data,
           event.container.data,

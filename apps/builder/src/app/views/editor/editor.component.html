@@ -1,17 +1,17 @@
 <div class="flex flex-col h-screen bg-slate-400 custom-bg">
   <header-bar></header-bar>
-    
+
   <div *ngIf="addArray==false" class="flex flex-row w-full h-full">
     <div class="transform1 relative"
     [ngStyle]="{'transform':sidePanel === false ? 'translateX(0px)': 'translateX(-325px)'}"
     >
     <!-- [ngStyle]="sidePanel?{'background-color': 'red'} : {'background-color': 'blue'}" -->
-    
+
     <!--  -->
-    
+
     <div class="absolute flex flex-col w-80  left-4  z-10 bg-white p-3 rounded-lg custom-shadow  sidebar"
         [ngStyle]="{'height':'calc(100vh - 120px)'}">
-        
+
       <div class="chakra-stack hide-scrollbar css-w71llh">
       <div class="flex items-center justify-end mb-4">
 
@@ -29,12 +29,12 @@
           <span class="tooltiptext-sec">Unlock sidebar</span>
         </a>
       </div>
- 
+
       <!--OriginatorContainer:<StructuredBlock> - begins -->
       <!-- GroupStructuredBlockWrapper - begins -->
       <div cdkDropListGroup>
         <!-- GroupStructuredBlock[] - begins  -->
-        <div 
+        <div
         cdkDropList
         *ngFor="let structuredBlock of structuredBlocks"
         [id]="structuredBlock.uuid"
@@ -52,7 +52,7 @@
                     <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
                     <div class="w-full text-sm px-2">
                       <img [src]="block.svg" class="toolbar-svg"/>
-                      {{block.name}} 
+                      {{block.name}}
                     </div>
                   </div>
                 </div>
@@ -66,13 +66,13 @@
     </div>
       <!-- GroupStructuredBlockWrapper - ends -->
       <!--OriginatorContainer:<StructuredBlock> - ends -->
-      
+
         <div *ngIf="sidePanel" class="css-1hsy5ug"><div class="css-i6ims5"></div></div>
     </div>
-     
+
     </div>
     <!--ReceiverContainer:<RenderedBlock> - begins -->
-    <div 
+    <div
       id="ReceiverContainer"
       class="relative pl-64 w-full"
       cdkDropList
@@ -87,42 +87,43 @@
         [style]="('top:'+group.position.y+'px;left:'+group.position.x+'px')"
         [id]="group.id"
       >
-      <div class="wrap-div w-72 bg-white p-4">
-        <div class="title-div pb-4 flex items-center justify-between"> 
-          <span class="font-sm font-normal ">{{group.name}}</span>
+        <div class="wrap-div w-72 bg-white p-4" cdkDrag>
+          <div class="title-div pb-4 flex items-center justify-between">
+            <span class="font-sm font-normal ">{{group.name}}</span>
 
-          <svg xmlns="http://www.w3.org/2000/svg" class="rounded-lg border-gray-200 border p-0.5 flex items-center justify-center w-7 h-7" *ngIf="group.draggable" (click)="draggable(group.id,false)"  fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M7 11.5V14m0-2.5v-6a1.5 1.5 0 113 0m-3 6a1.5 1.5 0 00-3 0v2a7.5 7.5 0 0015 0v-5a1.5 1.5 0 00-3 0m-6-3V11m0-5.5v-1a1.5 1.5 0 013 0v1m0 0V11m0-5.5a1.5 1.5 0 013 0v3m0 0V11" />
-          </svg>
-          <svg xmlns="http://www.w3.org/2000/svg" class="rounded-lg border-gray-200 border p-0.5 flex items-center justify-center w-7 h-7" *ngIf="!group.draggable" (click)="draggable(group.id,true)" viewBox="0 0 20 20" fill="currentColor">
-            <path fill-rule="evenodd" d="M9 3a1 1 0 012 0v5.5a.5.5 0 001 0V4a1 1 0 112 0v4.5a.5.5 0 001 0V6a1 1 0 112 0v5a7 7 0 11-14 0V9a1 1 0 012 0v2.5a.5.5 0 001 0V4a1 1 0 012 0v4.5a.5.5 0 001 0V3z" clip-rule="evenodd" />
-          </svg>
-  
-        </div>
-        <!-- [cdkDropListSortingDisabled]="true" -->
+            <svg xmlns="http://www.w3.org/2000/svg" class="rounded-lg border-gray-200 border p-0.5 flex items-center justify-center w-7 h-7" *ngIf="group.draggable" (click)="draggable(group.id,false)"  fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M7 11.5V14m0-2.5v-6a1.5 1.5 0 113 0m-3 6a1.5 1.5 0 00-3 0v2a7.5 7.5 0 0015 0v-5a1.5 1.5 0 00-3 0m-6-3V11m0-5.5v-1a1.5 1.5 0 013 0v1m0 0V11m0-5.5a1.5 1.5 0 013 0v3m0 0V11" />
+            </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" class="rounded-lg border-gray-200 border p-0.5 flex items-center justify-center w-7 h-7" *ngIf="!group.draggable" (click)="draggable(group.id,true)" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M9 3a1 1 0 012 0v5.5a.5.5 0 001 0V4a1 1 0 112 0v4.5a.5.5 0 001 0V6a1 1 0 112 0v5a7 7 0 11-14 0V9a1 1 0 012 0v2.5a.5.5 0 001 0V4a1 1 0 012 0v4.5a.5.5 0 001 0V3z" clip-rule="evenodd" />
+            </svg>
+
+          </div>
+          <!-- [cdkDropListSortingDisabled]="true" -->
           <div
             cdkDropList
-            [id]="group.uuid"
             [cdkDropListData]="group.blocks"
             (cdkDropListDropped)="drop($event,'ReceiverOriginator')"
             [cdkDropListConnectedTo]="allReceiverOriginatorBlocksConnector()"
             class=" min-h-24 ReceiverContainerChild p-2 rounded-lg"
+            [id]="(group.name == 'Start' ? '0' : group.uuid)"
           >
             <div
-              [id]="block.id"
-              class="p-4 bg-slate-100 relative drap-bg-style my-1"
-              *ngFor="let block of group.blocks"
               cdkDrag
-
+              [cdkDragDisabled]="block.id === 0"
+              (cdkDragStarted)="cdkDragStarted($event)"
+              *ngFor="let block of group.blocks"
+              class="p-4 bg-slate-100 relative drap-bg-style my-1"
+              [id]="block.id"
             >
               <div class="w-full px-2">
-              {{block.name}}
+                {{block.name}}
               </div>
             </div>
           </div>
+        </div>
       </div>
     </div>
-  </div>
     <!--ReceiverContainer:<RenderedBlock> - ends -->
 
     <!-- ZOOM BUTTONS - [begins] -->
@@ -142,12 +143,12 @@
         </a>
         <a href="#" class="bg-white rounded-b-md p-0.5 w-8 h-8 flex items-center justify-center">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M18 12H6" /> 
-          </svg> 
+            <path stroke-linecap="round" stroke-linejoin="round" d="M18 12H6" />
+          </svg>
         </a>
       </div>
     </div>
     <!-- ZOOM BUTTONS - [ends] -->
   </div>
-  
+
 </div>
