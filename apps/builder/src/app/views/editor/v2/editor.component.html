@@ -1,41 +1,32 @@
 <div class="wrapper">
-  <div
-    class="main"
-    cdkDropListGroup
-  >
-    <div class="example-container box">
-      <h2>Fixed Items</h2>
-      <div
-        cdkDropList
-        *ngFor="let groupBlock of fixeditems"
-        [cdkDropListData]="groupBlock.blocks"
-        [cdkDropListSortingDisabled]="true"
-        class="example-list"
-        id="fixed-list"
-        [cdkDropListEnterPredicate]="noReturnPredicate"
-      >
-        <label class="font-base text-gray-600 font-medium pb-2 pl-1.5">{{ groupBlock.name }}</label>
-        <div class="example-box" *ngFor="let item of groupBlock.blocks" cdkDrag>{{item}}</div>
+  <div class="main" cdkDropListGroup>
+    <div class="h-screen bg-slate-400 ">
+      <div class="absolute z-10 flex flex-col p-4 bg-white rounded-lg w-80 left-4 custom-shadow sidebar">
+        <div class="example-container box">
+          <!-- <h2 class="font-base text-gray-600 font-medium pb-2 pl-1.5">bubbles</h2> -->
+          <div cdkDropList *ngFor="let groupBlock of fixeditems" [cdkDropListData]="groupBlock.blocks"
+            [cdkDropListSortingDisabled]="true" class="example-list" id="fixed-list"
+            [cdkDropListEnterPredicate]="noReturnPredicate">
+            <label class="font-base text-gray-600 font-medium pb-2 pl-1.5">{{ groupBlock.name }}</label>
+            <div class="h-10 px-3 py-2 border rounded-lg shadow bg-gray-50 example-box border-slate-300 w-42"
+              *ngFor="let item of groupBlock.blocks" cdkDrag>{{item}}</div>
+          </div>
+        </div>
       </div>
-    </div>
 
-    <div class="example-container box" *ngFor="let b of groupblock" cdkDrag>
-      <h2>{{b.name}}</h2>
-      <div
-        cdkDropList
-        [cdkDropListData]="b.blocks"
-        class="example-list"
-        id="receiving-list"
-        (cdkDropListDropped)="drop($event, 'box')">
-        <div class="example-box" *ngFor="let item of b.blocks" cdkDrag>{{item}}</div>
+      <div class="pl-64">
+        <div class="example-container box" *ngFor="let b of groupblock" cdkDrag>
+          <h2>{{b.name}}</h2>
+          <div cdkDropList [cdkDropListData]="b.blocks" class="example-list" id="receiving-list"
+            (cdkDropListDropped)="drop($event, 'box')">
+            <div class="example-box" *ngFor="let item of b.blocks" cdkDrag>{{item}}</div>
+          </div>
+        </div>
       </div>
-    </div>
 
-    <div class="example-container main-container">
-      <div
-        cdkDropList
-        class="example-list"
-        (cdkDropListDropped)="drop($event, 'container')">
+      <div class="absolute inset-0 example-container main-container custom-bg">
+        <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event, 'container')">
+        </div>
       </div>
     </div>
   </div>
