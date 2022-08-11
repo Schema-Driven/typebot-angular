@@ -59,7 +59,11 @@
     </div>
 
     <div class="example-container main-container pl-96">
-      <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event, 'container')">
+      <div
+        cdkDropList
+        (cdkDropListDropped)="drop($event, 'container')"
+        class="example-list"
+      >
       </div>
     </div>
 
