@@ -5,11 +5,14 @@
         <div class="example-container box">
           <!-- <h2 class="font-base text-gray-600 font-medium pb-2 pl-1.5">bubbles</h2> -->
           <div cdkDropList *ngFor="let groupBlock of fixeditems" [cdkDropListData]="groupBlock.blocks"
-            [cdkDropListSortingDisabled]="true" class="example-list" id="fixed-list"
+            [cdkDropListSortingDisabled]="true" class="example-list pt-6" id="fixed-list"
             [cdkDropListEnterPredicate]="noReturnPredicate">
             <label class="font-base text-gray-600 font-medium pb-2 pl-1.5">{{ groupBlock.name }}</label>
-            <div class="h-10 px-3 py-2 border rounded-lg shadow bg-gray-50 example-box border-slate-300 w-42"
-              *ngFor="let item of groupBlock.blocks" cdkDrag>{{item}}</div>
+            <div class="grid grid-cols-2 gap-4">
+              <div
+                class="cursor-pointer h-10 px-3 py-2 border rounded-lg shadow bg-gray-50 example-box border-slate-300 w-42"
+                *ngFor="let item of groupBlock.blocks" cdkDrag>{{item}}</div>
+            </div>
           </div>
         </div>
       </div>
