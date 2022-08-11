@@ -7,7 +7,7 @@
       <h2>Fixed Items</h2>
       <div
         cdkDropList
-        *ngFor="let groupBlock of fixeditems"
+        *ngFor="let groupBlock of structuredBlocks"
         [cdkDropListData]="groupBlock.blocks"
         [cdkDropListSortingDisabled]="true"
         class="example-list"
@@ -15,7 +15,7 @@
         [cdkDropListEnterPredicate]="noReturnPredicate"
       >
         <label class="font-base text-gray-600 font-medium pb-2 pl-1.5">{{ groupBlock.name }}</label>
-        <div class="example-box" *ngFor="let item of groupBlock.blocks" cdkDrag>{{item}}</div>
+        <div class="example-box" *ngFor="let block of groupBlock.blocks" cdkDrag>{{block.name}}</div>
       </div>
     </div>
 

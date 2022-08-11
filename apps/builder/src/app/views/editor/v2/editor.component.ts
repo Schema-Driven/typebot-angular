@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { CdkDrag, CdkDragDrop, moveItemInArray, transferArrayItem, copyArrayItem } from '@angular/cdk/drag-drop';
+import { GroupStructuredBlock } from './editor.interfaces';
 
 
 @Component({
@@ -9,6 +10,36 @@ import { CdkDrag, CdkDragDrop, moveItemInArray, transferArrayItem, copyArrayItem
 })
 
 export class Editorv2Component {
+
+  structuredBlocks: GroupStructuredBlock[] = [
+    {
+      uuid: this.uuid(),
+      name: 'bubbles',
+      blocks: [
+        {
+          id: parseFloat((Math.random() * 10000000).toFixed(0)),
+          uuid: this.uuid(),
+          name: 'Text',
+          position: {
+            x: 320,
+            y: 120,
+          },
+          svg: `assets/svgs/text.svg`,
+        },
+        {
+          id: parseFloat((Math.random() * 10000000).toFixed(0)),
+          uuid: this.uuid(),
+          name: 'Image',
+          position: {
+            x: 320,
+            y: 120,
+          },
+          svg: `assets/svgs/image.svg`,
+        },
+      ],
+    }
+  ];
+
   todo = ['Get to work', 'Pick up groceries', 'Go home', 'Fall asleep'];
 
   done = ['Get up', 'Brush teeth', 'Take a shower', 'Check e-mail', 'Walk dog'];
@@ -37,6 +68,31 @@ export class Editorv2Component {
     }
   ]
 
+  public uuid() {
+    var d = new Date().getTime(); //Timestamp
+    var d2 =
+      (typeof performance !== 'undefined' &&
+        performance.now &&
+        performance.now() * 1000) ||
+      0; //Time in microseconds since page-load or 0 if unsupported
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(
+      /[xy]/g,
+      function (c) {
+        var r = Math.random() * 16; //random number between 0 and 16
+        if (d > 0) {
+          //Use timestamp until depleted
+          r = (d + r) % 16 | 0;
+          d = Math.floor(d / 16);
+        } else {
+          //Use microseconds since page-load if supported
+          r = (d2 + r) % 16 | 0;
+          d2 = Math.floor(d2 / 16);
+        }
+        return (c === 'x' ? r : (r & 0x3) | 0x8).toString(16);
+      }
+    );
+  }
+
   drop(event: CdkDragDrop<string[]>, container: string) {
     console.log("event", event);
     console.log("container", container);
@@ -62,6 +118,12 @@ export class Editorv2Component {
         event.previousIndex,
         event.currentIndex,
       );
+
+      if (event.previousContainer.data.length == 0) {
+        this.groupblock = this.groupblock.filter(
+          (gb) => gb.blocks.length > 0
+        );
+      }
     }
   }
 
