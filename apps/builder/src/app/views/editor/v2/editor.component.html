@@ -19,7 +19,7 @@
       </div>
     </div>
 
-    <div class="example-container box" *ngFor="let b of groupblock" cdkDrag>
+    <div class="example-container box" *ngFor="let b of groupBlocks" cdkDrag>
       <h2>{{b.name}}</h2>
       <div
         cdkDropList
@@ -27,7 +27,7 @@
         class="example-list"
         id="receiving-list"
         (cdkDropListDropped)="drop($event, 'box')">
-        <div class="example-box" *ngFor="let item of b.blocks" cdkDrag>{{item}}</div>
+        <div class="example-box" *ngFor="let block of b.blocks" cdkDrag>{{block.name}}</div>
       </div>
     </div>
 
