@@ -3,30 +3,56 @@
 
     <div class="flex flex-col w-80 absolute left-4 top-4 bg-white p-3 rounded-lg shadow-lg border sidebar">
       <div class="example-container box px-4 w-full">
-        <div cdkDropList *ngFor="let groupBlock of structuredBlocks" [cdkDropListData]="groupBlock.blocks"
-          [cdkDropListSortingDisabled]="true" class="example-list pt-8 pb-2" id="fixed-list"
-          [cdkDropListEnterPredicate]="noReturnPredicate">
+        <div
+          cdkDropList
+          *ngFor="let groupBlock of structuredBlocks"
+          [cdkDropListData]="groupBlock.blocks"
+          [cdkDropListEnterPredicate]="noReturnPredicate"
+          [cdkDropListSortingDisabled]="true"
+          class="example-list pt-8 pb-2"
+          id="fixed-list"
+        >
           <label class="font-base text-gray-600 font-medium pl-1.5 mb-2">{{ groupBlock.name }}</label>
           <div class="grid grid-cols-2 gap-3">
-            <div class="example-box bg-gray-50 py-2 px-2 rounded-lg border cursor-pointer flex gap-2 items-center
-              justify-center hover-shadow" *ngFor="let block of groupBlock.blocks" cdkDrag>
+            <div
+              class="example-box bg-gray-50 py-2 px-2 rounded-lg border cursor-pointer flex gap-2 items-center
+              justify-center hover-shadow"
+              *ngFor="let block of groupBlock.blocks"
+              cdkDrag
+              (cdkDragStarted)="cdkDragStarted($event)" [cdkDragFreeDragPosition]="{x:block.position.x,y:block.position.y}"
+            >
               <img [src]="block.svg" class="toolbar-svg w-4 h-4" />
               <small>{{block.name}}</small>
             </div>
           </div>
         </div>
       </div>
-
-
     </div>
 
-
-    <div class="example-container box dragAbleBox bg-white p-4 m-0 rounded-lg cursor-pointer w-72 relative"
-      *ngFor="let b of groupBlocks" cdkDrag>
+    <div
+      class="example-container box dragAbleBox bg-white p-4 m-0 rounded-lg cursor-pointer w-72"
+      *ngFor="let b of groupBlocks"
+      [style]="('top:'+ b.position.y+'px;left:'+ b.position.x+'px')"
+      cdkDrag
+    >
       <h2>{{b.name}}</h2>
-      <div cdkDropList [cdkDropListData]="b.blocks" class="example-list mt-3 p-2.5 bg-gray-100 rounded-lg"
-        id="receiving-list" (cdkDropListDropped)="drop($event, 'box')">
-        <div class="example-box bg-gray-50 p-3 rounded-lg text-xs border my-1" *ngFor="let block of b.blocks" cdkDrag>
+      <div
+        cdkDropList
+        [cdkDropListData]="b.blocks"
+        (cdkDropListDropped)="drop($event, 'box')"
+        class="example-list mt-3 p-2.5 bg-gray-100 rounded-lg"
+        [cdkDropListEnterPredicate]="dropListEnterPredicate(b)"
+        id="receiving-list"
+      >
+        <div
+          cdkDrag
+          [cdkDragDisabled]="block.id === 0"
+          (cdkDragStarted)="cdkDragStarted($event)"
+          *ngFor="let block of b.blocks"
+
+          class="example-box bg-gray-50 p-3 rounded-lg text-xs border my-1"
+          [id]="block.id"
+        >
           {{block.name}}
         </div>
       </div>

@@ -71,6 +71,9 @@
   z-index: 2;
   position: relative;
 }
+.example-container.box.dragAbleBox {
+  position: absolute;
+}
 
 
 .hover-shadow:hover {

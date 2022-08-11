@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CdkDrag, CdkDragDrop, moveItemInArray, transferArrayItem, copyArrayItem } from '@angular/cdk/drag-drop';
+import { CdkDrag, CdkDragDrop, CdkDropList, moveItemInArray, transferArrayItem, copyArrayItem } from '@angular/cdk/drag-drop';
 import { GroupBlock, Block } from './editor.interfaces';
 import { StructuredBlocks } from './group-structured-blocks';
 
@@ -10,6 +10,8 @@ import { StructuredBlocks } from './group-structured-blocks';
 })
 
 export class Editorv2Component extends StructuredBlocks {
+
+  deg: number = 3;
 
   groupBlocks: GroupBlock[] = [
     {
@@ -54,6 +56,7 @@ export class Editorv2Component extends StructuredBlocks {
     } else if ( container === "container") {
       this.addNewContainer(event.previousContainer.data[event.previousIndex], event);
       event.previousContainer.data.splice(event.previousIndex, 1);
+      this.removeEmptyGroupBlocks(event);
     } else {
       console.log("event.container.data", event.container.data)
       transferArrayItem(
@@ -63,22 +66,15 @@ export class Editorv2Component extends StructuredBlocks {
         event.currentIndex,
       );
 
-      if (event.previousContainer.data.length == 0) {
-        this.groupBlocks = this.groupBlocks.filter(
-          (gb) => gb.blocks.length > 0
-        );
-      }
+      this.removeEmptyGroupBlocks(event);
     }
   }
 
   addNewContainer(newGroup: any, event: any) {
-    let lastIndex = this.groupBlocks.length;
-    let nextIndex = ++lastIndex;
-
     this.groupBlocks.push({
       id: parseFloat((Math.random() * 10000000).toFixed(0)),
       uuid: this.uuid(),
-      name: `Group # ${nextIndex}`,
+      name: `Group # ${(this.groupBlocks.length + 1)}`,
       position: {
         x: event.dropPoint.x,
         y: event.dropPoint.y,
@@ -88,12 +84,32 @@ export class Editorv2Component extends StructuredBlocks {
     });
   }
 
+  removeEmptyGroupBlocks(event: any) {
+    if (event.previousContainer.data.length == 0) {
+      this.groupBlocks = this.groupBlocks.filter(
+        (gb) => gb.blocks.length > 0
+      );
+    }
+  }
+
   /** Predicate function that doesn't allow items to be dropped into a list. */
   noReturnPredicate() {
     return false;
   }
 
-  allowDrag(event: CdkDrag<number>, container: string) {
-    return false;
+  canDrop(item: CdkDrag, list: CdkDropList) {
+    // console.log(list.getSortedItems().length)
+    // return list && list.getSortedItems().length && list.getSortedItems().length > 0;
+  }
+
+  dropListEnterPredicate(b: any){
+    return function(drag: CdkDrag, drop: CdkDropList) {
+        return b.name !== 'Start';
+    };
+  }
+
+  // Emits when the user starts dragging the item.
+  cdkDragStarted(event: any) {
+    event.source._dragRef._initialTransform = `rotate(${this.deg}deg)`;
   }
 }
