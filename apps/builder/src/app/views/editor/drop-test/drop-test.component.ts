@@ -63,6 +63,12 @@ export class DropTestComponent {
         event.previousIndex,
         event.currentIndex,
       );
+
+      if (event.previousContainer.data.length == 0) {
+        this.groupblock = this.groupblock.filter(
+          (gb) => gb.blocks.length > 0
+        );
+      }
     }
   }
 
