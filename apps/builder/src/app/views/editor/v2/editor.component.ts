@@ -1,5 +1,12 @@
 import { Component } from '@angular/core';
-import { CdkDrag, CdkDragDrop, CdkDropList, moveItemInArray, transferArrayItem, copyArrayItem } from '@angular/cdk/drag-drop';
+import {
+  CdkDrag,
+  CdkDragDrop,
+  CdkDropList,
+  moveItemInArray,
+  transferArrayItem,
+  copyArrayItem,
+} from '@angular/cdk/drag-drop';
 import { jsPlumb } from 'jsplumb';
 import { GroupBlock, Block } from './editor.interfaces';
 import { StructuredBlocks } from './group-structured-blocks';
@@ -9,12 +16,12 @@ import { StructuredBlocks } from './group-structured-blocks';
   templateUrl: './editor.component.html',
   styleUrls: ['./editor.component.css'],
 })
-
 export class Editorv2Component extends StructuredBlocks {
 
   jsPlumbInstance: any;
   deg: number = 3;
   endpoints: any[] = [];
+  sidePanel: boolean = false;
 
   groupBlocks: GroupBlock[] = [
     {
@@ -37,7 +44,7 @@ export class Editorv2Component extends StructuredBlocks {
           },
           rendered: true,
           svg: `assets/svgs/text.svg`,
-        }
+        },
       ],
     },
   ];
@@ -73,29 +80,49 @@ export class Editorv2Component extends StructuredBlocks {
     this.registerEndpoints();
   }
 
+  sidePanelClick() {
+    console.log('Side Panel Click', this.sidePanel);
+    this.sidePanel = !this.sidePanel;
+  }
+
   drop(event: CdkDragDrop<Block[]>, container: string) {
-    console.log("event", event);
-    console.log("container", container);
+    console.log('event', event);
+    console.log('container', container);
     if (event.previousContainer === event.container) {
-      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-    } else if ( event.previousContainer.id === "fixed-list" && event.container.id === "receiving-list" ) {
+      moveItemInArray(
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex
+      );
+    } else if (
+      event.previousContainer.id === 'fixed-list' &&
+      event.container.id === 'receiving-list'
+    ) {
       copyArrayItem(
         event.previousContainer.data,
         event.container.data,
         event.previousIndex,
-        event.currentIndex,
+        event.currentIndex
       );
-    } else if ( container === "container") {
-      this.addNewContainer(event.previousContainer.data[event.previousIndex], event);
+    } else if (event.previousContainer.id === 'fixed-list') {
+      this.addNewContainer(
+        event.previousContainer.data[event.previousIndex],
+        event
+      );
+    } else if (container === 'container') {
+      this.addNewContainer(
+        event.previousContainer.data[event.previousIndex],
+        event
+      );
       event.previousContainer.data.splice(event.previousIndex, 1);
       this.removeEmptyGroupBlocks(event);
     } else {
-      console.log("event.container.data", event.container.data)
+      console.log('event.container.data', event.container.data);
       transferArrayItem(
         event.previousContainer.data,
         event.container.data,
         event.previousIndex,
-        event.currentIndex,
+        event.currentIndex
       );
 
       this.removeEmptyGroupBlocks(event);
@@ -106,7 +133,7 @@ export class Editorv2Component extends StructuredBlocks {
     this.groupBlocks.push({
       id: parseFloat((Math.random() * 10000000).toFixed(0)),
       uuid: this.uuid(),
-      name: `Group # ${(this.groupBlocks.length + 1)}`,
+      name: `Group # ${this.groupBlocks.length + 1}`,
       position: {
         x: event.dropPoint.x,
         y: event.dropPoint.y,
@@ -153,9 +180,9 @@ export class Editorv2Component extends StructuredBlocks {
     // return list && list.getSortedItems().length && list.getSortedItems().length > 0;
   }
 
-  dropListEnterPredicate(b: any){
-    return function(drag: CdkDrag, drop: CdkDropList) {
-        return b.name !== 'Start';
+  dropListEnterPredicate(b: any) {
+    return function (drag: CdkDrag, drop: CdkDropList) {
+      return b.name !== 'Start';
     };
   }
 
