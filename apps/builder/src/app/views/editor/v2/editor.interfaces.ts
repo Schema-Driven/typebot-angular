@@ -22,3 +22,8 @@ export interface GroupBlock {
   draggable: boolean;
   blocks: Block[];
 }
+
+export interface Endpoint {
+  identifier: string;
+  instance: any;
+}

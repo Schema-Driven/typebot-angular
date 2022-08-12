@@ -7,6 +7,7 @@ import {
   transferArrayItem,
   copyArrayItem,
 } from '@angular/cdk/drag-drop';
+import { jsPlumb } from 'jsplumb';
 import { GroupBlock, Block } from './editor.interfaces';
 import { StructuredBlocks } from './group-structured-blocks';
 
@@ -16,12 +17,11 @@ import { StructuredBlocks } from './group-structured-blocks';
   styleUrls: ['./editor.component.css'],
 })
 export class Editorv2Component extends StructuredBlocks {
+
+  jsPlumbInstance: any;
   deg: number = 3;
+  endpoints: any[] = [];
   sidePanel: boolean = false;
-  sidePanelClick() {
-    console.log('Side Panel Click', this.sidePanel);
-    this.sidePanel = !this.sidePanel;
-  }
 
   groupBlocks: GroupBlock[] = [
     {
@@ -48,6 +48,42 @@ export class Editorv2Component extends StructuredBlocks {
       ],
     },
   ];
+
+  ngAfterViewInit() {
+    this.jsPlumbInstance = jsPlumb.getInstance({
+      Container: 'block-container',
+      Connector: [
+        'Flowchart',
+        { stub: [212, 67], cornerRadius: 5, alwaysRespectStubs: true },
+      ],
+      PaintStyle: {
+        strokeWidth: 2,
+        stroke: '#9CA3AF',
+      },
+      DragOptions: { cursor: 'crosshair' },
+      Endpoints: [
+        ['Dot', { radius: 4, cssClass: 'connectingConnectorLabel' }],
+        ['Dot', { radius: 11, cssClass: 'connectingConnectorLabel' }],
+      ],
+      ConnectionOverlays: [
+        ['Arrow', { width: 15, length: 15, location: 1, id: 'arrow' }],
+        [
+          'Label',
+          {
+            location: 0.5,
+            cssClass: 'connectingConnectorLabel',
+          },
+        ],
+      ],
+    });
+
+    this.registerEndpoints();
+  }
+
+  sidePanelClick() {
+    console.log('Side Panel Click', this.sidePanel);
+    this.sidePanel = !this.sidePanel;
+  }
 
   drop(event: CdkDragDrop<Block[]>, container: string) {
     console.log('event', event);
@@ -105,11 +141,32 @@ export class Editorv2Component extends StructuredBlocks {
       draggable: true,
       blocks: [newGroup],
     });
+
+    setTimeout(() => {
+      this.registerEndpoints();
+    }, 100);
   }
 
   removeEmptyGroupBlocks(event: any) {
     if (event.previousContainer.data.length == 0) {
-      this.groupBlocks = this.groupBlocks.filter((gb) => gb.blocks.length > 0);
+      let endpointId: any;
+      this.groupBlocks = this.groupBlocks.filter(
+        (gb) => {
+          if (gb.blocks.length === 0) {
+            endpointId = gb.id;
+          }
+          return gb.blocks.length > 0
+        }
+      );
+
+      if (endpointId) {
+        this.endpoints
+          .filter((e) => e.identifier == endpointId)
+          .forEach((endpoint) => {
+            console.log({ endpoint });
+            this.jsPlumbInstance.deleteEndpoint(endpoint.instance);
+          });
+      }
     }
   }
 
@@ -132,5 +189,96 @@ export class Editorv2Component extends StructuredBlocks {
   // Emits when the user starts dragging the item.
   cdkDragStarted(event: any) {
     event.source._dragRef._initialTransform = `rotate(${this.deg}deg)`;
+  }
+
+  registerEndpoints() {
+    this.groupBlocks.map((gb) => {
+      let index = this.endpoints.findIndex((e) => e.identifier == gb.id);
+      if (index === -1) {
+
+        this.endpoints.push({
+          identifier: gb.id.toString(),
+          instance: this.jsPlumbInstance.addEndpoint(
+            gb.id.toString(),
+            {
+              anchor: [0, 0, 0, 0, 0, 30, 'outline'],
+              maxConnections: 99999,
+              Class: 'fooColor',
+            },
+            { isTarget: true }
+            // { cssClass: "fooColor" },
+          ),
+        });
+
+        this.endpoints.push({
+          identifier: gb.id.toString(),
+          instance: this.jsPlumbInstance.addEndpoint(
+            gb.id.toString(),
+            {
+              anchor: [1, 1, 1, 0, 0, -45, 'outline'],
+              connectorOverlays: [
+                [
+                  'Arrow',
+                  {
+                    width: 30,
+                    length: 30,
+                    location: 1,
+                    id: 'arrow',
+                  },
+                ],
+              ],
+              maxConnections: 99999,
+              Class: 'fooColor',
+              ports: {
+                default: {
+                  paintStyle: { fill: '#f76258' }, // the endpoint's appearance
+                  hoverPaintStyle: { fill: '#434343' }, // appearance when mouse hovering on endpoint or connection
+                  edgeType: 'common', // the type of edge for connections from this port type
+                  maxConnections: -1, // no limit on connections
+                  dropOptions: {
+                    //drop options for the port. here we attach a css class.
+                    hoverClass: 'drop-hover',
+                  },
+                  events: {
+                    dblclick: (p: any) => {
+                      console.log(p);
+                    },
+                  },
+                },
+              },
+            },
+            { isSource: true }
+          ),
+        });
+
+        this.jsPlumbInstance.draggable(gb.id.toString());
+      }
+    });
+
+    this.jsPlumbInstance.bind(
+      'endpointClick',
+      function (endpoint: any, originalEvent: any) {
+        console.log(endpoint, originalEvent);
+      }
+    );
+
+    this.jsPlumbInstance.bind(
+      'mouseup',
+      function (endpoint: any, originalEvent: any) {
+        console.log(endpoint, originalEvent);
+      }
+    );
+
+    this.jsPlumbInstance.connect({
+      connector: [
+        'Flowchart',
+        { stub: [212, 67], cornerRadius: 1, alwaysRespectStubs: true },
+      ],
+      source: 'Source',
+      target: 'Target1',
+      anchor: ['Right', 'Left'],
+      paintStyle: { stroke: '#456', strokeWidth: 4, cssClass: 'outline' },
+      overlays: [['svg', { location: 0.5, cssClass: 'fooColor' }]],
+    });
   }
 }
