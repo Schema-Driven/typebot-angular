@@ -139,6 +139,12 @@
   transform: none !important;
 }
 
+.groups-wrapper {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+}
+
 ::ng-deep body .jtk-endpoint:first-child { display: none; }
 ::ng-deep .jtk-endpoint { z-index:3; }
 ::ng-deep .jtk-connector { z-index:4; }
