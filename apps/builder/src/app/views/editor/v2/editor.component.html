@@ -1,4 +1,5 @@
 <div class="wrapper custom-bg border h-screen overflow-hidden">
+  <header-bar></header-bar>
   <div class="main h-full w-full" cdkDropListGroup>
 
     <div class="transform1 relative"
@@ -57,21 +58,23 @@
     </div>
 
 
-
-
-    <div class="example-container box dragAbleBox bg-white p-4 m-0 rounded-lg cursor-pointer w-72 hover:shadow-md"
-      *ngFor="let b of groupBlocks" [style]="('top:'+ b.position.y+'px;left:'+ b.position.x+'px')" cdkDrag>
-      <h2>{{b.name}}</h2>
-      <div cdkDropList [cdkDropListData]="b.blocks" (cdkDropListDropped)="drop($event, 'box')"
-        class="example-list overflow-hidden block h-full mt-3 p-2.5 bg-gray-100 rounded-lg"
-        [cdkDropListEnterPredicate]="dropListEnterPredicate(b)" id="receiving-list">
-        <div cdkDrag [cdkDragDisabled]="block.id === 0" (cdkDragStarted)="cdkDragStarted($event)"
-          *ngFor="let block of b.blocks" class="example-box bg-gray-50 p-3 rounded-lg text-xs border my-1"
-          [id]="block.id">
-          <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
-          <div class="w-full text-sm px-2 flex gap-2 items-center">
-            <img [src]="block.svg" class="w-4 h-4" />
-            <p class="mb-0">{{block.name}}</p>
+    <!--
+example-container box dragAbleBox bg-white p-4 m-0 rounded-lg cursor-pointer w-72 hover:shadow-md -->
+    <div *ngFor="let b of groupBlocks" [id]="b.id" class=" absolute z-2"
+      [style]="('top:'+ b.position.y+'px;left:'+ b.position.x+'px')">
+      <div class="wrap-div w-72 bg-white p-4" cdkDrag>
+        <h2>{{b.name}}</h2>
+        <div cdkDropList [cdkDropListData]="b.blocks" (cdkDropListDropped)="drop($event, 'box')"
+          class="example-list overflow-hidden block h-full mt-3 p-2.5 bg-gray-100 rounded-lg"
+          [cdkDropListEnterPredicate]="dropListEnterPredicate(b)" id="receiving-list">
+          <div cdkDrag [cdkDragDisabled]="block.id === 0" (cdkDragStarted)="cdkDragStarted($event)"
+            *ngFor="let block of b.blocks" class="example-box bg-gray-50 p-3 rounded-lg text-xs border my-1"
+            [id]="block.id">
+            <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
+            <div class="w-full text-sm px-2 flex gap-2 items-center">
+              <img [src]="block.svg" class="w-4 h-4" />
+              <p class="mb-0">{{block.name}}</p>
+            </div>
           </div>
         </div>
       </div>
