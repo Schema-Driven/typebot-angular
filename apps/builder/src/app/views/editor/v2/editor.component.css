@@ -71,10 +71,10 @@
   z-index: 2;
   position: relative;
 }
-.example-container.box.dragAbleBox {
-  position: absolute;
-}
 
+.z-2 {
+  z-index: 2;
+}
 
 .hover-shadow:hover {
     box-shadow: 0 4px 6px -1px rgb(0 0 0 / 10%), 0 2px 4px -1px rgb(0 0 0 / 6%);
@@ -84,3 +84,15 @@
 .main-container .cdk-drop-list > div {
   display: none;
 }
+
+.wrap-div {
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 10%), 0 2px 4px -1px rgb(0 0 0 / 6%);
+  border-radius: 10px;
+  transition: box-shadow 200ms ease 0s;
+  cursor: pointer;
+  transform: none !important;
+}
+
+::ng-deep body .jtk-endpoint:first-child { display: none; }
+::ng-deep .jtk-endpoint { z-index:3; }
+::ng-deep .jtk-connector { z-index:4; }
