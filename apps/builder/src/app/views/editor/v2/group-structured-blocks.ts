@@ -7,45 +7,25 @@ export class StructuredBlocks {
       name: 'bubbles',
       blocks: [
         {
-          id: parseFloat((Math.random() * 10000000).toFixed(0)),
-          uuid: this.uuid(),
-          name: 'Text',
-          position: {
-            x: 320,
-            y: 120,
-          },
-          svg: `assets/svgs/text.svg`,
+          id: this.uuid(),
+          content: {html: "<div></div>", plainText:""},
+          type: 'text',
         },
         {
-          id: parseFloat((Math.random() * 10000000).toFixed(0)),
-          uuid: this.uuid(),
-          name: 'Image',
-          position: {
-            x: 320,
-            y: 120,
-          },
-          svg: `assets/svgs/image.svg`,
+          id: this.uuid(),
+          content: {},
+          type: 'image',
         },
         {
-          id: parseFloat((Math.random() * 10000000).toFixed(0)),
-          uuid: this.uuid(),
-          name: 'Video',
-          position: {
-            x: 320,
-            y: 120,
-          },
-          svg: `assets/svgs/video.svg`,
+          id: this.uuid(),
+          content: {},
+          type: 'video'
         },
         {
-          id: parseFloat((Math.random() * 10000000).toFixed(0)),
-          uuid: this.uuid(),
-          name: 'Embed',
-          position: {
-            x: 320,
-            y: 120,
-          },
-          svg: `assets/svgs/embed.svg`,
-        },
+          id: this.uuid(),
+          content: {height: 400},
+          type: 'embed'
+        }
       ],
     },
     {
@@ -53,187 +33,144 @@ export class StructuredBlocks {
       name: 'inputs',
       blocks: [
         {
-          id: parseFloat((Math.random() * 10000000).toFixed(0)),
-          uuid: this.uuid(),
-          name: 'Text',
-          position: {
-            x: 320,
-            y: 120,
+          id: this.uuid(),
+          options: {
+            isLong: false,
+            labels: {button: "Send", placeholder: "Type your answer..."}
           },
-          svg: `assets/svgs/input-text.svg`,
+          type: 'text_input',
         },
         {
-          id: parseFloat((Math.random() * 10000000).toFixed(0)),
-          uuid: this.uuid(),
-          name: 'Number',
-          position: {
-            x: 320,
-            y: 120,
+          id: this.uuid(),
+          options: {
+            labels: {button: "Send", placeholder: "Type a number..."}
           },
-          svg: `assets/svgs/input-number.svg`,
+          type: 'number_input',
         },
         {
-          id: parseFloat((Math.random() * 10000000).toFixed(0)),
-          uuid: this.uuid(),
-          name: 'Email',
-          position: {
-            x: 320,
-            y: 120,
+          id: this.uuid(),
+          options: {
+            labels: {button: "Send", placeholder: "Type your email..."},
+            retryMessageContent: "This email doesn't seem to be valid. Can you type it again?"
           },
-          svg: `assets/svgs/input-email.svg`,
+          type: 'email_input',
         },
         {
-          id: parseFloat((Math.random() * 10000000).toFixed(0)),
-          uuid: this.uuid(),
-          name: 'Website',
-          position: {
-            x: 320,
-            y: 120,
+          id: this.uuid(),
+          options: {
+            labels: {button: "Send", placeholder: "Type a URL..."},
+            retryMessageContent: "This URL doesn't seem to be valid. Can you type it again?"
           },
-          svg: `assets/svgs/input-website.svg`,
+          type: 'url_input',
         },
         {
-          id: parseFloat((Math.random() * 10000000).toFixed(0)),
-          uuid: this.uuid(),
-          name: 'Date',
-          position: {
-            x: 320,
-            y: 120,
+          id: this.uuid(),
+          options: {
+            labels: {to: "To:", from: "From:", button: "Send"},
+            hasTime: false,
+            isRange: false
           },
-          svg: `assets/svgs/input-date.svg`,
+          type: 'date_input',
         },
         {
-          id: parseFloat((Math.random() * 10000000).toFixed(0)),
-          uuid: this.uuid(),
-          name: 'Phone',
-          position: {
-            x: 320,
-            y: 120,
+          id: this.uuid(),
+          options: {
+            labels: {button: "Send", placeholder: "Type your phone number..."},
+            retryMessageContent: "This phone numbe doesn't seem to be valid. Can you type it again?"
           },
-          svg: `assets/svgs/input-phone.svg`,
+          type: 'phone_number_input',
         },
         {
-          id: parseFloat((Math.random() * 10000000).toFixed(0)),
-          uuid: this.uuid(),
-          name: 'Button',
-          position: {
-            x: 320,
-            y: 120,
+          id: this.uuid(),
+          items: [
+            {
+              id: this.uuid(),
+              content: "Click to edit",
+              type: 0
+            }
+          ],
+          options: {
+            buttonLabel: "Send",
+            isMultipleChoice: false
           },
-          svg: `assets/svgs/input-button.svg`,
+          type: 'choice_input',
         },
         {
-          id: parseFloat((Math.random() * 10000000).toFixed(0)),
-          uuid: this.uuid(),
-          name: 'Payment',
-          position: {
-            x: 320,
-            y: 120,
+          id: this.uuid(),
+          options: {
+            currency: "USD",
+            labels: {button: "Pay", success: "Success"},
+            providers: "stripe"
           },
-          svg: `assets/svgs/input-payment.svg`,
+          type: 'payment_input',
         },
+        {
+          id: this.uuid(),
+          options: {
+            buttonTypes: "Numbers",
+            customIcon: {
+              isEnabled: false
+            },
+            labels: {
+              button: "Send"
+            },
+            length: 10
+          },
+          type: 'rating_input',
+        },
+        {
+          id: this.uuid(),
+          options: {
+            labels: {
+              button: "Upload",
+              placeholder: "<strong>Click to upload</strong> or drag and drop<br> (size limit: 10MB)"
+            },
+            isMultipleAllowed: false,
+            isRequired: true,
+          },
+          type: 'file_input',
+        }
       ],
     },
     {
       uuid: this.uuid(),
-      name: 'toolbar',
+      name: 'logic',
       blocks: [
         {
-          id: parseFloat((Math.random() * 10000000).toFixed(0)),
-          uuid: this.uuid(),
-          name: 'Text',
-          position: {
-            x: 320,
-            y: 120,
-          },
-          svg: `assets/svgs/text.svg`,
+          id: this.uuid(),
+          options: {},
+          type: 'set_variable'
         },
         {
-          id: parseFloat((Math.random() * 10000000).toFixed(0)),
-          uuid: this.uuid(),
-          name: 'Image',
-          position: {
-            x: 320,
-            y: 120,
-          },
-          svg: `assets/svgs/image.svg`,
+          id: this.uuid(),
+          items: [
+            {
+              id: this.uuid(),
+              content: {comparisons: [], logicalOperator: "AND"},
+              type: 1
+            }
+          ],
+          type: 'condition'
         },
         {
-          id: parseFloat((Math.random() * 10000000).toFixed(0)),
-          uuid: this.uuid(),
-          name: 'Video',
-          position: {
-            x: 320,
-            y: 120,
+          id: this.uuid(),
+          options: {
+            isNewTab: false
           },
-          svg: `assets/svgs/video.svg`,
+          type: 'redirect'
         },
         {
-          id: parseFloat((Math.random() * 10000000).toFixed(0)),
-          uuid: this.uuid(),
-          name: 'Embed',
-          position: {
-            x: 320,
-            y: 120,
+          id: this.uuid(),
+          options: {
+            name: "Code snippet",
           },
-          svg: `assets/svgs/embed.svg`,
-        },
-      ],
-    },
-    {
-      uuid: this.uuid(),
-      name: 'logics',
-      blocks: [
-        {
-          id: parseFloat((Math.random() * 10000000).toFixed(0)),
-          uuid: this.uuid(),
-          name: 'Set variable',
-          position: {
-            x: 320,
-            y: 120,
-          },
-          svg: `assets/svgs/logic-variable.svg`,
+          type: 'code'
         },
         {
-          id: parseFloat((Math.random() * 10000000).toFixed(0)),
-          uuid: this.uuid(),
-          name: 'Condition',
-          position: {
-            x: 320,
-            y: 120,
-          },
-          svg: `assets/svgs/logic-condition.svg`,
-        },
-        {
-          id: parseFloat((Math.random() * 10000000).toFixed(0)),
-          uuid: this.uuid(),
-          name: 'Redirect',
-          position: {
-            x: 320,
-            y: 120,
-          },
-          svg: `assets/svgs/logic-redirect.svg`,
-        },
-        {
-          id: parseFloat((Math.random() * 10000000).toFixed(0)),
-          uuid: this.uuid(),
-          name: 'Code',
-          position: {
-            x: 320,
-            y: 120,
-          },
-          svg: `assets/svgs/logic-code.svg`,
-        },
-        {
-          id: parseFloat((Math.random() * 10000000).toFixed(0)),
-          uuid: this.uuid(),
-          name: 'Typebot',
-          position: {
-            x: 320,
-            y: 120,
-          },
-          svg: `assets/svgs/logic-typebot.svg`,
-        },
+          id: this.uuid(),
+          options: {},
+          type: 'typebot_link'
+        }
       ],
     },
     {
@@ -241,28 +178,109 @@ export class StructuredBlocks {
       name: 'integerations',
       blocks: [
         {
-          id: parseFloat((Math.random() * 10000000).toFixed(0)),
-          uuid: this.uuid(),
-          name: 'Webhook',
-          position: {
-            x: 320,
-            y: 120,
-          },
-          svg: `assets/svgs/integeration-webhook.svg`,
+          id: this.uuid(),
+          options: {},
+          type: 'webhook'
         },
         {
-          id: parseFloat((Math.random() * 10000000).toFixed(0)),
-          uuid: this.uuid(),
-          name: 'Email',
-          position: {
-            x: 320,
-            y: 120,
-          },
-          svg: `assets/svgs/integeration-email.svg`,
+          id: this.uuid(),
+          options: {},
+          type: 'email'
         },
       ],
     },
   ];
+
+  prefilledData : any = {
+    start: {
+      label: 'Start',
+      svg: 'assets/svgs/text.svg'
+    },
+    text: {
+      label: 'Text',
+      svg: 'assets/svgs/text.svg'
+    },
+    image: {
+      label: 'Image',
+      svg: 'assets/svgs/image.svg'
+    },
+    video: {
+      label: 'Video',
+      svg: 'assets/svgs/video.svg'
+    },
+    embed: {
+      label: 'Embed',
+      svg: 'assets/svgs/embed.svg'
+    },
+    text_input: {
+      label: 'Text',
+      svg: 'assets/svgs/input-text.svg'
+    },
+    number_input: {
+      label: 'Number',
+      svg: 'assets/svgs/input-number.svg'
+    },
+    email_input: {
+      label: 'Email',
+      svg: 'assets/svgs/input-email.svg'
+    },
+    url_input: {
+      label: 'Website',
+      svg: 'assets/svgs/input-website.svg'
+    },
+    date_input: {
+      label: 'Date',
+      svg: 'assets/svgs/input-date.svg'
+    },
+    phone_number_input: {
+      label: 'Phone',
+      svg: 'assets/svgs/input-phone.svg'
+    },
+    choice_input: {
+      label: 'Button',
+      svg: 'assets/svgs/input-button.svg'
+    },
+    payment_input: {
+      label: 'Payment',
+      svg: 'assets/svgs/input-payment.svg'
+    },
+    rating_input: {
+      label: 'Rating',
+      svg: 'assets/svgs/input-payment.svg'
+    },
+    file_input: {
+      label: 'File',
+      svg: 'assets/svgs/input-payment.svg'
+    },
+    set_variable: {
+      label: 'Set Variable',
+      svg: 'assets/svgs/logic-variable.svg'
+    },
+    condition: {
+      label: 'Condition',
+      svg: 'assets/svgs/logic-condition.svg'
+    },
+    redirect: {
+      label: 'Redirect',
+      svg: 'assets/svgs/logic-redirect.svg'
+    },
+    code: {
+      label: 'Code',
+      svg: 'assets/svgs/logic-code.svg'
+    },
+    typebot_link: {
+      label: 'Typeot',
+      svg: 'assets/svgs/logic-typebot.svg'
+    },
+    webhook: {
+      label: 'Webhooks',
+      svg: 'assets/svgs/integeration-webhook.svg'
+    },
+    email: {
+      label: 'Email',
+      svg: 'assets/svgs/integeration-email.svg'
+    },
+  }
 
   public uuid() {
     var d = new Date().getTime(); //Timestamp

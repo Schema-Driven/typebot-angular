@@ -35,15 +35,8 @@ export class Editorv2Component extends StructuredBlocks {
       draggable: true,
       blocks: [
         {
-          id: 0,
-          uuid: this.uuid(),
-          name: 'Start',
-          position: {
-            x: 420,
-            y: 120,
-          },
-          rendered: true,
-          svg: `assets/svgs/text.svg`,
+          id: this.uuid(),
+          type: 'start'
         },
       ],
     },

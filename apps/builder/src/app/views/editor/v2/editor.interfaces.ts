@@ -1,11 +1,9 @@
 export interface Block {
-  id: number;
-  uuid: string;
-  name?: string;
-  position?: any;
-  svg?: string;
-  rendered?: boolean;
-  endpoint?: any;
+  id: string;
+  content?: object;
+  items?: { id: string, content: any, type: number }[];
+  options?: object;
+  type: string;
 }
 
 export interface GroupStructuredBlock {
