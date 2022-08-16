@@ -25,8 +25,7 @@ export class Editorv2Component extends StructuredBlocks {
 
   groupBlocks: GroupBlock[] = [
     {
-      id: parseFloat((Math.random() * 10000000).toFixed(0)),
-      uuid: this.uuid(),
+      id: this.uuid(),
       name: 'Start',
       position: {
         x: 420,
@@ -124,8 +123,7 @@ export class Editorv2Component extends StructuredBlocks {
 
   addNewContainer(newGroup: any, event: any) {
     this.groupBlocks.push({
-      id: parseFloat((Math.random() * 10000000).toFixed(0)),
-      uuid: this.uuid(),
+      id: this.uuid(),
       name: `Group # ${this.groupBlocks.length + 1}`,
       position: {
         x: event.dropPoint.x,
@@ -251,27 +249,27 @@ export class Editorv2Component extends StructuredBlocks {
     this.jsPlumbInstance.bind(
       'endpointClick',
       function (endpoint: any, originalEvent: any) {
-        console.log(endpoint, originalEvent);
+        console.log("endpointClick", endpoint, originalEvent);
       }
     );
 
     this.jsPlumbInstance.bind(
       'mouseup',
       function (endpoint: any, originalEvent: any) {
-        console.log(endpoint, originalEvent);
+        console.log("mouseup", endpoint, originalEvent);
       }
     );
 
-    this.jsPlumbInstance.connect({
-      connector: [
-        'Flowchart',
-        { stub: [212, 67], cornerRadius: 1, alwaysRespectStubs: true },
-      ],
-      source: 'Source',
-      target: 'Target1',
-      anchor: ['Right', 'Left'],
-      paintStyle: { stroke: '#456', strokeWidth: 4, cssClass: 'outline' },
-      overlays: [['svg', { location: 0.5, cssClass: 'fooColor' }]],
-    });
+    // this.jsPlumbInstance.connect({
+    //   connector: [
+    //     'Flowchart',
+    //     { stub: [212, 67], cornerRadius: 1, alwaysRespectStubs: true },
+    //   ],
+    //   source: 'Source',
+    //   target: 'Target1',
+    //   anchor: ['Right', 'Left'],
+    //   paintStyle: { stroke: '#456', strokeWidth: 4, cssClass: 'outline' },
+    //   overlays: [['svg', { location: 0.5, cssClass: 'fooColor' }]],
+    // });
   }
 }

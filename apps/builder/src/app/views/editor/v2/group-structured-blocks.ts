@@ -3,7 +3,7 @@ import { GroupStructuredBlock } from "./editor.interfaces";
 export class StructuredBlocks {
   structuredBlocks: GroupStructuredBlock[] = [
     {
-      uuid: this.uuid(),
+      id: this.uuid(),
       name: 'bubbles',
       blocks: [
         {
@@ -29,7 +29,7 @@ export class StructuredBlocks {
       ],
     },
     {
-      uuid: this.uuid(),
+      id: this.uuid(),
       name: 'inputs',
       blocks: [
         {
@@ -133,7 +133,7 @@ export class StructuredBlocks {
       ],
     },
     {
-      uuid: this.uuid(),
+      id: this.uuid(),
       name: 'logic',
       blocks: [
         {
@@ -174,7 +174,7 @@ export class StructuredBlocks {
       ],
     },
     {
-      uuid: this.uuid(),
+      id: this.uuid(),
       name: 'integerations',
       blocks: [
         {

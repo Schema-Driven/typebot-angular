@@ -7,16 +7,15 @@ export interface Block {
 }
 
 export interface GroupStructuredBlock {
-  uuid: string;
+  id: string;
   name: string;
   blocks: Block[];
 }
 
 export interface GroupBlock {
-  id: number;
-  uuid: string;
+  id: string;
   name: string;
-  position: any;
+  position: {x: number, y: number};
   draggable: boolean;
   blocks: Block[];
 }
