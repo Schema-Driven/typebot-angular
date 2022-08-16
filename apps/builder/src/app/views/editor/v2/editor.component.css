@@ -1,54 +1,45 @@
 .custom-bg {
     background: radial-gradient(rgb(198, 208, 225) 1px, transparent 0px) -19px 0px / 40px 40px rgb(244, 245, 248);
 }
-.example-container {
-  max-width: 100%;
-  display: inline-block;
-  vertical-align: top;
+
+.editor-main-container{
+  display: flex;
+  overflow: clip;
+  height: 100vh;
+  flex-direction: column;
 }
 
-.example-list {
-  min-height: 60px;
+.wrapper-inner{
+    display: flex;
+    flex: 1 1 0%;
+    position: relative;
 }
 
-.cdk-drag-preview {
-  box-sizing: border-box;
-  border-radius: 4px;
-  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
-              0 8px 10px 1px rgba(0, 0, 0, 0.14),
-              0 3px 14px 2px rgba(0, 0, 0, 0.12);
-}
-
-.main-container {
-  width: 100%;
-  height: 100%;
+.sidePanel{
+  display: flex;
+  width: 360px;
   position: absolute;
-  left: 0;
-  z-index: 1;
-}
-.example-container.box {
+  left: 0px;
+  height: 100%;
   z-index: 2;
-  position: relative;
+  padding-right: 0;
+  transition: transform 350ms cubic-bezier(0.075, 0.82, 0.165, 1) 0s;
 }
 
-.z-2 {
-  z-index: 2;
+.sidePanel:hover {
+    transform: translateX(0px) !important;
+    transition: transform 350ms cubic-bezier(0.075, 0.82, 0.165, 1) 0s;
 }
 
-.hover-shadow:hover {
-    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 10%), 0 2px 4px -1px rgb(0 0 0 / 6%);
-    transition: box-shadow 200ms ease 0s;
+.sidePanel{
+    transition: transform 350ms cubic-bezier(0.075, 0.82, 0.165, 1) 0s;
 }
 
-.main-container .cdk-drop-list > div {
+.sidePanel .sidebar::-webkit-scrollbar {
   display: none;
 }
 
-.sidebar::-webkit-scrollbar {
-  display: none;
-}
-
-.css-1hsy5ug{
+.sidePanelHoverMain{
     display: flex;
     align-items: center;
     justify-content: center;
@@ -59,7 +50,7 @@
     top: 0px;
 }
 
-.css-i6ims5{
+.sidePanelHoverThumb{
     display: flex;
     width: 5px;
     height: 20px;
@@ -67,13 +58,9 @@
     border-radius: 0.35rem;
 }
 
-.transform1:hover {
-    transform: translateX(0px) !important;
-    transition: transform 350ms cubic-bezier(0.075, 0.82, 0.165, 1) 0s;
-}
-
-.transform1{
-    transition: transform 350ms cubic-bezier(0.075, 0.82, 0.165, 1) 0s;
+.rightSide{
+  width: 100%;
+  float: left;
 }
 
 .tooltip-sec {
@@ -98,25 +85,18 @@
     font-weight: 400;
 }
 
-
-.transform1{
-  display: flex;
-  width: 360px;
-  position: absolute;
-  left: 0px;
-  /* top: 50px; */
-  height: 100%;
-  z-index: 2;
-  padding-right: 0;
-  transition: transform 350ms cubic-bezier(0.075, 0.82, 0.165, 1) 0s;
-}
-
 .tooltip-sec:hover   .tooltiptext-sec {
     visibility: visible;
 }
 
-.cdk-drag-placeholder {
-  display: hidden !important;
+
+.groups-wrapper{
+    display: flex;
+    flex: 1 1 0%;
+    transform-origin: 0px 0px 0px;
+    width: 100%;
+    height: 100%;
+    position: absolute;
 }
 
 .wrap-div {
@@ -127,10 +107,22 @@
   transform: none !important;
 }
 
-.groups-wrapper {
+.dragAbleBox {
+  min-height: 60px;
+}
+
+.recieveDragedBox {
   width: 100%;
   height: 100%;
   position: absolute;
+  overflow: hidden;
+  display: block;
+  left: 0;
+  z-index: 1;
+}
+
+.z-2 {
+  z-index: 2;
 }
 
 ::ng-deep body .jtk-endpoint:first-child ::ng-deep .jtk-endpoint:after{ display: none; }
@@ -174,7 +166,3 @@
     border-radius: 12px;
 }
 
-/* ::ng-deep  .jtk-connector path[pointer-events="all"]{
-    d: path('M7.07138888,5.50174526 L2.43017246,7.82235347 C1.60067988,8.23709976 0.592024983,7.90088146 0.177278692,7.07138888 C0.0606951226,6.83822174 0,6.58111307 0,6.32042429 L0,1.67920787 C0,0.751806973 0.751806973,0 1.67920787,0 C1.93989666,0 2.19700532,0.0606951226 2.43017246,0.177278692 L7,3 C7.82949258,3.41474629 8.23709976,3.92128809 7.82235347,4.75078067 C7.6598671,5.07575341 7.39636161,5.33925889 7.07138888,5.50174526 Z');
-    transform: translateX(94%);
-} */
