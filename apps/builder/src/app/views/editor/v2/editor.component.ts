@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import {
   CdkDrag,
   CdkDragDrop,
@@ -8,6 +8,16 @@ import {
   copyArrayItem,
 } from '@angular/cdk/drag-drop';
 import { jsPlumb } from 'jsplumb';
+import {
+  BrowserJsPlumbInstance,
+  ContainmentType,
+  EVENT_DRAG_STOP,
+  EVENT_ENDPOINT_MOUSEOUT,
+  EVENT_ENDPOINT_MOUSEOVER,
+  newInstance,
+  ready
+} from "@jsplumb/browser-ui";
+import { FlowchartConnector } from "@jsplumb/connector-flowchart";
 import { GroupBlock, Block } from './editor.interfaces';
 import { StructuredBlocks } from './group-structured-blocks';
 
@@ -18,6 +28,7 @@ import { StructuredBlocks } from './group-structured-blocks';
 })
 export class Editorv2Component extends StructuredBlocks {
 
+  // @ViewChild("wrapper", { static: true }) wrapper: ElementRef;
   jsPlumbInstance: any;
   deg: number = 3;
   endpoints: any[] = [];
