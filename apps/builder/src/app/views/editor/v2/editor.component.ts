@@ -18,6 +18,7 @@ import {
   ready
 } from "@jsplumb/browser-ui";
 import { FlowchartConnector } from "@jsplumb/connector-flowchart";
+import { AnchorLocations, AnchorSpec, AnchorOptions } from "@jsplumb/common";
 import { GroupBlock, Block } from './editor.interfaces';
 import { StructuredBlocks } from './group-structured-blocks';
 
@@ -28,15 +29,19 @@ import { StructuredBlocks } from './group-structured-blocks';
 })
 export class Editorv2Component extends StructuredBlocks {
 
-  // @ViewChild("wrapper", { static: true }) wrapper: ElementRef;
+  @ViewChild("wrapper", { static: true })
+  wrapper!: ElementRef;
   jsPlumbInstance: any;
+  instance: any;
   deg: number = 3;
   endpoints: any[] = [];
+  nodes: any[] = [];
   sidePanel: boolean = false;
 
+  firstGroupId = this.uuid();
   groupBlocks: GroupBlock[] = [
     {
-      id: this.uuid(),
+      id: this.firstGroupId,
       name: 'Start',
       position: {
         x: 420,
@@ -52,36 +57,121 @@ export class Editorv2Component extends StructuredBlocks {
     },
   ];
 
-  ngAfterViewInit() {
-    this.jsPlumbInstance = jsPlumb.getInstance({
-      Container: 'block-container',
-      Connector: [
-        'Flowchart',
-        { stub: [212, 67], cornerRadius: 5, alwaysRespectStubs: true },
-      ],
-      PaintStyle: {
-        strokeWidth: 2,
-        stroke: '#9CA3AF',
-      },
-      DragOptions: { cursor: 'crosshair' },
-      Endpoints: [
-        ['Dot', { radius: 4, cssClass: 'connectingConnectorLabel' }],
-        ['Dot', { radius: 11, cssClass: 'connectingConnectorLabel' }],
-      ],
-      ConnectionOverlays: [
-        ['Arrow', { width: 15, length: 15, location: 1, id: 'arrow' }],
-        [
-          'Label',
-          {
-            location: 0.5,
-            cssClass: 'connectingConnectorLabel',
-          },
-        ],
-      ],
+  connectorPaintStyle = {
+    stroke: "#58b7f6",
+    strokeWidth: 2
+  };
+
+  connectorHoverStyle = {
+    stroke: "#58b7f6",
+    strokeWidth: 2
+  };
+
+  sourceEndpoint = {
+    endpoint: {
+      type: "Dot",
+      options: { radius: 10, cssClass: "endpoint source-endpoint" }
+    },
+    paintStyle: {
+      fill: "#fffhdg",
+      stroke: "none"
+    },
+    source: true,
+    target: false,
+    connectorStyle: this.connectorPaintStyle,
+    connectorHoverStyle: this.connectorHoverStyle,
+    maxConnections: 4,
+    scope: "jsplumb_defaultscope"
+  };
+
+  targetEndpoint = {
+    endpoint: {
+      type: "Dot",
+      options: { radius: 7, cssClass: "endpoint" }
+    },
+    paintStyle: {
+      fill: "none"
+    },
+    maxConnections: 4,
+    source: false,
+    target: true,
+    uniqueEndpoint: true,
+    deleteEndpointsOnDetach: false
+  };
+
+  dragOptions = {
+    zIndex: 2000,
+    containment: ContainmentType.notNegative
+  };
+  connectionOverlays = [
+    {
+      type: "Arrow",
+      options: {
+        location: 1,
+        length: 14,
+        foldback: 0.8
+      }
+    }
+  ];
+  connectorProp = {
+    type: FlowchartConnector.type,
+    options: {
+      stub: [10, 15],
+      alwaysRespectStubs: true,
+      cornerRadius: 20,
+      midpoint: 0.5
+    }
+  };
+
+  ngOnInit() {
+    this.instance = newInstance({
+      dragOptions: this.dragOptions,
+      connectionOverlays: this.connectionOverlays,
+      connector: this.connectorProp,
+      container: this.wrapper.nativeElement
     });
 
-    this.registerEndpoints();
+    this.instance.addTargetSelector(".single-group", {
+      ...this.targetEndpoint,
+      ...{
+        anchor: "ContinuousLeft",
+        scope: "target_scope"
+      }
+    });
+
+    this.manageNode(this.firstGroupId);
   }
+
+  // ngAfterViewInit() {
+  //   this.jsPlumbInstance = jsPlumb.getInstance({
+  //     Container: 'block-container',
+  //     Connector: [
+  //       'Flowchart',
+  //       { stub: [212, 67], cornerRadius: 5, alwaysRespectStubs: true },
+  //     ],
+  //     PaintStyle: {
+  //       strokeWidth: 2,
+  //       stroke: '#9CA3AF',
+  //     },
+  //     DragOptions: { cursor: 'crosshair' },
+  //     Endpoints: [
+  //       ['Dot', { radius: 4, cssClass: 'connectingConnectorLabel' }],
+  //       ['Dot', { radius: 11, cssClass: 'connectingConnectorLabel' }],
+  //     ],
+  //     ConnectionOverlays: [
+  //       ['Arrow', { width: 15, length: 15, location: 1, id: 'arrow' }],
+  //       [
+  //         'Label',
+  //         {
+  //           location: 0.5,
+  //           cssClass: 'connectingConnectorLabel',
+  //         },
+  //       ],
+  //     ],
+  //   });
+
+  //   this.registerEndpoints();
+  // }
 
   sidePanelClick() {
     console.log('Side Panel Click', this.sidePanel);
@@ -133,8 +223,9 @@ export class Editorv2Component extends StructuredBlocks {
   }
 
   addNewContainer(newGroup: any, event: any) {
+    let groupId = this.uuid();
     this.groupBlocks.push({
-      id: this.uuid(),
+      id: groupId,
       name: `Group # ${this.groupBlocks.length + 1}`,
       position: {
         x: event.dropPoint.x,
@@ -145,7 +236,8 @@ export class Editorv2Component extends StructuredBlocks {
     });
 
     setTimeout(() => {
-      this.registerEndpoints();
+      // this.registerEndpoints();
+      this.manageNode(groupId);
     }, 100);
   }
 
@@ -282,5 +374,24 @@ export class Editorv2Component extends StructuredBlocks {
     //   paintStyle: { stroke: '#456', strokeWidth: 4, cssClass: 'outline' },
     //   overlays: [['svg', { location: 0.5, cssClass: 'fooColor' }]],
     // });
+  }
+
+  manageNode(id: string) {
+    setTimeout(() => {
+      this.instance.manage(document.getElementById(id));
+      this._addEndPoints2(id, ["Right"]);
+    });
+  }
+
+  _addEndPoints2(id: string, sourceAnchors: Array<AnchorSpec>) {
+    const element = this.instance.getManagedElement(id);
+    for (let i = 0; i < sourceAnchors.length; i++) {
+      const sourceUUID = id + sourceAnchors[i];
+      this.instance.addEndpoint(element, this.sourceEndpoint, {
+        anchor: "Right",
+        uuid: sourceUUID,
+        scope: "target_scope"
+      });
+    }
   }
 }

@@ -194,7 +194,7 @@ export class StructuredBlocks {
   prefilledData : any = {
     start: {
       label: 'Start',
-      svg: 'assets/svgs/text.svg'
+      svg: 'assets/svgs/flag.svg'
     },
     text: {
       label: 'Text',
