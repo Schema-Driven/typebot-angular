@@ -38,12 +38,11 @@
                 <div class="bg-slate-100   hover:shadow-md w-full h-10 rounded-lg">
                   <div
                     class="bg-slate-50  border border-slate-300 hover:shadow-md w-full rounded-lg py-2.5 h-10 cursor-pointer"
-                    cdkDrag (cdkDragStarted)="cdkDragStarted($event)"
-                    [cdkDragFreeDragPosition]="{x:block.position.x,y:block.position.y}" [id]="block.id">
+                    cdkDrag (cdkDragStarted)="cdkDragStarted($event)" [id]="block.id">
                     <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
                     <div class="w-full text-xs px-2 flex justify-center gap-2 items-center">
-                      <img [src]="block.svg" class="w-4 h-4" />
-                      <p class="mb-0">{{block.name}}</p>
+                      <img [src]="prefilledData[block.type].svg" class="w-4 h-4" />
+                      <p class="mb-0">{{prefilledData[block.type].label}}</p>
                     </div>
                   </div>
                 </div>
@@ -67,13 +66,13 @@ example-container box dragAbleBox bg-white p-4 m-0 rounded-lg cursor-pointer w-7
           <div cdkDropList [cdkDropListData]="b.blocks" (cdkDropListDropped)="drop($event, 'box')"
             class="example-list overflow-hidden block h-full mt-3 p-2.5 bg-gray-100 rounded-lg"
             [cdkDropListEnterPredicate]="dropListEnterPredicate(b)" id="receiving-list">
-            <div cdkDrag [cdkDragDisabled]="block.id === 0" (cdkDragStarted)="cdkDragStarted($event)"
+            <div cdkDrag [cdkDragDisabled]="block.type === 'start'" (cdkDragStarted)="cdkDragStarted($event)"
               *ngFor="let block of b.blocks" class="example-box bg-gray-50 p-3 rounded-lg text-xs border my-1"
               [id]="block.id">
               <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
               <div class="w-full text-sm px-2 flex gap-2 items-center">
-                <img [src]="block.svg" class="w-4 h-4" />
-                <p class="mb-0">{{block.name}}</p>
+                <img [src]="prefilledData[block.type].svg" class="w-4 h-4" />
+                <p class="mb-0">{{prefilledData[block.type].label}}</p>
               </div>
             </div>
           </div>
