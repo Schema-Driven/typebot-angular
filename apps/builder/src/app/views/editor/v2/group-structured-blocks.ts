@@ -1,4 +1,14 @@
 import { GroupStructuredBlock } from "./editor.interfaces";
+import {
+  BrowserJsPlumbInstance,
+  ContainmentType,
+  EVENT_DRAG_STOP,
+  EVENT_ENDPOINT_MOUSEOUT,
+  EVENT_ENDPOINT_MOUSEOVER,
+  newInstance,
+  ready,
+} from '@jsplumb/browser-ui';
+import { FlowchartConnector } from '@jsplumb/connector-flowchart';
 
 export class StructuredBlocks {
   structuredBlocks: GroupStructuredBlock[] = [
@@ -281,6 +291,74 @@ export class StructuredBlocks {
       svg: 'assets/svgs/integeration-email.svg'
     },
   }
+
+  connectorPaintStyle = {
+    stroke: '#9CA3AF',
+    strokeWidth: 2,
+  };
+
+  connectorHoverStyle = {
+    stroke: '#1a5fff',
+    strokeWidth: 2,
+  };
+
+  sourceEndpoint = {
+    endpoint: {
+      type: 'Dot',
+      options: { radius: 6, cssClass: 'endpoint source-endpoint' },
+    },
+    paintStyle: {
+      fill: 'transparent',
+      stroke: 'none',
+    },
+    source: true,
+    target: false,
+    connectorStyle: this.connectorPaintStyle,
+    connectorHoverStyle: this.connectorHoverStyle,
+    maxConnections: 4,
+    scope: 'jsplumb_defaultscope',
+  };
+
+  targetEndpoint = {
+    endpoint: {
+      type: 'Blank',
+      options: { radius: 7, cssClass: 'endpointOnTarget' },
+    },
+    paintStyle: {
+      fill: 'none',
+    },
+    maxConnections: 4,
+    source: false,
+    target: true,
+    uniqueEndpoint: true,
+    deleteEndpointsOnDetach: false,
+  };
+
+  dragOptions = {
+    zIndex: 2000,
+    containment: ContainmentType.notNegative,
+  };
+  connectionOverlays = [
+    {
+      type: 'PlainArrow',
+      options: {
+        location: 1,
+        length: 8,
+        width: 8,
+        foldback: 0.8,
+        id: 'connected_arrow',
+      },
+    },
+  ];
+  connectorProp = {
+    type: FlowchartConnector.type,
+    options: {
+      stub: [10, 15],
+      alwaysRespectStubs: true,
+      cornerRadius: 20,
+      midpoint: 0.5,
+    },
+  };
 
   public uuid() {
     var d = new Date().getTime(); //Timestamp

@@ -47,6 +47,7 @@
                   </div>
                 </div>
               </div>
+              <div (click)="printJson()">Print JSON</div>
             </div>
           </div>
         </div>
@@ -66,7 +67,7 @@
               class="dragAbleBox overflow-hidden block h-full mt-3 p-2.5 bg-gray-100 rounded-lg"
               [cdkDropListEnterPredicate]="dropListEnterPredicate(b)" id="receiving-list">
               <div cdkDrag [cdkDragDisabled]="block.type === 'start'" (cdkDragStarted)="cdkDragStarted($event)"
-                *ngFor="let block of b.blocks" class=" bg-gray-50 p-3 rounded-lg text-xs border my-1" [id]="block.id">
+                *ngFor="let block of b.blocks" class="bg-gray-50 p-3 rounded-lg text-xs border my-1" [id]="block.id">
                 <div class="dragAbleBoxPlaceholder" *cdkDragPlaceholder></div>
                 <div class="w-full text-sm px-2 flex gap-2 items-center">
                   <img [src]="prefilledData[block.type].svg" class="w-4 h-4" />

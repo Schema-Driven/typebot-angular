@@ -1,4 +1,5 @@
 export interface Block {
+  groupId?: string;
   id: string;
   content?: object;
   items?: { id: string, content: any, type: number }[];
