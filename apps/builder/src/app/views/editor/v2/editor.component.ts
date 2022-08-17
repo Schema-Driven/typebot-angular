@@ -34,7 +34,6 @@ export class Editorv2Component extends StructuredBlocks {
   instance: any;
   deg: number = 3;
   endpoints: any[] = [];
-  nodes: any[] = [];
   sidePanel: boolean = false;
 
   firstGroupId = this.uuid();
@@ -253,12 +252,18 @@ export class Editorv2Component extends StructuredBlocks {
       });
 
       if (endpointId) {
-        this.endpoints
+        /*this.endpoints
           .filter((e) => e.identifier == endpointId)
           .forEach((endpoint) => {
             console.log({ endpoint });
             this.jsPlumbInstance.deleteEndpoint(endpoint.instance);
-          });
+          });*/
+        this.endpoints
+        .filter((e) => e.identifier == endpointId)
+        .forEach((endpoint) => {
+          console.log({ endpoint });
+          this.instance.deleteEndpoint(endpoint.instance);
+        });
       }
     }
   }
