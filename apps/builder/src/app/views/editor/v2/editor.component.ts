@@ -15,10 +15,10 @@ import {
   EVENT_ENDPOINT_MOUSEOUT,
   EVENT_ENDPOINT_MOUSEOVER,
   newInstance,
-  ready
-} from "@jsplumb/browser-ui";
-import { FlowchartConnector } from "@jsplumb/connector-flowchart";
-import { AnchorLocations, AnchorSpec, AnchorOptions } from "@jsplumb/common";
+  ready,
+} from '@jsplumb/browser-ui';
+import { FlowchartConnector } from '@jsplumb/connector-flowchart';
+import { AnchorLocations, AnchorSpec, AnchorOptions } from '@jsplumb/common';
 import { GroupBlock, Block } from './editor.interfaces';
 import { StructuredBlocks } from './group-structured-blocks';
 
@@ -28,8 +28,7 @@ import { StructuredBlocks } from './group-structured-blocks';
   styleUrls: ['./editor.component.css'],
 })
 export class Editorv2Component extends StructuredBlocks {
-
-  @ViewChild("wrapper", { static: true })
+  @ViewChild('wrapper', { static: true })
   wrapper!: ElementRef;
   jsPlumbInstance: any;
   instance: any;
@@ -51,67 +50,69 @@ export class Editorv2Component extends StructuredBlocks {
       blocks: [
         {
           id: this.uuid(),
-          type: 'start'
+          type: 'start',
         },
       ],
     },
   ];
 
   connectorPaintStyle = {
-    stroke: "#58b7f6",
-    strokeWidth: 2
+    stroke: '#9CA3AF',
+    strokeWidth: 2,
   };
 
   connectorHoverStyle = {
-    stroke: "#58b7f6",
-    strokeWidth: 2
+    stroke: '#1a5fff',
+    strokeWidth: 2,
   };
 
   sourceEndpoint = {
     endpoint: {
-      type: "Dot",
-      options: { radius: 10, cssClass: "endpoint source-endpoint" }
+      type: 'Dot',
+      options: { radius: 6, cssClass: 'endpoint source-endpoint' },
     },
     paintStyle: {
-      fill: "#fffhdg",
-      stroke: "none"
+      fill: 'transparent',
+      stroke: 'none',
     },
     source: true,
     target: false,
     connectorStyle: this.connectorPaintStyle,
     connectorHoverStyle: this.connectorHoverStyle,
     maxConnections: 4,
-    scope: "jsplumb_defaultscope"
+    scope: 'jsplumb_defaultscope',
   };
 
   targetEndpoint = {
     endpoint: {
-      type: "Dot",
-      options: { radius: 7, cssClass: "endpoint" }
+      type: 'Blank',
+      options: { radius: 7, cssClass: 'endpointOnTarget' },
     },
     paintStyle: {
-      fill: "none"
+      fill: 'none',
     },
     maxConnections: 4,
     source: false,
     target: true,
     uniqueEndpoint: true,
-    deleteEndpointsOnDetach: false
+    deleteEndpointsOnDetach: false,
   };
 
   dragOptions = {
     zIndex: 2000,
-    containment: ContainmentType.notNegative
+    containment: ContainmentType.notNegative,
   };
   connectionOverlays = [
     {
-      type: "Arrow",
+      type: 'PlainArrow',
       options: {
         location: 1,
-        length: 14,
-        foldback: 0.8
-      }
-    }
+        length: 8,
+        width: 8,
+        foldback: 0.8,
+        id: 'connected_arrow',
+      },
+    },
   ];
   connectorProp = {
     type: FlowchartConnector.type,
@@ -119,8 +120,8 @@ export class Editorv2Component extends StructuredBlocks {
       stub: [10, 15],
       alwaysRespectStubs: true,
       cornerRadius: 20,
-      midpoint: 0.5
-    }
+      midpoint: 0.5,
+    },
   };
 
   ngOnInit() {
@@ -128,15 +129,15 @@ export class Editorv2Component extends StructuredBlocks {
       dragOptions: this.dragOptions,
       connectionOverlays: this.connectionOverlays,
       connector: this.connectorProp,
-      container: this.wrapper.nativeElement
+      container: this.wrapper.nativeElement,
     });
 
-    this.instance.addTargetSelector(".single-group", {
+    this.instance.addTargetSelector('.single-group', {
       ...this.targetEndpoint,
       ...{
-        anchor: "ContinuousLeft",
-        scope: "target_scope"
-      }
+        anchor: 'ContinuousLeft',
+        scope: 'target_scope',
+      },
     });
 
     this.manageNode(this.firstGroupId);
@@ -244,14 +245,12 @@ export class Editorv2Component extends StructuredBlocks {
   removeEmptyGroupBlocks(event: any) {
     if (event.previousContainer.data.length == 0) {
       let endpointId: any;
-      this.groupBlocks = this.groupBlocks.filter(
-        (gb) => {
-          if (gb.blocks.length === 0) {
-            endpointId = gb.id;
-          }
-          return gb.blocks.length > 0
+      this.groupBlocks = this.groupBlocks.filter((gb) => {
+        if (gb.blocks.length === 0) {
+          endpointId = gb.id;
         }
-      );
+        return gb.blocks.length > 0;
+      });
 
       if (endpointId) {
         this.endpoints
@@ -289,7 +288,6 @@ export class Editorv2Component extends StructuredBlocks {
     this.groupBlocks.map((gb) => {
       let index = this.endpoints.findIndex((e) => e.identifier == gb.id);
       if (index === -1) {
-
         this.endpoints.push({
           identifier: gb.id.toString(),
           instance: this.jsPlumbInstance.addEndpoint(
@@ -352,14 +350,14 @@ export class Editorv2Component extends StructuredBlocks {
     this.jsPlumbInstance.bind(
       'endpointClick',
       function (endpoint: any, originalEvent: any) {
-        console.log("endpointClick", endpoint, originalEvent);
+        console.log('endpointClick', endpoint, originalEvent);
       }
     );
 
     this.jsPlumbInstance.bind(
       'mouseup',
       function (endpoint: any, originalEvent: any) {
-        console.log("mouseup", endpoint, originalEvent);
+        console.log('mouseup', endpoint, originalEvent);
       }
     );
 
@@ -379,7 +377,7 @@ export class Editorv2Component extends StructuredBlocks {
   manageNode(id: string) {
     setTimeout(() => {
       this.instance.manage(document.getElementById(id));
-      this._addEndPoints2(id, ["Right"]);
+      this._addEndPoints2(id, ['Right']);
     });
   }
 
@@ -388,9 +386,9 @@ export class Editorv2Component extends StructuredBlocks {
     for (let i = 0; i < sourceAnchors.length; i++) {
       const sourceUUID = id + sourceAnchors[i];
       this.instance.addEndpoint(element, this.sourceEndpoint, {
-        anchor: "Right",
+        anchor: 'Right',
         uuid: sourceUUID,
-        scope: "target_scope"
+        scope: 'target_scope',
       });
     }
   }

@@ -126,14 +126,33 @@
 }
 
 ::ng-deep body .jtk-endpoint:first-child ::ng-deep .jtk-endpoint:after{ display: none; }
-::ng-deep .jtk-endpoint { z-index:3; cursor: pointer;}
+
+::ng-deep .jtk-endpoint {
+  z-index:5;
+  cursor: pointer;
+}
+
+::ng-deep .source-endpoint {
+  border-radius: 100%;
+  background: #f4f5f8;
+}
+
+::ng-deep .source-endpoint circle{
+  stroke-width: 4px;
+  stroke:#7ea6ff;
+}
+
+
 ::ng-deep .jtk-connector { z-index:4; }
 
-
-::ng-deep .jtk-endpoint svg circle{
-  fill: #F3F4F6 !important;
+::ng-deep  .jtk-hover{
+  cursor: pointer;
 }
-::ng-deep .jtk-endpoint:after {
+
+/* ::ng-deep .jtk-endpoint svg circle{
+  fill: #F3F4F6 !important;
+} */
+/* ::ng-deep .jtk-endpoint:after {
     background: #F3F4F6;
     border: 3px solid #7ea6ff;
     position: absolute;
@@ -143,9 +162,9 @@
     left: 3px;
     width: 12.5px;
     border-radius: 100%;
-}
+} */
 
-::ng-deep  .jtk-hover path[pointer-events="visibleStroke"] {
+/* ::ng-deep  .jtk-hover path[pointer-events="visibleStroke"] {
     stroke: #1a5fff;
     cursor: pointer;
 }
@@ -154,15 +173,15 @@
     fill: #1a5fff;
     stroke: #1a5fff;
     cursor: pointer;
-}
+} */
 
-::ng-deep  .jtk-source-hover{
-    border: 2px solid #1a5fff;
+/* ::ng-deep  .jtk-source-hover{
+    outline: 2px solid #1a5fff;
     border-radius: 12px;
 }
 
 ::ng-deep  .jtk-target-hover{
-    border: 2px solid #1a5fff;
+    outline: 2px solid #1a5fff;
     border-radius: 12px;
-}
+} */
 
