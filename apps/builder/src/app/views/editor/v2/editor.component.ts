@@ -8,6 +8,7 @@ import {
   copyArrayItem,
 } from '@angular/cdk/drag-drop';
 import { jsPlumb } from 'jsplumb';
+import * as jsPlumbBrowserUI from '@jsplumb/browser-ui';
 import { newInstance } from '@jsplumb/browser-ui';
 import { AnchorLocations, AnchorSpec, AnchorOptions } from '@jsplumb/common';
 import { GroupBlock, Block } from './editor.interfaces';
@@ -18,15 +19,17 @@ import { StructuredBlocks } from './group-structured-blocks';
   templateUrl: './editor.component.html',
   styleUrls: ['./editor.component.css'],
 })
-
 export class Editorv2Component extends StructuredBlocks {
   @ViewChild('wrapper', { static: true })
   wrapper!: ElementRef;
+  @ViewChild('drawing', { static: true })
+  drawing!: ElementRef;
   jsPlumbInstance: any;
   instance: any;
   deg: number = 3;
   endpoints: any[] = [];
   sidePanel: boolean = false;
+  dragableContainer: any;
 
   firstGroupId = this.uuid();
   groupBlocks: GroupBlock[] = [
@@ -49,11 +52,15 @@ export class Editorv2Component extends StructuredBlocks {
   ];
 
   ngOnInit() {
+    this.dragableContainer = jsPlumbBrowserUI.newInstance({
+      container: this.drawing.nativeElement,
+    });
+
     this.instance = newInstance({
       dragOptions: this.dragOptions,
       connectionOverlays: this.connectionOverlays,
       connector: this.connectorProp,
-      container: this.wrapper.nativeElement
+      container: this.wrapper.nativeElement,
     });
 
     this.instance.addTargetSelector('.single-group', {
@@ -122,7 +129,7 @@ export class Editorv2Component extends StructuredBlocks {
       let block = {
         ...data,
         id: blockId,
-        groupId: groupId
+        groupId: groupId,
       };
 
       this.groupBlocks.push({
@@ -144,7 +151,7 @@ export class Editorv2Component extends StructuredBlocks {
       let block = {
         ...data,
         id: blockId,
-        groupId: groupId
+        groupId: groupId,
       };
 
       this.groupBlocks.map((group) => {
@@ -170,23 +177,21 @@ export class Editorv2Component extends StructuredBlocks {
     const element = this.instance.getManagedElement(id);
     for (let i = 0; i < sourceAnchors.length; i++) {
       const sourceUUID = id + sourceAnchors[i];
-      this.endpoints.push(
-        {
-          identifier: id.toString(),
-          instance: this.instance.addEndpoint(element, this.sourceEndpoint, {
-            anchor: sourceAnchors[i],
-            uuid: sourceUUID,
-            scope: 'target_scope',
-          })
-        }
-      );
+      this.endpoints.push({
+        identifier: id.toString(),
+        instance: this.instance.addEndpoint(element, this.sourceEndpoint, {
+          anchor: sourceAnchors[i],
+          uuid: sourceUUID,
+          scope: 'target_scope',
+        }),
+      });
     }
   }
 
   _removeEndPoint(id: string) {
     this.instance.manage(document.getElementById(id));
     const element = this.instance.getManagedElement(id);
-    this.instance.removeAllEndpoints(element)
+    this.instance.removeAllEndpoints(element);
   }
 
   removeEmptyGroupBlocks(event: any) {
@@ -222,6 +227,10 @@ export class Editorv2Component extends StructuredBlocks {
   }
 
   printJson() {
-    console.log("groupBlocks",this.groupBlocks);
+    console.log('groupBlocks', this.groupBlocks);
+  }
+
+  zoomHnadler(event: any, n: any) {
+    this.drawing.nativeElement.style.transform = 'scale(' + n + ')';
   }
 }
