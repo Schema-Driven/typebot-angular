@@ -16,7 +16,7 @@ export interface GroupStructuredBlock {
 export interface GroupBlock {
   id: string;
   name: string;
-  position: {x: number, y: number};
+  position: { x: number, y: number };
   draggable: boolean;
   blocks: Block[];
 }
@@ -24,4 +24,16 @@ export interface GroupBlock {
 export interface Endpoint {
   identifier: string;
   instance: any;
+}
+
+export interface Edge {
+  id: string;
+  from: { blockId: string, groupId?: string };
+  to: { groupId: string }
+}
+
+export interface TypeBot {
+  name: string;
+  groups: GroupBlock[];
+  edges: Edge[];
 }

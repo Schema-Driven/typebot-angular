@@ -305,7 +305,7 @@ export class StructuredBlocks {
   sourceEndpoint = {
     endpoint: {
       type: 'Dot',
-      options: { radius: 6, cssClass: 'endpoint source-endpoint' },
+      options: { radius: 6, cssClass: 'endpoint source-endpoint grouper' },
     },
     paintStyle: {
       fill: 'transparent',
@@ -322,7 +322,7 @@ export class StructuredBlocks {
   targetEndpoint = {
     endpoint: {
       type: 'Blank',
-      options: { radius: 7, cssClass: 'endpointOnTarget' },
+      options: { radius: 7, cssClass: 'endpointOnTarget grouper' },
     },
     paintStyle: {
       fill: 'none',
@@ -334,10 +334,28 @@ export class StructuredBlocks {
     deleteEndpointsOnDetach: false,
   };
 
+  groupSourceEndpoint = {
+    endpoint: {
+      type: 'Dot',
+      options: { radius: 6, cssClass: 'endpoint group-source-endpoint grouper' },
+    },
+    paintStyle: {
+      fill: 'transparent',
+      stroke: 'none',
+    },
+    source: false,
+    target: false,
+    connectorStyle: this.connectorPaintStyle,
+    connectorHoverStyle: this.connectorHoverStyle,
+    maxConnections: 4,
+    scope: 'jsplumb_defaultscope',
+  };
+
   dragOptions = {
     zIndex: 2000,
     containment: ContainmentType.notNegative,
   };
+
   connectionOverlays = [
     {
       type: 'PlainArrow',
@@ -347,6 +365,11 @@ export class StructuredBlocks {
         width: 8,
         foldback: 0.8,
         id: 'connected_arrow',
+        events: {
+          click: function () {
+              alert('you clicked on the arrow overlay')
+          }
+        }
       },
     },
   ];

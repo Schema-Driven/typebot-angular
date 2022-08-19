@@ -3,7 +3,7 @@
   <div class="w-full h-full wrapper-inner" cdkDropListGroup>
 
     <div class="relative sidePanel"
-      [ngStyle]="{'transform':sidePanel === false ? 'translateX(0px)': 'translateX(-325px)'}" style="z-index: 2;">
+      [ngStyle]="{'transform':sidePanel === false ? 'translateX(0px)': 'translateX(-325px)'}">
       <div
         class="absolute flex flex-col p-4 overflow-auto bg-white border rounded-lg shadow-lg w-80 left-4 top-6 sidebar"
         style="height: calc(100vh - 100px);">
@@ -57,29 +57,33 @@
       </div>
     </div>
 
-    <div #drawing class="rightSide">
-      <div class="groups-wrapper" #wrapper>
-        <div *ngFor="let b of groupBlocks" [id]="b.id" class="absolute z-2"
-          [style]="('top:'+ b.position.y+'px;left:'+ b.position.x+'px')">
-          <div class="p-4 bg-white single-group wrap-div w-72" cdkDrag>
-            <h2>{{b.name}}</h2>
-            <div cdkDropList [cdkDropListData]="b.blocks" (cdkDropListDropped)="drop($event, 'box')"
-              class="dragAbleBox overflow-hidden block h-full mt-3 p-2.5 bg-gray-100 rounded-lg"
-              [cdkDropListEnterPredicate]="dropListEnterPredicate(b)" id="receiving-list">
-              <div cdkDrag [cdkDragDisabled]="block.type === 'start'" (cdkDragStarted)="cdkDragStarted($event)"
-                *ngFor="let block of b.blocks" class="p-3 my-1 text-xs border rounded-lg bg-gray-50" [id]="block.id">
-                <div class="dragAbleBoxPlaceholder" *cdkDragPlaceholder></div>
-                <div class="flex items-center w-full gap-2 px-2 text-sm">
-                  <img [src]="prefilledData[block.type].svg" class="w-4 h-4" />
-                  <p class="mb-0">{{prefilledData[block.type].label}}</p>
+    <div class="rightSide">
+      <!-- <div class="drawing" #drawing> -->
+
+        <div class="groups-wrapper" #wrapper>
+          <div *ngFor="let b of groupBlocks" [id]="b.id" class="grouper absolute z-2"
+            [style]="('top:'+ b.position.y+'px;left:'+ b.position.x+'px')">
+            <div class="p-4 bg-white single-group wrap-div w-72" cdkDrag>
+              <h2>{{b.name}}</h2>
+              <div cdkDropList [cdkDropListData]="b.blocks" (cdkDropListDropped)="drop($event, 'box')"
+                class="dragAbleBox overflow-hidden block h-full mt-3 p-2.5 bg-gray-100 rounded-lg"
+                [cdkDropListEnterPredicate]="dropListEnterPredicate(b)" id="receiving-list">
+                <div cdkDrag [cdkDragDisabled]="block.type === 'start'" (cdkDragStarted)="cdkDragStarted($event)"
+                  *ngFor="let block of b.blocks; let i = index" class="p-3 my-1 text-xs border rounded-lg bg-gray-50" [id]="block.id">
+                  <div class="dragAbleBoxPlaceholder" *cdkDragPlaceholder></div>
+                  <div class="flex items-center w-full gap-2 px-2 text-sm single-block">
+                    <img [src]="prefilledData[block.type].svg" class="w-4 h-4" />
+                    <p class="mb-0">{{prefilledData[block.type].label}}</p>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
+          <div cdkDropList (cdkDropListDropped)="drop($event, 'container')" class="recieveDragedBox">
+          </div>
         </div>
-      </div>
-      <div cdkDropList (cdkDropListDropped)="drop($event, 'container')" class="recieveDragedBox">
-      </div>
+
+      <!-- </div> -->
     </div>
     <!-- ZOOM BUTTONS - [begins] -->
     <div class="absolute z-20 top-6 right-6 transform-position">
@@ -93,14 +97,14 @@
         </a>
       </div>
       <div class="mt-4 custom-shadow-icon">
-        <a (click)="zoomHnadler($event,'1.2')"
+        <a (click)="zoomHandler('1.2')"
           class="bg-white hover:bg-gray-200 rounded-t-md p-0.5 w-8 h-8 flex items-center justify-center">
           <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"
             stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
           </svg>
         </a>
-        <a (click)="zoomHnadler($event,'0.8')"
+        <a (click)="zoomHandler('0.8')"
           class="bg-white hover:bg-gray-200 rounded-b-md p-0.5 w-8 h-8 flex items-center justify-center">
           <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"
             stroke-width="2">
