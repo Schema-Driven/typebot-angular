@@ -68,7 +68,22 @@ export class Editorv2Component extends StructuredBlocks {
       ...{
         anchor: 'ContinuousLeft',
         scope: 'target_scope',
+        redrop:"any"
       },
+    });
+
+    // this.instance.addTargetSelector('.single-block', {
+    //   ...this.targetEndpoint,
+    //   ...{
+    //     anchor: 'ContinuousLeft',
+    //     scope: 'block_target_scope',
+    //   },
+    // });
+
+
+    this.instance.bind("click", function(conn: any) {
+      console.log("coming here");
+        // jsPlumb.detach(conn);
     });
 
     // this.panZoomController.pan(10, 10)
@@ -228,6 +243,7 @@ export class Editorv2Component extends StructuredBlocks {
   }
 
   _addEndPoint(id: string, sourceAnchors: Array<AnchorSpec>, type: string = 'block') {
+
     let sourcePoint = ((type === 'block') ? this.sourceEndpoint : this.groupSourceEndpoint);
     // const element = this.instance.getManagedElement(id);
     for (let i = 0; i < sourceAnchors.length; i++) {
@@ -236,6 +252,15 @@ export class Editorv2Component extends StructuredBlocks {
         anchor: sourceAnchors[i],
         uuid: sourceUUID
       });
+    }
+
+    if (type === 'group') {
+      this.instance.addGroup({
+        el: document.getElementById(id),
+        id: id,
+        droppable:false,
+        dropOverride:true
+      })
     }
   }
 

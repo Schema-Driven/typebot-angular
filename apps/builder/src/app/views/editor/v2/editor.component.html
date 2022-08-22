@@ -69,11 +69,13 @@
                 class="dragAbleBox overflow-hidden block h-full mt-3 p-2.5 bg-gray-100 rounded-lg"
                 [cdkDropListEnterPredicate]="dropListEnterPredicate(b)" id="receiving-list">
                 <div cdkDrag [cdkDragDisabled]="block.type === 'start'" (cdkDragStarted)="cdkDragStarted($event)"
-                  *ngFor="let block of b.blocks; let i = index" class="p-3 my-1 text-xs border rounded-lg bg-gray-50" [id]="block.id">
+                  *ngFor="let block of b.blocks; let i = index" class="single-block p-3 my-1 text-xs border rounded-lg bg-gray-50" [id]="block.id">
                   <div class="draggable-custom-placeholder" *cdkDragPlaceholder></div>
-                  <div class="flex items-center w-full gap-2 px-2 text-sm single-block">
-                    <img [src]="prefilledData[block.type].svg" class="w-4 h-4" />
-                    <p class="mb-0">{{prefilledData[block.type].label}}</p>
+                  <div class="single-block-placeholder">
+                    <div class="flex items-center w-full gap-2 px-2 text-sm">
+                      <img [src]="prefilledData[block.type].svg" class="w-4 h-4" />
+                      <p class="mb-0">{{prefilledData[block.type].label}}</p>
+                    </div>
                   </div>
                 </div>
               </div>

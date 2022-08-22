@@ -321,7 +321,7 @@ export class StructuredBlocks {
 
   targetEndpoint = {
     endpoint: {
-      type: 'Blank',
+      type: 'Dot',
       options: { radius: 7, cssClass: 'endpointOnTarget grouper' },
     },
     paintStyle: {
