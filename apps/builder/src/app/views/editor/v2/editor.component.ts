@@ -73,31 +73,31 @@ export class Editorv2Component extends StructuredBlocks {
 
     // this.panZoomController.pan(10, 10)
     // this.panZoomController.zoom(1, { animate: true });
-    this.panZoomController = Panzoom(this.wrapper.nativeElement, {
-      minScale: 0.6,
-      maxScale: 1.5,
-      increment: 0.1,
-      cursor: "",
-      excludeClass: 'grouper'
-    });
+    // this.panZoomController = Panzoom(this.wrapper.nativeElement, {
+    //   minScale: 0.6,
+    //   maxScale: 1.5,
+    //   increment: 0.1,
+    //   cursor: "",
+    //   excludeClass: 'grouper'
+    // });
 
-    this.wrapper.nativeElement.parentElement.addEventListener('wheel', (e: any) => {
-      if(e.ctrlKey == true) {
-        e.preventDefault();
-        this.panZoomController.zoomWithWheel(e)
-      } else {
-        e.preventDefault();
-        var deltaY = e.deltaY || e.wheelDeltaY || (-e.deltaY);
-        var deltaX = e.deltaX || e.wheelDeltaX || (-e.deltaX);
-        this.panZoomController.pan(deltaX/2, deltaY/2, {
-          // animate: true,
-          relative: true,
-        });
-      }
+    // this.wrapper.nativeElement.parentElement.addEventListener('wheel', (e: any) => {
+    //   if(e.ctrlKey == true) {
+    //     e.preventDefault();
+    //     this.panZoomController.zoomWithWheel(e)
+    //   } else {
+    //     e.preventDefault();
+    //     var deltaY = e.deltaY || e.wheelDeltaY || (-e.deltaY);
+    //     var deltaX = e.deltaX || e.wheelDeltaX || (-e.deltaX);
+    //     this.panZoomController.pan(deltaX/2, deltaY/2, {
+    //       // animate: true,
+    //       relative: true,
+    //     });
+    //   }
 
-      this.zoomHandler(this.panZoomController.getScale(), 'scroller');
-    });
-    this.instance.repaintEverything();
+    //   this.zoomHandler(this.panZoomController.getScale(), 'scroller');
+    // });
+    // this.instance.repaintEverything();
 
     this.manageNode(this.firstGroupId, ['Right'], 'group');
     this.manageNode(this.firstBlockId, ['Right'], 'block');

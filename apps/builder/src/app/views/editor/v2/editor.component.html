@@ -39,7 +39,7 @@
                   <div
                     class="bg-slate-50  border border-slate-300 hover:shadow-md w-full rounded-lg py-2.5 h-10 cursor-pointer"
                     cdkDrag (cdkDragStarted)="cdkDragStarted($event)" [id]="block.id">
-                    <div class="dragAbleBoxPlaceholder" *cdkDragPlaceholder></div>
+                    <div class="draggable-custom-placeholder" *cdkDragPlaceholder></div>
                     <div class="flex items-center w-full gap-2 px-4 text-sm justify-left">
                       <img [src]="prefilledData[block.type].svg" class="w-4 h-4" />
                       <p class="mb-0">{{prefilledData[block.type].label}}</p>
@@ -70,7 +70,7 @@
                 [cdkDropListEnterPredicate]="dropListEnterPredicate(b)" id="receiving-list">
                 <div cdkDrag [cdkDragDisabled]="block.type === 'start'" (cdkDragStarted)="cdkDragStarted($event)"
                   *ngFor="let block of b.blocks; let i = index" class="p-3 my-1 text-xs border rounded-lg bg-gray-50" [id]="block.id">
-                  <div class="dragAbleBoxPlaceholder" *cdkDragPlaceholder></div>
+                  <div class="draggable-custom-placeholder" *cdkDragPlaceholder></div>
                   <div class="flex items-center w-full gap-2 px-2 text-sm single-block">
                     <img [src]="prefilledData[block.type].svg" class="w-4 h-4" />
                     <p class="mb-0">{{prefilledData[block.type].label}}</p>
