@@ -1,70 +1,212 @@
-.example-container {
-  width: 400px;
-  max-width: 100%;
-  margin: 0 25px 25px 0;
-  display: inline-block;
-  vertical-align: top;
+.custom-bg {
+    background: radial-gradient(rgb(198, 208, 225) 1px, transparent 0px) -19px 0px / 40px 40px rgb(244, 245, 248);
 }
 
-.example-list {
-  border: solid 1px #ccc;
-  min-height: 60px;
-  background: white;
-  border-radius: 4px;
-  overflow: hidden;
-  display: block;
-  height: 100%;
-}
-
-.example-box {
-  padding: 20px 10px;
-  border-bottom: solid 1px #ccc;
-  color: rgba(0, 0, 0, 0.87);
+.editor-main-container{
   display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  box-sizing: border-box;
-  cursor: move;
-  background: white;
-  font-size: 14px;
+  overflow: clip;
+  height: 100vh;
+  flex-direction: column;
 }
 
-.cdk-drag-preview {
-  box-sizing: border-box;
-  border-radius: 4px;
-  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
-              0 8px 10px 1px rgba(0, 0, 0, 0.14),
-              0 3px 14px 2px rgba(0, 0, 0, 0.12);
+.wrapper-inner{
+    display: flex;
+    flex: 1 1 0%;
+    position: relative;
 }
 
-.cdk-drag-placeholder {
-  opacity: 0;
+.sidePanel{
+  display: flex;
+  width: 360px;
+  position: absolute;
+  left: 0px;
+  height: 100%;
+  z-index: 20;
+  padding-right: 0;
+  transition: transform 350ms cubic-bezier(0.075, 0.82, 0.165, 1) 0s;
 }
 
-.cdk-drag-animating {
-  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+.sidePanel:hover {
+    transform: translateX(0px) !important;
+    transition: transform 350ms cubic-bezier(0.075, 0.82, 0.165, 1) 0s;
 }
 
-.example-box:last-child {
-  border: none;
+.sidePanel{
+    transition: transform 350ms cubic-bezier(0.075, 0.82, 0.165, 1) 0s;
 }
 
-.example-list.cdk-drop-list-dragging .example-box:not(.cdk-drag-placeholder) {
-  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+.sidePanel .sidebar::-webkit-scrollbar {
+  display: none;
 }
-.main {
+
+.sidePanelHoverMain{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    height: 100%;
+    width: 50px;
+    right: -20px;
+    top: 0px;
+}
+
+.sidePanelHoverThumb{
+    display: flex;
+    width: 5px;
+    height: 20px;
+    background-color: #9ca3af;
+    border-radius: 0.35rem;
+}
+
+.rightSide{
   width: 100%;
-  height: 900px;
+  float: left;
 }
-.main-container {
+
+.tooltip-sec {
+    position: relative;
+}
+
+.tooltip-sec  .tooltiptext-sec{
+    visibility: hidden;
+    width: 102px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    bottom: 10px;
+    right: 0px;
+    top: 37px;
+    z-index: 999 !important;
+    height: 29px;
+    font-size: 13px;
+    font-weight: 400;
+}
+
+.tooltip-sec:hover   .tooltiptext-sec {
+    visibility: visible;
+}
+
+
+.groups-wrapper{
+    display: flex;
+    flex: 1 1 0%;
+    transform-origin: 0px 0px 0px;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    /* z-index: 1; */
+}
+
+.wrap-div {
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 10%), 0 2px 4px -1px rgb(0 0 0 / 6%);
+  border-radius: 10px;
+  transition: box-shadow 200ms ease 0s;
+  cursor: pointer;
+  transform: none !important;
+}
+
+.dragAbleBox {
+  min-height: 60px;
+}
+
+.recieveDragedBox {
   width: 100%;
   height: 100%;
   position: absolute;
+  overflow: hidden;
+  display: block;
   left: 0;
+  top: 0;
   z-index: 1;
 }
-.example-container.box {
+
+.z-2 {
   z-index: 2;
-  position: relative;
+}
+
+::ng-deep body .jtk-endpoint:first-child ::ng-deep .jtk-endpoint:after{ display: none; }
+
+::ng-deep .jtk-endpoint {
+  z-index:5;
+  cursor: pointer;
+}
+
+::ng-deep .source-endpoint {
+  border-radius: 100%;
+  background: #f4f5f8;
+  margin-left: 26px;
+}
+
+::ng-deep .source-endpoint circle{
+  stroke-width: 4px;
+  stroke:#7ea6ff;
+}
+
+
+::ng-deep .jtk-connector {
+  z-index:1;
+  /* margin-left: 25px; */
+}
+
+::ng-deep  .jtk-hover{
+  cursor: pointer;
+}
+
+/* ::ng-deep .jtk-endpoint svg circle{
+  fill: #F3F4F6 !important;
+} */
+/* ::ng-deep .jtk-endpoint:after {
+    background: #F3F4F6;
+    border: 3px solid #7ea6ff;
+    position: absolute;
+    content: '';
+    height: 12.5px;
+    top: 3px;
+    left: 3px;
+    width: 12.5px;
+    border-radius: 100%;
+} */
+
+/* ::ng-deep  .jtk-hover path[pointer-events="visibleStroke"] {
+    stroke: #1a5fff;
+    cursor: pointer;
+}
+
+::ng-deep  .jtk-hover path[pointer-events="all"] {
+    fill: #1a5fff;
+    stroke: #1a5fff;
+    cursor: pointer;
+} */
+
+/* ::ng-deep  .jtk-source-hover{
+    outline: 2px solid #1a5fff;
+    border-radius: 12px;
+}
+
+::ng-deep  .jtk-target-hover{
+    outline: 2px solid #1a5fff;
+    border-radius: 12px;
+} */
+
+.drawing {
+  /* position: relative;
+  width: 100%;
+  height: 100%; */
+}
+
+.dragAbleBox .draggable-custom-placeholder {
+  background: rgb(201, 201, 201);
+  border: 1px solid rgb(201, 201, 201);
+  min-height: 40px;
+  border-radius: 0.5rem;
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+.jtk-drag-hover{
+  outline: 2px solid #1a5fff;
+}
+.jtk-drag-active:nth-child(1) .jtk-drag-hover{
+  outline: none !important;
 }

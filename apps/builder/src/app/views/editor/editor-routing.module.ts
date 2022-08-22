@@ -8,6 +8,13 @@ import { Editorv2Component } from './v2/editor.component';
 const routes: Routes = [
   {
     path: '',
+    component: Editorv2Component,
+    children: [
+      //add child-paths here ...
+    ],
+  },
+  {
+    path: 'v1',
     component: EditorComponent,
     children: [
       //add child-paths here ...
@@ -16,13 +23,6 @@ const routes: Routes = [
   {
     path: 'drop-test',
     component: DropTestComponent,
-    children: [
-      //add child-paths here ...
-    ],
-  },
-  {
-    path: 'v2',
-    component: Editorv2Component,
     children: [
       //add child-paths here ...
     ],
