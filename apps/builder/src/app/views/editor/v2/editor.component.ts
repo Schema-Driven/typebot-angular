@@ -68,7 +68,7 @@ export class Editorv2Component extends StructuredBlocks {
       ...{
         anchor: 'ContinuousLeft',
         scope: 'target_scope',
-        redrop:"any"
+        redrop:"any",
       },
     });
 
@@ -322,25 +322,55 @@ export class Editorv2Component extends StructuredBlocks {
 
   bindEvents() {
     this.instance.bind("connection", (info: any) => {
-      var connection = info.connection;
-      console.log("connection", connection);
-      connection.bind("click", (connection: any, originalEvent: any) => {
-        alert("you clicked on "+connection);
-        this.instance.detach(connection);
+      console.log("info.connection", info.connection);
+      const connectors = document.querySelectorAll(".jtk-connector");
+      connectors.forEach((connector) => {
+        connector.addEventListener('contextmenu', (e: any) => {
+          console.log("Right Click Event");
+          e.preventDefault();
+          return false;
+        });
+
+        connector.addEventListener('click', (e: any) => {
+          console.log("Left Click Event", e);
+          e.preventDefault();
+          return false;
+        });
+
+        connector.removeEventListener('contextmenu', () => {});
+        connector.removeEventListener('click', () => {});
       });
+      // var connection = info.connection;
+      // console.log("connection", connection);
+      // connection.bind("click", (connection: any, originalEvent: any) => {
+      //   alert("you clicked on "+connection);
+      //   this.instance.detach(connection);
+      // });
     });
 
     this.instance.bind(EVENT_CLICK, (connection: any, originalEvent: any) => {
       console.log("Aaa12345");
-      alert("you clicked on "+connection);
+      // alert("you clicked on "+connection);
       // this.instance.detach(connection);
     });
 
-    this.instance.bind(EVENT_ELEMENT_CLICK, (connection: any, originalEvent: any) => {
-      console.log("Aaa123");
-      alert("you clicked on "+connection);
-      // this.instance.detach(connection);
+    // this.instance.bind(EVENT_ELEMENT_CLICK, (connection: any, originalEvent: any) => {
+    //   console.log("Aaa123");
+    //   alert("you clicked on "+connection);
+    //   // this.instance.detach(connection);
+    // });
+
+    this.instance.bind('beforeDrop', (ci: any) => { // Before new connection is created
+      let src = ci.sourceId;
+      let con= this.instance.getConnections({ source: src }); // Get all source el. connection(s) except the new connection which is being established
+      if(con.length != 0 && document.getElementById(src)){
+          for(var i = 0; i < con.length; i++) {
+            this.instance.deleteConnection(con[i]);
+          }
+      }
+      return true; // true for establishing new connection
     });
+
   }
 
 }
