@@ -63,7 +63,7 @@ export class Editorv2Component extends StructuredBlocks {
       container: this.wrapper.nativeElement,
     });
 
-    this.instance.addTargetSelector('.single-group', {
+    this.instance.addTargetSelector('.single-group, .single-block', {
       ...this.targetEndpoint,
       ...{
         anchor: 'ContinuousLeft',
@@ -243,8 +243,16 @@ export class Editorv2Component extends StructuredBlocks {
   }
 
   _addEndPoint(id: string, sourceAnchors: Array<AnchorSpec>, type: string = 'block') {
-
     let sourcePoint = ((type === 'block') ? this.sourceEndpoint : this.groupSourceEndpoint);
+
+    if (type === 'group') {
+      this.instance.addGroup({
+        el: document.getElementById(id),
+        id: id,
+        droppable:false,
+        // dropOverride:true
+      })
+    }
     // const element = this.instance.getManagedElement(id);
     for (let i = 0; i < sourceAnchors.length; i++) {
       const sourceUUID = id + sourceAnchors[i];
@@ -254,14 +262,7 @@ export class Editorv2Component extends StructuredBlocks {
       });
     }
 
-    if (type === 'group') {
-      this.instance.addGroup({
-        el: document.getElementById(id),
-        id: id,
-        droppable:false,
-        dropOverride:true
-      })
-    }
+
   }
 
   _removeEndPoint(id: string) {
