@@ -61,9 +61,9 @@
       <!-- <div class="drawing" #drawing> -->
 
         <div class="groups-wrapper" #wrapper>
-          <div *ngFor="let b of groupBlocks" [id]="b.id" class="grouper absolute z-2"
+          <div *ngFor="let b of groupBlocks" [id]="b.id" class="grouper absolute z-2 single-group"
             [style]="('top:'+ b.position.y+'px;left:'+ b.position.x+'px')">
-            <div class="py-4 bg-white single-group wrap-div w-72" cdkDrag>
+            <div class="py-4 bg-white wrap-div w-72" cdkDrag>
               <h2>{{b.name}}</h2>
               <div cdkDropList [cdkDropListData]="b.blocks" (cdkDropListDropped)="drop($event, 'box')"
                 class="dragAbleBox overflow-hidden block h-full mt-3 py-2.5 bg-gray-100 rounded-lg"

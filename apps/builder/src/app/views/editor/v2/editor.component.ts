@@ -7,7 +7,7 @@ import {
   transferArrayItem,
   copyArrayItem,
 } from '@angular/cdk/drag-drop';
-import { newInstance } from '@jsplumb/browser-ui';
+import { newInstance, EVENT_CLICK, EVENT_ELEMENT_CLICK } from '@jsplumb/browser-ui';
 import { AnchorLocations, AnchorSpec, AnchorOptions } from '@jsplumb/common';
 import Panzoom from '@panzoom/panzoom'
 import { GroupBlock, Block, Edge, TypeBot } from './editor.interfaces';
@@ -72,19 +72,7 @@ export class Editorv2Component extends StructuredBlocks {
       },
     });
 
-    // this.instance.addTargetSelector('.single-block', {
-    //   ...this.targetEndpoint,
-    //   ...{
-    //     anchor: 'ContinuousLeft',
-    //     scope: 'block_target_scope',
-    //   },
-    // });
-
-
-    this.instance.bind("click", function(conn: any) {
-      console.log("coming here");
-        // jsPlumb.detach(conn);
-    });
+    this.bindEvents();
 
     // this.panZoomController.pan(10, 10)
     // this.panZoomController.zoom(1, { animate: true });
@@ -253,6 +241,7 @@ export class Editorv2Component extends StructuredBlocks {
         // dropOverride:true
       })
     }
+
     // const element = this.instance.getManagedElement(id);
     for (let i = 0; i < sourceAnchors.length; i++) {
       const sourceUUID = id + sourceAnchors[i];
@@ -261,7 +250,6 @@ export class Editorv2Component extends StructuredBlocks {
         uuid: sourceUUID
       });
     }
-
 
   }
 
@@ -331,4 +319,28 @@ export class Editorv2Component extends StructuredBlocks {
     this.instance.setZoom(n)
     // this.instance.repaint();
   }
+
+  bindEvents() {
+    this.instance.bind("connection", (info: any) => {
+      var connection = info.connection;
+      console.log("connection", connection);
+      connection.bind("click", (connection: any, originalEvent: any) => {
+        alert("you clicked on "+connection);
+        this.instance.detach(connection);
+      });
+    });
+
+    this.instance.bind(EVENT_CLICK, (connection: any, originalEvent: any) => {
+      console.log("Aaa12345");
+      alert("you clicked on "+connection);
+      // this.instance.detach(connection);
+    });
+
+    this.instance.bind(EVENT_ELEMENT_CLICK, (connection: any, originalEvent: any) => {
+      console.log("Aaa123");
+      alert("you clicked on "+connection);
+      // this.instance.detach(connection);
+    });
+  }
+
 }
