@@ -321,13 +321,13 @@ export class StructuredBlocks {
 
   targetEndpoint = {
     endpoint: {
-      type: 'Dot',
+      type: 'Blank',
       options: { radius: 7, cssClass: 'endpointOnTarget grouper' },
     },
     paintStyle: {
       fill: 'none',
     },
-    maxConnections: 4,
+    maxConnections: 2,
     source: false,
     target: true,
     uniqueEndpoint: true,

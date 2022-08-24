@@ -364,6 +364,12 @@ export class Editorv2Component extends StructuredBlocks {
         alert('you clicked on ' + connection);
         this.instance.detach(connection);
       });
+      // var connection = info.connection;
+      // console.log("connection", connection);
+      // connection.bind("click", (connection: any, originalEvent: any) => {
+      //   alert("you clicked on "+connection);
+      //   this.instance.detach(connection);
+      // });
     });
 
     this.instance.bind(EVENT_CLICK, (connection: any, originalEvent: any) => {
