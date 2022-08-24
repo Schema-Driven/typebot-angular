@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import { Component, ViewChild, ElementRef, Attribute } from '@angular/core';
 import {
   CdkDrag,
   CdkDragDrop,
@@ -7,9 +7,13 @@ import {
   transferArrayItem,
   copyArrayItem,
 } from '@angular/cdk/drag-drop';
-import { newInstance, EVENT_CLICK, EVENT_ELEMENT_CLICK } from '@jsplumb/browser-ui';
+import {
+  newInstance,
+  EVENT_CLICK,
+  EVENT_ELEMENT_CLICK,
+} from '@jsplumb/browser-ui';
 import { AnchorLocations, AnchorSpec, AnchorOptions } from '@jsplumb/common';
-import Panzoom from '@panzoom/panzoom'
+import Panzoom from '@panzoom/panzoom';
 import { GroupBlock, Block, Edge, TypeBot } from './editor.interfaces';
 import { StructuredBlocks } from './group-structured-blocks';
 
@@ -27,6 +31,7 @@ export class Editorv2Component extends StructuredBlocks {
   edges: Edge[] = [];
   groupBlockIdsMapping: any = {};
   sidePanel: boolean = false;
+  rightClick: boolean = false;
 
   firstGroupId = this.uuid();
   firstBlockId = this.uuid();
@@ -52,8 +57,13 @@ export class Editorv2Component extends StructuredBlocks {
   typebot: TypeBot = {
     name: 'My Typebot',
     edges: this.edges,
-    groups: this.groupBlocks
+    groups: this.groupBlocks,
   };
+
+  onClick(event: any) {
+    // this.groupBlocks[index].popover = false;
+    console.log(event);
+  }
 
   ngOnInit() {
     this.instance = newInstance({
@@ -68,7 +78,7 @@ export class Editorv2Component extends StructuredBlocks {
       ...{
         anchor: 'ContinuousLeft',
         scope: 'target_scope',
-        redrop:"any"
+        redrop: 'any',
       },
     });
 
@@ -105,6 +115,13 @@ export class Editorv2Component extends StructuredBlocks {
     this.manageNode(this.firstGroupId, ['Right'], 'group');
     this.manageNode(this.firstBlockId, ['Right'], 'block');
     this.groupBlockIdsMapping[this.firstBlockId] = this.firstGroupId;
+  }
+
+  ngAfterViewInit() {
+    this.wrapper.nativeElement.addEventListener(
+      'click',
+      this.onRightClick.bind(this)
+    );
   }
 
   sidePanelClick() {
@@ -144,7 +161,11 @@ export class Editorv2Component extends StructuredBlocks {
         'group'
       );
 
-      this.rearrangeEndPoints(event.previousContainer.data, event.previousIndex, true);
+      this.rearrangeEndPoints(
+        event.previousContainer.data,
+        event.previousIndex,
+        true
+      );
       this.removeEmptyGroupBlocks(event);
     } else {
       this.addGroupOrBlock(
@@ -153,7 +174,11 @@ export class Editorv2Component extends StructuredBlocks {
         'block'
       );
 
-      this.rearrangeEndPoints(event.previousContainer.data, event.previousIndex, true);
+      this.rearrangeEndPoints(
+        event.previousContainer.data,
+        event.previousIndex,
+        true
+      );
       this.removeEmptyGroupBlocks(event);
     }
   }
@@ -172,7 +197,11 @@ export class Editorv2Component extends StructuredBlocks {
             this._removeEndPoint(block.id);
           });
           // Add endpoint to last block
-          this.manageNode(group.blocks[group.blocks.length - 1].id, ['Right'], 'block');
+          this.manageNode(
+            group.blocks[group.blocks.length - 1].id,
+            ['Right'],
+            'block'
+          );
         }
       });
     }
@@ -180,7 +209,8 @@ export class Editorv2Component extends StructuredBlocks {
 
   addGroupOrBlock(data: any, event: any, type: string) {
     let blockId = this.uuid();
-    let groupId = (type === 'group') ? this.uuid() : event.container.data[0].groupId;
+    let groupId =
+      type === 'group' ? this.uuid() : event.container.data[0].groupId;
     let block = {
       ...data,
       id: blockId,
@@ -204,7 +234,6 @@ export class Editorv2Component extends StructuredBlocks {
         this.manageNode(groupId, ['Right'], 'group');
         this.manageNode(blockId, ['Right'], 'block');
       }, 100);
-
     } else {
       // Add Block to Group
       this.groupBlocks.map((group) => {
@@ -212,10 +241,10 @@ export class Editorv2Component extends StructuredBlocks {
           // group.blocks.push(block);
           let lastIndex = group.blocks.length;
           if (lastIndex === event.currentIndex) {
-            this._removeEndPoint(group.blocks[lastIndex-1].id);
+            this._removeEndPoint(group.blocks[lastIndex - 1].id);
             this.manageNode(blockId, ['Right'], 'block');
           }
-          group.blocks.splice( event.currentIndex, 0, block );
+          group.blocks.splice(event.currentIndex, 0, block);
         }
       });
     }
@@ -230,16 +259,21 @@ export class Editorv2Component extends StructuredBlocks {
     });
   }
 
-  _addEndPoint(id: string, sourceAnchors: Array<AnchorSpec>, type: string = 'block') {
-    let sourcePoint = ((type === 'block') ? this.sourceEndpoint : this.groupSourceEndpoint);
+  _addEndPoint(
+    id: string,
+    sourceAnchors: Array<AnchorSpec>,
+    type: string = 'block'
+  ) {
+    let sourcePoint =
+      type === 'block' ? this.sourceEndpoint : this.groupSourceEndpoint;
 
     if (type === 'group') {
       this.instance.addGroup({
         el: document.getElementById(id),
         id: id,
-        droppable:false,
+        droppable: false,
         // dropOverride:true
-      })
+      });
     }
 
     // const element = this.instance.getManagedElement(id);
@@ -247,10 +281,9 @@ export class Editorv2Component extends StructuredBlocks {
       const sourceUUID = id + sourceAnchors[i];
       this.instance.addEndpoint(document.getElementById(id), sourcePoint, {
         anchor: sourceAnchors[i],
-        uuid: sourceUUID
+        uuid: sourceUUID,
       });
     }
-
   }
 
   _removeEndPoint(id: string) {
@@ -298,15 +331,18 @@ export class Editorv2Component extends StructuredBlocks {
 
   setEdgesObject() {
     this.edges = [];
-    let connections = this.instance.getConnections({scope: "jsplumb_defaultscope"});
-    connections.forEach((con: any)=> {
-      this.edges.push(
-        {
-          id: this.uuid(),
-          from: {blockId: con.sourceId, groupId: this.groupBlockIdsMapping[con.sourceId]},
-          to: {groupId: con.targetId}
-        }
-      )
+    let connections = this.instance.getConnections({
+      scope: 'jsplumb_defaultscope',
+    });
+    connections.forEach((con: any) => {
+      this.edges.push({
+        id: this.uuid(),
+        from: {
+          blockId: con.sourceId,
+          groupId: this.groupBlockIdsMapping[con.sourceId],
+        },
+        to: { groupId: con.targetId },
+      });
     });
     this.typebot.edges = this.edges;
   }
@@ -316,31 +352,56 @@ export class Editorv2Component extends StructuredBlocks {
       this.wrapper.nativeElement.style.transform = 'scale(' + n + ')';
     }
 
-    this.instance.setZoom(n)
+    this.instance.setZoom(n);
     // this.instance.repaint();
   }
 
   bindEvents() {
-    this.instance.bind("connection", (info: any) => {
+    this.instance.bind('connection', (info: any) => {
       var connection = info.connection;
-      console.log("connection", connection);
-      connection.bind("click", (connection: any, originalEvent: any) => {
-        alert("you clicked on "+connection);
+      console.log('connection', connection);
+      connection.bind('click', (connection: any, originalEvent: any) => {
+        alert('you clicked on ' + connection);
         this.instance.detach(connection);
       });
     });
 
     this.instance.bind(EVENT_CLICK, (connection: any, originalEvent: any) => {
-      console.log("Aaa12345");
-      alert("you clicked on "+connection);
+      console.log('Aaa12345');
+      alert('you clicked on ' + connection);
       // this.instance.detach(connection);
     });
 
-    this.instance.bind(EVENT_ELEMENT_CLICK, (connection: any, originalEvent: any) => {
-      console.log("Aaa123");
-      alert("you clicked on "+connection);
-      // this.instance.detach(connection);
-    });
+    this.instance.bind(
+      EVENT_ELEMENT_CLICK,
+      (connection: any, originalEvent: any) => {
+        console.log('Aaa123');
+        alert('you clicked on ' + connection);
+        // this.instance.detach(connection);
+      }
+    );
   }
 
+  // right click function
+
+  onRightClick(index: any) {
+    if (index === 0) {
+      return true;
+    }
+    this.groupBlocks[index].popover = true;
+    return `
+      <div class="absolute top-0 w-48 -right-0">
+        <div class="bg-white rounded-md border shadow text-lg font-semibold">
+          <div class="flex items-center gap-3 text-gray-500 p-3 hover:bg-gray-100">
+            <span class="w-5 h-5 popover-icon"><img class="w-full h-full" src="../../../../assets/svgs/clone-regular.svg"/></span>
+            <p class="">Duplicate</p>
+          </div>
+          <div class="flex items-center  gap-3 text-gray-500 p-3 hover:bg-gray-100">
+            <span class="w-5 h-5  popover-icon"><img class="w-full h-full" src="../../../../assets/svgs/trash-solid.svg" /></span>
+            <p class="">Delete</p>
+          </div>
+        </div>
+      </div>
+    `;
+  }
 }
