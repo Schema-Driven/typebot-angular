@@ -29,13 +29,11 @@ export class Editorv2Component extends StructuredBlocks {
   wrapper!: ElementRef;
   instance: any;
   panZoomController: any;
+  scaleLevel: number = 1;
   deg: number = 3;
   edges: Edge[] = [];
   groupBlockIdsMapping: any = {};
   sidePanel: boolean = false;
-  rightClick: boolean = false;
-  sX: any;
-  sY: any;
 
   firstGroupId = this.uuid();
   firstBlockId = this.uuid();
@@ -76,19 +74,6 @@ export class Editorv2Component extends StructuredBlocks {
       connector: this.connectorProp,
       container: this.wrapper.nativeElement,
     });
-
-    // this.instance.registerconnectionTypes({
-    //   "basic": {
-    //     paintStyle:{ stroke:"blue", strokeWidth:5  },
-    //     hoverPaintStyle:{ stroke:"red", strokeWidth:7 },
-    //     cssClass:"connector-normal"
-    //   },
-    //   "selected":{
-    //     paintStyle:{ stroke:"red", strokeWidth:5 },
-    //     hoverPaintStyle:{ strokeWidth: 17, stroke:"red" },
-    //     cssClass:"connector-selected"
-    //   }
-    // });
 
     this.instance.addTargetSelector('.single-group, .single-block', {
       ...this.targetEndpoint,
@@ -357,12 +342,16 @@ export class Editorv2Component extends StructuredBlocks {
     this.typebot.edges = this.edges;
   }
 
-  zoomHandler(n: any, ref = 'btns') {
-    if (ref === 'btns') {
-      this.wrapper.nativeElement.style.transform = 'scale(' + n + ')';
+  zoomHandler(type: string) {
+    // check maximum and minimum level of zoom
+    if (type === 'increase' && this.scaleLevel <= 1.2) {
+      this.scaleLevel = this.scaleLevel + 0.1;
+    } else if (type === 'decrease' && this.scaleLevel > 0.8) {
+      this.scaleLevel = this.scaleLevel - 0.1;
     }
 
-    this.instance.setZoom(n);
+    this.wrapper.nativeElement.style.transform = 'scale(' + this.scaleLevel + ')';
+    this.instance.setZoom(this.scaleLevel);
     // this.instance.repaint();
   }
 
@@ -421,7 +410,7 @@ export class Editorv2Component extends StructuredBlocks {
     });
 
     window.addEventListener('click', (e: any) => {
-      console.log('window event', e);
+
       if (e.target.nodeName !== 'path') {
         this.removeSelectedBorder();
       }
@@ -452,19 +441,16 @@ export class Editorv2Component extends StructuredBlocks {
   }
 
   removeCloneDeletePopup(elements: any, clickElement: any) {
-    console.log(elements);
     let isAllowToRemove = true;
     for (const el of elements) {
       if (!el.classList.contains('recieveDragedBox')) {
         if (el.contains(clickElement.target)) {
-          console.log('el', el);
           isAllowToRemove = false;
         }
       }
     }
 
     if (isAllowToRemove) {
-      console.log('Remove It');
       const selectedElem = document.querySelectorAll('.delete-popover');
       selectedElem.forEach((e) => {
         e.remove();
