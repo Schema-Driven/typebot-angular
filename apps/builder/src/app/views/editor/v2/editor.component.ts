@@ -7,7 +7,7 @@ import {
   transferArrayItem,
   copyArrayItem,
 } from '@angular/cdk/drag-drop';
-import { newInstance } from '@jsplumb/browser-ui';
+import { newInstance, EVENT_CLICK, EVENT_ELEMENT_CLICK } from '@jsplumb/browser-ui';
 import { AnchorLocations, AnchorSpec, AnchorOptions } from '@jsplumb/common';
 import Panzoom from '@panzoom/panzoom'
 import { GroupBlock, Block, Edge, TypeBot } from './editor.interfaces';
@@ -63,13 +63,16 @@ export class Editorv2Component extends StructuredBlocks {
       container: this.wrapper.nativeElement,
     });
 
-    this.instance.addTargetSelector('.single-group', {
+    this.instance.addTargetSelector('.single-group, .single-block', {
       ...this.targetEndpoint,
       ...{
         anchor: 'ContinuousLeft',
         scope: 'target_scope',
+        redrop:"any",
       },
     });
+
+    this.bindEvents();
 
     // this.panZoomController.pan(10, 10)
     // this.panZoomController.zoom(1, { animate: true });
@@ -229,6 +232,16 @@ export class Editorv2Component extends StructuredBlocks {
 
   _addEndPoint(id: string, sourceAnchors: Array<AnchorSpec>, type: string = 'block') {
     let sourcePoint = ((type === 'block') ? this.sourceEndpoint : this.groupSourceEndpoint);
+
+    if (type === 'group') {
+      this.instance.addGroup({
+        el: document.getElementById(id),
+        id: id,
+        droppable:false,
+        // dropOverride:true
+      })
+    }
+
     // const element = this.instance.getManagedElement(id);
     for (let i = 0; i < sourceAnchors.length; i++) {
       const sourceUUID = id + sourceAnchors[i];
@@ -237,6 +250,7 @@ export class Editorv2Component extends StructuredBlocks {
         uuid: sourceUUID
       });
     }
+
   }
 
   _removeEndPoint(id: string) {
@@ -305,4 +319,58 @@ export class Editorv2Component extends StructuredBlocks {
     this.instance.setZoom(n)
     // this.instance.repaint();
   }
+
+  bindEvents() {
+    this.instance.bind("connection", (info: any) => {
+      console.log("info.connection", info.connection);
+      const connectors = document.querySelectorAll(".jtk-connector");
+      connectors.forEach((connector) => {
+        connector.addEventListener('contextmenu', (e: any) => {
+          console.log("Right Click Event");
+          e.preventDefault();
+          return false;
+        });
+
+        connector.addEventListener('click', (e: any) => {
+          console.log("Left Click Event", e);
+          e.preventDefault();
+          return false;
+        });
+
+        connector.removeEventListener('contextmenu', () => {});
+        connector.removeEventListener('click', () => {});
+      });
+      // var connection = info.connection;
+      // console.log("connection", connection);
+      // connection.bind("click", (connection: any, originalEvent: any) => {
+      //   alert("you clicked on "+connection);
+      //   this.instance.detach(connection);
+      // });
+    });
+
+    this.instance.bind(EVENT_CLICK, (connection: any, originalEvent: any) => {
+      console.log("Aaa12345");
+      // alert("you clicked on "+connection);
+      // this.instance.detach(connection);
+    });
+
+    // this.instance.bind(EVENT_ELEMENT_CLICK, (connection: any, originalEvent: any) => {
+    //   console.log("Aaa123");
+    //   alert("you clicked on "+connection);
+    //   // this.instance.detach(connection);
+    // });
+
+    this.instance.bind('beforeDrop', (ci: any) => { // Before new connection is created
+      let src = ci.sourceId;
+      let con= this.instance.getConnections({ source: src }); // Get all source el. connection(s) except the new connection which is being established
+      if(con.length != 0 && document.getElementById(src)){
+          for(var i = 0; i < con.length; i++) {
+            this.instance.deleteConnection(con[i]);
+          }
+      }
+      return true; // true for establishing new connection
+    });
+
+  }
+
 }

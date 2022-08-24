@@ -327,7 +327,7 @@ export class StructuredBlocks {
     paintStyle: {
       fill: 'none',
     },
-    maxConnections: 4,
+    maxConnections: 2,
     source: false,
     target: true,
     uniqueEndpoint: true,

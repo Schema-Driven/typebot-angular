@@ -60,18 +60,20 @@
     <div class="rightSide">
       <!-- <div class="drawing" #drawing> -->
 
-        <div class="groups-wrapper" #wrapper>
-          <div *ngFor="let b of groupBlocks" [id]="b.id" class="grouper absolute z-2"
-            [style]="('top:'+ b.position.y+'px;left:'+ b.position.x+'px')">
-            <div class="p-4 bg-white single-group wrap-div w-72" cdkDrag>
-              <h2>{{b.name}}</h2>
-              <div cdkDropList [cdkDropListData]="b.blocks" (cdkDropListDropped)="drop($event, 'box')"
-                class="dragAbleBox overflow-hidden block h-full mt-3 p-2.5 bg-gray-100 rounded-lg"
-                [cdkDropListEnterPredicate]="dropListEnterPredicate(b)" id="receiving-list">
-                <div cdkDrag [cdkDragDisabled]="block.type === 'start'" (cdkDragStarted)="cdkDragStarted($event)"
-                  *ngFor="let block of b.blocks; let i = index" class="p-3 my-1 text-xs border rounded-lg bg-gray-50" [id]="block.id">
-                  <div class="draggable-custom-placeholder" *cdkDragPlaceholder></div>
-                  <div class="flex items-center w-full gap-2 px-2 text-sm single-block">
+      <div class="groups-wrapper" #wrapper>
+        <div *ngFor="let b of groupBlocks" [id]="b.id" [attr.data-jtk-managed]="b.id" class="grouper absolute z-2"
+          [style]="('top:'+ b.position.y+'px;left:'+ b.position.x+'px')">
+          <div class="py-4 bg-white wrap-div w-72 single-group" cdkDrag>
+            <h2 class="px-4">{{b.name}}</h2>
+            <div cdkDropList [cdkDropListData]="b.blocks" (cdkDropListDropped)="drop($event, 'box')"
+              class="dragAbleBox overflow-hidden block h-full mt-3"
+              [cdkDropListEnterPredicate]="dropListEnterPredicate(b)" id="receiving-list">
+              <div cdkDrag [cdkDragDisabled]="block.type === 'start'" (cdkDragStarted)="cdkDragStarted($event)"
+                *ngFor="let block of b.blocks; let i = index" class="single-block px-4" [id]="block.id"
+                [attr.data-jtk-managed]="block.id">
+                <div class="draggable-custom-placeholder" *cdkDragPlaceholder></div>
+                <div class="single-block-placeholder p-3 my-2 text-xs border rounded-lg bg-gray-50">
+                  <div class="flex items-center w-full gap-2 px-2 text-sm">
                     <img [src]="prefilledData[block.type].svg" class="w-4 h-4" />
                     <p class="mb-0">{{prefilledData[block.type].label}}</p>
                   </div>
@@ -79,9 +81,10 @@
               </div>
             </div>
           </div>
-          <div cdkDropList (cdkDropListDropped)="drop($event, 'container')" class="recieveDragedBox">
-          </div>
         </div>
+        <div cdkDropList (cdkDropListDropped)="drop($event, 'container')" class="recieveDragedBox">
+        </div>
+      </div>
 
       <!-- </div> -->
     </div>
