@@ -223,8 +223,8 @@ export class Editorv2Component extends StructuredBlocks {
         id: groupId,
         name: `Group # ${this.groupBlocks.length + 1}`,
         position: {
-          x: event.dropPoint.x,
-          y: event.dropPoint.y,
+          x: event.dropPoint.x - 40,
+          y: event.dropPoint.y - 50,
         },
         draggable: true,
         blocks: [block],
@@ -357,10 +357,12 @@ export class Editorv2Component extends StructuredBlocks {
   }
 
   bindEvents() {
-    this.instance.bind("connection", (info: any) => {
-      console.log("info.connection", info.connection);
+    this.instance.bind("connection", (info: any, e: any) => {
+      console.log("info.connection", info);
+      console.log("event", e);
       const connectors = document.querySelectorAll(".jtk-connector");
       connectors.forEach((connector) => {
+
         connector.addEventListener('contextmenu', (e: any) => {
           console.log("Right Click Event");
           e.preventDefault();
