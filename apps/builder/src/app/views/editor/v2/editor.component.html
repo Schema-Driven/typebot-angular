@@ -61,7 +61,7 @@
       <!-- <div class="drawing" #drawing> -->
 
       <div class="groups-wrapper" #wrapper>
-        <div *ngFor="let b of groupBlocks; let i = index" [id]="b.id" class="grouper absolute z-2"
+        <div *ngFor="let b of groupBlocks; let i = index" [id]="b.id" [attr.data-jtk-managed]="b.id" class="grouper absolute z-2"
           [style]="('top:'+ b.position.y+'px;left:'+ b.position.x+'px')">
           <div class="py-4 bg-white single-group wrap-div w-72" cdkDrag (contextmenu)="onRightClick(i)">
             <h2 class="px-4">{{b.name}}</h2>
