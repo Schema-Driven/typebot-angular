@@ -395,10 +395,7 @@ export class Editorv2Component extends StructuredBlocks {
     });
 
     window.addEventListener('click', (e: any) => {
-      console.log("window event", e);
-      if (e.target.nodeName !== 'path') {
-        this.removeSelectedBorder();
-      }
+      this.removeCloneDeletePopup(this.wrapper.nativeElement.children, e);
     });
 
     this.instance.bind('beforeDrop', (ci: any) => { // Before new connection is created
@@ -423,7 +420,26 @@ export class Editorv2Component extends StructuredBlocks {
     })
   }
 
-  // right click function
+  removeCloneDeletePopup(elements: any, clickElement: any) {
+    console.log(elements);
+    let isAllowToRemove = true;
+    for (const el of elements) {
+      if (!el.classList.contains('recieveDragedBox')) {
+        if (el.contains(clickElement.target)) {
+            console.log("el", el);
+            isAllowToRemove = false;
+        }
+      }
+    }
+
+    if (isAllowToRemove) {
+      console.log("Remove It");
+      const selectedElem = document.querySelectorAll('.delete-popover');
+      selectedElem.forEach((e) => {
+        e.remove();
+      })
+    }
+  }
 
   onRightClick(index: any) {
     if (index === 0) {
