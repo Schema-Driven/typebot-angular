@@ -61,9 +61,10 @@
       <!-- <div class="drawing" #drawing> -->
 
       <div class="groups-wrapper" #wrapper>
-        <div *ngFor="let b of groupBlocks; let i = index" [id]="b.id" [attr.data-jtk-managed]="b.id" class="grouper absolute z-2"
-          [style]="('top:'+ b.position.y+'px;left:'+ b.position.x+'px')">
-          <div class="py-4 bg-white single-group wrap-div w-72" cdkDrag (contextmenu)="onRightClick(i)">
+        <div *ngFor="let b of groupBlocks; let i = index" [id]="b.id" [attr.data-jtk-managed]="b.id"
+          class="grouper absolute z-2" [style]="('top:'+ b.position.y+'px;left:'+ b.position.x+'px')">
+          <div oncontextmenu='return false' class="py-4 bg-white single-group wrap-div w-72" cdkDrag
+            (contextmenu)="onRightClick(i)">
             <h2 class="px-4">{{b.name}}</h2>
             <div cdkDropList [cdkDropListData]="b.blocks" (cdkDropListDropped)="drop($event, 'box')"
               class="dragAbleBox overflow-hidden block h-full mt-3"
@@ -80,7 +81,7 @@
                 </div>
               </div>
             </div>
-            <div *ngIf="b.popover" class="" [innerHtml]="onRightClick(i)"></div>
+            <div *ngIf="b.popover" class="delete-popover" [innerHtml]="onRightClick(i)"></div>
           </div>
 
         </div>

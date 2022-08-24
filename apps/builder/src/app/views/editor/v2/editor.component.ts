@@ -17,6 +17,7 @@ import { AnchorLocations, AnchorSpec, AnchorOptions } from '@jsplumb/common';
 import Panzoom from '@panzoom/panzoom';
 import { GroupBlock, Block, Edge, TypeBot } from './editor.interfaces';
 import { StructuredBlocks } from './group-structured-blocks';
+import { HtmlParser } from '@angular/compiler';
 
 @Component({
   selector: 'editorv2',
@@ -33,6 +34,8 @@ export class Editorv2Component extends StructuredBlocks {
   groupBlockIdsMapping: any = {};
   sidePanel: boolean = false;
   rightClick: boolean = false;
+  sX: any;
+  sY: any;
 
   firstGroupId = this.uuid();
   firstBlockId = this.uuid();
@@ -67,8 +70,6 @@ export class Editorv2Component extends StructuredBlocks {
   }
 
   ngOnInit() {
-
-
     this.instance = newInstance({
       dragOptions: this.dragOptions,
       connectionOverlays: this.connectionOverlays,
@@ -94,7 +95,7 @@ export class Editorv2Component extends StructuredBlocks {
       ...{
         anchor: 'ContinuousLeft',
         scope: 'target_scope',
-        redrop: 'any'
+        redrop: 'any',
       },
     });
 
@@ -131,13 +132,6 @@ export class Editorv2Component extends StructuredBlocks {
     this.manageNode(this.firstGroupId, ['Right'], 'group');
     this.manageNode(this.firstBlockId, ['Right'], 'block');
     this.groupBlockIdsMapping[this.firstBlockId] = this.firstGroupId;
-  }
-
-  ngAfterViewInit() {
-    this.wrapper.nativeElement.addEventListener(
-      'click',
-      this.onRightClick.bind(this)
-    );
   }
 
   sidePanelClick() {
@@ -373,70 +367,120 @@ export class Editorv2Component extends StructuredBlocks {
   }
 
   bindEvents() {
-    this.instance.bind("connection", (info: any, e: any) => {
-      console.log("info.connection", info);
-      console.log("connector", info.connection.connector);
+    this.instance.bind('connection', (info: any, e: any) => {
+      console.log('info.connection', info);
+      console.log('connector', info.connection.connector);
 
-      this.instance.setAttribute(info.connection.connector.canvas, "connector-source-id", info.sourceId);
-      this.instance.setAttribute(info.connection.connector.canvas, "connector-target-id", info.targetId);
+      this.instance.setAttribute(
+        info.connection.connector.canvas,
+        'connector-source-id',
+        info.sourceId
+      );
+      this.instance.setAttribute(
+        info.connection.connector.canvas,
+        'connector-target-id',
+        info.targetId
+      );
 
-      this.instance.on(info.connection.connector.canvas, "click", (e: any) => {
+      this.instance.on(info.connection.connector.canvas, 'click', (e: any) => {
         let connector = e.target.closest('.jtk-connector');
-        this.instance.addClass(connector,"selected");
-        this.instance.addClass(document.getElementById(this.groupBlockIdsMapping[connector.getAttribute("connector-source-id")]), "selected");
-        this.instance.addClass(document.getElementById(connector.getAttribute("connector-target-id")), "selected");
+        this.instance.addClass(connector, 'selected');
+        this.instance.addClass(
+          document.getElementById(
+            this.groupBlockIdsMapping[
+              connector.getAttribute('connector-source-id')
+            ]
+          ),
+          'selected'
+        );
+        this.instance.addClass(
+          document.getElementById(
+            connector.getAttribute('connector-target-id')
+          ),
+          'selected'
+        );
       });
 
-      this.instance.on(info.connection.connector.canvas, "contextmenu", (e: any) => {
-        console.log("Right Click Event");
-        e.preventDefault();
-        return false;
-      })
+      this.instance.on(
+        info.connection.connector.canvas,
+        'contextmenu',
+        (e: any) => {
+          console.log('Right Click Event', e);
+          console.log(e.clientX);
+          console.log(e.clientY);
+          console.log(e.path);
+          e.preventDefault();
+          const rightContent = this.onConnectorRightClick(e.clientX, e.clientY);
+          this.wrapper.nativeElement.insertAdjacentHTML(
+            'beforeend',
+            rightContent
+          );
+          return false;
+        }
+      );
     });
 
     window.addEventListener('click', (e: any) => {
-      console.log("window event", e);
+      console.log('window event', e);
       if (e.target.nodeName !== 'path') {
         this.removeSelectedBorder();
       }
     });
 
-    this.instance.bind('beforeDrop', (ci: any) => { // Before new connection is created
+    this.instance.bind('beforeDrop', (ci: any) => {
+      // Before new connection is created
       let src = ci.sourceId;
-      let con= this.instance.getConnections({ source: src }); // Get all source el. connection(s) except the new connection which is being established
-      if(con.length != 0 && document.getElementById(src)){
-          for(var i = 0; i < con.length; i++) {
-            this.instance.deleteConnection(con[i]);
-          }
+      let con = this.instance.getConnections({ source: src }); // Get all source el. connection(s) except the new connection which is being established
+      if (con.length != 0 && document.getElementById(src)) {
+        for (var i = 0; i < con.length; i++) {
+          this.instance.deleteConnection(con[i]);
+        }
       }
 
       this.removeSelectedBorder();
       return true; // true for establishing new connection
     });
-
   }
 
   removeSelectedBorder() {
     const selectedElem = document.querySelectorAll('.selected');
     selectedElem.forEach((e) => {
       e.classList.remove('selected');
-    })
+    });
   }
 
   // right click function
 
   onRightClick(index: any) {
+    // const rightContent = this.onConnectorRightClick(e.clientX, e.clientY);
+    // this.wrapper.nativeElement.insertAdjacentHTML('beforeend', rightContent);
     if (index === 0) {
       return true;
     }
     this.groupBlocks[index].popover = true;
     return `
-      <div class="absolute top-0 w-48 -right-0">
+      <div class="absolute top-0 right-0 w-48">
         <div class="bg-white rounded-md border shadow text-lg font-semibold">
           <div class="flex items-center gap-3 text-gray-500 p-3 hover:bg-gray-100">
             <span class="w-5 h-5 popover-icon"><img class="w-full h-full" src="../../../../assets/svgs/clone-regular.svg"/></span>
             <p class="">Duplicate</p>
           </div>
+          <div class="flex items-center  gap-3 text-gray-500 p-3 hover:bg-gray-100">
+            <span class="w-5 h-5  popover-icon"><img class="w-full h-full" src="../../../../assets/svgs/trash-solid.svg" /></span>
+            <p class="">Delete</p>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+  // right click function
+
+  onConnectorRightClick(sX: any, sY: any) {
+    return `
+      <div style="transform:translate(${sX - 30}px, ${
+      sY - 30
+    }px)" class="w-56 cursor-pointer absolute z-50">
+        <div class="bg-white rounded-md border shadow text-lg font-semibold">
           <div class="flex items-center  gap-3 text-gray-500 p-3 hover:bg-gray-100">
             <span class="w-5 h-5  popover-icon"><img class="w-full h-full" src="../../../../assets/svgs/trash-solid.svg" /></span>
             <p class="">Delete</p>
