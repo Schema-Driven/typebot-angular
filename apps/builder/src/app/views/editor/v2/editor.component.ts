@@ -8,6 +8,7 @@ import {
   copyArrayItem,
 } from '@angular/cdk/drag-drop';
 import {
+  BrowserJsPlumbInstance,
   newInstance,
   EVENT_CLICK,
   EVENT_ELEMENT_CLICK,
@@ -66,6 +67,8 @@ export class Editorv2Component extends StructuredBlocks {
   }
 
   ngOnInit() {
+
+
     this.instance = newInstance({
       dragOptions: this.dragOptions,
       connectionOverlays: this.connectionOverlays,
@@ -73,12 +76,25 @@ export class Editorv2Component extends StructuredBlocks {
       container: this.wrapper.nativeElement,
     });
 
+    // this.instance.registerconnectionTypes({
+    //   "basic": {
+    //     paintStyle:{ stroke:"blue", strokeWidth:5  },
+    //     hoverPaintStyle:{ stroke:"red", strokeWidth:7 },
+    //     cssClass:"connector-normal"
+    //   },
+    //   "selected":{
+    //     paintStyle:{ stroke:"red", strokeWidth:5 },
+    //     hoverPaintStyle:{ strokeWidth: 17, stroke:"red" },
+    //     cssClass:"connector-selected"
+    //   }
+    // });
+
     this.instance.addTargetSelector('.single-group, .single-block', {
       ...this.targetEndpoint,
       ...{
         anchor: 'ContinuousLeft',
         scope: 'target_scope',
-        redrop: 'any',
+        redrop: 'any'
       },
     });
 
@@ -359,44 +375,31 @@ export class Editorv2Component extends StructuredBlocks {
   bindEvents() {
     this.instance.bind("connection", (info: any, e: any) => {
       console.log("info.connection", info);
-      console.log("event", e);
-      const connectors = document.querySelectorAll(".jtk-connector");
-      connectors.forEach((connector) => {
+      console.log("connector", info.connection.connector);
 
-        connector.addEventListener('contextmenu', (e: any) => {
-          console.log("Right Click Event");
-          e.preventDefault();
-          return false;
-        });
+      this.instance.setAttribute(info.connection.connector.canvas, "connector-source-id", info.sourceId);
+      this.instance.setAttribute(info.connection.connector.canvas, "connector-target-id", info.targetId);
 
-        connector.addEventListener('click', (e: any) => {
-          console.log("Left Click Event", e);
-          e.preventDefault();
-          return false;
-        });
-
-        connector.removeEventListener('contextmenu', () => {});
-        connector.removeEventListener('click', () => {});
+      this.instance.on(info.connection.connector.canvas, "click", (e: any) => {
+        let connector = e.target.closest('.jtk-connector');
+        this.instance.addClass(connector,"selected");
+        this.instance.addClass(document.getElementById(this.groupBlockIdsMapping[connector.getAttribute("connector-source-id")]), "selected");
+        this.instance.addClass(document.getElementById(connector.getAttribute("connector-target-id")), "selected");
       });
-      // var connection = info.connection;
-      // console.log("connection", connection);
-      // connection.bind("click", (connection: any, originalEvent: any) => {
-      //   alert("you clicked on "+connection);
-      //   this.instance.detach(connection);
-      // });
+
+      this.instance.on(info.connection.connector.canvas, "contextmenu", (e: any) => {
+        console.log("Right Click Event");
+        e.preventDefault();
+        return false;
+      })
     });
 
-    this.instance.bind(EVENT_CLICK, (connection: any, originalEvent: any) => {
-      console.log("Aaa12345");
-      // alert("you clicked on "+connection);
-      // this.instance.detach(connection);
+    window.addEventListener('click', (e: any) => {
+      console.log("window event", e);
+      if (e.target.nodeName !== 'path') {
+        this.removeSelectedBorder();
+      }
     });
-
-    // this.instance.bind(EVENT_ELEMENT_CLICK, (connection: any, originalEvent: any) => {
-    //   console.log("Aaa123");
-    //   alert("you clicked on "+connection);
-    //   // this.instance.detach(connection);
-    // });
 
     this.instance.bind('beforeDrop', (ci: any) => { // Before new connection is created
       let src = ci.sourceId;
@@ -406,9 +409,18 @@ export class Editorv2Component extends StructuredBlocks {
             this.instance.deleteConnection(con[i]);
           }
       }
+
+      this.removeSelectedBorder();
       return true; // true for establishing new connection
     });
 
+  }
+
+  removeSelectedBorder() {
+    const selectedElem = document.querySelectorAll('.selected');
+    selectedElem.forEach((e) => {
+      e.classList.remove('selected');
+    })
   }
 
   // right click function

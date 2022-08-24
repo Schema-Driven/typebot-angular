@@ -160,6 +160,19 @@
   fill: transparent;
 }
 
+.single-block.selected .single-block-placeholder {
+  outline: 2px solid #1a5fff;
+}
+
+.grouper.selected{
+  outline: 3px solid #1a5fff;
+  border-radius: 10px;
+}
+
+::ng-deep svg.selected path {
+  stroke: #1a5fff !important;
+}
+
 .grouper.jtk-drag-hover {
   outline: 3px solid #1a5fff;
   border-radius: 10px;

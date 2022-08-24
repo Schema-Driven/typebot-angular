@@ -380,6 +380,7 @@ export class StructuredBlocks {
       alwaysRespectStubs: true,
       cornerRadius: 20,
       midpoint: 0.5,
+      type: "basic"
     },
   };
 
