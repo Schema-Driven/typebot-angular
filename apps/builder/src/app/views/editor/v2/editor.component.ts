@@ -425,6 +425,8 @@ export class Editorv2Component extends StructuredBlocks {
       if (e.target.nodeName !== 'path') {
         this.removeSelectedBorder();
       }
+
+      this.removeCloneDeletePopup(this.wrapper.nativeElement.children, e);
     });
 
     this.instance.bind('beforeDrop', (ci: any) => {
@@ -449,7 +451,26 @@ export class Editorv2Component extends StructuredBlocks {
     });
   }
 
-  // right click function
+  removeCloneDeletePopup(elements: any, clickElement: any) {
+    console.log(elements);
+    let isAllowToRemove = true;
+    for (const el of elements) {
+      if (!el.classList.contains('recieveDragedBox')) {
+        if (el.contains(clickElement.target)) {
+          console.log('el', el);
+          isAllowToRemove = false;
+        }
+      }
+    }
+
+    if (isAllowToRemove) {
+      console.log('Remove It');
+      const selectedElem = document.querySelectorAll('.delete-popover');
+      selectedElem.forEach((e) => {
+        e.remove();
+      });
+    }
+  }
 
   onRightClick(index: any) {
     // const rightContent = this.onConnectorRightClick(e.clientX, e.clientY);
@@ -479,7 +500,7 @@ export class Editorv2Component extends StructuredBlocks {
     return `
       <div style="transform:translate(${sX - 30}px, ${
       sY - 30
-    }px)" class="w-56 cursor-pointer absolute z-50">
+    }px)" class="w-56 cursor-pointer absolute z-50 delete-popover">
         <div class="bg-white rounded-md border shadow text-lg font-semibold">
           <div class="flex items-center  gap-3 text-gray-500 p-3 hover:bg-gray-100">
             <span class="w-5 h-5  popover-icon"><img class="w-full h-full" src="../../../../assets/svgs/trash-solid.svg" /></span>
