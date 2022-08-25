@@ -33,6 +33,11 @@ export class Editorv2Component extends StructuredBlocks {
   deg: number = 3;
   edges: Edge[] = [];
   groupBlockIdsMapping: any = {};
+  rightClickPopovers: any = {
+    'connector': [],
+    'group': [],
+    'block': [],
+  };
   sidePanel: boolean = false;
 
   firstGroupId = this.uuid();
@@ -390,20 +395,23 @@ export class Editorv2Component extends StructuredBlocks {
         );
       });
 
-      this.instance.on(
-        info.connection.connector.canvas,
-        'contextmenu',
-        (e: any) => {
-          console.log('Right Click Event', e);
-          console.log(e.clientX);
-          console.log(e.clientY);
-          console.log(e.path);
+      this.instance.on(info.connection.connector.canvas, 'contextmenu', (e: any) => {
           e.preventDefault();
-          const rightContent = this.onConnectorRightClick(e.clientX, e.clientY);
-          this.wrapper.nativeElement.insertAdjacentHTML(
-            'beforeend',
-            rightContent
-          );
+          let connector = e.target.closest('.jtk-connector');
+          let type = 'connector';
+          let id = type + '-' + connector.getAttribute('connector-source-id');
+
+          if (document.getElementById(id)) {
+            // if any coonector popover found then delete it first
+            let index = document.getElementById(id)?.getAttribute('data-popover-index');
+            this.rightClickPopovers[type].splice(index, 1);
+          }
+
+          this.rightClickPopovers[type].push({
+            position: { x: e.clientX, y: e.clientY },
+            type: type,
+            id: id,
+          });
           return false;
         }
       );
@@ -420,17 +428,19 @@ export class Editorv2Component extends StructuredBlocks {
 
     this.instance.bind('beforeDrop', (ci: any) => {
       // Before new connection is created
-      let src = ci.sourceId;
-      let con = this.instance.getConnections({ source: src }); // Get all source el. connection(s) except the new connection which is being established
-      if (con.length != 0 && document.getElementById(src)) {
-        for (var i = 0; i < con.length; i++) {
-          this.instance.deleteConnection(con[i]);
-        }
-      }
-
+      this.deleteConnection(ci.sourceId);
       this.removeSelectedBorder();
       return true; // true for establishing new connection
     });
+  }
+
+  deleteConnection(id: string) {
+    let con = this.instance.getConnections({ source: id }); // Get all source el. connection(s) except the new connection which is being established
+    if (con.length != 0 && document.getElementById(id)) {
+      for (var i = 0; i < con.length; i++) {
+        this.instance.deleteConnection(con[i]);
+      }
+    }
   }
 
   removeSelectedBorder() {
@@ -451,49 +461,48 @@ export class Editorv2Component extends StructuredBlocks {
     }
 
     if (isAllowToRemove) {
-      const selectedElem = document.querySelectorAll('.delete-popover');
-      selectedElem.forEach((e) => {
-        e.remove();
+      this.resetRightClickPopovers();
+    }
+  }
+
+  resetRightClickPopovers() {
+    this.rightClickPopovers = {
+      'connector': [],
+      'group': [],
+      'block': [],
+    };
+  }
+
+  showRightClickPopover(type: string, id: string, e:any) {
+    if (this.firstGroupId !== id) {
+      id = type + '-' + id;
+      if (document.getElementById(id)) {
+        let index = document.getElementById(id)?.getAttribute('data-popover-index');
+        this.rightClickPopovers[type].splice(index, 1);
+      }
+
+      this.rightClickPopovers[type].push({
+        position: { x: e.clientX, y: e.clientY },
+        type: type,
+        id: id,
       });
+      return false;
     }
+    return true;
   }
 
-  onRightClick(index: any) {
-    // const rightContent = this.onConnectorRightClick(e.clientX, e.clientY);
-    // this.wrapper.nativeElement.insertAdjacentHTML('beforeend', rightContent);
-    if (index === 0) {
-      return true;
-    }
-    this.groupBlocks[index].popover = true;
-    return `
-      <div class="absolute top-0 right-0 w-48">
-        <div class="bg-white rounded-md border shadow text-lg font-semibold">
-          <div class="flex items-center gap-3 text-gray-500 p-3 hover:bg-gray-100">
-            <span class="w-5 h-5 popover-icon"><img class="w-full h-full" src="../../../../assets/svgs/clone-regular.svg"/></span>
-            <p class="">Duplicate</p>
-          </div>
-          <div class="flex items-center  gap-3 text-gray-500 p-3 hover:bg-gray-100">
-            <span class="w-5 h-5  popover-icon"><img class="w-full h-full" src="../../../../assets/svgs/trash-solid.svg" /></span>
-            <p class="">Delete</p>
-          </div>
-        </div>
-      </div>
-    `;
-  }
-  // right click function
+  popoverHandler(type: string, id: string, index: number) {
+    let groupIndex: any;
+    id = id.replace(type + "-", "");
 
-  onConnectorRightClick(sX: any, sY: any) {
-    return `
-      <div style="transform:translate(${sX - 30}px, ${
-      sY - 30
-    }px)" class="w-56 cursor-pointer absolute z-50 delete-popover">
-        <div class="bg-white rounded-md border shadow text-lg font-semibold">
-          <div class="flex items-center  gap-3 text-gray-500 p-3 hover:bg-gray-100">
-            <span class="w-5 h-5  popover-icon"><img class="w-full h-full" src="../../../../assets/svgs/trash-solid.svg" /></span>
-            <p class="">Delete</p>
-          </div>
-        </div>
-      </div>
-    `;
+    if (type === 'connector') {
+      this.deleteConnection(id);
+    } else if (type === 'group') {
+      groupIndex = document.getElementById(id)?.getAttribute('data-group-index');
+      this._removeEndPoint(id);
+      this.groupBlocks.splice(groupIndex, 1);
+    }
+
+    this.rightClickPopovers[type].splice(index, 1);
   }
 }
