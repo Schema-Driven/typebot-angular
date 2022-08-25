@@ -499,7 +499,7 @@ export class Editorv2Component extends StructuredBlocks {
       this.deleteConnection(id);
     } else if (type === 'group') {
       groupIndex = document.getElementById(id)?.getAttribute('data-group-index');
-      this._removeEndPoint(id);
+      this.instance.removeGroup(id);
       this.groupBlocks.splice(groupIndex, 1);
     }
 
