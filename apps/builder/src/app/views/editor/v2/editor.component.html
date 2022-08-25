@@ -84,6 +84,7 @@
         </div>
 
         <div class="popovers">
+          <!-- Start Connector Popovers -->
           <div *ngFor="let popover of rightClickPopovers['connector']; index as i"
             class="w-56 cursor-pointer absolute z-50 delete-popover"
             [style]="('transform:translate('+ (popover.position.x - 30)+'px, '+ (popover.position.y - 30) +'px')" [attr.id]="popover.id" [attr.data-popover-index]="i"
@@ -95,6 +96,8 @@
               </div>
             </div>
           </div>
+          <!-- End Connector Popovers -->
+          <!-- Start Group Popovers -->
           <div *ngFor="let popover of rightClickPopovers['group']; index as i"
             class="w-56 cursor-pointer absolute z-50 delete-popover"
             [style]="('transform:translate('+ (popover.position.x - 30)+'px, '+ (popover.position.y - 30) +'px')" [attr.id]="popover.id" [attr.data-popover-index]="i"
@@ -106,6 +109,7 @@
               </div>
             </div>
           </div>
+          <!-- End Group Popovers -->
         </div>
 
         <div cdkDropList (cdkDropListDropped)="drop($event, 'container')" class="recieveDragedBox my-element">
