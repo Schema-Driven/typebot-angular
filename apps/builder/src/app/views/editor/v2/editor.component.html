@@ -68,9 +68,16 @@
             <div cdkDropList [cdkDropListData]="b.blocks" (cdkDropListDropped)="drop($event, 'box')"
               class="dragAbleBox overflow-hidden block h-full mt-3"
               [cdkDropListEnterPredicate]="dropListEnterPredicate(b)" id="receiving-list">
-              <div cdkDrag [cdkDragDisabled]="block.type === 'start'" (cdkDragStarted)="cdkDragStarted($event)"
-                *ngFor="let block of b.blocks; let i = index" class="single-block px-4" [id]="block.id"
-                [attr.data-jtk-managed]="block.id">
+              <div
+                cdkDrag
+                [cdkDragDisabled]="block.type === 'start'"
+                (cdkDragStarted)="cdkDragStarted($event)"
+                (contextmenu)="showRightClickPopover('block', block.id, $event)"
+                *ngFor="let block of b.blocks; let i = index"
+                class="single-block px-4"
+                [id]="block.id"
+                [attr.data-jtk-managed]="block.id"
+                [attr.data-block-index]="i">
                 <div class="draggable-custom-placeholder" *cdkDragPlaceholder></div>
                 <div class="single-block-placeholder p-3 my-2 text-xs border rounded-lg bg-gray-50">
                   <div class="flex items-center w-full gap-2 px-2 text-sm">
@@ -110,6 +117,19 @@
             </div>
           </div>
           <!-- End Group Popovers -->
+          <!-- Start Block Popovers -->
+          <div *ngFor="let popover of rightClickPopovers['block']; index as i"
+            class="w-56 cursor-pointer absolute z-50 delete-popover"
+            [style]="('transform:translate('+ (popover.position.x - 30)+'px, '+ (popover.position.y - 30) +'px')" [attr.id]="popover.id" [attr.data-popover-index]="i"
+          >
+            <div class="bg-white rounded-md border shadow text-lg font-semibold">
+              <div class="flex items-center  gap-3 text-gray-500 p-3 hover:bg-gray-100" (click)="popoverHandler(popover.type, popover.id, i)">
+                <span class="w-5 h-5  popover-icon"><img class="w-full h-full" src="../../../../assets/svgs/trash-solid.svg" /></span>
+                <p class="">Delete</p>
+              </div>
+            </div>
+          </div>
+          <!-- End Block Popovers -->
         </div>
 
         <div cdkDropList (cdkDropListDropped)="drop($event, 'container')" class="recieveDragedBox my-element">

@@ -166,7 +166,7 @@ export class Editorv2Component extends StructuredBlocks {
         event.previousIndex,
         true
       );
-      this.removeEmptyGroupBlocks(event);
+      this.removeEmptyGroupBlocks(event.previousContainer.data);
     } else {
       this.addGroupOrBlock(
         event.previousContainer.data[event.previousIndex],
@@ -179,7 +179,7 @@ export class Editorv2Component extends StructuredBlocks {
         event.previousIndex,
         true
       );
-      this.removeEmptyGroupBlocks(event);
+      this.removeEmptyGroupBlocks(event.previousContainer.data);
     }
   }
 
@@ -292,8 +292,8 @@ export class Editorv2Component extends StructuredBlocks {
     this.instance.removeAllEndpoints(document.getElementById(id));
   }
 
-  removeEmptyGroupBlocks(event: any) {
-    if (event.previousContainer.data.length == 0) {
+  removeEmptyGroupBlocks(data: any) {
+    if (data.length == 0) {
       let endpointId: any;
       this.groupBlocks = this.groupBlocks.filter((gb) => {
         if (gb.blocks.length === 0) {
@@ -303,7 +303,8 @@ export class Editorv2Component extends StructuredBlocks {
       });
 
       if (endpointId) {
-        this._removeEndPoint(endpointId);
+        // this._removeEndPoint(endpointId);
+        this.instance.removeGroup(endpointId);
       }
     }
   }
@@ -474,7 +475,7 @@ export class Editorv2Component extends StructuredBlocks {
   }
 
   showRightClickPopover(type: string, id: string, e:any) {
-    if (this.firstGroupId !== id) {
+    if (this.firstGroupId !== id && this.firstBlockId !== id) {
       id = type + '-' + id;
       if (document.getElementById(id)) {
         let index = document.getElementById(id)?.getAttribute('data-popover-index');
@@ -492,7 +493,8 @@ export class Editorv2Component extends StructuredBlocks {
   }
 
   popoverHandler(type: string, id: string, index: number) {
-    let groupIndex: any;
+    let groupIndex: any
+    let blockIndex: any;
     id = id.replace(type + "-", "");
 
     if (type === 'connector') {
@@ -501,6 +503,17 @@ export class Editorv2Component extends StructuredBlocks {
       groupIndex = document.getElementById(id)?.getAttribute('data-group-index');
       this.instance.removeGroup(id);
       this.groupBlocks.splice(groupIndex, 1);
+    } else if (type === 'block') {
+      groupIndex = document.getElementById(id)?.closest('.grouper')?.getAttribute('data-group-index');
+      blockIndex = document.getElementById(id)?.getAttribute('data-block-index');
+      this._removeEndPoint(id);
+      this.groupBlocks[groupIndex].blocks.splice(blockIndex, 1);
+
+      // Remove empty groups
+      if (this.groupBlocks[groupIndex].blocks.length === 0) {
+        this.instance.removeGroup(this.groupBlocks[groupIndex].id);
+        this.groupBlocks.splice(groupIndex, 1);
+      }
     }
 
     this.rightClickPopovers[type].splice(index, 1);
