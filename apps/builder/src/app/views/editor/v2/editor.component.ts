@@ -67,11 +67,6 @@ export class Editorv2Component extends StructuredBlocks {
     groups: this.groupBlocks,
   };
 
-  onClick(event: any) {
-    // this.groupBlocks[index].popover = false;
-    console.log(event);
-  }
-
   ngOnInit() {
     this.instance = newInstance({
       dragOptions: this.dragOptions,
@@ -223,8 +218,8 @@ export class Editorv2Component extends StructuredBlocks {
         id: groupId,
         name: `Group # ${this.groupBlocks.length + 1}`,
         position: {
-          x: event.dropPoint.x - 40,
-          y: event.dropPoint.y - 50,
+          x: event.dropPoint.x,
+          y: event.dropPoint.y,
         },
         draggable: true,
         blocks: [block],

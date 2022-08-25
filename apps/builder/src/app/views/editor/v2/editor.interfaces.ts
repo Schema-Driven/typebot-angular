@@ -18,7 +18,7 @@ export interface GroupBlock {
   name: string;
   position: { x: number; y: number };
   draggable: boolean;
-  popover?: boolean;
+  active?: boolean;
   blocks: Block[];
 }
 
