@@ -61,16 +61,23 @@
       <!-- <div class="drawing" #drawing> -->
 
       <div class="groups-wrapper" #wrapper>
-        <div *ngFor="let b of groupBlocks" [id]="b.id" [attr.data-jtk-managed]="b.id" class="grouper absolute z-2"
-          [style]="('top:'+ b.position.y+'px;left:'+ b.position.x+'px')">
-          <div class="py-4 bg-white wrap-div w-72 single-group" cdkDrag>
-            <h2 class="px-4">{{b.name}}</h2>
+        <div *ngFor="let b of groupBlocks; let i = index" [id]="b.id" [attr.data-jtk-managed]="b.id" [attr.data-group-index]="i"
+          class="grouper absolute z-2" [style]="('top:'+ b.position.y+'px;left:'+ b.position.x+'px')">
+          <div class="py-4 bg-white single-group wrap-div w-72" cdkDrag>
+            <h2 class="px-4" (contextmenu)="showRightClickPopover('group', b.id, $event)">{{b.name}}</h2>
             <div cdkDropList [cdkDropListData]="b.blocks" (cdkDropListDropped)="drop($event, 'box')"
               class="dragAbleBox overflow-hidden block h-full mt-3"
               [cdkDropListEnterPredicate]="dropListEnterPredicate(b)" id="receiving-list">
-              <div cdkDrag [cdkDragDisabled]="block.type === 'start'" (cdkDragStarted)="cdkDragStarted($event)"
-                *ngFor="let block of b.blocks; let i = index" class="single-block px-4" [id]="block.id"
-                [attr.data-jtk-managed]="block.id">
+              <div
+                cdkDrag
+                [cdkDragDisabled]="block.type === 'start'"
+                (cdkDragStarted)="cdkDragStarted($event)"
+                (contextmenu)="showRightClickPopover('block', block.id, $event)"
+                *ngFor="let block of b.blocks; let i = index"
+                class="single-block px-4"
+                [id]="block.id"
+                [attr.data-jtk-managed]="block.id"
+                [attr.data-block-index]="i">
                 <div class="draggable-custom-placeholder" *cdkDragPlaceholder></div>
                 <div class="single-block-placeholder p-3 my-2 text-xs border rounded-lg bg-gray-50">
                   <div class="flex items-center w-full gap-2 px-2 text-sm">
@@ -82,7 +89,50 @@
             </div>
           </div>
         </div>
-        <div cdkDropList (cdkDropListDropped)="drop($event, 'container')" class="recieveDragedBox">
+
+        <div class="popovers">
+          <!-- Start Connector Popovers -->
+          <div *ngFor="let popover of rightClickPopovers['connector']; index as i"
+            class="w-56 cursor-pointer absolute z-50 delete-popover"
+            [style]="('transform:translate('+ (popover.position.x - 30)+'px, '+ (popover.position.y - 30) +'px')" [attr.id]="popover.id" [attr.data-popover-index]="i"
+          >
+            <div class="bg-white rounded-md border shadow text-lg font-semibold">
+              <div class="flex items-center  gap-3 text-gray-500 p-3 hover:bg-gray-100" (click)="popoverHandler(popover.type, popover.id, i)">
+                <span class="w-5 h-5  popover-icon"><img class="w-full h-full" src="../../../../assets/svgs/trash-solid.svg" /></span>
+                <p class="">Delete</p>
+              </div>
+            </div>
+          </div>
+          <!-- End Connector Popovers -->
+          <!-- Start Group Popovers -->
+          <div *ngFor="let popover of rightClickPopovers['group']; index as i"
+            class="w-56 cursor-pointer absolute z-50 delete-popover"
+            [style]="('transform:translate('+ (popover.position.x - 30)+'px, '+ (popover.position.y - 30) +'px')" [attr.id]="popover.id" [attr.data-popover-index]="i"
+          >
+            <div class="bg-white rounded-md border shadow text-lg font-semibold">
+              <div class="flex items-center  gap-3 text-gray-500 p-3 hover:bg-gray-100" (click)="popoverHandler(popover.type, popover.id, i)">
+                <span class="w-5 h-5  popover-icon"><img class="w-full h-full" src="../../../../assets/svgs/trash-solid.svg" /></span>
+                <p class="">Delete</p>
+              </div>
+            </div>
+          </div>
+          <!-- End Group Popovers -->
+          <!-- Start Block Popovers -->
+          <div *ngFor="let popover of rightClickPopovers['block']; index as i"
+            class="w-56 cursor-pointer absolute z-50 delete-popover"
+            [style]="('transform:translate('+ (popover.position.x - 30)+'px, '+ (popover.position.y - 30) +'px')" [attr.id]="popover.id" [attr.data-popover-index]="i"
+          >
+            <div class="bg-white rounded-md border shadow text-lg font-semibold">
+              <div class="flex items-center  gap-3 text-gray-500 p-3 hover:bg-gray-100" (click)="popoverHandler(popover.type, popover.id, i)">
+                <span class="w-5 h-5  popover-icon"><img class="w-full h-full" src="../../../../assets/svgs/trash-solid.svg" /></span>
+                <p class="">Delete</p>
+              </div>
+            </div>
+          </div>
+          <!-- End Block Popovers -->
+        </div>
+
+        <div cdkDropList (cdkDropListDropped)="drop($event, 'container')" class="recieveDragedBox my-element">
         </div>
       </div>
 
@@ -100,15 +150,15 @@
         </a>
       </div>
       <div class="mt-4 custom-shadow-icon">
-        <a (click)="zoomHandler('1.2')"
-          class="bg-white hover:bg-gray-200 rounded-t-md p-0.5 w-8 h-8 flex items-center justify-center">
+        <a (click)="zoomHandler('increase')"
+          class="bg-white hover:bg-gray-200 rounded-t-md p-0.5 w-8 h-8 flex items-center justify-center cursor-pointer">
           <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"
             stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
           </svg>
         </a>
-        <a (click)="zoomHandler('0.8')"
-          class="bg-white hover:bg-gray-200 rounded-b-md p-0.5 w-8 h-8 flex items-center justify-center">
+        <a (click)="zoomHandler('decrease')"
+          class="bg-white hover:bg-gray-200 rounded-b-md p-0.5 w-8 h-8 flex items-center justify-center cursor-pointer">
           <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"
             stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M18 12H6" />

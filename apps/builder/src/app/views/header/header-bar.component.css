@@ -1,3 +1,8 @@
+.header {
+  z-index: 20;
+  position: relative;
+}
+
 .active{
     border: 1px solid #0036b4;
     color: #0036b4;

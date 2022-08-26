@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import { Component, ViewChild, ElementRef, Attribute } from '@angular/core';
 import {
   CdkDrag,
   CdkDragDrop,
@@ -7,11 +7,17 @@ import {
   transferArrayItem,
   copyArrayItem,
 } from '@angular/cdk/drag-drop';
-import { newInstance, EVENT_CLICK, EVENT_ELEMENT_CLICK } from '@jsplumb/browser-ui';
+import {
+  BrowserJsPlumbInstance,
+  newInstance,
+  EVENT_CLICK,
+  EVENT_ELEMENT_CLICK,
+} from '@jsplumb/browser-ui';
 import { AnchorLocations, AnchorSpec, AnchorOptions } from '@jsplumb/common';
-import Panzoom from '@panzoom/panzoom'
+import Panzoom from '@panzoom/panzoom';
 import { GroupBlock, Block, Edge, TypeBot } from './editor.interfaces';
 import { StructuredBlocks } from './group-structured-blocks';
+import { HtmlParser } from '@angular/compiler';
 
 @Component({
   selector: 'editorv2',
@@ -23,9 +29,15 @@ export class Editorv2Component extends StructuredBlocks {
   wrapper!: ElementRef;
   instance: any;
   panZoomController: any;
+  scaleLevel: number = 1;
   deg: number = 3;
   edges: Edge[] = [];
   groupBlockIdsMapping: any = {};
+  rightClickPopovers: any = {
+    'connector': [],
+    'group': [],
+    'block': [],
+  };
   sidePanel: boolean = false;
 
   firstGroupId = this.uuid();
@@ -52,7 +64,7 @@ export class Editorv2Component extends StructuredBlocks {
   typebot: TypeBot = {
     name: 'My Typebot',
     edges: this.edges,
-    groups: this.groupBlocks
+    groups: this.groupBlocks,
   };
 
   ngOnInit() {
@@ -68,7 +80,7 @@ export class Editorv2Component extends StructuredBlocks {
       ...{
         anchor: 'ContinuousLeft',
         scope: 'target_scope',
-        redrop:"any",
+        redrop: 'any',
       },
     });
 
@@ -144,8 +156,12 @@ export class Editorv2Component extends StructuredBlocks {
         'group'
       );
 
-      this.rearrangeEndPoints(event.previousContainer.data, event.previousIndex, true);
-      this.removeEmptyGroupBlocks(event);
+      this.rearrangeEndPoints(
+        event.previousContainer.data,
+        event.previousIndex,
+        true
+      );
+      this.removeEmptyGroupBlocks(event.previousContainer.data);
     } else {
       this.addGroupOrBlock(
         event.previousContainer.data[event.previousIndex],
@@ -153,8 +169,12 @@ export class Editorv2Component extends StructuredBlocks {
         'block'
       );
 
-      this.rearrangeEndPoints(event.previousContainer.data, event.previousIndex, true);
-      this.removeEmptyGroupBlocks(event);
+      this.rearrangeEndPoints(
+        event.previousContainer.data,
+        event.previousIndex,
+        true
+      );
+      this.removeEmptyGroupBlocks(event.previousContainer.data);
     }
   }
 
@@ -172,7 +192,11 @@ export class Editorv2Component extends StructuredBlocks {
             this._removeEndPoint(block.id);
           });
           // Add endpoint to last block
-          this.manageNode(group.blocks[group.blocks.length - 1].id, ['Right'], 'block');
+          this.manageNode(
+            group.blocks[group.blocks.length - 1].id,
+            ['Right'],
+            'block'
+          );
         }
       });
     }
@@ -180,7 +204,8 @@ export class Editorv2Component extends StructuredBlocks {
 
   addGroupOrBlock(data: any, event: any, type: string) {
     let blockId = this.uuid();
-    let groupId = (type === 'group') ? this.uuid() : event.container.data[0].groupId;
+    let groupId =
+      type === 'group' ? this.uuid() : event.container.data[0].groupId;
     let block = {
       ...data,
       id: blockId,
@@ -204,7 +229,6 @@ export class Editorv2Component extends StructuredBlocks {
         this.manageNode(groupId, ['Right'], 'group');
         this.manageNode(blockId, ['Right'], 'block');
       }, 100);
-
     } else {
       // Add Block to Group
       this.groupBlocks.map((group) => {
@@ -212,10 +236,10 @@ export class Editorv2Component extends StructuredBlocks {
           // group.blocks.push(block);
           let lastIndex = group.blocks.length;
           if (lastIndex === event.currentIndex) {
-            this._removeEndPoint(group.blocks[lastIndex-1].id);
+            this._removeEndPoint(group.blocks[lastIndex - 1].id);
             this.manageNode(blockId, ['Right'], 'block');
           }
-          group.blocks.splice( event.currentIndex, 0, block );
+          group.blocks.splice(event.currentIndex, 0, block);
         }
       });
     }
@@ -230,16 +254,21 @@ export class Editorv2Component extends StructuredBlocks {
     });
   }
 
-  _addEndPoint(id: string, sourceAnchors: Array<AnchorSpec>, type: string = 'block') {
-    let sourcePoint = ((type === 'block') ? this.sourceEndpoint : this.groupSourceEndpoint);
+  _addEndPoint(
+    id: string,
+    sourceAnchors: Array<AnchorSpec>,
+    type: string = 'block'
+  ) {
+    let sourcePoint =
+      type === 'block' ? this.sourceEndpoint : this.groupSourceEndpoint;
 
     if (type === 'group') {
       this.instance.addGroup({
         el: document.getElementById(id),
         id: id,
-        droppable:false,
+        droppable: false,
         // dropOverride:true
-      })
+      });
     }
 
     // const element = this.instance.getManagedElement(id);
@@ -247,10 +276,9 @@ export class Editorv2Component extends StructuredBlocks {
       const sourceUUID = id + sourceAnchors[i];
       this.instance.addEndpoint(document.getElementById(id), sourcePoint, {
         anchor: sourceAnchors[i],
-        uuid: sourceUUID
+        uuid: sourceUUID,
       });
     }
-
   }
 
   _removeEndPoint(id: string) {
@@ -259,8 +287,8 @@ export class Editorv2Component extends StructuredBlocks {
     this.instance.removeAllEndpoints(document.getElementById(id));
   }
 
-  removeEmptyGroupBlocks(event: any) {
-    if (event.previousContainer.data.length == 0) {
+  removeEmptyGroupBlocks(data: any) {
+    if (data.length == 0) {
       let endpointId: any;
       this.groupBlocks = this.groupBlocks.filter((gb) => {
         if (gb.blocks.length === 0) {
@@ -270,7 +298,8 @@ export class Editorv2Component extends StructuredBlocks {
       });
 
       if (endpointId) {
-        this._removeEndPoint(endpointId);
+        // this._removeEndPoint(endpointId);
+        this.instance.removeGroup(endpointId);
       }
     }
   }
@@ -298,79 +327,190 @@ export class Editorv2Component extends StructuredBlocks {
 
   setEdgesObject() {
     this.edges = [];
-    let connections = this.instance.getConnections({scope: "jsplumb_defaultscope"});
-    connections.forEach((con: any)=> {
-      this.edges.push(
-        {
-          id: this.uuid(),
-          from: {blockId: con.sourceId, groupId: this.groupBlockIdsMapping[con.sourceId]},
-          to: {groupId: con.targetId}
-        }
-      )
+    let connections = this.instance.getConnections({
+      scope: 'jsplumb_defaultscope',
+    });
+    connections.forEach((con: any) => {
+      this.edges.push({
+        id: this.uuid(),
+        from: {
+          blockId: con.sourceId,
+          groupId: this.groupBlockIdsMapping[con.sourceId],
+        },
+        to: { groupId: con.targetId },
+      });
     });
     this.typebot.edges = this.edges;
   }
 
-  zoomHandler(n: any, ref = 'btns') {
-    if (ref === 'btns') {
-      this.wrapper.nativeElement.style.transform = 'scale(' + n + ')';
+  zoomHandler(type: string) {
+    // check maximum and minimum level of zoom
+    if (type === 'increase' && this.scaleLevel <= 1.2) {
+      this.scaleLevel = this.scaleLevel + 0.1;
+    } else if (type === 'decrease' && this.scaleLevel > 0.8) {
+      this.scaleLevel = this.scaleLevel - 0.1;
     }
 
-    this.instance.setZoom(n)
+    this.wrapper.nativeElement.style.transform = 'scale(' + this.scaleLevel + ')';
+    this.instance.setZoom(this.scaleLevel);
     // this.instance.repaint();
   }
 
   bindEvents() {
-    this.instance.bind("connection", (info: any) => {
-      console.log("info.connection", info.connection);
-      const connectors = document.querySelectorAll(".jtk-connector");
-      connectors.forEach((connector) => {
-        connector.addEventListener('contextmenu', (e: any) => {
-          console.log("Right Click Event");
-          e.preventDefault();
-          return false;
-        });
+    this.instance.bind('connection', (info: any, e: any) => {
+      console.log('info.connection', info);
+      console.log('connector', info.connection.connector);
 
-        connector.addEventListener('click', (e: any) => {
-          console.log("Left Click Event", e);
-          e.preventDefault();
-          return false;
-        });
+      this.instance.setAttribute(
+        info.connection.connector.canvas,
+        'connector-source-id',
+        info.sourceId
+      );
+      this.instance.setAttribute(
+        info.connection.connector.canvas,
+        'connector-target-id',
+        info.targetId
+      );
 
-        connector.removeEventListener('contextmenu', () => {});
-        connector.removeEventListener('click', () => {});
+      this.instance.on(info.connection.connector.canvas, 'click', (e: any) => {
+        let connector = e.target.closest('.jtk-connector');
+        this.instance.addClass(connector, 'selected');
+        this.instance.addClass(
+          document.getElementById(
+            this.groupBlockIdsMapping[
+              connector.getAttribute('connector-source-id')
+            ]
+          ),
+          'selected'
+        );
+        this.instance.addClass(
+          document.getElementById(
+            connector.getAttribute('connector-target-id')
+          ),
+          'selected'
+        );
       });
-      // var connection = info.connection;
-      // console.log("connection", connection);
-      // connection.bind("click", (connection: any, originalEvent: any) => {
-      //   alert("you clicked on "+connection);
-      //   this.instance.detach(connection);
-      // });
-    });
 
-    this.instance.bind(EVENT_CLICK, (connection: any, originalEvent: any) => {
-      console.log("Aaa12345");
-      // alert("you clicked on "+connection);
-      // this.instance.detach(connection);
-    });
+      this.instance.on(info.connection.connector.canvas, 'contextmenu', (e: any) => {
+          e.preventDefault();
+          let connector = e.target.closest('.jtk-connector');
+          let type = 'connector';
+          let id = type + '-' + connector.getAttribute('connector-source-id');
 
-    // this.instance.bind(EVENT_ELEMENT_CLICK, (connection: any, originalEvent: any) => {
-    //   console.log("Aaa123");
-    //   alert("you clicked on "+connection);
-    //   // this.instance.detach(connection);
-    // });
-
-    this.instance.bind('beforeDrop', (ci: any) => { // Before new connection is created
-      let src = ci.sourceId;
-      let con= this.instance.getConnections({ source: src }); // Get all source el. connection(s) except the new connection which is being established
-      if(con.length != 0 && document.getElementById(src)){
-          for(var i = 0; i < con.length; i++) {
-            this.instance.deleteConnection(con[i]);
+          if (document.getElementById(id)) {
+            // if any coonector popover found then delete it first
+            let index = document.getElementById(id)?.getAttribute('data-popover-index');
+            this.rightClickPopovers[type].splice(index, 1);
           }
+
+          this.rightClickPopovers[type].push({
+            position: { x: e.clientX, y: e.clientY },
+            type: type,
+            id: id,
+          });
+          return false;
+        }
+      );
+    });
+
+    window.addEventListener('click', (e: any) => {
+
+      if (e.target.nodeName !== 'path') {
+        this.removeSelectedBorder();
       }
+
+      this.removeCloneDeletePopup(this.wrapper.nativeElement.children, e);
+    });
+
+    this.instance.bind('beforeDrop', (ci: any) => {
+      // Before new connection is created
+      this.deleteConnection(ci.sourceId);
+      this.removeSelectedBorder();
       return true; // true for establishing new connection
     });
-
   }
 
+  deleteConnection(id: string) {
+    let con = this.instance.getConnections({ source: id }); // Get all source el. connection(s) except the new connection which is being established
+    if (con.length != 0 && document.getElementById(id)) {
+      for (var i = 0; i < con.length; i++) {
+        this.instance.deleteConnection(con[i]);
+      }
+    }
+  }
+
+  removeSelectedBorder() {
+    const selectedElem = document.querySelectorAll('.selected');
+    selectedElem.forEach((e) => {
+      e.classList.remove('selected');
+    });
+  }
+
+  removeCloneDeletePopup(elements: any, clickElement: any) {
+    let isAllowToRemove = true;
+    for (const el of elements) {
+      if (!el.classList.contains('recieveDragedBox')) {
+        if (el.contains(clickElement.target)) {
+          isAllowToRemove = false;
+        }
+      }
+    }
+
+    if (isAllowToRemove) {
+      this.resetRightClickPopovers();
+    }
+  }
+
+  resetRightClickPopovers() {
+    this.rightClickPopovers = {
+      'connector': [],
+      'group': [],
+      'block': [],
+    };
+  }
+
+  showRightClickPopover(type: string, id: string, e:any) {
+    if (this.firstGroupId !== id && this.firstBlockId !== id) {
+      id = type + '-' + id;
+      if (document.getElementById(id)) {
+        let index = document.getElementById(id)?.getAttribute('data-popover-index');
+        this.rightClickPopovers[type].splice(index, 1);
+      }
+
+      this.rightClickPopovers[type].push({
+        position: { x: e.clientX, y: e.clientY },
+        type: type,
+        id: id,
+      });
+      return false;
+    }
+    return true;
+  }
+
+  popoverHandler(type: string, id: string, index: number) {
+    let groupIndex: any
+    let blockIndex: any;
+    id = id.replace(type + "-", "");
+
+    if (type === 'connector') {
+      this.deleteConnection(id);
+    } else if (type === 'group') {
+      groupIndex = document.getElementById(id)?.getAttribute('data-group-index');
+      this.instance.removeGroup(id);
+      this.groupBlocks.splice(groupIndex, 1);
+    } else if (type === 'block') {
+      groupIndex = document.getElementById(id)?.closest('.grouper')?.getAttribute('data-group-index');
+      blockIndex = document.getElementById(id)?.getAttribute('data-block-index');
+      this._removeEndPoint(id);
+      this.groupBlocks[groupIndex].blocks.splice(blockIndex, 1);
+
+      // Remove empty groups
+      if (this.groupBlocks[groupIndex].blocks.length === 0) {
+        this.instance.removeGroup(this.groupBlocks[groupIndex].id);
+        this.groupBlocks.splice(groupIndex, 1);
+      }
+    }
+
+    this.rightClickPopovers[type].splice(index, 1);
+  }
 }

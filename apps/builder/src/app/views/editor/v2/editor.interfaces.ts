@@ -2,7 +2,7 @@ export interface Block {
   groupId?: string;
   id: string;
   content?: object;
-  items?: { id: string, content: any, type: number }[];
+  items?: { id: string; content: any; type: number }[];
   options?: object;
   type: string;
 }
@@ -16,8 +16,9 @@ export interface GroupStructuredBlock {
 export interface GroupBlock {
   id: string;
   name: string;
-  position: { x: number, y: number };
+  position: { x: number; y: number };
   draggable: boolean;
+  active?: boolean;
   blocks: Block[];
 }
 
@@ -28,8 +29,8 @@ export interface Endpoint {
 
 export interface Edge {
   id: string;
-  from: { blockId: string, groupId?: string };
-  to: { groupId: string }
+  from: { blockId: string; groupId?: string };
+  to: { groupId: string };
 }
 
 export interface TypeBot {
