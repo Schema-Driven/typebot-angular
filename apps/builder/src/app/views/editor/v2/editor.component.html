@@ -77,7 +77,10 @@
                 class="single-block px-4"
                 [id]="block.id"
                 [attr.data-jtk-managed]="block.id"
-                [attr.data-block-index]="i">
+                [attr.data-block-index]="i"
+                placement="end"
+                ngbPopover="Vivamus sagittis lacus vel augue laoreet rutrum faucibus." popoverTitle="Popover on right"
+              >
                 <div class="draggable-custom-placeholder" *cdkDragPlaceholder></div>
                 <div class="single-block-placeholder p-3 my-2 text-xs border rounded-lg bg-gray-50">
                   <div class="flex items-center w-full gap-2 px-2 text-sm">

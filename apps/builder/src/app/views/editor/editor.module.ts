@@ -7,9 +7,10 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { ListItemComponent } from './list-item/list-item.component';
 import { DropTestComponent } from './drop-test/drop-test.component';
 import { Editorv2Component } from './v2/editor.component';
+import { NgbPopoverModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
-  imports: [CommonModule, HeaderBarModule, EditorRoutingModule, DragDropModule],
+  imports: [CommonModule, HeaderBarModule, EditorRoutingModule, DragDropModule, NgbPopoverModule],
   declarations: [EditorComponent, ListItemComponent, DropTestComponent, Editorv2Component],
 })
 export class EditorModule {}
