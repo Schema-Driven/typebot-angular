@@ -74,7 +74,8 @@
                 (contextmenu)="showRightClickPopover('block', block.id, $event)"
                 *ngFor="let block of b.blocks; let i = index" class="px-4 single-block" [id]="block.id"
                 [attr.data-jtk-managed]="block.id" [attr.data-block-index]="i" placement="left"
-                [ngbPopover]="popContent" [autoClose]="'outside'">
+                popoverClass="input-popover"
+                [ngbPopover]="popContent" [autoClose]="'outside'" container="body">
                 <div class="draggable-custom-placeholder" *cdkDragPlaceholder></div>
                 <div class="p-3 my-2 text-xs border rounded-lg single-block-placeholder bg-gray-50">
                   <div class="flex items-center w-full gap-2 px-2 text-sm">
@@ -175,22 +176,23 @@
 
 <!-- /* Popover body content */ -->
 <ng-template #popContent>
-  <div class="p-4 bg-white border rounded-lg shadow w-[20rem] max-h-[400px] overscroll-y-auto relative">
-    <div class="absolute top-0 flex items-center justify-center h-full -right-3">
+  <div
+    class="p-4 bg-white border rounded-lg shadow w-[20rem] max-h-[400px] overflow-x-hidden overflow-y-scroll relative custom-scrollbar z-50">
+    <div class="absolute top-0 flex items-center justify-center h-full -right-7">
       <div class="inline-block w-3 overflow-hidden">
         <div class="h-8 origin-top-left transform rotate-45 bg-white border shadow "></div>
       </div>
     </div>
     <div
-      class="flex items-center justify-center w-6 h-6 p-1 ml-auto text-black bg-gray-100 rounded-lg hover:bg-gray-200">
+      class="fixed z-50 flex items-center justify-center w-6 h-6 p-1 ml-auto text-black bg-gray-100 rounded-lg hover:bg-gray-200 right-2 top-2">
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor"
         class="w-4 h-4">
         <path strokeLinecap="round" strokeLinejoin="round"
           d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15" />
       </svg>
     </div>
-    <div class="inner-content">
-      <div class="flex items-center justify-between mt-2.5 mb-3">
+    <div class="popover-content">
+      <div class="flex items-center justify-between mt-6 mb-4">
         <h3 class="text-base font-medium text-gray-700">
           Long text?
         </h3>
@@ -201,11 +203,11 @@
           </div>
         </label>
       </div>
-      <div class="mb-4 placeholder">
-        <label for="placeholder" class="block mb-1 text-base font-medium text-gray-700 dark:text-gray-300">
+      <div class="mb-4 input-field">
+        <label class="block mb-1 text-base font-medium text-gray-700 dark:text-gray-300">
           Placeholder:</label>
         <div class="flex items-center">
-          <input type="text" id="first_name" class="block w-full h-10 p-2 text-sm text-gray-700 border border-gray-300 rounded-lg bg-gray-50
+          <input type="text" class="block w-full h-10 p-2 text-sm text-gray-700 border border-gray-300 rounded-lg bg-gray-50
             placeholder:text-gray-700 placeholder:font-medium placeholder:text-base
             focus:outline-[#7ea6ff] focus:shadow-lg dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
             dark:text-white " placeholder="Type your answer..." required>
@@ -219,11 +221,11 @@
           </div> -->
         </div>
       </div>
-      <div class="mb-4 button-label">
-        <label for="button-label" class="block mb-1 text-base font-medium text-gray-700 dark:text-gray-300">
+      <div class="mb-4 input-field">
+        <label class="block mb-1 text-base font-medium text-gray-700 dark:text-gray-300">
           Button label:</label>
         <div class="flex items-center">
-          <input type="text" id="button-label" class="block w-full h-10 p-2 text-sm text-gray-700 border border-gray-300 rounded-lg bg-gray-50
+          <input type="text" class="block w-full h-10 p-2 text-sm text-gray-700 border border-gray-300 rounded-lg bg-gray-50
             placeholder:text-gray-700 placeholder:font-medium placeholder:text-base
             focus:outline-[#7ea6ff] focus:shadow-lg dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
             dark:text-white " placeholder="Send" required>

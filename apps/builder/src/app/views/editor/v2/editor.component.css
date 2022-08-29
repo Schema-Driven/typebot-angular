@@ -206,3 +206,27 @@ svg.endpointOnTarget.grouper.jtk-endpoint.jtk-endpoint-connected {
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
 
+/* width */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 16px;
+}
+
+/* Track */
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #f3f4f6;
+}
+
+/* Handle */
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+}
+
+/* Handle on hover */
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #b1b1b1;
+}
+
+
+.input-popover {
+  z-index: 999999;
+}
