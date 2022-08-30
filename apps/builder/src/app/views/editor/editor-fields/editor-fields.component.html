@@ -2,6 +2,7 @@
 <div *ngFor="let field of fields; let i = index">
   <app-radio-field *ngIf="field.type === 'radio'" [label]="field.label" [value]="field.value" (updateObjectValue)="updateObject($event, field.key)"></app-radio-field>
   <app-text-field *ngIf="field.type === 'text_input'" [label]="field.label" [value]="field.value" (updateObjectValue)="updateObject($event, field.key)"></app-text-field>
+  <app-number-field *ngIf="field.type === 'number_input'" [label]="field.label" [value]="field.value" (updateObjectValue)="updateObject($event, field.key)"></app-number-field>
 </div>
 
 <!-- <div class="save-answer">

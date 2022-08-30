@@ -24,6 +24,9 @@ export class EditorFieldsComponent implements OnInit {
         case 'text_input':
           this.setTextInputFields(options);
         break;
+        case 'number_input':
+          this.setNumberInputFields(options);
+        break;
         case 'email_input':
         case'url_input':
           this.setEmailInputFields(options);
@@ -48,11 +51,21 @@ export class EditorFieldsComponent implements OnInit {
     ]
   }
 
+  setNumberInputFields(options: any) {
+    this.fields = [
+      { key: 'placeholder', label: 'Placeholder:', value: options.labels.placeholder, type: 'text_input'},
+      { key: 'button', label: 'Button Label:', value: options.labels.button, type: 'text_input' },
+      { key: 'min', label: 'Min', value: options.min, type: 'number_input' },
+      { key: 'max', label: 'Max', value: options.max, type: 'number_input' },
+      { key: 'step', label: 'Step', value: options.step, type: 'number_input' }
+    ]
+  }
+
   updateObject(value: string, key: string) {
-    if (this.block.options.hasOwnProperty(key)) {
-      this.block.options[key] = value;
-    } else {
+    if (this.block.options.labels.hasOwnProperty(key)) {
       this.block.options.labels[key] = value;
+    } else {
+      this.block.options[key] = value;
     }
     this.updatedBlock.emit(this.block);
     return true;
