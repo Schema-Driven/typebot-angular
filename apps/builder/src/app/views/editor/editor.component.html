@@ -1,148 +1,196 @@
-<div class="flex flex-col h-screen bg-slate-400 custom-bg">
+<div id="editor-container" class="editor-main-container custom-bg">
   <header-bar></header-bar>
 
-  <div *ngIf="addArray==false" class="flex flex-row w-full h-full">
-    <div class="transform1 relative"
-    [ngStyle]="{'transform':sidePanel === false ? 'translateX(0px)': 'translateX(-325px)'}"
-    >
-    <!-- [ngStyle]="sidePanel?{'background-color': 'red'} : {'background-color': 'blue'}" -->
+  <div class="w-full h-full wrapper-inner" cdkDropListGroup>
 
-    <!--  -->
-
-    <div class="absolute flex flex-col w-80  left-4  z-10 bg-white p-3 rounded-lg custom-shadow  sidebar"
-        [ngStyle]="{'height':'calc(100vh - 120px)'}">
-
-      <div class="chakra-stack hide-scrollbar css-w71llh">
-      <div class="flex items-center justify-end mb-4">
-
-        <button  (click)="sidePanelClick()" *ngIf="sidePanel" type="button" class="tooltip chakra-button css-2nd5xf" aria-label="Lock">
-          <svg viewBox="0 0 24 24" focusable="false" class=" chakra-icon css-1k8v1e7" stroke-width="2px" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-            <path d="M7 11V7a5 5 0 0 1 9.9-1"></path>
-          </svg>
-          <span class="tooltiptext">Lock sidebar</span>
-        </button>
-        <a title="" *ngIf="sidePanel==false" (click)="sidePanelClick()" class="tooltip-sec rounded-lg border-gray-200 border p-0.5 flex items-center justify-center w-8 h-8">
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-          </svg>
-          <span class="tooltiptext-sec">Unlock sidebar</span>
-        </a>
-      </div>
-
-      <!--OriginatorContainer:<StructuredBlock> - begins -->
-      <!-- GroupStructuredBlockWrapper - begins -->
-      <div cdkDropListGroup>
-        <!-- GroupStructuredBlock[] - begins  -->
-        <div
-        cdkDropList
-        *ngFor="let structuredBlock of structuredBlocks"
-        [id]="structuredBlock.uuid"
-        [cdkDropListData]="structuredBlock.blocks"
-        (cdkDropListDropped)="drop($event,'Originator')"
-        [cdkDropListConnectedTo]="['ReceiverContainer']"
-        [cdkDropListSortingDisabled]="true">
-        <div class="pb-5">
-            <label class="font-base text-gray-600 font-medium pb-2 pl-1.5">{{ structuredBlock.name }}</label>
-            <div class=" flex flex-wrap">
-              <!-- StructuredBlock[] -begins -->
-              <div class="w-2/4 px-1.5 py-1.5 button-design" *ngFor="let block of structuredBlock.blocks">
-                <div class="bg-slate-100   hover-shadow w-42 h-10 rounded-lg">
-                  <div class=" bg-white  border border-slate-300 hover-shadow w-42 py-2 px-3 h-10 rounded-lg" cdkDrag (cdkDragStarted)="cdkDragStarted($event)" [cdkDragFreeDragPosition]="{x:block.position.x,y:block.position.y}" [id]="block.id">
-                    <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
-                    <div class="w-full text-sm px-2">
-                      <img [src]="block.svg" class="toolbar-svg"/>
-                      {{block.name}}
+    <div class="relative sidePanel"
+      [ngStyle]="{'transform':sidePanel === false ? 'translateX(0px)': 'translateX(-325px)'}">
+      <div
+        class="absolute flex flex-col p-4 overflow-auto bg-white border rounded-lg shadow-lg w-80 left-4 top-6 sidebar"
+        style="height: calc(100vh - 100px);">
+        <div class="w-full">
+          <div class="flex items-center justify-end">
+            <button (click)="sidePanelClick()" *ngIf="sidePanel" type="button"
+              class="cursor-pointer tooltip-sec rounded-lg border-gray-200 border p-0.5 flex items-center justify-center w-8 h-8"
+              aria-label="Lock">
+              <svg viewBox="0 0 24 24" focusable="false" class="w-4 h-4 text-black" fill="none" stroke="currentColor"
+                stroke-width="2px" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                <path d="M7 11V7a5 5 0 0 1 9.9-1"></path>
+              </svg>
+              <span class="tooltiptext-sec">Lock sidebar</span>
+            </button>
+            <a title="" *ngIf="sidePanel==false" (click)="sidePanelClick()" class="cursor-pointer tooltip-sec rounded-lg border-gray-200 border p-0.5 flex items-center justify-center
+            w-8 h-8">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-gray-400" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+              </svg>
+              <span class="tooltiptext-sec">Unlock sidebar</span>
+            </a>
+          </div>
+          <div cdkDropList *ngFor="let groupBlock of structuredBlocks" [cdkDropListData]="groupBlock.blocks"
+            [cdkDropListEnterPredicate]="noReturnPredicate" [cdkDropListSortingDisabled]="true"
+            class="block pt-5 pb-2 overflow-hidden" id="fixed-list">
+            <label class="font-base text-gray-600 font-medium pl-1.5 mb-2 capitalize">{{ groupBlock.name }}</label>
+            <div class="grid grid-cols-2 gap-3 mt-2">
+              <div class="w-full" *ngFor="let block of groupBlock.blocks">
+                <div class="w-full h-10 rounded-lg bg-slate-100 hover:shadow-md">
+                  <div
+                    class="bg-slate-50  border border-slate-300 hover:shadow-md w-full rounded-lg py-2.5 h-10 cursor-pointer"
+                    cdkDrag (cdkDragStarted)="cdkDragStarted($event)" [id]="block.id">
+                    <div class="draggable-custom-placeholder" *cdkDragPlaceholder></div>
+                    <div class="flex items-center w-full gap-2 px-4 text-sm justify-left">
+                      <img [src]="prefilledData[block.type].svg" class="w-4 h-4" />
+                      <p class="mb-0">{{prefilledData[block.type].label}}</p>
                     </div>
                   </div>
                 </div>
               </div>
-              <!-- StructuredBlock[] -ends -->
             </div>
           </div>
+          <div (click)="printJson()">Print JSON</div>
         </div>
-        <!-- GroupStructuredBlock[] - ends  -->
+      </div>
+      <div *ngIf="sidePanel" class="sidePanelHoverMain">
+        <div class="sidePanelHoverThumb"></div>
       </div>
     </div>
-      <!-- GroupStructuredBlockWrapper - ends -->
-      <!--OriginatorContainer:<StructuredBlock> - ends -->
 
-        <div *ngIf="sidePanel" class="css-1hsy5ug"><div class="css-i6ims5"></div></div>
-    </div>
+    <div class="rightSide">
+      <!-- <div class="drawing" #drawing> -->
 
-    </div>
-    <!--ReceiverContainer:<RenderedBlock> - begins -->
-    <div
-      id="ReceiverContainer"
-      class="relative pl-64 w-full"
-      cdkDropList
-      [cdkDropListData]="groupRenderedBlocks"
-      [cdkDropListConnectedTo]="structuredBlocksConnector()"
-      (cdkDropListDropped)="drop($event,'Receiver')"
-      [cdkDropListSortingDisabled]="true"
-    >
-      <div
-        class="absolute"
-        *ngFor="let group of groupRenderedBlocks"
-        [style]="('top:'+group.position.y+'px;left:'+group.position.x+'px')"
-        [id]="group.id"
-      >
-        <div class="wrap-div w-72 bg-white p-4" cdkDrag>
-          <div class="title-div pb-4 flex items-center justify-between">
-            <span class="font-sm font-normal ">{{group.name}}</span>
-
-            <svg xmlns="http://www.w3.org/2000/svg" class="rounded-lg border-gray-200 border p-0.5 flex items-center justify-center w-7 h-7" *ngIf="group.draggable" (click)="draggable(group.id,false)"  fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M7 11.5V14m0-2.5v-6a1.5 1.5 0 113 0m-3 6a1.5 1.5 0 00-3 0v2a7.5 7.5 0 0015 0v-5a1.5 1.5 0 00-3 0m-6-3V11m0-5.5v-1a1.5 1.5 0 013 0v1m0 0V11m0-5.5a1.5 1.5 0 013 0v3m0 0V11" />
-            </svg>
-            <svg xmlns="http://www.w3.org/2000/svg" class="rounded-lg border-gray-200 border p-0.5 flex items-center justify-center w-7 h-7" *ngIf="!group.draggable" (click)="draggable(group.id,true)" viewBox="0 0 20 20" fill="currentColor">
-              <path fill-rule="evenodd" d="M9 3a1 1 0 012 0v5.5a.5.5 0 001 0V4a1 1 0 112 0v4.5a.5.5 0 001 0V6a1 1 0 112 0v5a7 7 0 11-14 0V9a1 1 0 012 0v2.5a.5.5 0 001 0V4a1 1 0 012 0v4.5a.5.5 0 001 0V3z" clip-rule="evenodd" />
-            </svg>
-
-          </div>
-          <!-- [cdkDropListSortingDisabled]="true" -->
+      <div class="groups-wrapper" #wrapper>
+        <div
+          *ngFor="let b of groupBlocks; let groupIndex = index"
+          [id]="b.id"
+          [attr.data-jtk-managed]="b.id"
+          [attr.data-group-index]="groupIndex"
+          class="absolute grouper z-2"
+          [style]="('top:'+ b.position.y+'px;left:'+ b.position.x+'px')"
+        >
           <div
-            cdkDropList
-            [cdkDropListData]="group.blocks"
-            (cdkDropListDropped)="drop($event,'ReceiverOriginator')"
-            [cdkDropListConnectedTo]="allReceiverOriginatorBlocksConnector()"
-            class=" min-h-24 ReceiverContainerChild p-2 rounded-lg"
-            [id]="(group.name == 'Start' ? '0' : group.uuid)"
+            cdkDrag
+            class="py-4 bg-white single-group wrap-div w-72"
           >
+            <h2 class="px-4" (contextmenu)="showRightClickPopover('group', b.id, $event)">{{b.name}}</h2>
             <div
-              cdkDrag
-              [cdkDragDisabled]="block.id === 0"
-              (cdkDragStarted)="cdkDragStarted($event)"
-              *ngFor="let block of group.blocks"
-              class="p-4 bg-slate-100 relative drap-bg-style my-1"
-              [id]="block.id"
+              cdkDropList
+              [cdkDropListData]="b.blocks"
+              (cdkDropListDropped)="drop($event, 'box')"
+              class="block h-full mt-3 overflow-hidden dragAbleBox"
+              [cdkDropListEnterPredicate]="dropListEnterPredicate(b)"
+              id="receiving-list"
             >
-              <div class="w-full px-2">
-                {{block.name}}
+              <div
+                cdkDrag
+                [cdkDragDisabled]="block.type === 'start'"
+                [disablePopover]="block.type === 'start'"
+                (cdkDragStarted)="cdkDragStarted($event)"
+                (contextmenu)="showRightClickPopover('block', block.id, $event)"
+                *ngFor="let block of b.blocks; let blockIndex = index" class="px-4 single-block"
+                [id]="block.id"
+                [attr.data-jtk-managed]="block.id"
+                [attr.data-block-index]="blockIndex"
+                #blockOptionsPopover="ngbPopover"
+                popoverClass="input-popover"
+                [ngbPopover]="popContent"
+                triggers="manual"
+                [autoClose]="'outside'"
+                placement="left"
+                container="body"
+                (click)="showBlockOptionsPopover(blockOptionsPopover, block, groupIndex, blockIndex)"
+              >
+                <div class="draggable-custom-placeholder" *cdkDragPlaceholder></div>
+                <div class="p-3 my-2 text-xs border rounded-lg single-block-placeholder bg-gray-50">
+                  <div class="flex items-center w-full gap-2 px-2 text-sm">
+                    <img [src]="prefilledData[block.type].svg" class="w-4 h-4" />
+                    <p class="mb-0">{{prefilledData[block.type].label}}</p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </div>
-    <!--ReceiverContainer:<RenderedBlock> - ends -->
 
+        <div class="popovers">
+          <!-- Start Connector Popovers -->
+          <div *ngFor="let popover of rightClickPopovers['connector']; index as i"
+            class="absolute z-50 w-56 cursor-pointer delete-popover"
+            [style]="('transform:translate('+ (popover.position.x - 30)+'px, '+ (popover.position.y - 30) +'px')"
+            [attr.id]="popover.id" [attr.data-popover-index]="i">
+            <div class="text-lg font-semibold bg-white border rounded-md shadow">
+              <div class="flex items-center gap-3 p-3 text-gray-500 hover:bg-gray-100"
+                (click)="popoverHandler(popover.type, popover.id, i)">
+                <span class="w-5 h-5 popover-icon"><img class="w-full h-full"
+                    src="../../../../assets/svgs/trash-solid.svg" /></span>
+                <p class="">Delete</p>
+              </div>
+            </div>
+          </div>
+          <!-- End Connector Popovers -->
+          <!-- Start Group Popovers -->
+          <div *ngFor="let popover of rightClickPopovers['group']; index as i"
+            class="absolute z-50 w-56 cursor-pointer delete-popover"
+            [style]="('transform:translate('+ (popover.position.x - 30)+'px, '+ (popover.position.y - 30) +'px')"
+            [attr.id]="popover.id" [attr.data-popover-index]="i">
+            <div class="text-lg font-semibold bg-white border rounded-md shadow">
+              <div class="flex items-center gap-3 p-3 text-gray-500 hover:bg-gray-100"
+                (click)="popoverHandler(popover.type, popover.id, i)">
+                <span class="w-5 h-5 popover-icon"><img class="w-full h-full"
+                    src="../../../../assets/svgs/trash-solid.svg" /></span>
+                <p class="">Delete</p>
+              </div>
+            </div>
+          </div>
+          <!-- End Group Popovers -->
+          <!-- Start Block Popovers -->
+          <div *ngFor="let popover of rightClickPopovers['block']; index as i"
+            class="absolute z-50 w-56 cursor-pointer delete-popover"
+            [style]="('transform:translate('+ (popover.position.x - 30)+'px, '+ (popover.position.y - 30) +'px')"
+            [attr.id]="popover.id" [attr.data-popover-index]="i">
+            <div class="text-lg font-semibold bg-white border rounded-md shadow">
+              <div class="flex items-center gap-3 p-3 text-gray-500 hover:bg-gray-100"
+                (click)="popoverHandler(popover.type, popover.id, i)">
+                <span class="w-5 h-5 popover-icon"><img class="w-full h-full"
+                    src="../../../../assets/svgs/trash-solid.svg" /></span>
+                <p class="">Delete</p>
+              </div>
+            </div>
+          </div>
+          <!-- End Block Popovers -->
+        </div>
+
+        <div cdkDropList (cdkDropListDropped)="drop($event, 'container')" class="recieveDragedBox my-element">
+        </div>
+      </div>
+
+      <!-- </div> -->
+    </div>
     <!-- ZOOM BUTTONS - [begins] -->
-    <div class="absolute top-20 right-6  transform-position">
+    <div class="absolute z-20 top-6 right-6 transform-position">
       <div class="custom-shadow-icon">
-        <a href="#" class="bg-white rounded-md p-0.5 w-8 h-8 flex items-center justify-center">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z" />
+        <a href="#" class="bg-white hover:bg-gray-200 rounded-md p-0.5 w-8 h-8 flex items-center justify-center">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+            stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z" />
           </svg>
         </a>
       </div>
       <div class="mt-4 custom-shadow-icon">
-        <a href="#" class="bg-white rounded-t-md p-0.5 w-8 h-8 flex items-center justify-center">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <a (click)="zoomHandler('increase')"
+          class="bg-white hover:bg-gray-200 rounded-t-md p-0.5 w-8 h-8 flex items-center justify-center cursor-pointer">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+            stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
           </svg>
         </a>
-        <a href="#" class="bg-white rounded-b-md p-0.5 w-8 h-8 flex items-center justify-center">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <a (click)="zoomHandler('decrease')"
+          class="bg-white hover:bg-gray-200 rounded-b-md p-0.5 w-8 h-8 flex items-center justify-center cursor-pointer">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+            stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M18 12H6" />
           </svg>
         </a>
@@ -150,5 +198,27 @@
     </div>
     <!-- ZOOM BUTTONS - [ends] -->
   </div>
-
 </div>
+
+<!-- /* Popover body content */ -->
+<ng-template #popContent let-block="block" let-groupIndex="groupIndex" let-blockIndex="blockIndex">
+  <div
+    class="p-4 bg-white border rounded-lg shadow w-[20rem] max-h-[400px] overflow-x-hidden overflow-y-scroll relative custom-scrollbar z-50">
+    <div class="absolute top-0 flex items-center justify-center h-full -right-7">
+      <div class="inline-block w-3 overflow-hidden">
+        <div class="h-8 origin-top-left transform rotate-45 bg-white border shadow "></div>
+      </div>
+    </div>
+    <div
+      class="fixed z-50 flex items-center justify-center w-6 h-6 p-1 ml-auto text-black bg-gray-100 rounded-lg hover:bg-gray-200 right-2 top-2">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor"
+        class="w-4 h-4">
+        <path strokeLinecap="round" strokeLinejoin="round"
+          d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15" />
+      </svg>
+    </div>
+    <div class="popover-content">
+      <app-editor-fields [block]="block" (updatedBlock)="updateBlock($event, groupIndex, blockIndex)"></app-editor-fields>
+    </div>
+  </div>
+</ng-template>

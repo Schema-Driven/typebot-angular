@@ -2,20 +2,20 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { DropTestComponent } from './drop-test/drop-test.component';
 
+import { EditorV1Component } from './v1/editor.component';
 import { EditorComponent } from './editor.component';
-import { Editorv2Component } from './v2/editor.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: Editorv2Component,
+    component: EditorComponent,
     children: [
       //add child-paths here ...
     ],
   },
   {
     path: 'v1',
-    component: EditorComponent,
+    component: EditorV1Component,
     children: [
       //add child-paths here ...
     ]
