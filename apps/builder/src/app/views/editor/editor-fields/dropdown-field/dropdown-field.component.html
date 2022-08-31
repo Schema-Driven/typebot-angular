@@ -7,7 +7,7 @@
     placeholder:text-gray-700 placeholder:font-medium placeholder:text-base
     focus:outline-[#7ea6ff] focus:shadow-lg dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
     dark:text-white ">
-      <option *ngFor="let ele of value" >{{ele}}</option>
+      <option *ngFor="let ele of value" [value]="ele.value" >{{ele.label}}</option>
     </select>
   </div>
 </div>

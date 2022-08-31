@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { EditorService } from '../../../services/editor.service';
+import { countries } from '../country';
 
 @Component({
   selector: 'app-editor-fields',
@@ -38,7 +39,11 @@ export class EditorFieldsComponent implements OnInit {
         case 'rating_input':
           this.setRatingInputFields(options);
         break;
+        case 'phone_number_input':
+          this.setPhoneInputFields(options);
+        break;
         case 'email_input':
+          break;
         case'url_input':
           this.setEmailInputFields(options);
         break;
@@ -83,8 +88,8 @@ export class EditorFieldsComponent implements OnInit {
 
   setRatingInputFields(options: any) {
     let buttonTypes = [
-      options.buttonTypes.iconText,
-      options.buttonTypes.numberText
+      {label:options.buttonTypes.iconText, value:options.buttonTypes.iconText},
+      {label:options.buttonTypes.numberText, value:options.buttonTypes.numberText}
     ]
     this.fields = [
       { key: 'length', label: 'Maximum:', value: Array(options.length).fill(0).map((x,i)=>i+3), type: 'dropdown'},
@@ -92,6 +97,15 @@ export class EditorFieldsComponent implements OnInit {
       { key: 'notLikelyLabel', label: '0 label:', value: options.labels.notLikelyLabel, type: 'text_input'},
       { key: 'extremeLabel', label: '4 label:', value: options.labels.extremeLabel, type:'text_input' },
       { key: 'button', label: 'Button Label:', value: options.labels.button, type: 'text_input' },
+    ]
+  }
+
+  setPhoneInputFields(options: any) {
+    this.fields = [
+      { key: 'placeholder', label: 'Placeholder:', value: options.labels.placeholder, type: 'text_input'},
+      { key: 'button', label: 'Button Label:', value: options.labels.button, type: 'text_input' },
+      { key: 'countries', label: 'Default country:', value: countries , type: 'dropdown' },
+      { key: 'retryMessageContent', label: 'Retry message:', value: options.retryMessageContent, type: 'text_input' }
     ]
   }
 

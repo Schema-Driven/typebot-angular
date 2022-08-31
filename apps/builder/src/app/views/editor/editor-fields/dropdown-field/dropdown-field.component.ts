@@ -10,7 +10,7 @@ export class DropdownFieldComponent{
 
   @Input() key: string = '';
   @Input() label: string = '';
-  @Input() value: string = '';
+  @Input() value: any = '';
   block: any = {};
 
   constructor(private editorService: EditorService) { }
