@@ -1,4 +1,5 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { EditorService } from '../../../../services/editor.service';
 
 @Component({
   selector: 'app-number-field',
@@ -7,13 +8,22 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 })
 export class NumberFieldComponent {
 
+  @Input() key: string = '';
   @Input() label: string = '';
   @Input() value: string = '';
-  @Output() updateObjectValue = new EventEmitter<string>();
+  block: any = {};
 
-  eventHandler(event: any) {
-    this.updateObjectValue.emit(event.target.value);
+  constructor(private editorService: EditorService) { }
+
+  ngOnInit() {
+    this.editorService.selectedBlock$.subscribe((block) => {
+      this.block = block;
+    });
   }
 
+  eventHandler(event: any) {
+    this.block.options[this.key] = event.target.value;
+    this.editorService.setBlock(this.block);
+  }
 
 }

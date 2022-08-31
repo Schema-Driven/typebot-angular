@@ -1,4 +1,5 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { EditorService } from '../../../../services/editor.service';
 
 @Component({
   selector: 'app-date-field',
@@ -7,12 +8,22 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 })
 export class DateFieldComponent{
 
+  @Input() key: string = '';
   @Input() label: string = '';
   @Input() value: string = '';
-  @Output() updateObjectValue = new EventEmitter<string>();
+  block: any = {};
+
+  constructor(private editorService: EditorService) { }
+
+  ngOnInit() {
+    this.editorService.selectedBlock$.subscribe((block) => {
+      this.block = block;
+    });
+  }
 
   eventHandler(event: any) {
-    this.updateObjectValue.emit(event.target.value);
+    this.block.options[this.key] = event.target.value;
+    this.editorService.setBlock(this.block);
   }
 
 }

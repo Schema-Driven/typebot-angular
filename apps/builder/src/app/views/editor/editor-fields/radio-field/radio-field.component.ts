@@ -1,4 +1,5 @@
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { EditorService } from '../../../../services/editor.service';
 
 @Component({
   selector: 'app-radio-field',
@@ -10,15 +11,20 @@ export class RadioFieldComponent implements OnInit {
   @Input() key: string = '';
   @Input() label: string = '';
   @Input() value: string = '';
+  block: any = {};
 
-  @Output() updateObjectValue = new EventEmitter<any>();
+  constructor(private editorService: EditorService) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.editorService.selectedBlock$.subscribe((block) => {
+      this.block = block;
+    });
+  }
 
   eventHandler(event: any) {
     let eventValue = event.target.value == 'on' ? true : false;
-    this.updateObjectValue.emit(eventValue);
-    return true;
+    this.block.options[this.key] = eventValue;
+    this.editorService.setBlock(this.block);
   }
 
 }

@@ -1,17 +1,39 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { EditorService } from '../../../../services/editor.service';
 
 @Component({
   selector: 'app-text-field',
   templateUrl: './text-field.component.html',
   styleUrls: ['./text-field.component.css']
 })
-export class TextFieldComponent {
+export class TextFieldComponent implements OnInit {
 
+  @Input() key: string = '';
   @Input() label: string = '';
   @Input() value: string = '';
-  @Output() updateObjectValue = new EventEmitter<string>();
+  @Input() dependent: any = {};
+  block: any = {};
+  isShow = true;
+
+  constructor(private editorService: EditorService) { }
+
+  ngOnInit() {
+    this.editorService.selectedBlock$.subscribe((block) => {
+      this.block = block;
+    });
+    // if (this.dependent) {
+    //   console.log("this.block",this.block.options);
+    //   console.log("this.block.options[this.dependent.fieldName]",this.block.options[this.dependent.fieldName]);
+    //   if (this.block.options[this.dependent.fieldName] === this.dependent.fieldValue) {
+    //     this.isShow = true;
+    //   } else {
+    //     this.isShow = false;
+    //   }
+    // }
+  }
 
   eventHandler(event: any) {
-    this.updateObjectValue.emit(event.target.value);
+    this.block.options.labels[this.key] = event.target.value;
+    this.editorService.setBlock(this.block);
   }
 }

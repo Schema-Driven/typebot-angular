@@ -19,6 +19,7 @@ import { GroupBlock, Block, Edge, TypeBot } from './editor.interfaces';
 import { StructuredBlocks } from './group-structured-blocks';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ModalContentComponent } from './modal-content/modal-content.component';
+import { EditorService } from '../../services/editor.service';
 
 @Component({
   selector: 'editor',
@@ -68,7 +69,10 @@ export class EditorComponent extends StructuredBlocks {
     groups: this.groupBlocks,
   };
 
-  constructor(private modalService: NgbModal) {
+  constructor(
+    private modalService: NgbModal,
+    private editorService: EditorService
+    ) {
     super();
   }
 
@@ -524,6 +528,7 @@ export class EditorComponent extends StructuredBlocks {
       popover.close();
     } else {
       this.removeAllPopovers();
+      this.editorService.setBlock(block);
       popover.open({block, groupIndex, blockIndex});
     }
   }

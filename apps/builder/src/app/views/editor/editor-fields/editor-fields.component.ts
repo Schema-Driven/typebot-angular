@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { isArrayLike } from '@jsplumb/browser-ui';
+import { EditorService } from '../../../services/editor.service';
 
 @Component({
   selector: 'app-editor-fields',
@@ -8,13 +8,17 @@ import { isArrayLike } from '@jsplumb/browser-ui';
 })
 export class EditorFieldsComponent implements OnInit {
 
-  @Input() block: any = {};
   @Output() updatedBlock = new EventEmitter<string>();
+  block: any = {};
   fields: any = [];
 
-  constructor() { }
+  constructor(private editorService: EditorService) { }
 
   ngOnInit(): void {
+    // this.currentBlock = this.block;
+    this.editorService.selectedBlock$.subscribe((block) => {
+      this.block = block;
+    });
     this.setFields();
   }
 
@@ -72,7 +76,7 @@ export class EditorFieldsComponent implements OnInit {
     this.fields = [
       { key: 'isRange', label: 'Is range?', value: options.isRange, type: 'radio' },
       { key: 'hasTime', label: 'With time?', value: options.hasTime, type: 'radio' },
-      { key: 'placeholder', label: 'From label:', value: options.labels.from, type: 'text_input', dependent: 'isRange'},
+      { key: 'placeholder', label: 'From label:', value: options.labels.from, type: 'text_input', dependent: { fieldName: 'isRange', fieldValue: true }},
       { key: 'button', label: 'Button Label:', value: options.labels.button, type: 'text_input' },
     ]
   }
@@ -97,7 +101,9 @@ export class EditorFieldsComponent implements OnInit {
     } else {
       this.block.options[key] = value;
     }
-    this.updatedBlock.emit(this.block);
+    // this.currentBlock = this.block;
+    this.editorService.setBlock(this.block);
+    // this.updatedBlock.emit(this.block);
     return true;
   }
 

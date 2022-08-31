@@ -19,9 +19,11 @@ import { NumberFieldComponent } from './editor-fields/number-field/number-field.
 import { ModalContentComponent } from './modal-content/modal-content.component';
 import { DateFieldComponent } from './editor-fields/date-field/date-field.component';
 import { DropdownFieldComponent } from './editor-fields/dropdown-field/dropdown-field.component';
+import { EditorService } from '../../services/editor.service';
 
 @NgModule({
   imports: [CommonModule, HeaderBarModule, EditorRoutingModule, DragDropModule, NgbPopoverModule],
   declarations: [ListItemComponent, DropTestComponent, EditorV1Component, EditorComponent, EditorFieldsComponent, TextFieldComponent, RadioFieldComponent, NumberFieldComponent, DateFieldComponent, DropdownFieldComponent, ModalContentComponent],
+  providers: [EditorService]
 })
 export class EditorModule {}
