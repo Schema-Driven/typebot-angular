@@ -7,8 +7,10 @@ import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 })
 export class RadioFieldComponent implements OnInit {
 
+  @Input() key: string = '';
   @Input() label: string = '';
   @Input() value: string = '';
+
   @Output() updateObjectValue = new EventEmitter<any>();
 
   ngOnInit() { }

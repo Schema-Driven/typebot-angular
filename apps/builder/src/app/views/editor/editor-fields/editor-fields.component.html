@@ -1,9 +1,12 @@
 <!-- <app-text-field label="Placeholder" value="type your input..." (updateObjectValue)="updateObject($event, 'Placeholder')"></app-text-field> -->
 <div *ngFor="let field of fields; let i = index">
-  <app-radio-field *ngIf="field.type === 'radio'" [label]="field.label" [value]="field.value" (updateObjectValue)="updateObject($event, field.key)"></app-radio-field>
+  <app-radio-field *ngIf="field.type === 'radio'" [label]="field.label" [value]="field.value" [key]="field.key" (updateObjectValue)="updateObject($event, field.key)"></app-radio-field>
   <app-text-field *ngIf="field.type === 'text_input'" [label]="field.label" [value]="field.value" (updateObjectValue)="updateObject($event, field.key)"></app-text-field>
   <app-number-field *ngIf="field.type === 'number_input'" [label]="field.label" [value]="field.value" (updateObjectValue)="updateObject($event, field.key)"></app-number-field>
   <app-date-field *ngIf="field.type === 'date_input'" [label]="field.label" [value]="field.value" (updateObjectValue)="updateObject($event, field.key)"></app-date-field>
+  <!-- <app-rating-field *ngIf="field.type === 'rating_input'" [label]="field.label" [value]="field.value" [buttonTypes]="field.buttonTypes" (updateObjectValue)="updateObject($event, field.key)"></app-rating-field>
+   -->
+   <app-dropdown-field *ngIf="field.type === 'dropdown'" [label]="field.label" [value]="field.value" (updateObjectValue)="updateObject($event, field.key)"></app-dropdown-field>
 </div>
 
 <!-- <div class="save-answer">

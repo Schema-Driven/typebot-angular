@@ -1,0 +1,13 @@
+<div class="mb-4 input-field">
+  <label class="block mb-1 text-base font-medium text-gray-700 dark:text-gray-300">
+    {{label}}</label>
+  <div class="flex items-center">
+    <select
+     class="block w-full h-10 p-2 text-sm text-gray-700 border border-gray-300 rounded-lg bg-gray-50
+    placeholder:text-gray-700 placeholder:font-medium placeholder:text-base
+    focus:outline-[#7ea6ff] focus:shadow-lg dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
+    dark:text-white ">
+      <option *ngFor="let ele of value" >{{ele}}</option>
+    </select>
+  </div>
+</div>

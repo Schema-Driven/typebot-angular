@@ -117,14 +117,19 @@ export class StructuredBlocks {
         {
           id: this.uuid(),
           options: {
-            buttonTypes: "Numbers",
+            buttonTypes: {
+              iconText:'Icons',
+              numberText:"Numbers"
+            },
             customIcon: {
               isEnabled: false
             },
             labels: {
-              button: "Send"
+              button: "Send",
+              notLikelyLabel: "Not likely at all",
+              extremeLabel: "Extremely likely",
             },
-            length: 10
+            length: 8,
           },
           type: 'rating_input',
         },

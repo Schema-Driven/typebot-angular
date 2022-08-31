@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { isArrayLike } from '@jsplumb/browser-ui';
 
 @Component({
   selector: 'app-editor-fields',
@@ -29,6 +30,9 @@ export class EditorFieldsComponent implements OnInit {
         break;
         case 'date_input':
           this.setDateInputFields(options);
+        break;
+        case 'rating_input':
+          this.setRatingInputFields(options);
         break;
         case 'email_input':
         case'url_input':
@@ -68,6 +72,20 @@ export class EditorFieldsComponent implements OnInit {
     this.fields = [
       { key: 'isRange', label: 'Is range?', value: options.isRange, type: 'radio' },
       { key: 'hasTime', label: 'With time?', value: options.hasTime, type: 'radio' },
+      { key: 'button', label: 'Button Label:', value: options.labels.button, type: 'text_input' },
+    ]
+  }
+
+  setRatingInputFields(options: any) {
+    let buttonTypes = [
+      options.buttonTypes.iconText,
+      options.buttonTypes.numberText
+    ]
+    this.fields = [
+      { key: 'length', label: 'Maximum:', value: Array(options.length).fill(0).map((x,i)=>i+3), type: 'dropdown'},
+      { key: 'buttonTypes', label: 'Type:', value: buttonTypes, type: 'dropdown' },
+      { key: 'notLikelyLabel', label: '0 label:', value: options.labels.notLikelyLabel, type: 'text_input'},
+      { key: 'extremeLabel', label: '4 label:', value: options.labels.extremeLabel, type:'text_input' },
       { key: 'button', label: 'Button Label:', value: options.labels.button, type: 'text_input' },
     ]
   }
