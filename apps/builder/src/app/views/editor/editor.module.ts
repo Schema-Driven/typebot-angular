@@ -15,9 +15,10 @@ import { EditorFieldsComponent } from './editor-fields/editor-fields.component';
 import { TextFieldComponent } from './editor-fields/text-field/text-field.component';
 import { RadioFieldComponent } from './editor-fields/radio-field/radio-field.component';
 import { NumberFieldComponent } from './editor-fields/number-field/number-field.component';
+import { ModalContentComponent } from './modal-content/modal-content.component';
 
 @NgModule({
   imports: [CommonModule, HeaderBarModule, EditorRoutingModule, DragDropModule, NgbPopoverModule],
-  declarations: [ListItemComponent, DropTestComponent, EditorV1Component, EditorComponent, EditorFieldsComponent, TextFieldComponent, RadioFieldComponent, NumberFieldComponent],
+  declarations: [ListItemComponent, DropTestComponent, EditorV1Component, EditorComponent, EditorFieldsComponent, TextFieldComponent, RadioFieldComponent, NumberFieldComponent, ModalContentComponent],
 })
 export class EditorModule {}
