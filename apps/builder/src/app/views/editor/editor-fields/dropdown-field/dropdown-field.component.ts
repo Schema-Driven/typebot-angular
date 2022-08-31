@@ -8,7 +8,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 export class DropdownFieldComponent{
 
   @Input() label: string = '';
-  @Input() value: string = '';
+  @Input() value: any = '';
   @Output() updateObjectValue = new EventEmitter<string>();
 
   eventHandler(event: any) {

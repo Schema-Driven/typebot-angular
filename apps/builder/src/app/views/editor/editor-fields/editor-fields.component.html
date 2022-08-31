@@ -4,8 +4,6 @@
   <app-text-field *ngIf="field.type === 'text_input'" [label]="field.label" [value]="field.value" (updateObjectValue)="updateObject($event, field.key)"></app-text-field>
   <app-number-field *ngIf="field.type === 'number_input'" [label]="field.label" [value]="field.value" (updateObjectValue)="updateObject($event, field.key)"></app-number-field>
   <app-date-field *ngIf="field.type === 'date_input'" [label]="field.label" [value]="field.value" (updateObjectValue)="updateObject($event, field.key)"></app-date-field>
-  <!-- <app-rating-field *ngIf="field.type === 'rating_input'" [label]="field.label" [value]="field.value" [buttonTypes]="field.buttonTypes" (updateObjectValue)="updateObject($event, field.key)"></app-rating-field>
-   -->
    <app-dropdown-field *ngIf="field.type === 'dropdown'" [label]="field.label" [value]="field.value" (updateObjectValue)="updateObject($event, field.key)"></app-dropdown-field>
 </div>
 

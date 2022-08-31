@@ -10,6 +10,7 @@ import {
 } from '@jsplumb/browser-ui';
 import { FlowchartConnector } from '@jsplumb/connector-flowchart';
 
+
 export class StructuredBlocks {
   structuredBlocks: GroupStructuredBlock[] = [
     {
@@ -86,7 +87,7 @@ export class StructuredBlocks {
           id: this.uuid(),
           options: {
             labels: {button: "Send", placeholder: "Type your phone number..."},
-            retryMessageContent: "This phone numbe doesn't seem to be valid. Can you type it again?"
+            retryMessageContent: "This phone number doesn't seem to be valid. Can you type it again?"
           },
           type: 'phone_number_input',
         },
@@ -412,4 +413,6 @@ export class StructuredBlocks {
       }
     );
   }
+
 }
+
