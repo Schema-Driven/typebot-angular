@@ -17,7 +17,7 @@ import { AnchorLocations, AnchorSpec, AnchorOptions } from '@jsplumb/common';
 import Panzoom from '@panzoom/panzoom';
 import { GroupBlock, Block, Edge, TypeBot } from './editor.interfaces';
 import { StructuredBlocks } from './group-structured-blocks';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ModalContentComponent } from './modal-content/modal-content.component';
 
 @Component({
@@ -523,8 +523,16 @@ export class EditorComponent extends StructuredBlocks {
     if (popover.isOpen()) {
       popover.close();
     } else {
+      this.removeAllPopovers();
       popover.open({block, groupIndex, blockIndex});
     }
+  }
+
+  removeAllPopovers() {
+    const elems = document.querySelectorAll('.input-popover')
+    elems.forEach((e) => {
+      e.remove();
+    });
   }
 
   updateBlock(updatedBlock: any, groupIndex: number, blockIndex: number) {
@@ -536,6 +544,7 @@ export class EditorComponent extends StructuredBlocks {
   }
 
   open(block: any, groupIndex: number, blockIndex: number) {
+    this.removeAllPopovers();
     const modalRef = this.modalService.open(ModalContentComponent, {backdrop: 'static', keyboard: false});
     modalRef.componentInstance.block = block;
     modalRef.componentInstance.groupIndex = groupIndex;
