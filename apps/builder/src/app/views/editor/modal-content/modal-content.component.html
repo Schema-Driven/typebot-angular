@@ -1,0 +1,12 @@
+<div
+  class="p-4 bg-white border rounded-lg shadow w-[20rem] max-h-[400px] overflow-x-hidden overflow-y-scroll relative custom-scrollbar z-50">
+  <div class="absolute top-0 flex items-center justify-center h-full -right-7">
+    <div class="inline-block w-3 overflow-hidden">
+      <div class="h-8 origin-top-left transform rotate-45 bg-white border shadow "></div>
+    </div>
+  </div>
+  <div class="modal-content">
+    <app-editor-fields [block]="block" (updatedBlock)="passBack($event)"></app-editor-fields>
+  </div>
+</div>
+<!--  -->

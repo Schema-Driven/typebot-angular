@@ -17,7 +17,8 @@ import { AnchorLocations, AnchorSpec, AnchorOptions } from '@jsplumb/common';
 import Panzoom from '@panzoom/panzoom';
 import { GroupBlock, Block, Edge, TypeBot } from './editor.interfaces';
 import { StructuredBlocks } from './group-structured-blocks';
-import { HtmlParser } from '@angular/compiler';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import { ModalContentComponent } from './modal-content/modal-content.component';
 
 @Component({
   selector: 'editor',
@@ -66,6 +67,10 @@ export class EditorComponent extends StructuredBlocks {
     edges: this.edges,
     groups: this.groupBlocks,
   };
+
+  constructor(private modalService: NgbModal) {
+    super();
+  }
 
   ngOnInit() {
     this.instance = newInstance({
@@ -528,5 +533,15 @@ export class EditorComponent extends StructuredBlocks {
     }
 
     return true;
+  }
+
+  open(block: any, groupIndex: number, blockIndex: number) {
+    const modalRef = this.modalService.open(ModalContentComponent, {backdrop: 'static', keyboard: false});
+    modalRef.componentInstance.block = block;
+    modalRef.componentInstance.groupIndex = groupIndex;
+    modalRef.componentInstance.blockIndex = blockIndex;
+    modalRef.componentInstance.updatedBlock.subscribe((receivedEntry: any) => {
+      console.log("receivedEntry",receivedEntry);
+    });
   }
 }
