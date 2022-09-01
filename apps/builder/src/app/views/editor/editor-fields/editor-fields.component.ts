@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { EditorService } from '../../../services/editor.service';
 import { countries } from '../country';
 
@@ -9,14 +9,12 @@ import { countries } from '../country';
 })
 export class EditorFieldsComponent implements OnInit {
 
-  @Output() updatedBlock = new EventEmitter<string>();
   block: any = {};
   fields: any = [];
 
   constructor(private editorService: EditorService) { }
 
-  ngOnInit(): void {
-    // this.currentBlock = this.block;
+  ngOnInit() {
     this.editorService.selectedBlock$.subscribe((block) => {
       this.block = block;
     });
@@ -107,18 +105,6 @@ export class EditorFieldsComponent implements OnInit {
       { key: 'countries', label: 'Default country:', value: countries , type: 'dropdown' },
       { key: 'retryMessageContent', label: 'Retry message:', value: options.retryMessageContent, type: 'text_input' }
     ]
-  }
-
-  updateObject(value: string, key: string) {
-    if (this.block.options.labels.hasOwnProperty(key)) {
-      this.block.options.labels[key] = value;
-    } else {
-      this.block.options[key] = value;
-    }
-    // this.currentBlock = this.block;
-    this.editorService.setBlock(this.block);
-    // this.updatedBlock.emit(this.block);
-    return true;
   }
 
 }

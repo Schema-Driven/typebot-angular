@@ -16,14 +16,13 @@ import { EditorFieldsComponent } from './editor-fields/editor-fields.component';
 import { TextFieldComponent } from './editor-fields/text-field/text-field.component';
 import { RadioFieldComponent } from './editor-fields/radio-field/radio-field.component';
 import { NumberFieldComponent } from './editor-fields/number-field/number-field.component';
-import { ModalContentComponent } from './modal-content/modal-content.component';
 import { DateFieldComponent } from './editor-fields/date-field/date-field.component';
 import { DropdownFieldComponent } from './editor-fields/dropdown-field/dropdown-field.component';
 import { EditorService } from '../../services/editor.service';
 
 @NgModule({
   imports: [CommonModule, HeaderBarModule, EditorRoutingModule, DragDropModule, NgbPopoverModule],
-  declarations: [ListItemComponent, DropTestComponent, EditorV1Component, EditorComponent, EditorFieldsComponent, TextFieldComponent, RadioFieldComponent, NumberFieldComponent, DateFieldComponent, DropdownFieldComponent, ModalContentComponent],
+  declarations: [ListItemComponent, DropTestComponent, EditorV1Component, EditorComponent, EditorFieldsComponent, TextFieldComponent, RadioFieldComponent, NumberFieldComponent, DateFieldComponent, DropdownFieldComponent],
   providers: [EditorService]
 })
 export class EditorModule {}

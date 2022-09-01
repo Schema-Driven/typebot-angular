@@ -18,7 +18,6 @@ import Panzoom from '@panzoom/panzoom';
 import { GroupBlock, Block, Edge, TypeBot } from './editor.interfaces';
 import { StructuredBlocks } from './group-structured-blocks';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ModalContentComponent } from './modal-content/modal-content.component';
 import { EditorService } from '../../services/editor.service';
 
 @Component({
@@ -540,22 +539,8 @@ export class EditorComponent extends StructuredBlocks {
     });
   }
 
-  updateBlock(updatedBlock: any, groupIndex: number, blockIndex: number) {
-    if (this.groupBlocks[groupIndex].blocks[blockIndex]) {
-      this.groupBlocks[groupIndex].blocks[blockIndex] = updatedBlock;
-    }
-
-    return true;
-  }
-
-  open(block: any, groupIndex: number, blockIndex: number) {
+  open(content: any, groupIndex: number, blockIndex: number) {
     this.removeAllPopovers();
-    const modalRef = this.modalService.open(ModalContentComponent, {backdrop: 'static', keyboard: false});
-    modalRef.componentInstance.block = block;
-    modalRef.componentInstance.groupIndex = groupIndex;
-    modalRef.componentInstance.blockIndex = blockIndex;
-    modalRef.componentInstance.updatedBlock.subscribe((receivedEntry: any) => {
-      console.log("receivedEntry",receivedEntry);
-    });
+    this.modalService.open(content, {ariaLabelledBy: 'block-modal'});
   }
 }

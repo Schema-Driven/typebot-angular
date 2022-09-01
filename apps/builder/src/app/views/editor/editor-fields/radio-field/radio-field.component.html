@@ -2,8 +2,8 @@
   <h3 class="text-base font-medium text-gray-700">
     {{label}}
   </h3>
-  <label for="{{key + '-toggle'}}" class="relative inline-flex items-center cursor-pointer">
-    <input type="checkbox" [checked]="value" id="{{key + '-toggle'}}" class="sr-only peer" (change)="eventHandler($event)">
+  <label [for]="'toggle-'+ block.id" class="relative inline-flex items-center cursor-pointer">
+    <input type="checkbox" [checked]="value" [id]="'toggle-'+ block.id" class="sr-only peer" (change)="eventHandler($event)">
     <div
       class="shadow-none w-9 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2.5px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600">
     </div>
