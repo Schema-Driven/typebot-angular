@@ -22,10 +22,6 @@ export class RadioFieldComponent implements OnInit {
     if (this.data.dependent) {
       this.isShow = false;
     }
-
-    if(this.value){
-      console.log(this.value);
-    }
   }
 
   eventHandler(event: any) {
