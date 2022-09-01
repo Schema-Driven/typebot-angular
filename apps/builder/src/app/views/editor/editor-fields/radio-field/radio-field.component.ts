@@ -22,8 +22,7 @@ export class RadioFieldComponent implements OnInit {
   }
 
   eventHandler(event: any) {
-    let eventValue = event.target.value == 'on' ? true : false;
-    this.block.options[this.key] = eventValue;
+    this.block.options[this.key] = event.target.checked;
     this.editorService.setBlock(this.block);
   }
 

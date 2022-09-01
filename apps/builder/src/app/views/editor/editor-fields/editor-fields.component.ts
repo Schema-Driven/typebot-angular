@@ -79,7 +79,8 @@ export class EditorFieldsComponent implements OnInit {
     this.fields = [
       { key: 'isRange', label: 'Is range?', value: options.isRange, type: 'radio' },
       { key: 'hasTime', label: 'With time?', value: options.hasTime, type: 'radio' },
-      { key: 'placeholder', label: 'From label:', value: options.labels.from, type: 'text_input', dependent: { fieldName: 'isRange', fieldValue: true }},
+      { key: 'from', label: 'From label:', value: options.labels.from, type: 'text_input', dependent: { fieldName: 'isRange', fieldValue: true }},
+      { key: 'to', label: 'To label:', value: options.labels.to, type: 'text_input', dependent: { fieldName: 'isRange', fieldValue: true }},
       { key: 'button', label: 'Button Label:', value: options.labels.button, type: 'text_input' },
     ]
   }
