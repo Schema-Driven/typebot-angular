@@ -78,11 +78,11 @@ export class EditorFieldsComponent implements OnInit {
 
   setDateInputFields(options: any) {
     this.fields = [
-      { key: 'isRange', label: 'Is range?', value: options.isRange, type: 'radio' },
-      { key: 'hasTime', label: 'With time?', value: options.hasTime, type: 'radio' },
-      { key: 'from', label: 'From label:', value: options.labels.from, type: 'text_input', dependent: { fieldName: 'isRange', fieldValue: true }},
-      { key: 'to', label: 'To label:', value: options.labels.to, type: 'text_input', dependent: { fieldName: 'isRange', fieldValue: true }},
-      { key: 'button', label: 'Button Label:', value: options.labels.button, type: 'text_input' },
+      { key: 'isRange', parentKey: '', label: 'Is range?', value: options.isRange, type: 'radio' },
+      { key: 'hasTime', parentKey: '', label: 'With time?', value: options.hasTime, type: 'radio' },
+      { key: 'from', parentKey: 'labels', label: 'From label:', value: options.labels.from, type: 'text_input', dependent: { key: 'isRange', parentKey: '', value: true }},
+      { key: 'to', parentKey: 'labels', label: 'To label:', value: options.labels.to, type: 'text_input', dependent: { key: 'isRange', parentKey: '', value: true }},
+      { key: 'button', parentKey: 'labels', label: 'Button Label:', value: options.labels.button, type: 'text_input' },
     ]
   }
 
@@ -97,13 +97,13 @@ export class EditorFieldsComponent implements OnInit {
     ];
 
     this.fields = [
-      { key: 'length', label: 'Maximum:', value: maximumValues, type: 'dropdown'},
-      { key: 'buttonTypes', label: 'Type:', value: buttonTypes, type: 'dropdown'},
-      { key: 'customIcon', label: 'Custom icon?', value: options.customIcon.isEnabled, type: 'radio', dependent: { fieldName: "buttonTypes", fieldValue: 'Icons' } },
-      { key: 'iconSVG:', label: 'Icon SVG:', value: options.labels.svg, type: 'text_input', placeholder: '<svg>...</svg>', dependent: { fieldName: 'customIcon', fieldValue: true }},
-      { key: 'notLikelyLabel', label: '0 label:', value: options.labels.left, placeholder: 'Not likely at all', type: 'text_input'},
-      { key: 'extremeLabel', label: '4 label:', value: options.labels.right, placeholder: 'Extremely likely', type:'text_input' },
-      { key: 'button', label: 'Button Label:', value: options.labels.button, type: 'text_input' },
+      { key: 'length', parentKey: '', label: 'Maximum:', value: maximumValues, type: 'dropdown'},
+      { key: 'buttonTypes', parentKey: '', label: 'Type:', value: buttonTypes, type: 'dropdown'},
+      { key: 'isEnabled', parentKey: 'customIcon', label: 'Custom icon?', value: options.customIcon.isEnabled, dependent: { key: 'buttonTypes', parentKey: '', value: 'Icons' }, type: 'radio' },
+      { key: 'svg', parentKey: 'customIcon', label: 'Icon SVG:', value: options.customIcon.svg, placeholder: '<svg>...</svg>', dependent: { key: 'isEnabled', parentKey: 'customIcon', value: true }, type: 'text_input' },
+      { key: 'left', parentKey: 'labels', label: '0 label:', value: options.labels.left, placeholder: 'Not likely at all', type: 'text_input'},
+      { key: 'right', parentKey: 'labels', label: '4 label:', value: options.labels.right, placeholder: 'Extremely likely', type:'text_input' },
+      { key: 'button', parentKey: 'labels', label: 'Button Label:', value: options.labels.button, type: 'text_input' },
     ];
   }
 

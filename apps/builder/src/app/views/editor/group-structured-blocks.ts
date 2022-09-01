@@ -119,9 +119,11 @@ export class StructuredBlocks {
           id: this.uuid(),
           options: {
             buttonTypes: "Numbers",
-            customIcon: false,
-            labels: {
+            customIcon: {
+              isEnabled: false,
               svg:"",
+            },
+            labels: {
               left: "",
               right: "",
               button: "Send",

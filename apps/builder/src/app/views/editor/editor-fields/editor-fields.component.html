@@ -1,9 +1,9 @@
 <div *ngFor="let field of fields; let i = index">
-  <app-radio-field *ngIf="field.type === 'radio'" [key]="field.key" [label]="field.label" [value]="field.value" [dependent]="field.dependent"></app-radio-field>
-  <app-text-field *ngIf="field.type === 'text_input'" [key]="field.key" [label]="field.label" [value]="field.value" [placeholder]="field.placeholder" [dependent]="field.dependent"></app-text-field>
-  <app-number-field *ngIf="field.type === 'number_input'" [key]="field.key" [label]="field.label" [value]="field.value"></app-number-field>
-  <app-date-field *ngIf="field.type === 'date_input'" [key]="field.key" [label]="field.label" [value]="field.value"></app-date-field>
-   <app-dropdown-field *ngIf="field.type === 'dropdown'" [key]="field.key" [label]="field.label" [value]="field.value" [dependent]="field.dependent"></app-dropdown-field>
+  <app-radio-field *ngIf="field.type === 'radio'" [data]="field"></app-radio-field>
+  <app-text-field *ngIf="field.type === 'text_input'" [data]="field"></app-text-field>
+  <app-number-field *ngIf="field.type === 'number_input'" [data]="field"></app-number-field>
+  <app-date-field *ngIf="field.type === 'date_input'" [data]="field"></app-date-field>
+  <app-dropdown-field *ngIf="field.type === 'dropdown'" [data]="field"></app-dropdown-field>
 </div>
 
 <!-- <div class="save-answer">

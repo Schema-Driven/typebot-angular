@@ -8,9 +8,7 @@ import { EditorService } from '../../../../services/editor.service';
 })
 export class DateFieldComponent{
 
-  @Input() key: string = '';
-  @Input() label: string = '';
-  @Input() value: string = '';
+  @Input() data: any = {};
   block: any = {};
 
   constructor(private editorService: EditorService) { }
@@ -22,7 +20,11 @@ export class DateFieldComponent{
   }
 
   eventHandler(event: any) {
-    this.block.options[this.key] = event.target.value;
+    if (this.data.parentKey) {
+      this.block.options[this.data.parentKey][this.data.key] = event.target.value;
+    } else {
+      this.block.options[this.data.key] = event.target.value;
+    }
     this.editorService.setBlock(this.block);
   }
 

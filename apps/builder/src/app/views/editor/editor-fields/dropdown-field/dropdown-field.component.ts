@@ -8,10 +8,7 @@ import { EditorService } from '../../../../services/editor.service';
 })
 export class DropdownFieldComponent{
 
-  @Input() key: string = '';
-  @Input() label: string = '';
-  @Input() value: any = '';
-  @Input() dependent: any = {};
+  @Input() data: any = {};
   block: any = {};
   isShow: boolean = true;
 
@@ -22,13 +19,17 @@ export class DropdownFieldComponent{
       this.block = block;
     });
 
-    if (this.dependent) {
+    if (this.data.dependent) {
       this.isShow = false;
     }
   }
 
   eventHandler(event: any) {
-    this.block.options[this.key] = event.target.value;
+    if (this.data.parentKey) {
+      this.block.options[this.data.parentKey][this.data.key] = event.target.value;
+    } else {
+      this.block.options[this.data.key] = event.target.value;
+    }
     this.editorService.setBlock(this.block);
   }
 
