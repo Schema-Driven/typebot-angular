@@ -102,7 +102,7 @@ export class EditorFieldsComponent implements OnInit {
     this.fields = [
       { key: 'placeholder', label: 'Placeholder:', value: options.labels.placeholder, type: 'text_input'},
       { key: 'button', label: 'Button Label:', value: options.labels.button, type: 'text_input' },
-      { key: 'countries', label: 'Default country:', value: countries , type: 'dropdown' },
+      { key: 'defaultCountryCode', label: 'Default country:', value: countries , type: 'dropdown' },
       { key: 'retryMessageContent', label: 'Retry message:', value: options.retryMessageContent, type: 'text_input' }
     ]
   }
