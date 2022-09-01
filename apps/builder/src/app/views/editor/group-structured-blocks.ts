@@ -131,7 +131,7 @@ export class StructuredBlocks {
               notLikelyLabel: "Not likely at all",
               extremeLabel: "Extremely likely",
             },
-            length: 8,
+            length: 10,
           },
           type: 'rating_input',
         },

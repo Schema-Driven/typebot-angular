@@ -87,12 +87,17 @@ export class EditorFieldsComponent implements OnInit {
   }
 
   setRatingInputFields(options: any) {
+    let maximumValues = Array(8).fill(0).map((x, i)=> {
+      return { label: i+3, value: i+3}
+    })
+
     let buttonTypes = [
       {label:options.buttonTypes.iconText, value:options.buttonTypes.iconText},
       {label:options.buttonTypes.numberText, value:options.buttonTypes.numberText}
-    ]
+    ];
+
     this.fields = [
-      { key: 'length', label: 'Maximum:', value: Array(options.length).fill(0).map((x,i)=>i+3), type: 'dropdown'},
+      { key: 'length', label: 'Maximum:', value: maximumValues, type: 'dropdown'},
       { key: 'buttonTypes', label: 'Type:', value: buttonTypes, type: 'dropdown'},
       { key: 'customIcon', label: 'Custom icon?', value: options.customIcon.isEnabled, type: 'radio', dependent: { fieldName: "buttonTypes", fieldValue: options.buttonTypes.iconText } },
       { key: 'iconSVG:', label: 'Icon SVG:', value: options.labels.svg, type: 'text_input', dependent: { fieldName: 'customIcon', fieldValue: true }},
