@@ -11,6 +11,8 @@ export class RadioFieldComponent implements OnInit {
   @Input() key: string = '';
   @Input() label: string = '';
   @Input() value: string = '';
+  @Input() dependent: any = {};
+  isShow = true;
   block: any = {};
 
   constructor(private editorService: EditorService) { }
@@ -19,6 +21,10 @@ export class RadioFieldComponent implements OnInit {
     this.editorService.selectedBlock$.subscribe((block) => {
       this.block = block;
     });
+
+    if (this.dependent) {
+      this.isShow = false;
+    }
   }
 
   eventHandler(event: any) {

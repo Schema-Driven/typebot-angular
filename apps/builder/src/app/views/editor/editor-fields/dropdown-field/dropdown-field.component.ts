@@ -11,7 +11,9 @@ export class DropdownFieldComponent{
   @Input() key: string = '';
   @Input() label: string = '';
   @Input() value: any = '';
+  @Input() dependent: any = {};
   block: any = {};
+  isShow: boolean = true;
 
   constructor(private editorService: EditorService) { }
 
@@ -19,6 +21,10 @@ export class DropdownFieldComponent{
     this.editorService.selectedBlock$.subscribe((block) => {
       this.block = block;
     });
+
+    if (this.dependent) {
+      this.isShow = false;
+    }
   }
 
   eventHandler(event: any) {

@@ -126,6 +126,7 @@ export class StructuredBlocks {
               isEnabled: false
             },
             labels: {
+              svg:'<svg>...</svg>',
               button: "Send",
               notLikelyLabel: "Not likely at all",
               extremeLabel: "Extremely likely",

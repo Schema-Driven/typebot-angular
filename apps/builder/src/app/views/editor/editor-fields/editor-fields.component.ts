@@ -92,7 +92,9 @@ export class EditorFieldsComponent implements OnInit {
     ]
     this.fields = [
       { key: 'length', label: 'Maximum:', value: Array(options.length).fill(0).map((x,i)=>i+3), type: 'dropdown'},
-      { key: 'buttonTypes', label: 'Type:', value: buttonTypes, type: 'dropdown' },
+      { key: 'buttonTypes', label: 'Type:', value: buttonTypes, type: 'dropdown'},
+      { key: 'customIcon', label: 'Custom icon?', value: options.customIcon.isEnabled, type: 'radio', dependent: { fieldName: "buttonTypes", fieldValue: options.buttonTypes.iconText } },
+      { key: 'iconSVG:', label: 'Icon SVG:', value: options.labels.svg, type: 'text_input', dependent: { fieldName: 'customIcon', fieldValue: true }},
       { key: 'notLikelyLabel', label: '0 label:', value: options.labels.notLikelyLabel, type: 'text_input'},
       { key: 'extremeLabel', label: '4 label:', value: options.labels.extremeLabel, type:'text_input' },
       { key: 'button', label: 'Button Label:', value: options.labels.button, type: 'text_input' },
