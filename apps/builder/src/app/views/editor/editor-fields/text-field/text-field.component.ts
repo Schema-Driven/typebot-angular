@@ -11,6 +11,7 @@ export class TextFieldComponent implements OnInit {
   @Input() key: string = '';
   @Input() label: string = '';
   @Input() value: string = '';
+  @Input() placeholder: string = '';
   @Input() dependent: any = {};
   block: any = {};
   isShow = true;
