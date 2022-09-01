@@ -31,19 +31,20 @@ export class EditorFieldsComponent implements OnInit {
         case 'number_input':
           this.setNumberInputFields(options);
         break;
+        case 'email_input':
+          this.setEmailInputFields(options);
+        break;
+        case'url_input':
+          this.setEmailInputFields(options);
+        break;
         case 'date_input':
           this.setDateInputFields(options);
-        break;
-        case 'rating_input':
-          this.setRatingInputFields(options);
         break;
         case 'phone_number_input':
           this.setPhoneInputFields(options);
         break;
-        case 'email_input':
-          break;
-        case'url_input':
-          this.setEmailInputFields(options);
+        case 'rating_input':
+          this.setRatingInputFields(options);
         break;
       }
     }
