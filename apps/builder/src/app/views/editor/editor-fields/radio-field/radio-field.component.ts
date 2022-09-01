@@ -25,11 +25,16 @@ export class RadioFieldComponent implements OnInit {
     if (this.dependent) {
       this.isShow = false;
     }
+
+    if(this.value){
+      console.log(this.value);
+    }
   }
 
   eventHandler(event: any) {
     this.block.options[this.key] = event.target.checked;
     this.editorService.setBlock(this.block);
+    // (document.getElementById(this.block.id) as HTMLElement).style.height = '150px';
   }
 
 }

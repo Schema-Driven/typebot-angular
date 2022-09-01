@@ -46,6 +46,9 @@ export class EditorFieldsComponent implements OnInit {
         case 'rating_input':
           this.setRatingInputFields(options);
         break;
+        case 'choice_input':
+          this.setChoiceInputFields(options);
+        break;
       }
     }
   }
@@ -108,6 +111,13 @@ export class EditorFieldsComponent implements OnInit {
       { key: 'button', label: 'Button Label:', value: options.labels.button, type: 'text_input' },
       { key: 'defaultCountryCode', label: 'Default country:', value: countries , type: 'dropdown' },
       { key: 'retryMessageContent', label: 'Retry message:', value: options.retryMessageContent, type: 'text_input' }
+    ]
+  }
+
+  setChoiceInputFields(options: any) {
+    this.fields = [
+      { key: 'isMultipleChoice', label: 'Multiple choice?', value: options.isMultipleChoice, type: 'radio' },
+      { key: 'button', label: 'Button Label:', value: options.buttonLabel, type: 'text_input' ,  dependent: { fieldName: 'isMultipleChoice', fieldValue: true }},
     ]
   }
 

@@ -543,4 +543,13 @@ export class EditorComponent extends StructuredBlocks {
     this.removeAllPopovers();
     this.modalService.open(content, {ariaLabelledBy: 'block-modal'});
   }
+
+  pushMultiInput(item:any){
+    item.push({
+      id:item.id,
+      content: "Click to edit",
+      type: 0
+    })
+    console.log(item);
+  }
 }

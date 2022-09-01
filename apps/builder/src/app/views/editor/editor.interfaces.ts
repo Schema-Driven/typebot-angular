@@ -2,10 +2,11 @@ export interface Block {
   groupId?: string;
   id: string;
   content?: object;
-  items?: { id: string; content: any; type: number }[];
-  options?: object;
+  items?: any;
+  options?: any;
   type: string;
 }
+// items?: { id: string; content: any; type: number }[];
 
 export interface GroupStructuredBlock {
   id: string;
