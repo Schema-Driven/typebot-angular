@@ -148,63 +148,63 @@ export class StructuredBlocks {
         }
       ],
     },
-    {
-      id: this.uuid(),
-      name: 'logic',
-      blocks: [
-        {
-          id: this.uuid(),
-          options: {},
-          type: 'set_variable'
-        },
-        {
-          id: this.uuid(),
-          items: [
-            {
-              id: this.uuid(),
-              content: {comparisons: [], logicalOperator: "AND"},
-              type: 1
-            }
-          ],
-          type: 'condition'
-        },
-        {
-          id: this.uuid(),
-          options: {
-            isNewTab: false
-          },
-          type: 'redirect'
-        },
-        {
-          id: this.uuid(),
-          options: {
-            name: "Code snippet",
-          },
-          type: 'code'
-        },
-        {
-          id: this.uuid(),
-          options: {},
-          type: 'typebot_link'
-        }
-      ],
-    },
-    {
-      id: this.uuid(),
-      name: 'integerations',
-      blocks: [
-        {
-          id: this.uuid(),
-          options: {},
-          type: 'webhook'
-        },
-        {
-          id: this.uuid(),
-          options: {},
-          type: 'email'
-        },
-      ],
-    },
+    // {
+    //   id: this.uuid(),
+    //   name: 'logic',
+    //   blocks: [
+    //     {
+    //       id: this.uuid(),
+    //       options: {},
+    //       type: 'set_variable'
+    //     },
+    //     {
+    //       id: this.uuid(),
+    //       items: [
+    //         {
+    //           id: this.uuid(),
+    //           content: {comparisons: [], logicalOperator: "AND"},
+    //           type: 1
+    //         }
+    //       ],
+    //       type: 'condition'
+    //     },
+    //     {
+    //       id: this.uuid(),
+    //       options: {
+    //         isNewTab: false
+    //       },
+    //       type: 'redirect'
+    //     },
+    //     {
+    //       id: this.uuid(),
+    //       options: {
+    //         name: "Code snippet",
+    //       },
+    //       type: 'code'
+    //     },
+    //     {
+    //       id: this.uuid(),
+    //       options: {},
+    //       type: 'typebot_link'
+    //     }
+    //   ],
+    // },
+    // {
+    //   id: this.uuid(),
+    //   name: 'integerations',
+    //   blocks: [
+    //     {
+    //       id: this.uuid(),
+    //       options: {},
+    //       type: 'webhook'
+    //     },
+    //     {
+    //       id: this.uuid(),
+    //       options: {},
+    //       type: 'email'
+    //     },
+    //   ],
+    // },
   ];
 
   prefilledData : any = {
