@@ -21,15 +21,10 @@ export class TextFieldComponent implements OnInit {
     this.editorService.selectedBlock$.subscribe((block) => {
       this.block = block;
     });
-    // if (this.dependent) {
-    //   console.log("this.block",this.block.options);
-    //   console.log("this.block.options[this.dependent.fieldName]",this.block.options[this.dependent.fieldName]);
-    //   if (this.block.options[this.dependent.fieldName] === this.dependent.fieldValue) {
-    //     this.isShow = true;
-    //   } else {
-    //     this.isShow = false;
-    //   }
-    // }
+
+    if (this.dependent) {
+      this.isShow = false;
+    }
   }
 
   eventHandler(event: any) {
