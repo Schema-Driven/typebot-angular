@@ -38,6 +38,7 @@ export class EditorComponent extends StructuredBlocks {
     'connector': [],
     'group': [],
     'block': [],
+    'itemField': []
   };
   sidePanel: boolean = false;
 
@@ -474,6 +475,7 @@ export class EditorComponent extends StructuredBlocks {
       'connector': [],
       'group': [],
       'block': [],
+      'itemField': []
     };
   }
 
@@ -506,11 +508,16 @@ export class EditorComponent extends StructuredBlocks {
       groupIndex = document.getElementById(id)?.getAttribute('data-group-index');
       this.instance.removeGroup(id);
       this.groupBlocks.splice(groupIndex, 1);
+    }
+    else if (type === 'itemField') {
+      groupIndex = document.getElementById(id)?.getAttribute('data-item-index');
+      this.groupBlocks.splice(groupIndex, 1);
     } else if (type === 'block') {
       groupIndex = document.getElementById(id)?.closest('.grouper')?.getAttribute('data-group-index');
       blockIndex = document.getElementById(id)?.getAttribute('data-block-index');
       this._removeEndPoint(id);
       this.groupBlocks[groupIndex].blocks.splice(blockIndex, 1);
+
 
       // Remove empty groups
       if (this.groupBlocks[groupIndex].blocks.length === 0) {
@@ -544,12 +551,16 @@ export class EditorComponent extends StructuredBlocks {
     this.modalService.open(content, {ariaLabelledBy: 'block-modal'});
   }
 
-  pushMultiInput(item:any){
-    item.push({
-      id:item.id,
+  pushMultiInput(block: any,event:any) {
+    event.stopPropagation();
+    block.items.push({
+      id:this.uuid(),
       content: "Click to edit",
       type: 0
     })
-    console.log(item);
+  }
+
+  groupNameField(b:any) {
+    document.getElementById("firstInput")?.removeAttribute("hidden");
   }
 }
