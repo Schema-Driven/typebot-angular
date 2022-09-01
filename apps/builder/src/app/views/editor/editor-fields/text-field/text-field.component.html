@@ -1,11 +1,13 @@
-<div class="mb-4 input-field" *ngIf="isShow || block.options[dependent.fieldName] === dependent.fieldValue">
+<div class="mb-4 input-field" *ngIf="isShow
+|| (data.dependent.parentKey === '' && block.options[data.dependent.key] === data.dependent.value)
+|| (data.dependent.parentKey && block.options[data.dependent.parentKey][data.dependent.key] === data.dependent.value)">
   <label class="block mb-1 text-base font-medium text-gray-700 dark:text-gray-300">
-    {{label}}</label>
+    {{ data.label }}</label>
   <div class="flex items-center">
-    <input type="text" class="block w-full h-10 p-2 text-sm text-gray-700 border border-gray-300 rounded-lg bg-gray-50
-      placeholder:text-gray-400  placeholder:text-base
+    <input type="text" [placeholder]="data.placeholder ? data.placeholder : ''" class="block w-full h-10 p-2 text-sm text-gray-700 border border-gray-300 rounded-lg bg-gray-50
+      placeholder:text-gray-700 placeholder:font-normal placeholder:text-base
       focus:outline-[#7ea6ff] focus:shadow-lg dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
-      dark:text-white " [placeholder]="value"  (blur)="eventHandler($event)">
+      dark:text-white " [value]="data.value" (blur)="eventHandler($event)">
     <!-- <div
       class="p-2.5 text-black bg-gray-100 rounded-lg hover:bg-gray-200 h-10 w-12 flex justify-center items-center">
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2"

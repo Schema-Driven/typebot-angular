@@ -81,28 +81,33 @@ export class EditorFieldsComponent implements OnInit {
 
   setDateInputFields(options: any) {
     this.fields = [
-      { key: 'isRange', label: 'Is range?', value: options.isRange, type: 'radio' },
-      { key: 'hasTime', label: 'With time?', value: options.hasTime, type: 'radio' },
-      { key: 'from', label: 'From label:', value: options.labels.from, type: 'text_input', dependent: { fieldName: 'isRange', fieldValue: true }},
-      { key: 'to', label: 'To label:', value: options.labels.to, type: 'text_input', dependent: { fieldName: 'isRange', fieldValue: true }},
-      { key: 'button', label: 'Button Label:', value: options.labels.button, type: 'text_input' },
+      { key: 'isRange', parentKey: '', label: 'Is range?', value: options.isRange, type: 'radio' },
+      { key: 'hasTime', parentKey: '', label: 'With time?', value: options.hasTime, type: 'radio' },
+      { key: 'from', parentKey: 'labels', label: 'From label:', value: options.labels.from, type: 'text_input', dependent: { key: 'isRange', parentKey: '', value: true }},
+      { key: 'to', parentKey: 'labels', label: 'To label:', value: options.labels.to, type: 'text_input', dependent: { key: 'isRange', parentKey: '', value: true }},
+      { key: 'button', parentKey: 'labels', label: 'Button Label:', value: options.labels.button, type: 'text_input' },
     ]
   }
 
   setRatingInputFields(options: any) {
+    let maximumValues = Array(8).fill(0).map((x, i)=> {
+      return { label: i+3, value: i+3}
+    });
+
     let buttonTypes = [
-      {label:options.buttonTypes.iconText, value:options.buttonTypes.iconText},
-      {label:options.buttonTypes.numberText, value:options.buttonTypes.numberText}
-    ]
+      { label: 'Icons', value: 'Icons' },
+      { label: 'Numbers', value: 'Numbers'}
+    ];
+
     this.fields = [
-      { key: 'length', label: 'Maximum:', value: Array(options.length).fill(0).map((x,i)=>i+3), type: 'dropdown'},
-      { key: 'buttonTypes', label: 'Type:', value: buttonTypes, type: 'dropdown'},
-      { key: 'customIcon', label: 'Custom icon?', value: options.customIcon.isEnabled, type: 'radio', dependent: { fieldName: "buttonTypes", fieldValue: options.buttonTypes.iconText } },
-      { key: 'iconSVG:', label: 'Icon SVG:', value: options.labels.svg, type: 'text_input', dependent: { fieldName: 'customIcon', fieldValue: true }},
-      { key: 'notLikelyLabel', label: '0 label:', value: options.labels.notLikelyLabel, type: 'text_input'},
-      { key: 'extremeLabel', label: '4 label:', value: options.labels.extremeLabel, type:'text_input' },
-      { key: 'button', label: 'Button Label:', value: options.labels.button, type: 'text_input' },
-    ]
+      { key: 'length', parentKey: '', label: 'Maximum:', value: maximumValues, type: 'dropdown'},
+      { key: 'buttonTypes', parentKey: '', label: 'Type:', value: buttonTypes, type: 'dropdown'},
+      { key: 'isEnabled', parentKey: 'customIcon', label: 'Custom icon?', value: options.customIcon.isEnabled, dependent: { key: 'buttonTypes', parentKey: '', value: 'Icons' }, type: 'radio' },
+      { key: 'svg', parentKey: 'customIcon', label: 'Icon SVG:', value: options.customIcon.svg, placeholder: '<svg>...</svg>', dependent: { key: 'isEnabled', parentKey: 'customIcon', value: true }, type: 'text_input' },
+      { key: 'left', parentKey: 'labels', label: '0 label:', value: options.labels.left, placeholder: 'Not likely at all', type: 'text_input'},
+      { key: 'right', parentKey: 'labels', label: '4 label:', value: options.labels.right, placeholder: 'Extremely likely', type:'text_input' },
+      { key: 'button', parentKey: 'labels', label: 'Button Label:', value: options.labels.button, type: 'text_input' },
+    ];
   }
 
   setPhoneInputFields(options: any) {

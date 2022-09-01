@@ -118,20 +118,17 @@ export class StructuredBlocks {
         {
           id: this.uuid(),
           options: {
-            buttonTypes: {
-              iconText:'Icons',
-              numberText:"Numbers"
-            },
+            buttonTypes: "Numbers",
             customIcon: {
-              isEnabled: false
+              isEnabled: false,
+              svg:"",
             },
             labels: {
-              svg:'<svg>...</svg>',
+              left: "",
+              right: "",
               button: "Send",
-              notLikelyLabel: "Not likely at all",
-              extremeLabel: "Extremely likely",
             },
-            length: 8,
+            length: 10,
           },
           type: 'rating_input',
         },

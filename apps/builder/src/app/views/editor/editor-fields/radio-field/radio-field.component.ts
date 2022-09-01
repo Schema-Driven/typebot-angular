@@ -8,10 +8,7 @@ import { EditorService } from '../../../../services/editor.service';
 })
 export class RadioFieldComponent implements OnInit {
 
-  @Input() key: string = '';
-  @Input() label: string = '';
-  @Input() value: string = '';
-  @Input() dependent: any = {};
+  @Input() data: any = {};
   isShow = true;
   block: any = {};
 
@@ -22,7 +19,7 @@ export class RadioFieldComponent implements OnInit {
       this.block = block;
     });
 
-    if (this.dependent) {
+    if (this.data.dependent) {
       this.isShow = false;
     }
 
@@ -32,7 +29,11 @@ export class RadioFieldComponent implements OnInit {
   }
 
   eventHandler(event: any) {
-    this.block.options[this.key] = event.target.checked;
+    if (this.data.parentKey) {
+      this.block.options[this.data.parentKey][this.data.key] = event.target.checked;
+    } else {
+      this.block.options[this.data.key] = event.target.checked;
+    }
     this.editorService.setBlock(this.block);
     // (document.getElementById(this.block.id) as HTMLElement).style.height = '150px';
   }

@@ -1,9 +1,13 @@
-<div class="flex items-center justify-between mt-6 mb-4" *ngIf="isShow || block.options[dependent.fieldName] === dependent.fieldValue">
+<div class="flex items-center justify-between mt-6 mb-4" *ngIf="isShow
+|| (data.dependent.parentKey === '' && block.options[data.dependent.key] === data.dependent.value)
+|| (data.dependent.parentKey && block.options[data.dependent.parentKey][data.dependent.key] === data.dependent.value)">
+
+  <!-- || block.options[data.dependent.parentKey][data.dependent.Key] === data.dependent.value -->
   <h3 class="text-base font-medium text-gray-700">
-    {{label}}
+    {{data.label}}
   </h3>
-  <label [for]="'toggle-'+ key + '-' + block.id" class="relative inline-flex items-center cursor-pointer">
-    <input type="checkbox" [checked]="value" [id]="'toggle-'+ key + '-' + block.id" class="sr-only peer" (change)="eventHandler($event)">
+  <label [for]="'toggle-'+ data.key + '-' + block.id" class="relative inline-flex items-center cursor-pointer">
+    <input type="checkbox" [checked]="data.value" [id]="'toggle-'+ data.key + '-' + block.id" class="sr-only peer" (change)="eventHandler($event)">
     <div
       class="shadow-none w-9 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2.5px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600">
     </div>
