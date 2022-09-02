@@ -1,9 +1,10 @@
-<div *ngFor="let field of fields; let i = index">
-  <app-radio-field *ngIf="field.type === 'radio'" [data]="field"></app-radio-field>
-  <app-text-field *ngIf="field.type === 'text_input'" [data]="field"></app-text-field>
-  <app-number-field *ngIf="field.type === 'number_input'" [data]="field"></app-number-field>
-  <app-date-field *ngIf="field.type === 'date_input'" [data]="field"></app-date-field>
-  <app-dropdown-field *ngIf="field.type === 'dropdown'" [data]="field"></app-dropdown-field>
+<div *ngFor="let field of fields; let i = index" [ngSwitch]="field.type">
+  <app-radio-field *ngSwitchCase="'radio'" [data]="field"></app-radio-field>
+  <app-textarea-field  *ngSwitchCase="'textarea'" [data]="field"></app-textarea-field>
+  <app-text-field  *ngSwitchCase="'text_input'" [data]="field"></app-text-field>
+  <app-number-field *ngSwitchCase="'number_input'" [data]="field"></app-number-field>
+  <app-date-field *ngSwitchCase="'date_input'" [data]="field"></app-date-field>
+  <app-dropdown-field *ngSwitchCase="'dropdown'" [data]="field"></app-dropdown-field>
 </div>
 
 <!-- <div class="save-answer">

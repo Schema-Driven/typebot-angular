@@ -19,10 +19,11 @@ import { NumberFieldComponent } from './editor-fields/number-field/number-field.
 import { DateFieldComponent } from './editor-fields/date-field/date-field.component';
 import { DropdownFieldComponent } from './editor-fields/dropdown-field/dropdown-field.component';
 import { EditorService } from '../../services/editor.service';
+import { TextareaFieldComponent } from './editor-fields/textarea-field/textarea-field.component';
 
 @NgModule({
   imports: [CommonModule, HeaderBarModule, EditorRoutingModule, DragDropModule, NgbPopoverModule],
-  declarations: [ListItemComponent, DropTestComponent, EditorV1Component, EditorComponent, EditorFieldsComponent, TextFieldComponent, RadioFieldComponent, NumberFieldComponent, DateFieldComponent, DropdownFieldComponent],
+  declarations: [ListItemComponent, DropTestComponent, EditorV1Component, EditorComponent, EditorFieldsComponent, TextFieldComponent, RadioFieldComponent, NumberFieldComponent, DateFieldComponent, DropdownFieldComponent, TextareaFieldComponent],
   providers: [EditorService]
 })
 export class EditorModule {}

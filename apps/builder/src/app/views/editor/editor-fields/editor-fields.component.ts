@@ -22,35 +22,41 @@ export class EditorFieldsComponent implements OnInit {
   }
 
   setFields() {
-    if (this.block?.options) {
-      let options = this.block.options;
+    if (this.block) {
       switch(this.block.type) {
+        case 'text':
+          this.setTextField(this.block.content);
+        break;
         case 'text_input':
-          this.setTextInputFields(options);
+          this.setTextInputFields(this.block.options);
         break;
         case 'number_input':
-          this.setNumberInputFields(options);
+          this.setNumberInputFields(this.block.options);
         break;
         case 'email_input':
-          this.setEmailInputFields(options);
-        break;
         case'url_input':
-          this.setEmailInputFields(options);
+          this.setEmailInputFields(this.block.options);
         break;
         case 'date_input':
-          this.setDateInputFields(options);
+          this.setDateInputFields(this.block.options);
         break;
         case 'phone_number_input':
-          this.setPhoneInputFields(options);
+          this.setPhoneInputFields(this.block.options);
         break;
         case 'rating_input':
-          this.setRatingInputFields(options);
+          this.setRatingInputFields(this.block.options);
         break;
         case 'choice_input':
-          this.setChoiceInputFields(options);
+          this.setChoiceInputFields(this.block.options);
         break;
       }
     }
+  }
+
+  setTextField(content: any) {
+    this.fields = [
+      { key: 'html', parentKey: 'content', value: content.html, type: 'textarea' }
+    ]
   }
 
   setTextInputFields(options: any) {
