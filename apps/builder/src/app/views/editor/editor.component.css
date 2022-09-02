@@ -267,7 +267,3 @@ svg.endpointOnTarget.grouper.jtk-endpoint.jtk-endpoint-connected {
   opacity: 1;
   transition: all ease-in-out 0.3ms;
 }
-
-.absolute.grouper.z-2.jtk-group-expanded.jtk-drag{
-  z-index: 6;
-}
