@@ -231,6 +231,10 @@ svg.endpointOnTarget.grouper.jtk-endpoint.jtk-endpoint-connected {
   z-index: 9;
 }
 
+::ng-deep .input-popover .popover-body{
+  transform: translate(15px, 0px);
+}
+
 ::ng-deep .modal-backdrop {
   position: fixed;
   top: 0;
@@ -267,3 +271,4 @@ svg.endpointOnTarget.grouper.jtk-endpoint.jtk-endpoint-connected {
   opacity: 1;
   transition: all ease-in-out 0.3ms;
 }
+

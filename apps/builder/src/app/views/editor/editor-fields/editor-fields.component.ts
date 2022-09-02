@@ -49,6 +49,9 @@ export class EditorFieldsComponent implements OnInit {
         case 'choice_input':
           this.setChoiceInputFields(this.block.options);
         break;
+        case 'image':
+          this.setImageBubbleFields(this.block.options);
+        break;
       }
     }
   }
@@ -56,6 +59,12 @@ export class EditorFieldsComponent implements OnInit {
   setTextField(content: any) {
     this.fields = [
       { key: 'html', parentKey: '', value: content.html, type: 'textarea' }
+    ]
+  }
+
+  setImageBubbleFields(content: any) {
+    this.fields = [
+      { key: 'image', parentKey: '', value: content, type: 'image' }
     ]
   }
 
@@ -131,5 +140,7 @@ export class EditorFieldsComponent implements OnInit {
       { key: 'button', label: 'Button Label:', value: options.buttonLabel, type: 'text_input' ,  dependent: { fieldName: 'isMultipleChoice', fieldValue: true }},
     ]
   }
+
+
 
 }
