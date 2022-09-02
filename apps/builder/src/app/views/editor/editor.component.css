@@ -228,7 +228,7 @@ svg.endpointOnTarget.grouper.jtk-endpoint.jtk-endpoint-connected {
 
 
 ::ng-deep .input-popover {
-  z-index: 999999;
+  z-index: 9;
 }
 
 ::ng-deep .modal-backdrop {

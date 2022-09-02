@@ -1,8 +1,8 @@
 <div class="mb-4 input-field">
   <!-- <label class="block mb-1 text-base font-medium text-gray-700 dark:text-gray-300">
     {{ data.label }}</label> -->
-  <div class="flex items-center">
+  <div class="flex items-center w-full">
     <!-- <textarea style="width: 100%; height: auto">{{data.value}}</textarea> -->
-    <ckeditor [config]="{ toolbar: [ 'heading', '|', 'bold', 'italic', 'link' ], placeholder: 'Type the content here!' }" [editor]="Editor" [data]="data.value" (change)="eventHandler($event)"></ckeditor>
+    <ckeditor class="w-full border-2 border-blue-600 rounded-lg py-2 text-editor-field mt-4" [config]="{ toolbar: [ 'bold', 'italic', 'link' ], placeholder: 'Type the content here!' }" [editor]="Editor" [data]="data.value" (change)="eventHandler($event)"></ckeditor>
   </div>
 </div>
