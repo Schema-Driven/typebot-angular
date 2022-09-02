@@ -67,20 +67,46 @@
           [style]="('top:'+ b.position.y+'px;left:'+ b.position.x+'px')">
           <div cdkDrag class="py-4 bg-white single-group wrap-div w-72">
             <h2 class="px-4" (contextmenu)="showRightClickPopover('group', b.id, $event)">
-              <span (click)="onGroupNameClick(groupIndex)"
-                class="hover:bg-gray-200 p-1 rounded-md transition-all cursor-text" [hidden]="editedGroupName === -1">{{b.name}}</span>
-              <input [value]="b.name" (change)="onGroupNameChange(b, $event)" [hidden]="editedGroupName === groupIndex" />
+              <span
+                (click)="onGroupNameClick(groupIndex)"
+                class="w-fit p-1 rounded-md transition-all cursor-text
+                {{editedGroupName === groupIndex ? 'hidden' : 'block'}}
+                {{groupIndex === 0 ? '' : 'hover:bg-gray-200'}}">
+                {{b.name}}
+              </span>
+              <input
+                [value]="b.name"
+                (change)="onGroupNameChange(b, $event)"
+                (blur)="editedGroupName = -1"
+                class="w-full h-10 p-2 text-sm text-gray-700 border-2 border-[#7ea6ff] shadow-md rounded-lg bg-white placeholder:text-gray-700 placeholder:font-normal placeholder:text-base focus:outline-[#7ea6ff]
+                {{editedGroupName === groupIndex ? 'block' : 'hidden'}}"
+              />
             </h2>
-            <div cdkDropList [cdkDropListData]="b.blocks" (cdkDropListDropped)="drop($event, 'box')"
+            <div
+              cdkDropList
+              [cdkDropListData]="b.blocks"
+              (cdkDropListDropped)="drop($event, 'box')"
               class="block h-full mt-3 overflow-hidden dragAbleBox"
-              [cdkDropListEnterPredicate]="dropListEnterPredicate(b)" id="receiving-list">
-              <div cdkDrag [cdkDragDisabled]="block.type === 'start'" [disablePopover]="block.type === 'start'"
+              [cdkDropListEnterPredicate]="dropListEnterPredicate(b)"
+              id="receiving-list">
+              <div
+                cdkDrag
+                [cdkDragDisabled]="block.type === 'start'"
+                [disablePopover]="block.type === 'start'"
                 (cdkDragStarted)="cdkDragStarted($event)"
                 (contextmenu)="showRightClickPopover('block', block.id, $event)"
-                *ngFor="let block of b.blocks; let blockIndex = index" class="px-4 single-block" [id]="block.id"
-                [attr.data-jtk-managed]="block.id" [attr.data-block-index]="blockIndex"
-                #blockOptionsPopover="ngbPopover" popoverClass="input-popover" [ngbPopover]="popContent"
-                [autoClose]="'outside'" triggers="manual" placement="left" container="body"
+                *ngFor="let block of b.blocks; let blockIndex = index"
+                class="px-4 single-block"
+                [id]="block.id"
+                [attr.data-jtk-managed]="block.id"
+                [attr.data-block-index]="blockIndex"
+                #blockOptionsPopover="ngbPopover"
+                popoverClass="input-popover"
+                [ngbPopover]="popContent"
+                [autoClose]="'outside'"
+                triggers="manual"
+                placement="left"
+                container="body"
                 (click)="showBlockOptionsPopover(blockOptionsPopover, block, groupIndex, blockIndex)">
                 <div class="draggable-custom-placeholder" *cdkDragPlaceholder></div>
                 <div class="py-3 px-2 my-2 text-xs border rounded-lg single-block-placeholder bg-gray-50">
