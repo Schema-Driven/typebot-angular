@@ -207,7 +207,7 @@
 
         </div>
 
-        <div cdkDropList (cdkDropListDropped)="drop($event, 'container')" class="recieveDragedBox my-element">
+        <div cdkDropList (cdkDropListDropped)="drop($event, 'container')" (click)="onDragRecieverContainer()" class="recieveDragedBox my-element">
         </div>
       </div>
 

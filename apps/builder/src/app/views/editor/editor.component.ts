@@ -570,4 +570,8 @@ export class EditorComponent extends StructuredBlocks {
   onGroupNameChange(group: any, e: any) {
     group.name = e.target.value;
   }
+
+  onDragRecieverContainer() {
+    this.editedGroupName = -1;
+  }
 }
