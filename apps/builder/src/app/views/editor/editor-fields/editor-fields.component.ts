@@ -55,7 +55,7 @@ export class EditorFieldsComponent implements OnInit {
 
   setTextField(content: any) {
     this.fields = [
-      { key: 'html', parentKey: 'content', value: content.html, type: 'textarea' }
+      { key: 'html', parentKey: '', value: content.html, type: 'textarea' }
     ]
   }
 

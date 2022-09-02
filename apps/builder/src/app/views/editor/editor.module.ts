@@ -5,6 +5,7 @@ import { EditorComponent } from './editor.component';
 import { HeaderBarModule } from '../header/header-bar.module';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { NgbPopoverModule } from '@ng-bootstrap/ng-bootstrap';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
 /* TODO: remove it later */
 import { DropTestComponent } from './drop-test/drop-test.component';
@@ -22,7 +23,7 @@ import { EditorService } from '../../services/editor.service';
 import { TextareaFieldComponent } from './editor-fields/textarea-field/textarea-field.component';
 
 @NgModule({
-  imports: [CommonModule, HeaderBarModule, EditorRoutingModule, DragDropModule, NgbPopoverModule],
+  imports: [CommonModule, HeaderBarModule, EditorRoutingModule, DragDropModule, NgbPopoverModule, CKEditorModule],
   declarations: [ListItemComponent, DropTestComponent, EditorV1Component, EditorComponent, EditorFieldsComponent, TextFieldComponent, RadioFieldComponent, NumberFieldComponent, DateFieldComponent, DropdownFieldComponent, TextareaFieldComponent],
   providers: [EditorService]
 })

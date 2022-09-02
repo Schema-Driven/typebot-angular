@@ -2,6 +2,7 @@
   <!-- <label class="block mb-1 text-base font-medium text-gray-700 dark:text-gray-300">
     {{ data.label }}</label> -->
   <div class="flex items-center">
-    <textarea style="width: 100%; height: auto">{{data.value}}</textarea>
+    <!-- <textarea style="width: 100%; height: auto">{{data.value}}</textarea> -->
+    <ckeditor [config]="{ toolbar: [ 'heading', '|', 'bold', 'italic', 'link' ], placeholder: 'Type the content here!' }" [editor]="Editor" [data]="data.value" (change)="eventHandler($event)"></ckeditor>
   </div>
 </div>

@@ -1,4 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
+import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { ChangeEvent } from '@ckeditor/ckeditor5-angular/ckeditor.component';
 import { EditorService } from '../../../../services/editor.service';
 
 @Component({
@@ -11,6 +13,7 @@ export class TextareaFieldComponent implements OnInit {
   @Input() data: any = {};
   block: any = {};
   isShow = true;
+  public Editor = ClassicEditor;
 
   constructor(private editorService: EditorService) { }
 
@@ -20,12 +23,12 @@ export class TextareaFieldComponent implements OnInit {
     });
   }
 
-  eventHandler(event: any) {
-    if (this.data.parentKey) {
-      this.block.options[this.data.parentKey][this.data.key] = event.target.value;
-    } else {
-      this.block.options.labels[this.data.key] = event.target.value;
-    }
+  eventHandler({ editor }: ChangeEvent) {
+    const content = editor.getData();
+    const plainData = content.replace( /(<([^>]+)>)/ig, '' );
+
+    this.block.content[this.data.key] = content;
+    this.block.content['plainText'] = plainData;
 
     this.editorService.setBlock(this.block);
   }
