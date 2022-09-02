@@ -16,7 +16,7 @@ import {
 import { AnchorLocations, AnchorSpec, AnchorOptions } from '@jsplumb/common';
 import Panzoom from '@panzoom/panzoom';
 import { GroupBlock, Block, Edge, TypeBot } from './editor.interfaces';
-import { StructuredBlocks } from './group-structured-blocks';
+import { Editor } from './editor';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { EditorService } from '../../services/editor.service';
 
@@ -25,7 +25,7 @@ import { EditorService } from '../../services/editor.service';
   templateUrl: './editor.component.html',
   styleUrls: ['./editor.component.css'],
 })
-export class EditorComponent extends StructuredBlocks {
+export class EditorComponent extends Editor {
   @ViewChild('wrapper', { static: true })
   wrapper!: ElementRef;
   instance: any;
@@ -41,7 +41,6 @@ export class EditorComponent extends StructuredBlocks {
     'block': [],
     'itemField': []
   };
-  sidePanel: boolean = false;
 
   firstGroupId = this.uuid();
   firstBlockId = this.uuid();
@@ -127,10 +126,6 @@ export class EditorComponent extends StructuredBlocks {
     this.manageNode(this.firstGroupId, ['Right'], 'group');
     this.manageNode(this.firstBlockId, ['Right'], 'block');
     this.groupBlockIdsMapping[this.firstBlockId] = this.firstGroupId;
-  }
-
-  sidePanelClick() {
-    this.sidePanel = !this.sidePanel;
   }
 
   drop(event: CdkDragDrop<Block[]>, container: string) {
@@ -312,11 +307,6 @@ export class EditorComponent extends StructuredBlocks {
         this.instance.removeGroup(endpointId);
       }
     }
-  }
-
-  /** Predicate function that doesn't allow items to be dropped into a list. */
-  noReturnPredicate() {
-    return false;
   }
 
   dropListEnterPredicate(b: any) {
@@ -550,15 +540,6 @@ export class EditorComponent extends StructuredBlocks {
   open(content: any, groupIndex: number, blockIndex: number) {
     this.removeAllPopovers();
     this.modalService.open(content, {ariaLabelledBy: 'block-modal'});
-  }
-
-  pushMultiInput(block: any,event:any) {
-    event.stopPropagation();
-    block.items.push({
-      id:this.uuid(),
-      content: "Click to edit",
-      type: 0
-    })
   }
 
   onGroupNameClick(index: number) {

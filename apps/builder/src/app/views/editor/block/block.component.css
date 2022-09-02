@@ -1,0 +1,22 @@
+::ng-deep .single-block.selected .single-block-placeholder {
+  outline: 2px solid #1a5fff;
+}
+
+::ng-deep .single-block.jtk-drag-hover .single-block-placeholder {
+  outline: 2px solid #1a5fff;
+  border-radius: 10px;
+}
+
+.is-long{
+  height: 100px;
+}
+
+.add-icon{
+  opacity: 0;
+  transition: all ease-in-out 0.3ms;
+}
+
+.choice-input:hover .add-icon{
+  opacity: 1;
+  transition: all ease-in-out 0.3ms;
+}
