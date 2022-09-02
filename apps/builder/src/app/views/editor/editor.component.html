@@ -67,9 +67,9 @@
           [style]="('top:'+ b.position.y+'px;left:'+ b.position.x+'px')">
           <div cdkDrag class="py-4 bg-white single-group wrap-div w-72">
             <h2 class="px-4" (contextmenu)="showRightClickPopover('group', b.id, $event)">
-              <span id="firstSpan" (click)="groupNameField(b)"
-                class="hover:bg-gray-200 p-1 rounded-md transition-all cursor-text">{{b.name}}</span>
-              <input id="firstInput" value="{{b.name}}" hidden />
+              <span (click)="onGroupNameClick(groupIndex)"
+                class="hover:bg-gray-200 p-1 rounded-md transition-all cursor-text" [hidden]="editedGroupName === -1">{{b.name}}</span>
+              <input [value]="b.name" (change)="onGroupNameChange(b, $event)" [hidden]="editedGroupName === groupIndex" />
             </h2>
             <div cdkDropList [cdkDropListData]="b.blocks" (cdkDropListDropped)="drop($event, 'box')"
               class="block h-full mt-3 overflow-hidden dragAbleBox"

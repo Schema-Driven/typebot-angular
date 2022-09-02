@@ -31,6 +31,7 @@ export class EditorComponent extends StructuredBlocks {
   instance: any;
   panZoomController: any;
   scaleLevel: number = 1;
+  editedGroupName: number = -1;
   deg: number = 3;
   edges: Edge[] = [];
   groupBlockIdsMapping: any = {};
@@ -560,7 +561,13 @@ export class EditorComponent extends StructuredBlocks {
     })
   }
 
-  groupNameField(b:any) {
-    document.getElementById("firstInput")?.removeAttribute("hidden");
+  onGroupNameClick(index: number) {
+    if (index !== 0) {
+      this.editedGroupName = index;
+    }
+  }
+
+  onGroupNameChange(group: any, e: any) {
+    group.name = e.target.value;
   }
 }
