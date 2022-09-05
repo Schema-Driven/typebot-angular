@@ -24,10 +24,11 @@ import { TextareaFieldComponent } from './editor-fields/textarea-field/textarea-
 import { EditorSidebarComponent } from './editor-sidebar/editor-sidebar.component';
 import { BlockComponent } from './block/block.component';
 import { TabsFieldComponent } from './editor-fields/tabs-field/tabs-field.component';
+import { VideoFieldComponent } from './editor-fields/video-field/video-field.component';
 
 @NgModule({
   imports: [CommonModule, HeaderBarModule, EditorRoutingModule, DragDropModule, NgbPopoverModule, CKEditorModule],
-  declarations: [ListItemComponent, DropTestComponent, EditorV1Component, EditorComponent, EditorFieldsComponent, TextFieldComponent, RadioFieldComponent, NumberFieldComponent, DateFieldComponent, DropdownFieldComponent, TextareaFieldComponent, EditorSidebarComponent, BlockComponent, TabsFieldComponent],
+  declarations: [ListItemComponent, DropTestComponent, EditorV1Component, EditorComponent, EditorFieldsComponent, TextFieldComponent, RadioFieldComponent, NumberFieldComponent, DateFieldComponent, DropdownFieldComponent, TextareaFieldComponent, EditorSidebarComponent, BlockComponent, TabsFieldComponent, VideoFieldComponent],
   providers: [EditorService]
 })
 export class EditorModule {}
