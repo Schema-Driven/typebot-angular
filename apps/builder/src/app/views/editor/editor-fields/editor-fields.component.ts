@@ -52,6 +52,9 @@ export class EditorFieldsComponent implements OnInit {
         case 'image':
           this.setImageBubbleFields(this.block.options);
         break;
+        case 'video':
+          this.setVideoBubbleFields(this.block.options);
+        break;
       }
     }
   }
@@ -65,6 +68,12 @@ export class EditorFieldsComponent implements OnInit {
   setImageBubbleFields(content: any) {
     this.fields = [
       { key: 'image', parentKey: '', value: content, type: 'image' }
+    ]
+  }
+
+  setVideoBubbleFields(content: any) {
+    this.fields = [
+      { key: 'video', parentKey: '', value: content, type: 'video' }
     ]
   }
 
