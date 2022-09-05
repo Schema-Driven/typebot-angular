@@ -20,6 +20,8 @@
     "@angular/platform-browser": "~13.3.0",
     "@angular/platform-browser-dynamic": "~13.3.0",
     "@angular/router": "~13.3.0",
+    "@ckeditor/ckeditor5-angular": "^4.0.0",
+    "@ckeditor/ckeditor5-build-classic": "^35.1.0",
     "@jsplumb/browser-ui": "^5.10.9",
     "@jsplumb/common": "^5.10.9",
     "@jsplumb/connector-flowchart": "^5.10.9",

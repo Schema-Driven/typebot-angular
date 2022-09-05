@@ -1,0 +1,20 @@
+<div *ngFor="let field of fields; let i = index" [ngSwitch]="field.type">
+  <app-radio-field *ngSwitchCase="'radio'" [data]="field"></app-radio-field>
+  <app-textarea-field  *ngSwitchCase="'textarea'" [data]="field"></app-textarea-field>
+  <app-text-field  *ngSwitchCase="'text_input'" [data]="field"></app-text-field>
+  <app-number-field *ngSwitchCase="'number_input'" [data]="field"></app-number-field>
+  <app-date-field *ngSwitchCase="'date_input'" [data]="field"></app-date-field>
+  <app-dropdown-field *ngSwitchCase="'dropdown'" [data]="field"></app-dropdown-field>
+  <app-tabs-field *ngSwitchCase="'image'" [data]="field"></app-tabs-field>
+</div>
+
+<!-- <div class="save-answer">
+  <label for="save-answer" class="block mb-1 text-base font-medium text-gray-700 dark:text-gray-300">
+    Save answer in a variable:</label>
+  <div class="flex items-center">
+    <input type="text" id="save-answer" class="block w-full h-10 p-2 text-sm text-gray-700 border border-gray-300 rounded-lg bg-gray-50
+      placeholder:text-gray-700 placeholder:font-medium placeholder:text-base
+      focus:outline-[#7ea6ff] focus:shadow-lg dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
+      dark:text-white " placeholder="Select a variable" required>
+  </div>
+</div> -->

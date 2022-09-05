@@ -1,0 +1,23 @@
+::ng-deep .text-editor-field .ck.ck-toolbar.ck-toolbar_grouping {
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 1px solid #e7e7e7;
+}
+::ng-deep .text-editor-field .ck-blurred.ck.ck-content.ck-editor__editable.ck-rounded-corners.ck-editor__editable_inline {
+    border: none;
+}
+::ng-deep .text-editor-field .ck.ck-content.ck-editor__editable.ck-rounded-corners.ck-editor__editable_inline.ck-focused{
+  border: none;
+  box-shadow: none;
+}
+::ng-deep .text-editor-field .ck.ck-button.ck-on, ::ng-deep .text-editor-field a.ck.ck-button.ck-on{
+    color: #0042da;
+    background: transparent;
+}
+::ng-deep .ck.ck-balloon-panel.ck-balloon-panel_arrow_n.ck-balloon-panel_visible.ck-balloon-panel_with-arrow{
+  z-index: 9999;
+}
+::ng-deep .text-editor-field  button.ck.ck-button.ck-off{
+ color: gray;
+}
