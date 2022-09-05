@@ -8,18 +8,18 @@
 <ng-template #blockRender>
   <!-- Text Rendering -->
   <div *ngIf="block.type === 'text'">
-    <div [innerHTML]="block.content.html"></div>
+    <div *ngIf="block.content.html else clickToEdit" [innerHTML]="block.content.html"></div>
   </div>
 
   <!-- Image Rendering -->
   <div *ngIf="block.type === 'image'">
-    <img *ngIf="block.content.url" [src]="block.content.url" alt="Group Image" class="rounded-lg w-full h-full object-cover">
+    <img *ngIf="block.content.url else clickToEdit" [src]="block.content.url" alt="Group Image" class="rounded-lg w-full h-full object-cover">
   </div>
 
   <!-- Video Rendering -->
   <div  *ngIf="block.type === 'video'">
     <iframe
-      *ngIf="block.content.id"
+      *ngIf="block.content.id else clickToEdit"
       [src]="block.content.id | safe"
       class="object-cover rounded-lg"
       allowfullscreen
@@ -30,7 +30,7 @@
 
   <!-- Embed Rendering -->
   <div *ngIf="block.type === 'embed'">
-    <p *ngIf="block.content.url" class="mb-0 text-gray-400 text-base">Show embed</p>
+    <p *ngIf="block.content.url else clickToEdit" class="mb-0 text-gray-400 text-base">Show embed</p>
   </div>
 
   <!-- Simple Inputs -->
@@ -74,4 +74,8 @@
       </div>
     </div>
   </div>
+</ng-template>
+
+<ng-template #clickToEdit>
+  <p class="mb-0 text-gray-400 text-base">Click to edit...</p>
 </ng-template>

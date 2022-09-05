@@ -34,7 +34,7 @@ export const structuredBlocks: GroupStructuredBlock[] = [
     blocks: [
       {
         id: uuid(),
-        content: {html: "<div></div>", plainText:""},
+        content: {html: "", plainText:""},
         type: 'text',
       },
       {
