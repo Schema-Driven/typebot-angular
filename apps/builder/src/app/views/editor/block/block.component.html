@@ -1,15 +1,50 @@
 <div class="py-3 px-2 my-2 text-xs border rounded-lg single-block-placeholder bg-gray-50">
   <div class="flex  w-full gap-2 px-2 text-sm">
     <img [src]="prefilledData[block.type].svg" class="w-4 h-4 mt-1" />
-    <p *ngIf="block.type === 'start'"
-      class="mb-0 text-black text-base {{block.options?.isLong ? 'is-long' : ''}}">
-      {{block.options?.labels?.placeholder ? block.options?.labels?.placeholder : prefilledData[block.type].label}}
-    </p>
-    <p *ngIf="block.type != 'choice_input' && block.type !='start'"
-      class="mb-0 text-gray-400 text-base {{block.options?.isLong ? 'is-long' : ''}}">
-      {{block.options?.labels?.placeholder ? block.options?.labels?.placeholder : prefilledData[block.type].label}}
-    </p>
-    <div class="w-full" *ngIf="block.type === 'choice_input'">
+    <p *ngIf="block.type === 'start' else blockRender" class="mb-0 text-black text-base">{{ prefilledData[block.type].label }}</p>
+  </div>
+</div>
+
+<ng-template #blockRender>
+  <!-- Text Rendering -->
+  <div *ngIf="block.type === 'text'">
+
+  </div>
+
+  <!-- Image Rendering -->
+  <div *ngIf="block.type === 'image'">
+
+  </div>
+
+  <!-- Video Rendering -->
+  <div *ngIf="block.type === 'video'">
+
+  </div>
+
+  <!-- Embed Rendering -->
+  <div *ngIf="block.type === 'embed'">
+
+  </div>
+
+  <!-- Simple Inputs -->
+  <p
+    *ngIf="block.type === 'text_input'
+    || block.type === 'number_input'
+    || block.type === 'email_input'
+    || block.type === 'url_input'
+    || block.type === 'date_input'
+    || block.type === 'phone_number_input'
+    || block.type === 'payment_input'
+    || block.type === 'rating_input'
+    || block.type === 'file_input'"
+    class="mb-0 text-gray-400 text-base {{block.options?.isLong ? 'is-long' : ''}}"
+  >
+    {{block.options?.labels?.placeholder ? block.options?.labels?.placeholder : prefilledData[block.type].label}}
+  </p>
+
+  <!-- Muliple Choice Input -->
+  <div *ngIf="block.type === 'choice_input'">
+    <div class="w-full">
       <div *ngFor="let item of block.items ; let itemIndex = index" [attr.data-item-index]="itemIndex"
         [id]="item.id" class="bg-white p-2 rounded-lg shadow border w-full relative choice-input mb-3">
         <input
@@ -29,4 +64,4 @@
       </div>
     </div>
   </div>
-</div>
+</ng-template>
