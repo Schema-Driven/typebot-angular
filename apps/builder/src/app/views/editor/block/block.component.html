@@ -42,12 +42,15 @@
     || block.type === 'date_input'
     || block.type === 'phone_number_input'
     || block.type === 'payment_input'
-    || block.type === 'rating_input'
     || block.type === 'file_input'"
     class="mb-0 text-gray-400 text-base {{block.options?.isLong ? 'is-long' : ''}}"
   >
     {{block.options?.labels?.placeholder ? block.options?.labels?.placeholder : prefilledData[block.type].label}}
   </p>
+
+  <div *ngIf="block.type === 'rating_input'">
+    <p class="mb-0 text-gray-400 text-base">Rate from 0 to {{block.options.length}}</p>
+  </div>
 
   <!-- Muliple Choice Input -->
   <div *ngIf="block.type === 'choice_input'">
