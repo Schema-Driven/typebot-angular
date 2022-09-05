@@ -8,7 +8,7 @@
 <ng-template #blockRender>
   <!-- Text Rendering -->
   <div *ngIf="block.type === 'text'">
-
+    <div [innerHTML]="block.content.html"></div>
   </div>
 
   <!-- Image Rendering -->
