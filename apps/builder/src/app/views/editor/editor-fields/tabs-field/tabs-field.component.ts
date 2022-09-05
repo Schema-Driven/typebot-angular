@@ -11,9 +11,7 @@ export class TabsFieldComponent implements OnInit {
 
   @Input() data: any = {};
   block: any = {};
-  isUpload = true;
-  isEmbed = false;
-  isGiph = false;
+  isTab = 1;
 
   constructor(private editorService: EditorService) { }
 
