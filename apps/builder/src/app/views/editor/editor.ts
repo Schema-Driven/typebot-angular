@@ -39,17 +39,19 @@ export const structuredBlocks: GroupStructuredBlock[] = [
       },
       {
         id: uuid(),
-        content: {},
+        content: {
+          url: ""
+        },
         type: 'image',
       },
       {
         id: uuid(),
-        content: {},
+        content: {id:"", type:"", url: ""},
         type: 'video'
       },
       {
         id: uuid(),
-        content: {height: 400},
+        content: {url:'', height: 400},
         type: 'embed'
       }
     ],

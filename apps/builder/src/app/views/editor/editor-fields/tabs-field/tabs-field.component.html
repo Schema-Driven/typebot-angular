@@ -15,10 +15,16 @@
 
 <div class="" *ngIf="isTab === 2">
   <div class="flex items-center w-full">
-    <input type="text" placeholder="Paste the image link..." class="block w-full h-10 p-2 text-sm text-gray-700 border border-gray-300 rounded-lg bg-gray-50
+    <input
+      [value]="data.value"
+      (blur)="eventHandler($event)"
+      type="text"
+      placeholder="Paste the image link..."
+      class="block w-full h-10 p-2 text-sm text-gray-700 border border-gray-300 rounded-lg bg-gray-50
       placeholder:text-gray-700 placeholder:font-normal placeholder:text-base
       focus:outline-[#7ea6ff] focus:shadow-lg dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
-      dark:text-white ">
+      dark:text-white "
+    />
   </div>
 </div>
 

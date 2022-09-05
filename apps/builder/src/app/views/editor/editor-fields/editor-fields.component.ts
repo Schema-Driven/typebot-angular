@@ -27,6 +27,15 @@ export class EditorFieldsComponent implements OnInit {
         case 'text':
           this.setTextField(this.block.content);
         break;
+        case 'image':
+          this.setImageBubbleField(this.block.content);
+        break;
+        case 'video':
+          this.setVideoBubbleField(this.block.content);
+        break;
+        case 'embed':
+          this.setEmbedBubbleField(this.block.content);
+        break;
         case 'text_input':
           this.setTextInputFields(this.block.options);
         break;
@@ -49,12 +58,6 @@ export class EditorFieldsComponent implements OnInit {
         case 'choice_input':
           this.setChoiceInputFields(this.block.options);
         break;
-        case 'image':
-          this.setImageBubbleFields(this.block.options);
-        break;
-        case 'video':
-          this.setVideoBubbleFields(this.block.options);
-        break;
       }
     }
   }
@@ -65,15 +68,22 @@ export class EditorFieldsComponent implements OnInit {
     ]
   }
 
-  setImageBubbleFields(content: any) {
+  setImageBubbleField(content: any) {
     this.fields = [
-      { key: 'image', parentKey: '', value: content, type: 'image' }
+      { key: 'url', parentKey: '', value: content.url, type: 'image' }
     ]
   }
 
-  setVideoBubbleFields(content: any) {
+  setVideoBubbleField(content: any) {
     this.fields = [
-      { key: 'video', parentKey: '', value: content, type: 'video' }
+      { key: 'url', parentKey: '', value: content.url, type: 'video' }
+    ]
+  }
+
+  setEmbedBubbleField(content: any) {
+    this.fields = [
+      { key: 'url', parentKey: '', value: content.url, height:content.height , type: 'embed' },
+      // { key: 'height', parentKey: '', value: content.height, type: 'embed' }
     ]
   }
 

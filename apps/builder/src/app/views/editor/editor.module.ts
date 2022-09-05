@@ -25,10 +25,12 @@ import { EditorSidebarComponent } from './editor-sidebar/editor-sidebar.componen
 import { BlockComponent } from './block/block.component';
 import { TabsFieldComponent } from './editor-fields/tabs-field/tabs-field.component';
 import { VideoFieldComponent } from './editor-fields/video-field/video-field.component';
+import { EmbedFieldComponent } from './editor-fields/embed-field/embed-field.component';
+import { SafePipe } from '../../pipes/safe.pipe';
 
 @NgModule({
   imports: [CommonModule, HeaderBarModule, EditorRoutingModule, DragDropModule, NgbPopoverModule, CKEditorModule],
-  declarations: [ListItemComponent, DropTestComponent, EditorV1Component, EditorComponent, EditorFieldsComponent, TextFieldComponent, RadioFieldComponent, NumberFieldComponent, DateFieldComponent, DropdownFieldComponent, TextareaFieldComponent, EditorSidebarComponent, BlockComponent, TabsFieldComponent, VideoFieldComponent],
+  declarations: [ListItemComponent, DropTestComponent, EditorV1Component, EditorComponent, EditorFieldsComponent, TextFieldComponent, RadioFieldComponent, NumberFieldComponent, DateFieldComponent, DropdownFieldComponent, TextareaFieldComponent, EditorSidebarComponent, BlockComponent, TabsFieldComponent, VideoFieldComponent, EmbedFieldComponent,SafePipe],
   providers: [EditorService]
 })
 export class EditorModule {}
