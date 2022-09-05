@@ -22,11 +22,8 @@
       *ngIf="block.content.id"
       [src]="block.content.id | safe"
       class="object-cover rounded-lg"
-      width="100%"
-      height="100%"
-      title="YouTube video player"
-      frameborder="0"
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"    allowfullscreen
+      allowfullscreen
+      style="width: 100%; height: 100%; pointer-events: none;"
     >
     </iframe>
   </div>
