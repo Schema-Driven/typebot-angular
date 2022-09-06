@@ -9,10 +9,15 @@
       <!-- <div class="drawing" #drawing> -->
 
       <div class="groups-wrapper" #wrapper>
-        <div *ngFor="let b of groupBlocks; let groupIndex = index" [id]="b.id" [attr.data-jtk-managed]="b.id"
-          [attr.data-group-index]="groupIndex" class="absolute grouper z-2"
+        <!-- [id]="b.id"
+          [attr.data-jtk-managed]="b.id" -->
+        <div
+          *ngFor="let b of groupBlocks; let groupIndex = index"
+          [attr.data-group-index]="groupIndex"
+          class="absolute grouper z-2"
           [style]="('top:'+ b.position.y+'px;left:'+ b.position.x+'px')">
           <div cdkDrag class="py-4 bg-white single-group wrap-div w-72">
+            <div class="group-connector" [id]="b.id"></div>
             <h2 class="px-4" (contextmenu)="showRightClickPopover('group', b.id, $event)">
               <span
                 (click)="onGroupNameClick(groupIndex)"
@@ -45,8 +50,6 @@
                 (contextmenu)="showRightClickPopover('block', block.id, $event)"
                 *ngFor="let block of b.blocks; let blockIndex = index"
                 class="px-4 single-block"
-                [id]="block.id"
-                [attr.data-jtk-managed]="block.id"
                 [attr.data-block-index]="blockIndex"
                 #blockOptionsPopover="ngbPopover"
                 popoverClass="input-popover"
