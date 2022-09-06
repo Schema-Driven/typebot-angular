@@ -27,10 +27,37 @@ import { TabsFieldComponent } from './editor-fields/tabs-field/tabs-field.compon
 import { VideoFieldComponent } from './editor-fields/video-field/video-field.component';
 import { EmbedFieldComponent } from './editor-fields/embed-field/embed-field.component';
 import { SafePipe } from '../../pipes/safe.pipe';
+import { CodeEditorFieldComponent } from './editor-fields/code-editor-field/code-editor-field.component';
 
 @NgModule({
-  imports: [CommonModule, HeaderBarModule, EditorRoutingModule, DragDropModule, NgbPopoverModule, CKEditorModule],
-  declarations: [ListItemComponent, DropTestComponent, EditorV1Component, EditorComponent, EditorFieldsComponent, TextFieldComponent, RadioFieldComponent, NumberFieldComponent, DateFieldComponent, DropdownFieldComponent, TextareaFieldComponent, EditorSidebarComponent, BlockComponent, TabsFieldComponent, VideoFieldComponent, EmbedFieldComponent,SafePipe],
-  providers: [EditorService]
+  imports: [
+    CommonModule,
+    HeaderBarModule,
+    EditorRoutingModule,
+    DragDropModule,
+    NgbPopoverModule,
+    CKEditorModule,
+  ],
+  declarations: [
+    ListItemComponent,
+    DropTestComponent,
+    EditorV1Component,
+    EditorComponent,
+    EditorFieldsComponent,
+    TextFieldComponent,
+    RadioFieldComponent,
+    NumberFieldComponent,
+    DateFieldComponent,
+    DropdownFieldComponent,
+    TextareaFieldComponent,
+    EditorSidebarComponent,
+    BlockComponent,
+    TabsFieldComponent,
+    VideoFieldComponent,
+    EmbedFieldComponent,
+    SafePipe,
+    CodeEditorFieldComponent,
+  ],
+  providers: [EditorService],
 })
 export class EditorModule {}
