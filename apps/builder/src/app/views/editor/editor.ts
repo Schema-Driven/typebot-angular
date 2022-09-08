@@ -158,6 +158,7 @@ export const structuredBlocks: GroupStructuredBlock[] = [
           },
           isMultipleAllowed: false,
           isRequired: true,
+          sizeLimit: 10
         },
         type: 'file_input',
       }

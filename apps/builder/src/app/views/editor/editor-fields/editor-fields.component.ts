@@ -165,11 +165,11 @@ export class EditorFieldsComponent implements OnInit {
 
   setFileInputFields(options: any) {
     this.fields = [
-      { key: 'isRequired', label: 'Required?', value: options.isRequired, type: 'radio' },
-      { key: 'isMultipleAllowed', label: 'Allow multiple files?', value: options.isMultipleAllowed, type: 'radio' },
-      { key: 'size ', label: 'Size limit (MB)', value: 10, type: 'number_input' },
-      { key: 'placeholder', label: 'Placeholder:', value: options.labels.placeholder, type: 'file_input'},
-      { key: 'button', label: 'Button Label:', value: options.labels.button, type: 'text_input'},
+      { key: 'isRequired', parentKey: '', label: 'Required?', value: options.isRequired, type: 'radio' },
+      { key: 'isMultipleAllowed', parentKey: '', label: 'Allow multiple files?', value: options.isMultipleAllowed, type: 'radio' },
+      { key: 'sizeLimit', parentKey: '', label: 'Size limit (MB)', value: options.sizeLimit, type: 'number_input' },
+      { key: 'placeholder', parentKey: 'labels', label: 'Placeholder:', value: options.labels.placeholder, type: 'file_input'},
+      { key: 'button', parentKey: 'labels', label: 'Button Label:', value: options.labels.button, type: 'text_input'},
     ]
   }
 
