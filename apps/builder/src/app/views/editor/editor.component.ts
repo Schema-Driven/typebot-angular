@@ -84,14 +84,14 @@ export class EditorComponent extends Editor {
       container: this.wrapper.nativeElement,
     });
 
-    // this.instance.addTargetSelector('.single-group, .single-block', {
-    //   ...this.targetEndpoint,
-    //   ...{
-    //     anchor: 'ContinuousLeft',
-    //     scope: 'target_scope',
-    //     redrop: 'any',
-    //   },
-    // });
+    this.instance.addTargetSelector('.single-group', {
+      ...this.targetEndpoint,
+      ...{
+        anchor: 'ContinuousLeft',
+        scope: 'target_scope',
+        redrop: 'any',
+      },
+    });
 
     this.bindEvents();
 
@@ -262,51 +262,23 @@ export class EditorComponent extends Editor {
   _addEndPoint(id: string, sourceAnchors: Array<AnchorSpec>, type: string = 'block') {
     let sourcePoint = type === 'block' ? this.sourceEndpoint : this.groupSourceEndpoint;
 
-    // if (type === 'group') {
-    //   this.instance.addGroup({
-    //     el: document.getElementById(id),
-    //     id: id,
-    //     droppable: false,
-    //     // dropOverride:true
-    //   });
-    // }
-    const sourceUUID = id + sourceAnchors[0];
-
     if (type === 'group') {
-      this.instance.addEndpoint(document.getElementById(id), {
-        endpoint: {
-          type: 'Dot',
-          options: { radius: 7, cssClass: 'endpointOnTarget1 grouper' },
-        },
-        paintStyle: {
-          fill: 'red',
-        },
-        maxConnections: 2,
-        source: false,
-        target: true,
-        uniqueEndpoint: true,
-        deleteEndpointsOnDetach: false,
-      }, {
-        anchor: ['Left'],
-        uuid: sourceUUID,
-      });
-    } else {
-      this.instance.addEndpoint(document.getElementById(id), sourcePoint, {
-        anchor: sourceAnchors[0],
-        uuid: sourceUUID,
+      this.instance.addGroup({
+        el: document.getElementById(id),
+        id: id,
+        droppable: false,
+        // dropOverride:true
       });
     }
 
-    console.log("sourcePoint", sourcePoint);
-
     // const element = this.instance.getManagedElement(id);
-    // for (let i = 0; i < sourceAnchors.length; i++) {
-    //   const sourceUUID = id + sourceAnchors[i];
-    //   this.instance.addEndpoint(document.getElementById(id), sourcePoint, {
-    //     anchor: sourceAnchors[i],
-    //     uuid: sourceUUID,
-    //   });
-    // }
+    for (let i = 0; i < sourceAnchors.length; i++) {
+      const sourceUUID = id + sourceAnchors[i];
+      this.instance.addEndpoint(document.getElementById(id), sourcePoint, {
+        anchor: sourceAnchors[i],
+        uuid: sourceUUID,
+      });
+    }
   }
 
   _removeEndPoint(id: string) {
