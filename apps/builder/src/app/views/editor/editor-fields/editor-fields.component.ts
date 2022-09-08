@@ -58,6 +58,9 @@ export class EditorFieldsComponent implements OnInit {
         case 'choice_input':
           this.setChoiceInputFields(this.block.options);
         break;
+        case 'file_input':
+          this.setFileInputFields(this.block.options);
+        break;
       }
     }
   }
@@ -157,6 +160,16 @@ export class EditorFieldsComponent implements OnInit {
     this.fields = [
       { key: 'isMultipleChoice', label: 'Multiple choice?', value: options.isMultipleChoice, type: 'radio' },
       { key: 'button', label: 'Button Label:', value: options.buttonLabel, type: 'text_input' ,  dependent: { fieldName: 'isMultipleChoice', fieldValue: true }},
+    ]
+  }
+
+  setFileInputFields(options: any) {
+    this.fields = [
+      { key: 'isRequired', parentKey: '', label: 'Required?', value: options.isRequired, type: 'radio' },
+      { key: 'isMultipleAllowed', parentKey: '', label: 'Allow multiple files?', value: options.isMultipleAllowed, type: 'radio' },
+      { key: 'sizeLimit', parentKey: '', label: 'Size limit (MB)', value: options.sizeLimit, type: 'number_input' },
+      { key: 'placeholder', parentKey: 'labels', label: 'Placeholder:', value: options.labels.placeholder, type: 'file_input'},
+      { key: 'button', parentKey: 'labels', label: 'Button Label:', value: options.labels.button, type: 'text_input'},
     ]
   }
 

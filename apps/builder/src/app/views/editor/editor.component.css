@@ -194,3 +194,6 @@ svg.endpointOnTarget.grouper.jtk-endpoint.jtk-endpoint-connected {
   overflow-y: auto;
 }
 
+::ng-deep .file_input-field .input-field {
+    display: block;
+}

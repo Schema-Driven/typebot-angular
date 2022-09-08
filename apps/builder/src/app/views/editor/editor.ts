@@ -158,6 +158,7 @@ export const structuredBlocks: GroupStructuredBlock[] = [
           },
           isMultipleAllowed: false,
           isRequired: true,
+          sizeLimit: 10
         },
         type: 'file_input',
       }
@@ -277,11 +278,11 @@ export const prefilledData : any = {
   },
   rating_input: {
     label: 'Rating',
-    svg: 'assets/svgs/input-payment.svg'
+    svg: 'assets/svgs/star.svg'
   },
   file_input: {
     label: 'File',
-    svg: 'assets/svgs/input-payment.svg'
+    svg: 'assets/svgs/file.svg'
   },
   set_variable: {
     label: 'Set Variable',
