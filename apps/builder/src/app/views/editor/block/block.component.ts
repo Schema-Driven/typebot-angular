@@ -39,6 +39,7 @@ export class BlockComponent implements OnInit {
     event.stopPropagation();
     block.items.push({
       id: uuid(),
+      blockId: block.id,
       content: "Click to edit",
       type: 0
     })

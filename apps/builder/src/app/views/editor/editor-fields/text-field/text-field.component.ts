@@ -28,7 +28,7 @@ export class TextFieldComponent implements OnInit {
     if (this.data.parentKey) {
       this.block.options[this.data.parentKey][this.data.key] = event.target.value;
     } else {
-      this.block.options.labels[this.data.key] = event.target.value;
+      this.block.options[this.data.key] = event.target.value;
     }
 
     this.editorService.setBlock(this.block);
