@@ -7,15 +7,8 @@ import {
   transferArrayItem,
   copyArrayItem,
 } from '@angular/cdk/drag-drop';
-import {
-  BrowserJsPlumbInstance,
-  newInstance,
-  EVENT_CLICK,
-  EVENT_ELEMENT_CLICK,
-} from '@jsplumb/browser-ui';
-import { AnchorLocations, AnchorSpec, AnchorOptions } from '@jsplumb/common';
 import Panzoom from '@panzoom/panzoom';
-import { GroupBlock, Block, Edge, TypeBot } from './editor.interfaces';
+import { Block, Edge, TypeBot } from './editor.interfaces';
 import { Editor } from './editor';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { EditorService } from '../../services/editor.service';
@@ -28,40 +21,11 @@ import { EditorService } from '../../services/editor.service';
 export class EditorComponent extends Editor {
   @ViewChild('wrapper', { static: true })
   wrapper!: ElementRef;
-  instance: any;
   panZoomController: any;
   scaleLevel: number = 1;
   editedGroupName: number = -1;
   deg: number = 3;
   edges: Edge[] = [];
-  groupBlockIdsMapping: any = {};
-  rightClickPopovers: any = {
-    'connector': [],
-    'group': [],
-    'block': [],
-    'itemField': []
-  };
-
-  firstGroupId = this.uuid();
-  firstBlockId = this.uuid();
-  groupBlocks: GroupBlock[] = [
-    {
-      id: this.firstGroupId,
-      name: 'Start',
-      position: {
-        x: 420,
-        y: 120,
-      },
-      draggable: true,
-      blocks: [
-        {
-          id: this.firstBlockId,
-          groupId: this.firstGroupId,
-          type: 'start',
-        },
-      ],
-    },
-  ];
 
   typebot: TypeBot = {
     name: 'My Typebot',
@@ -71,27 +35,13 @@ export class EditorComponent extends Editor {
 
   constructor(
     private modalService: NgbModal,
-    private editorService: EditorService
+    protected editorService: EditorService
     ) {
-    super();
+    super(editorService);
   }
 
   ngOnInit() {
-    this.instance = newInstance({
-      dragOptions: this.dragOptions,
-      connectionOverlays: this.connectionOverlays,
-      connector: this.connectorProp,
-      container: this.wrapper.nativeElement,
-    });
-
-    this.instance.addTargetSelector('.single-group', {
-      ...this.targetEndpoint,
-      ...{
-        anchor: 'ContinuousLeft',
-        scope: 'target_scope',
-        redrop: 'any',
-      },
-    });
+    this.createInstance(this.wrapper);
 
     this.bindEvents();
 
@@ -181,30 +131,8 @@ export class EditorComponent extends Editor {
       );
       this.removeEmptyGroupBlocks(event.previousContainer.data);
     }
-  }
 
-  rearrangeEndPoints(data: any, index: number, slice: boolean = false) {
-    this._removeEndPoint(data[index].id);
-    if (slice === true) {
-      data.splice(index, 1);
-    }
-
-    if (data.length) {
-      let groupId = data[0].groupId;
-      this.groupBlocks.forEach((group) => {
-        if (group.id === groupId) {
-          group.blocks.forEach((block) => {
-            this._removeEndPoint(block.id);
-          });
-          // Add endpoint to last block
-          this.manageNode(
-            group.blocks[group.blocks.length - 1].id,
-            ['Right'],
-            'block'
-          );
-        }
-      });
-    }
+    // this.editorService.setGroupBlocks(this.groupBlocks);
   }
 
   addGroupOrBlock(data: any, event: any, type: string) {
@@ -252,41 +180,6 @@ export class EditorComponent extends Editor {
     this.groupBlockIdsMapping[blockId] = groupId;
   }
 
-  manageNode(id: string, location: any, type: string) {
-    setTimeout(() => {
-      // this.instance.manage(document.getElementById(id));
-      this._addEndPoint(id, location, type);
-    });
-  }
-
-  _addEndPoint(id: string, sourceAnchors: Array<AnchorSpec>, type: string = 'block') {
-    let sourcePoint = type === 'block' ? this.sourceEndpoint : this.groupSourceEndpoint;
-
-    if (type === 'group') {
-      this.instance.addGroup({
-        el: document.getElementById(id),
-        id: id,
-        droppable: false,
-        // dropOverride:true
-      });
-    }
-
-    // const element = this.instance.getManagedElement(id);
-    for (let i = 0; i < sourceAnchors.length; i++) {
-      const sourceUUID = id + sourceAnchors[i];
-      this.instance.addEndpoint(document.getElementById(id), sourcePoint, {
-        anchor: sourceAnchors[i],
-        uuid: sourceUUID,
-      });
-    }
-  }
-
-  _removeEndPoint(id: string) {
-    this.instance.manage(document.getElementById(id));
-    const element = this.instance.getManagedElement(id);
-    this.instance.removeAllEndpoints(document.getElementById(id));
-  }
-
   removeEmptyGroupBlocks(data: any) {
     if (data.length == 0) {
       let endpointId: any;
@@ -315,29 +208,6 @@ export class EditorComponent extends Editor {
     event.source._dragRef._initialTransform = `rotate(${this.deg}deg)`;
   }
 
-  printJson() {
-    this.setEdgesObject();
-    console.log(this.typebot);
-  }
-
-  setEdgesObject() {
-    this.edges = [];
-    let connections = this.instance.getConnections({
-      scope: 'jsplumb_defaultscope',
-    });
-    connections.forEach((con: any) => {
-      this.edges.push({
-        id: this.uuid(),
-        from: {
-          blockId: con.sourceId,
-          groupId: this.groupBlockIdsMapping[con.sourceId],
-        },
-        to: { groupId: con.targetId },
-      });
-    });
-    this.typebot.edges = this.edges;
-  }
-
   zoomHandler(type: string) {
     // check maximum and minimum level of zoom
     if (type === 'increase' && this.scaleLevel <= 1.2) {
@@ -349,120 +219,6 @@ export class EditorComponent extends Editor {
     this.wrapper.nativeElement.style.transform = 'scale(' + this.scaleLevel + ')';
     this.instance.setZoom(this.scaleLevel);
     // this.instance.repaint();
-  }
-
-  bindEvents() {
-    this.instance.bind('connection', (info: any, e: any) => {
-      console.log('info.connection', info);
-      console.log('connector', info.connection.connector);
-
-      this.instance.setAttribute(
-        info.connection.connector.canvas,
-        'connector-source-id',
-        info.sourceId
-      );
-      this.instance.setAttribute(
-        info.connection.connector.canvas,
-        'connector-target-id',
-        info.targetId
-      );
-
-      this.instance.on(info.connection.connector.canvas, 'click', (e: any) => {
-        let connector = e.target.closest('.jtk-connector');
-        this.instance.addClass(connector, 'selected');
-        this.instance.addClass(
-          document.getElementById(
-            this.groupBlockIdsMapping[
-              connector.getAttribute('connector-source-id')
-            ]
-          ),
-          'selected'
-        );
-        this.instance.addClass(
-          document.getElementById(
-            connector.getAttribute('connector-target-id')
-          ),
-          'selected'
-        );
-      });
-
-      this.instance.on(info.connection.connector.canvas, 'contextmenu', (e: any) => {
-          e.preventDefault();
-          let connector = e.target.closest('.jtk-connector');
-          let type = 'connector';
-          let id = type + '-' + connector.getAttribute('connector-source-id');
-
-          if (document.getElementById(id)) {
-            // if any coonector popover found then delete it first
-            let index = document.getElementById(id)?.getAttribute('data-popover-index');
-            this.rightClickPopovers[type].splice(index, 1);
-          }
-
-          this.rightClickPopovers[type].push({
-            position: { x: e.clientX, y: e.clientY },
-            type: type,
-            id: id,
-          });
-          return false;
-        }
-      );
-    });
-
-    window.addEventListener('click', (e: any) => {
-
-      if (e.target.nodeName !== 'path') {
-        this.removeSelectedBorder();
-      }
-
-      this.removeCloneDeletePopup(this.wrapper.nativeElement.children, e);
-    });
-
-    this.instance.bind('beforeDrop', (ci: any) => {
-      // Before new connection is created
-      this.deleteConnection(ci.sourceId);
-      this.removeSelectedBorder();
-      return true; // true for establishing new connection
-    });
-  }
-
-  deleteConnection(id: string) {
-    let con = this.instance.getConnections({ source: id }); // Get all source el. connection(s) except the new connection which is being established
-    if (con.length != 0 && document.getElementById(id)) {
-      for (var i = 0; i < con.length; i++) {
-        this.instance.deleteConnection(con[i]);
-      }
-    }
-  }
-
-  removeSelectedBorder() {
-    const selectedElem = document.querySelectorAll('.selected');
-    selectedElem.forEach((e) => {
-      e.classList.remove('selected');
-    });
-  }
-
-  removeCloneDeletePopup(elements: any, clickElement: any) {
-    let isAllowToRemove = true;
-    for (const el of elements) {
-      if (!el.classList.contains('recieveDragedBox')) {
-        if (el.contains(clickElement.target)) {
-          isAllowToRemove = false;
-        }
-      }
-    }
-
-    if (isAllowToRemove) {
-      this.resetRightClickPopovers();
-    }
-  }
-
-  resetRightClickPopovers() {
-    this.rightClickPopovers = {
-      'connector': [],
-      'group': [],
-      'block': [],
-      'itemField': []
-    };
   }
 
   showRightClickPopover(type: string, id: string, e:any) {
@@ -549,5 +305,33 @@ export class EditorComponent extends Editor {
 
   onDragRecieverContainer() {
     this.editedGroupName = -1;
+  }
+
+  addEndpointToItem(id: string) {
+    console.log("addEndpointToItem", id)
+    this.manageNode(id, ['Right'], 'block');
+  }
+
+  printJson() {
+    this.setEdgesObject();
+    console.log(this.typebot);
+  }
+
+  setEdgesObject() {
+    this.edges = [];
+    let connections = this.instance.getConnections({
+      scope: 'jsplumb_defaultscope',
+    });
+    connections.forEach((con: any) => {
+      this.edges.push({
+        id: this.uuid(),
+        from: {
+          blockId: con.sourceId,
+          groupId: this.groupBlockIdsMapping[con.sourceId],
+        },
+        to: { groupId: con.targetId },
+      });
+    });
+    this.typebot.edges = this.edges;
   }
 }

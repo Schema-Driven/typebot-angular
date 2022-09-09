@@ -2,7 +2,6 @@
   <header-bar></header-bar>
 
   <div class="w-full h-full wrapper-inner" cdkDropListGroup>
-
     <app-editor-sidebar></app-editor-sidebar>
 
     <div class="rightSide">
@@ -63,7 +62,7 @@
                 container="body"
                 (click)="showBlockOptionsPopover(blockOptionsPopover, block, groupIndex, blockIndex)">
                 <div class="draggable-custom-placeholder" *cdkDragPlaceholder></div>
-                <app-block [block]="block"></app-block>
+                <app-block [block]="block" (addEndpointToItem)="addEndpointToItem($event)"></app-block>
               </div>
             </div>
           </div>
@@ -141,6 +140,7 @@
     </div>
     <!-- ZOOM BUTTONS - [begins] -->
     <div class="absolute z-20 top-6 right-6 transform-position">
+      <div class="mt-2 z-5" (click)="printJson()">Print JSON</div>
       <div class="custom-shadow-icon">
         <a href="#" class="bg-white hover:bg-gray-200 rounded-md p-0.5 w-8 h-8 flex items-center justify-center">
           <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"

@@ -9,8 +9,6 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
 /* TODO: remove it later */
 import { DropTestComponent } from './drop-test/drop-test.component';
-import { ListItemComponent } from './v1/list-item/list-item.component';
-import { EditorV1Component } from './v1/editor.component';
 /* TODO: remove it later */
 
 import { EditorFieldsComponent } from './editor-fields/editor-fields.component';
@@ -39,9 +37,7 @@ import { CodeEditorFieldComponent } from './editor-fields/code-editor-field/code
     CKEditorModule,
   ],
   declarations: [
-    ListItemComponent,
     DropTestComponent,
-    EditorV1Component,
     EditorComponent,
     EditorFieldsComponent,
     TextFieldComponent,
