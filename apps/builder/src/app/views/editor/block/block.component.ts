@@ -34,7 +34,7 @@ export class BlockComponent implements OnInit {
       content: "Click to edit",
       type: 0
     });
-    this.addEndpointToItem.emit(itemId)
+    this.addEndpointToItem.emit('iteme-' + itemId)
   }
 
   onItemInput(index: number, event: any) {

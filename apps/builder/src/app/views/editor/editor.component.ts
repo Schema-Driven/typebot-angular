@@ -74,7 +74,7 @@ export class EditorComponent extends Editor {
     // this.instance.repaintEverything();
 
     this.manageNode(this.firstGroupId, ['Right'], 'group');
-    this.manageNode(this.firstBlockId, ['Right'], 'block');
+    this.manageNode('be-' + this.firstBlockId, ['Right'], 'block');
     this.groupBlockIdsMapping[this.firstBlockId] = this.firstGroupId;
   }
 
@@ -160,7 +160,7 @@ export class EditorComponent extends Editor {
 
       setTimeout(() => {
         this.manageNode(groupId, ['Right'], 'group');
-        this.manageNode(blockId, ['Right'], 'block');
+        this.manageNode('be-' + blockId, ['Right'], 'block');
       }, 100);
     } else {
       // Add Block to Group
@@ -169,8 +169,8 @@ export class EditorComponent extends Editor {
           // group.blocks.push(block);
           let lastIndex = group.blocks.length;
           if (lastIndex === event.currentIndex) {
-            this._removeEndPoint(group.blocks[lastIndex - 1].id);
-            this.manageNode(blockId, ['Right'], 'block');
+            this._removeEndPoint('be-' + group.blocks[lastIndex - 1].id);
+            this.manageNode('be-' + blockId, ['Right'], 'block');
           }
           group.blocks.splice(event.currentIndex, 0, block);
         }

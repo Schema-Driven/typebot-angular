@@ -481,14 +481,12 @@ export class Editor {
       // const element = this.instance.getManagedElement(id);
       for (let i = 0; i < sourceAnchors.length; i++) {
         const sourceUUID = id + sourceAnchors[i];
-        this.instance.addEndpoint(document.getElementById('block-' + id), sourcePoint, {
+        this.instance.addEndpoint(document.getElementById(id), sourcePoint, {
           anchor: sourceAnchors[i],
           uuid: sourceUUID,
         });
       }
     }
-
-
 
     if (id === this.firstBlockId) {
       this.instance.toggleDraggable(document.getElementById(id))
@@ -496,7 +494,7 @@ export class Editor {
   }
 
   rearrangeEndPoints(data: any, index: number, slice: boolean = false) {
-    this._removeEndPoint(data[index].id);
+    this._removeEndPoint('be-' + data[index].id);
     if (slice === true) {
       data.splice(index, 1);
     }
@@ -506,11 +504,11 @@ export class Editor {
       this.groupBlocks.forEach((group) => {
         if (group.id === groupId) {
           group.blocks.forEach((block) => {
-            this._removeEndPoint(block.id);
+            this._removeEndPoint('be-' + block.id);
           });
           // Add endpoint to last block
           this.manageNode(
-            group.blocks[group.blocks.length - 1].id,
+            'be-' + group.blocks[group.blocks.length - 1].id,
             ['Right'],
             'block'
           );
