@@ -169,6 +169,7 @@ export class EditorComponent extends Editor {
           // group.blocks.push(block);
           let lastIndex = group.blocks.length;
           if (lastIndex === event.currentIndex) {
+            this._removeEndPoint(group.blocks[lastIndex - 1].id);
             this._removeEndPoint('be-' + group.blocks[lastIndex - 1].id);
             this.manageNode('be-' + blockId, ['Right'], 'block');
           }

@@ -494,7 +494,7 @@ export class Editor {
   }
 
   rearrangeEndPoints(data: any, index: number, slice: boolean = false) {
-    this._removeEndPoint('be-' + data[index].id);
+    this._removeEndPoint(data[index].id);
     if (slice === true) {
       data.splice(index, 1);
     }
@@ -504,6 +504,7 @@ export class Editor {
       this.groupBlocks.forEach((group) => {
         if (group.id === groupId) {
           group.blocks.forEach((block) => {
+            this._removeEndPoint(block.id);
             this._removeEndPoint('be-' + block.id);
           });
           // Add endpoint to last block
@@ -518,8 +519,8 @@ export class Editor {
   }
 
   _removeEndPoint(id: string) {
-    this.instance.manage(document.getElementById(id));
-    const element = this.instance.getManagedElement(id);
+    // this.instance.manage(document.getElementById(id));
+    // const element = this.instance.getManagedElement(id);
     this.instance.removeAllEndpoints(document.getElementById(id));
   }
 
