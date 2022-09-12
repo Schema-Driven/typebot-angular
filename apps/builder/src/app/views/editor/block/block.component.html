@@ -2,6 +2,7 @@
   <div class="flex  w-full gap-2 px-2 text-sm">
     <img [src]="prefilledData[block.type].svg" class="w-4 h-4 mt-1" />
     <p *ngIf="block.type === 'start' else blockRender" class="mb-0 text-black text-base">{{ prefilledData[block.type].label }}</p>
+    <div class="tp-endpoint" [id]="'block-' + block.id"></div>
   </div>
 </div>
 
@@ -79,6 +80,7 @@
             <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m6-6H6" />
           </svg>
         </div>
+        <div class="tp-endpoint" [id]="'item-' + item.id"></div>
       </div>
     </div>
   </div>

@@ -477,16 +477,18 @@ export class Editor {
         droppable: false,
         // dropOverride:true
       });
+    } else {
+      // const element = this.instance.getManagedElement(id);
+      for (let i = 0; i < sourceAnchors.length; i++) {
+        const sourceUUID = id + sourceAnchors[i];
+        this.instance.addEndpoint(document.getElementById('block-' + id), sourcePoint, {
+          anchor: sourceAnchors[i],
+          uuid: sourceUUID,
+        });
+      }
     }
 
-    // const element = this.instance.getManagedElement(id);
-    for (let i = 0; i < sourceAnchors.length; i++) {
-      const sourceUUID = id + sourceAnchors[i];
-      this.instance.addEndpoint(document.getElementById(id), sourcePoint, {
-        anchor: sourceAnchors[i],
-        uuid: sourceUUID,
-      });
-    }
+
 
     if (id === this.firstBlockId) {
       this.instance.toggleDraggable(document.getElementById(id))
