@@ -197,3 +197,8 @@ svg.endpointOnTarget.grouper.jtk-endpoint.jtk-endpoint-connected {
 ::ng-deep .file_input-field .input-field {
     display: block;
 }
+
+.custom-modal-main .custom-scrollbar {
+    height: 100%;
+    max-height: 100%;
+}
