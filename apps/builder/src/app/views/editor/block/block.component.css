@@ -31,7 +31,20 @@
     border-radius: 100%;
 }
 
+.choice-input {
+    position: relative;
+}
+
 .choice-input .tp-endpoint {
     right: -35px;
     top: 15px;
+}
+
+.default-button{
+  position: relative;
+}
+
+.default-button .tp-endpoint {
+    top: 15px;
+    right: -35px;
 }
