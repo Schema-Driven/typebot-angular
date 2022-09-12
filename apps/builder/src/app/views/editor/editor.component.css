@@ -62,7 +62,7 @@
 
 ::ng-deep .jtk-endpoint {
   z-index:5;
-  cursor: pointer;
+  cursor: copy;
 }
 
 ::ng-deep .source-endpoint {
