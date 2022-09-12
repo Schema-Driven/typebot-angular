@@ -30,3 +30,8 @@
     width: 15px;
     border-radius: 100%;
 }
+
+.choice-input .tp-endpoint {
+    right: -35px;
+    top: 15px;
+}

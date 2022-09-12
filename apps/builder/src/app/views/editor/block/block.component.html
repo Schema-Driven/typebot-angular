@@ -1,4 +1,4 @@
-<div class="py-3 px-2 my-2 text-xs border rounded-lg single-block-placeholder bg-gray-50">
+<div class="{{block.type + '-block'}} py-3 px-2 my-2 text-xs border rounded-lg single-block-placeholder bg-gray-50">
   <div class="flex  w-full gap-2 px-2 text-sm">
     <img [src]="prefilledData[block.type].svg" class="w-4 h-4 mt-1" />
     <p *ngIf="block.type === 'start' else blockRender" class="mb-0 text-black text-base">{{ prefilledData[block.type].label }}</p>
@@ -57,7 +57,7 @@
   </div>
 
   <!-- Muliple Choice Input -->
-  <div *ngIf="block.type === 'choice_input'">
+  <div class="w-full" *ngIf="block.type === 'choice_input'">
     <div class="w-full">
       <div
         *ngFor="let item of block.items;
@@ -81,6 +81,11 @@
           </svg>
         </div>
         <div class="tp-endpoint" [id]="'iteme-' + item.id"></div>
+      </div>
+      <div class="default-button">
+        <p class="bg-gray-50 border my-2 px-4 py-3 rounded-lg text-base text-gray-400 cursor-not-allowed">
+          Default
+        </p>
       </div>
     </div>
   </div>
