@@ -2,15 +2,20 @@
   <header-bar></header-bar>
 
   <div class="w-full h-full wrapper-inner" cdkDropListGroup>
-
     <app-editor-sidebar></app-editor-sidebar>
 
     <div class="rightSide">
       <!-- <div class="drawing" #drawing> -->
 
       <div class="groups-wrapper" #wrapper>
-        <div *ngFor="let b of groupBlocks; let groupIndex = index" [id]="b.id" [attr.data-jtk-managed]="b.id"
-          [attr.data-group-index]="groupIndex" class="absolute grouper z-2"
+        <!-- [id]="b.id"
+          [attr.data-jtk-managed]="b.id" -->
+        <div
+          *ngFor="let b of groupBlocks; let groupIndex = index"
+          [attr.data-group-index]="groupIndex"
+          [id]="b.id"
+          [attr.data-jtk-managed]="b.id"
+          class="absolute grouper z-2"
           [style]="('top:'+ b.position.y+'px;left:'+ b.position.x+'px')">
           <div cdkDrag class="py-4 bg-white single-group wrap-div w-72">
             <h2 class="px-4" (contextmenu)="showRightClickPopover('group', b.id, $event)">
@@ -57,7 +62,7 @@
                 container="body"
                 (click)="showBlockOptionsPopover(blockOptionsPopover, block, groupIndex, blockIndex)">
                 <div class="draggable-custom-placeholder" *cdkDragPlaceholder></div>
-                <app-block [block]="block"></app-block>
+                <app-block [block]="block" (addEndpointToItem)="addEndpointToItem($event)"></app-block>
               </div>
             </div>
           </div>
@@ -135,6 +140,7 @@
     </div>
     <!-- ZOOM BUTTONS - [begins] -->
     <div class="absolute z-20 top-6 right-6 transform-position">
+      <div class="mt-2 z-5" (click)="printJson()">Print JSON</div>
       <div class="custom-shadow-icon">
         <a href="#" class="bg-white hover:bg-gray-200 rounded-md p-0.5 w-8 h-8 flex items-center justify-center">
           <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"
@@ -168,10 +174,10 @@
 <!-- Start Popover body content -->
 <ng-template class="popover-body-main" #popContent let-block="block" let-groupIndex="groupIndex" let-blockIndex="blockIndex">
   <div
-    class="{{block.type === 'image' ? ' w-[36rem] ' : ' w-[20rem] overflow-y-scroll '}}p-4 bg-white border rounded-lg shadow max-h-[400px] custom-scrollbar z-50">
-    <div class="{{block.type === 'image' ? ' -right-2.5 ' : ' -right-2.5 ' }} mt-2 absolute top-0 flex items-center justify-center h-full">
+    class="w-[20rem] overflow-y-scroll p-4 bg-white border rounded-lg shadow max-h-[400px] custom-scrollbar z-50 {{block.type + '-field'}}">
+    <div class="-right-2.5 mt-2 absolute top-0 flex items-center justify-center h-full">
       <div class="inline-block w-3 overflow-hidden">
-        <div class="{{block.type === 'image' ? ' bg-white ' : ' bg-gray-100 '}} h-8 origin-top-left transform rotate-45 border-b-0 border shadow"></div>
+        <div class="{{block.type === 'image' || block.type === 'video' || block.type === 'embed'  ? ' bg-white ' : ' bg-gray-100 '}} h-8 origin-top-left transform rotate-45 border-b-0 border shadow"></div>
       </div>
     </div>
     <div (click)="open(modalContent, groupIndex, blockIndex)"

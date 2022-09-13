@@ -27,6 +27,15 @@ export class EditorFieldsComponent implements OnInit {
         case 'text':
           this.setTextField(this.block.content);
         break;
+        case 'image':
+          this.setImageBubbleField(this.block.content);
+        break;
+        case 'video':
+          this.setVideoBubbleField(this.block.content);
+        break;
+        case 'embed':
+          this.setEmbedBubbleField(this.block.content);
+        break;
         case 'text_input':
           this.setTextInputFields(this.block.options);
         break;
@@ -49,8 +58,8 @@ export class EditorFieldsComponent implements OnInit {
         case 'choice_input':
           this.setChoiceInputFields(this.block.options);
         break;
-        case 'image':
-          this.setImageBubbleFields(this.block.options);
+        case 'file_input':
+          this.setFileInputFields(this.block.options);
         break;
       }
     }
@@ -62,32 +71,45 @@ export class EditorFieldsComponent implements OnInit {
     ]
   }
 
-  setImageBubbleFields(content: any) {
+  setImageBubbleField(content: any) {
     this.fields = [
-      { key: 'image', parentKey: '', value: content, type: 'image' }
+      { key: 'url', parentKey: '', value: content.url, type: 'image' }
+    ]
+  }
+
+  setVideoBubbleField(content: any) {
+    this.fields = [
+      { key: 'url', parentKey: '', value: content.url, type: 'video' }
+    ]
+  }
+
+  setEmbedBubbleField(content: any) {
+    this.fields = [
+      { key: 'url', parentKey: '', value: content.url, height:content.height , type: 'embed' },
+      // { key: 'height', parentKey: '', value: content.height, type: 'embed' }
     ]
   }
 
   setTextInputFields(options: any) {
     this.fields = [
-      { key: 'isLong', label: 'Long Text?', value: options.isLong, type: 'radio' },
-      { key: 'placeholder', label: 'Placeholder:', value: options.labels.placeholder, type: 'text_input'},
-      { key: 'button', label: 'Button Label:', value: options.labels.button, type: 'text_input' }
+      { key: 'isLong', parentKey: '', label: 'Long Text?', value: options.isLong, type: 'radio' },
+      { key: 'placeholder', parentKey: 'labels', label: 'Placeholder:', value: options.labels.placeholder, type: 'text_input'},
+      { key: 'button', parentKey: 'labels', label: 'Button Label:', value: options.labels.button, type: 'text_input' }
     ]
   }
 
   setEmailInputFields(options: any) {
     this.fields = [
-      { key: 'placeholder', label: 'Placeholder:', value: options.labels.placeholder, type: 'text_input'},
-      { key: 'button', label: 'Button Label:', value: options.labels.button, type: 'text_input' },
-      { key: 'retryMessageContent', label: 'Retry message:', value: options.retryMessageContent, type: 'text_input' }
+      { key: 'placeholder', parentKey: 'labels', label: 'Placeholder:', value: options.labels.placeholder, type: 'text_input'},
+      { key: 'button', parentKey: 'labels', label: 'Button Label:', value: options.labels.button, type: 'text_input' },
+      { key: 'retryMessageContent', parentKey: '', label: 'Retry message:', value: options.retryMessageContent, type: 'text_input' }
     ]
   }
 
   setNumberInputFields(options: any) {
     this.fields = [
-      { key: 'placeholder', label: 'Placeholder:', value: options.labels.placeholder, type: 'text_input'},
-      { key: 'button', label: 'Button Label:', value: options.labels.button, type: 'text_input' },
+      { key: 'placeholder', parentKey: 'labels', label: 'Placeholder:', value: options.labels.placeholder, type: 'text_input'},
+      { key: 'button', parentKey: 'labels', label: 'Button Label:', value: options.labels.button, type: 'text_input' },
       { key: 'min', label: 'Min', value: options.min, type: 'number_input' },
       { key: 'max', label: 'Max', value: options.max, type: 'number_input' },
       { key: 'step', label: 'Step', value: options.step, type: 'number_input' }
@@ -127,17 +149,27 @@ export class EditorFieldsComponent implements OnInit {
 
   setPhoneInputFields(options: any) {
     this.fields = [
-      { key: 'placeholder', label: 'Placeholder:', value: options.labels.placeholder, type: 'text_input'},
-      { key: 'button', label: 'Button Label:', value: options.labels.button, type: 'text_input' },
-      { key: 'defaultCountryCode', label: 'Default country:', value: countries , type: 'dropdown' },
-      { key: 'retryMessageContent', label: 'Retry message:', value: options.retryMessageContent, type: 'text_input' }
+      { key: 'placeholder', parentKey: 'labels', label: 'Placeholder:', value: options.labels.placeholder, type: 'text_input'},
+      { key: 'button', parentKey: 'labels', label: 'Button Label:', value: options.labels.button, type: 'text_input' },
+      { key: 'defaultCountryCode', parentKey: '', label: 'Default country:', value: countries , type: 'dropdown' },
+      { key: 'retryMessageContent', parentKey: '', label: 'Retry message:', value: options.retryMessageContent, type: 'text_input' }
     ]
   }
 
   setChoiceInputFields(options: any) {
     this.fields = [
-      { key: 'isMultipleChoice', label: 'Multiple choice?', value: options.isMultipleChoice, type: 'radio' },
-      { key: 'button', label: 'Button Label:', value: options.buttonLabel, type: 'text_input' ,  dependent: { fieldName: 'isMultipleChoice', fieldValue: true }},
+      { key: 'isMultipleChoice', parentKey: '', label: 'Multiple choice?', value: options.isMultipleChoice, type: 'radio' },
+      { key: 'buttonLabel', parentKey: '', label: 'Button Label:', value: options.buttonLabel, type: 'text_input' ,  dependent: { key: 'isMultipleChoice', parentKey: '', value: true }},
+    ]
+  }
+
+  setFileInputFields(options: any) {
+    this.fields = [
+      { key: 'isRequired', parentKey: '', label: 'Required?', value: options.isRequired, type: 'radio' },
+      { key: 'isMultipleAllowed', parentKey: '', label: 'Allow multiple files?', value: options.isMultipleAllowed, type: 'radio' },
+      { key: 'sizeLimit', parentKey: '', label: 'Size limit (MB)', value: options.sizeLimit, type: 'number_input' },
+      { key: 'placeholder', parentKey: 'labels', label: 'Placeholder:', value: options.labels.placeholder, type: 'file_input'},
+      { key: 'button', parentKey: 'labels', label: 'Button Label:', value: options.labels.button, type: 'text_input'},
     ]
   }
 

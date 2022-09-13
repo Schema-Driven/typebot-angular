@@ -1,32 +1,97 @@
-<div class="py-3 px-2 my-2 text-xs border rounded-lg single-block-placeholder bg-gray-50">
+<div class="{{block.type + '-block'}} py-3 px-2 my-2 text-xs border rounded-lg single-block-placeholder bg-gray-50">
   <div class="flex  w-full gap-2 px-2 text-sm">
     <img [src]="prefilledData[block.type].svg" class="w-4 h-4 mt-1" />
-    <p *ngIf="block.type === 'start'"
-      class="mb-0 text-black text-base {{block.options?.isLong ? 'is-long' : ''}}">
-      {{block.options?.labels?.placeholder ? block.options?.labels?.placeholder : prefilledData[block.type].label}}
-    </p>
-    <p *ngIf="block.type != 'choice_input' && block.type !='start'"
-      class="mb-0 text-gray-400 text-base {{block.options?.isLong ? 'is-long' : ''}}">
-      {{block.options?.labels?.placeholder ? block.options?.labels?.placeholder : prefilledData[block.type].label}}
-    </p>
-    <div class="w-full" *ngIf="block.type === 'choice_input'">
-      <div *ngFor="let item of block.items ; let itemIndex = index" [attr.data-item-index]="itemIndex"
-        [id]="item.id" class="bg-white p-2 rounded-lg shadow border w-full relative choice-input mb-3">
+    <p *ngIf="block.type === 'start' else blockRender" class="mb-0 text-black text-base">{{ prefilledData[block.type].label }}</p>
+    <div *ngIf="block.type !== 'choice_input'" class="tp-endpoint" [id]="'be-' + block.id"></div>
+  </div>
+</div>
+
+<ng-template #blockRender>
+  <!-- Text Rendering -->
+  <div *ngIf="block.type === 'text'">
+    <div *ngIf="block.content.html else clickToEdit" [innerHTML]="block.content.html"></div>
+  </div>
+
+  <!-- Image Rendering -->
+  <div *ngIf="block.type === 'image'">
+    <img *ngIf="block.content.url else clickToEdit" [src]="block.content.url" alt="Group Image" class="rounded-lg w-full h-full object-cover">
+  </div>
+
+  <!-- Video Rendering -->
+  <div  *ngIf="block.type === 'video'">
+    <iframe
+      *ngIf="block.content.id else clickToEdit"
+      [src]="block.content.id | safe"
+      class="object-cover rounded-lg"
+      allowfullscreen
+      style="width: 100%; height: 100%; pointer-events: none;"
+    >
+    </iframe>
+  </div>
+
+  <!-- Embed Rendering -->
+  <div *ngIf="block.type === 'embed'">
+    <p *ngIf="block.content.url else clickToEdit" class="mb-0 text-gray-400 text-base">Show embed</p>
+  </div>
+
+  <!-- Simple Inputs -->
+  <p
+    *ngIf="block.type === 'text_input'
+    || block.type === 'number_input'
+    || block.type === 'email_input'
+    || block.type === 'url_input'
+    || block.type === 'date_input'
+    || block.type === 'phone_number_input'
+    || block.type === 'payment_input'"
+    class="mb-0 text-gray-400 text-base {{block.options?.isLong ? 'is-long' : ''}}"
+  >
+    {{block.options?.labels?.placeholder ? block.options?.labels?.placeholder : prefilledData[block.type].label}}
+  </p>
+
+  <div *ngIf="block.type === 'rating_input'">
+    <p class="mb-0 text-gray-400 text-base">Rate from 0 to {{block.options.length}}</p>
+  </div>
+
+   <div *ngIf="block.type === 'file_input'">
+    <p class="mb-0 text-gray-400 text-base">Collect File{{block.options.isMultipleAllowed ? 's' : ''}}</p>
+  </div>
+
+  <!-- Muliple Choice Input -->
+  <div class="w-full" *ngIf="block.type === 'choice_input'">
+    <div class="w-full">
+      <div
+        *ngFor="let item of block.items;
+        let itemIndex = index"
+        [attr.data-item-index]="itemIndex"
+        [id]="item.id"
+        class="bg-white p-2 rounded-lg shadow border w-full relative choice-input mb-3">
         <input
           (click)="$event.stopPropagation()"
+          (blur)="onItemInput(itemIndex, $event)"
           (contextmenu)="showRightClickPopover('itemField', item.id, $event)"
           class="block w-[90%] pl-2 h-8 text-sm text-gray-700 rounded-lg bg-white placeholder:text-gray-400 placeholder:text-base focus:outline-[#7ea6ff] focus:shadow-lg dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
           placeholder="{{item.content}}"
         />
-        <!-- (click)="pushMultiInput(block,$event)" -->
         <div
+          (click)="addItem($event)"
           class="shadow rounded-md bg-gray-100 text-black p-0.5 w-fit absolute left-0 right-0 -bottom-2 mx-auto add-icon z-50">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
             stroke="currentColor" class="w-4 h-4">
             <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m6-6H6" />
           </svg>
         </div>
+        <div class="tp-endpoint" [id]="'iteme-' + item.id"></div>
+      </div>
+      <div class="default-button">
+        <p class="bg-gray-50 border my-2 px-4 py-3 rounded-lg text-base text-gray-400 cursor-not-allowed">
+          Default
+        </p>
+        <div class="tp-endpoint" [id]="'be-' + block.id"></div>
       </div>
     </div>
   </div>
-</div>
+</ng-template>
+
+<ng-template #clickToEdit>
+  <p class="mb-0 text-gray-400 text-base">Click to edit...</p>
+</ng-template>

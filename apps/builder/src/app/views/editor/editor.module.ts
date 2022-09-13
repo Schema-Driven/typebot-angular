@@ -9,8 +9,6 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
 /* TODO: remove it later */
 import { DropTestComponent } from './drop-test/drop-test.component';
-import { ListItemComponent } from './v1/list-item/list-item.component';
-import { EditorV1Component } from './v1/editor.component';
 /* TODO: remove it later */
 
 import { EditorFieldsComponent } from './editor-fields/editor-fields.component';
@@ -24,10 +22,38 @@ import { TextareaFieldComponent } from './editor-fields/textarea-field/textarea-
 import { EditorSidebarComponent } from './editor-sidebar/editor-sidebar.component';
 import { BlockComponent } from './block/block.component';
 import { TabsFieldComponent } from './editor-fields/tabs-field/tabs-field.component';
+import { VideoFieldComponent } from './editor-fields/video-field/video-field.component';
+import { EmbedFieldComponent } from './editor-fields/embed-field/embed-field.component';
+import { SafePipe } from '../../pipes/safe.pipe';
+import { CodeEditorFieldComponent } from './editor-fields/code-editor-field/code-editor-field.component';
 
 @NgModule({
-  imports: [CommonModule, HeaderBarModule, EditorRoutingModule, DragDropModule, NgbPopoverModule, CKEditorModule],
-  declarations: [ListItemComponent, DropTestComponent, EditorV1Component, EditorComponent, EditorFieldsComponent, TextFieldComponent, RadioFieldComponent, NumberFieldComponent, DateFieldComponent, DropdownFieldComponent, TextareaFieldComponent, EditorSidebarComponent, BlockComponent, TabsFieldComponent],
-  providers: [EditorService]
+  imports: [
+    CommonModule,
+    HeaderBarModule,
+    EditorRoutingModule,
+    DragDropModule,
+    NgbPopoverModule,
+    CKEditorModule,
+  ],
+  declarations: [
+    DropTestComponent,
+    EditorComponent,
+    EditorFieldsComponent,
+    TextFieldComponent,
+    RadioFieldComponent,
+    NumberFieldComponent,
+    DateFieldComponent,
+    DropdownFieldComponent,
+    TextareaFieldComponent,
+    EditorSidebarComponent,
+    BlockComponent,
+    TabsFieldComponent,
+    VideoFieldComponent,
+    EmbedFieldComponent,
+    SafePipe,
+    CodeEditorFieldComponent,
+  ],
+  providers: [EditorService],
 })
 export class EditorModule {}

@@ -1,6 +1,9 @@
-import { GroupStructuredBlock } from "./editor.interfaces";
-import { ContainmentType } from '@jsplumb/browser-ui';
+import { ElementRef } from '@angular/core';
+import { GroupStructuredBlock, GroupBlock } from "./editor.interfaces";
+import { ContainmentType, newInstance } from '@jsplumb/browser-ui';
 import { FlowchartConnector } from '@jsplumb/connector-flowchart';
+import { AnchorLocations, AnchorSpec, AnchorOptions } from '@jsplumb/common';
+import { EditorService } from '../../services/editor.service';
 
 export function uuid() {
   var d = new Date().getTime(); //Timestamp
@@ -34,22 +37,24 @@ export const structuredBlocks: GroupStructuredBlock[] = [
     blocks: [
       {
         id: uuid(),
-        content: {html: "<div></div>", plainText:""},
+        content: {html: "", plainText:""},
         type: 'text',
       },
       {
         id: uuid(),
-        content: {},
+        content: {
+          url: ""
+        },
         type: 'image',
       },
       {
         id: uuid(),
-        content: {},
+        content: {id:"", type:"", url: ""},
         type: 'video'
       },
       {
         id: uuid(),
-        content: {height: 400},
+        content: {url:'', height: 400},
         type: 'embed'
       }
     ],
@@ -108,13 +113,7 @@ export const structuredBlocks: GroupStructuredBlock[] = [
       },
       {
         id: uuid(),
-        items: [
-          {
-            id: uuid(),
-            content: "Click to edit",
-            type: 0
-          }
-        ],
+        items: [],
         options: {
           buttonLabel: "Send",
           isMultipleChoice: false
@@ -156,6 +155,7 @@ export const structuredBlocks: GroupStructuredBlock[] = [
           },
           isMultipleAllowed: false,
           isRequired: true,
+          sizeLimit: 10
         },
         type: 'file_input',
       }
@@ -275,11 +275,11 @@ export const prefilledData : any = {
   },
   rating_input: {
     label: 'Rating',
-    svg: 'assets/svgs/input-payment.svg'
+    svg: 'assets/svgs/star.svg'
   },
   file_input: {
     label: 'File',
-    svg: 'assets/svgs/input-payment.svg'
+    svg: 'assets/svgs/file.svg'
   },
   set_variable: {
     label: 'Set Variable',
@@ -312,6 +312,38 @@ export const prefilledData : any = {
 }
 
 export class Editor {
+
+  instance: any;
+  wrapperElement: any;
+  groupBlockIdsMapping: any = {};
+  rightClickPopovers: any = {
+    'connector': [],
+    'group': [],
+    'block': [],
+    'itemField': []
+  };
+
+  firstGroupId = this.uuid();
+  firstBlockId = this.uuid();
+
+  groupBlocks: GroupBlock[] = [
+    {
+      id: this.firstGroupId,
+      name: 'Start',
+      position: {
+        x: 420,
+        y: 120,
+      },
+      draggable: true,
+      blocks: [
+        {
+          id: this.firstBlockId,
+          groupId: this.firstGroupId,
+          type: 'start',
+        },
+      ],
+    },
+  ];
 
   connectorPaintStyle = {
     stroke: '#9CA3AF',
@@ -394,6 +426,7 @@ export class Editor {
       },
     },
   ];
+
   connectorProp = {
     type: FlowchartConnector.type,
     options: {
@@ -403,6 +436,207 @@ export class Editor {
       midpoint: 0.5,
     },
   };
+
+  constructor(editorService: EditorService) {
+
+  }
+
+  createInstance(wrapper: ElementRef) {
+    this.wrapperElement = wrapper;
+    this.instance = newInstance({
+      dragOptions: this.dragOptions,
+      connectionOverlays: this.connectionOverlays,
+      connector: this.connectorProp,
+      container: this.wrapperElement.nativeElement,
+    });
+
+    this.instance.addTargetSelector('.single-group', {
+      ...this.targetEndpoint,
+      ...{
+        anchor: 'ContinuousLeft',
+        scope: 'target_scope',
+        redrop: 'any',
+      },
+    });
+  }
+
+  manageNode(id: string, location: any, type: string) {
+    setTimeout(() => {
+      // this.instance.manage(document.getElementById(id));
+      this._addEndPoint(id, location, type);
+    });
+  }
+
+  _addEndPoint(id: string, sourceAnchors: Array<AnchorSpec>, type: string = 'block') {
+    let sourcePoint = type === 'block' ? this.sourceEndpoint : this.groupSourceEndpoint;
+
+    if (type === 'group') {
+      this.instance.addGroup({
+        el: document.getElementById(id),
+        id: id,
+        droppable: false,
+        // dropOverride:true
+      });
+    } else {
+      // const element = this.instance.getManagedElement(id);
+      for (let i = 0; i < sourceAnchors.length; i++) {
+        const sourceUUID = id + sourceAnchors[i];
+        this.instance.addEndpoint(document.getElementById(id), sourcePoint, {
+          anchor: sourceAnchors[i],
+          uuid: sourceUUID,
+        });
+      }
+    }
+
+    if (id === this.firstBlockId) {
+      this.instance.toggleDraggable(document.getElementById(id))
+    }
+  }
+
+  rearrangeEndPoints(data: any, index: number, slice: boolean = false) {
+    this._removeEndPoint(data[index].id);
+    if (slice === true) {
+      data.splice(index, 1);
+    }
+
+    if (data.length) {
+      let groupId = data[0].groupId;
+      this.groupBlocks.forEach((group) => {
+        if (group.id === groupId) {
+          group.blocks.forEach((block) => {
+            this._removeEndPoint(block.id);
+            this._removeEndPoint('be-' + block.id);
+          });
+          // Add endpoint to last block
+          this.manageNode(
+            'be-' + group.blocks[group.blocks.length - 1].id,
+            ['Right'],
+            'block'
+          );
+        }
+      });
+    }
+  }
+
+  _removeEndPoint(id: string) {
+    // this.instance.manage(document.getElementById(id));
+    // const element = this.instance.getManagedElement(id);
+    this.instance.removeAllEndpoints(document.getElementById(id));
+  }
+
+  deleteConnection(id: string) {
+    let con = this.instance.getConnections({ source: id }); // Get all source el. connection(s) except the new connection which is being established
+    if (con.length != 0 && document.getElementById(id)) {
+      for (var i = 0; i < con.length; i++) {
+        this.instance.deleteConnection(con[i]);
+      }
+    }
+  }
+
+  removeSelectedBorder() {
+    const selectedElem = document.querySelectorAll('.selected');
+    selectedElem.forEach((e) => {
+      e.classList.remove('selected');
+    });
+  }
+
+  bindEvents() {
+    this.instance.bind('connection', (info: any, e: any) => {
+      console.log('info.connection', info);
+      console.log('connector', info.connection.connector);
+
+      this.instance.setAttribute(
+        info.connection.connector.canvas,
+        'connector-source-id',
+        info.sourceId
+      );
+      this.instance.setAttribute(
+        info.connection.connector.canvas,
+        'connector-target-id',
+        info.targetId
+      );
+
+      this.instance.on(info.connection.connector.canvas, 'click', (e: any) => {
+        let connector = e.target.closest('.jtk-connector');
+        this.instance.addClass(connector, 'selected');
+        this.instance.addClass(
+          document.getElementById(
+            this.groupBlockIdsMapping[
+              connector.getAttribute('connector-source-id')
+            ]
+          ),
+          'selected'
+        );
+        this.instance.addClass(
+          document.getElementById(
+            connector.getAttribute('connector-target-id')
+          ),
+          'selected'
+        );
+      });
+
+      this.instance.on(info.connection.connector.canvas, 'contextmenu', (e: any) => {
+          e.preventDefault();
+          let connector = e.target.closest('.jtk-connector');
+          let type = 'connector';
+          let id = type + '-' + connector.getAttribute('connector-source-id');
+
+          if (document.getElementById(id)) {
+            // if any coonector popover found then delete it first
+            let index = document.getElementById(id)?.getAttribute('data-popover-index');
+            this.rightClickPopovers[type].splice(index, 1);
+          }
+
+          this.rightClickPopovers[type].push({
+            position: { x: e.clientX, y: e.clientY },
+            type: type,
+            id: id,
+          });
+          return false;
+        }
+      );
+    });
+
+    window.addEventListener('click', (e: any) => {
+
+      if (e.target.nodeName !== 'path') {
+        this.removeSelectedBorder();
+      }
+
+      this.removeCloneDeletePopup(this.wrapperElement.nativeElement.children, e);
+    });
+
+    this.instance.bind('beforeDrop', (ci: any) => {
+      // Before new connection is created
+      this.deleteConnection(ci.sourceId);
+      this.removeSelectedBorder();
+      return true; // true for establishing new connection
+    });
+  }
+
+  removeCloneDeletePopup(elements: any, clickElement: any) {
+    let isAllowToRemove = true;
+    for (const el of elements) {
+      if (!el.classList.contains('recieveDragedBox')) {
+        if (el.contains(clickElement.target)) {
+          isAllowToRemove = false;
+        }
+      }
+    }
+
+    if (isAllowToRemove) {
+      this.resetRightClickPopovers();
+    }
+  }
+
+  resetRightClickPopovers() {
+    this.rightClickPopovers = {
+      'connector': [],
+      'group': [],
+      'block': [],
+      'itemField': []
+    };
+  }
 
   public uuid() {
     var d = new Date().getTime(); //Timestamp

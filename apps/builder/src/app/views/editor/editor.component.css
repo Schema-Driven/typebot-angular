@@ -62,7 +62,7 @@
 
 ::ng-deep .jtk-endpoint {
   z-index:5;
-  cursor: pointer;
+  cursor: copy;
 }
 
 ::ng-deep .source-endpoint {
@@ -179,5 +179,21 @@ svg.endpointOnTarget.grouper.jtk-endpoint.jtk-endpoint-connected {
   outline: 0;
 }
 
+.image-field{
+  width: 36rem;
+  overflow-y: auto;
+}
 
+.video-field{
+  width: 25rem;
+  overflow-y: auto;
+}
 
+.embed-field{
+  width: 25rem;
+  overflow-y: auto;
+}
+
+::ng-deep .file_input-field .input-field {
+    display: block;
+}

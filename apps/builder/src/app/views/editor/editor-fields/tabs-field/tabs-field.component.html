@@ -1,30 +1,53 @@
-<div class="flex flex-wrap text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400 w-96">
+<div class="flex flex-wrap gap-2 text-sm font-medium text-center text-gray-900 dark:text-gray-400 w-96 mb-4">
+  <p (click)="isTab = 1 " aria-current="page" class="{{isTab === 1 ? 'bg-gray-100 ' : ''}}inline-block px-4 py-2 text-gray-900 hover:bg-gray-100 rounded-lg active dark:bg-gray-800 dark:text-blue-500 cursor-pointer">Upload</p>
 
-        <p (click)="isUpload = true ; isEmbed = false ; isGiph = false " class="mr-2" aria-current="page" class="inline-block px-4 py-2 text-blue-600 bg-gray-100 rounded-t-lg active dark:bg-gray-800 dark:text-blue-500">Upload</p>
+  <p (click)="isTab = 2 " class="{{isTab === 2 ? 'bg-gray-100 ' : ''}}inline-block px-4 py-2 rounded-lg text-gray-900 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-300 cursor-pointer">Embed link</p>
 
-        <p (click)="isEmbed = true ; isUpload = false ; isGiph = false " class="inline-block px-4 py-2 rounded-t-lg hover:text-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800 dark:hover:text-gray-300">Embed link</p>
-
-        <p (click)="isGiph = true ; isEmbed = false ; isUpload = false " class="inline-block px-4 py-2 rounded-t-lg hover:text-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800 dark:hover:text-gray-300">Giphy</p>
-
+  <!-- <p (click)="isTab = 3 " class="{{isTab === 3 ? 'bg-gray-100 ' : ''}}inline-block px-4 py-2 rounded-lg text-gray-900 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-300 cursor-pointer">Giphy</p> -->
 </div>
 
-<div class="w-full mt-4" *ngIf="isUpload">
-  <div class="relative w-fit mx-auto">
-    <input type="file" class="w-full absolute inset-0 opacity-0"/>
-    <span class="bg-blue-600 text-white rounded-lg px-3 py-2">Choose an image</span>
+<div class="w-full" *ngIf="isTab === 1">
+  <div class="relative w-fit mx-auto bg-[#0042da] hover:bg-[#0036b4] text-white rounded-lg px-3 py-2 text-sm font-medium">
+    <input type="file" class="w-full absolute inset-0 opacity-0" accept=".jpg, .jpeg, .png, .svg, .gif"/>
+    <span class=" ">Choose an image</span>
   </div>
 </div>
 
-<div class="" *ngIf="isEmbed">
-  <div class="flex items-center">
-    <input type="text" [placeholder]="data.placeholder ? data.placeholder : ''" class="block w-full h-10 p-2 text-sm text-gray-700 border border-gray-300 rounded-lg bg-gray-50
+<div class="" *ngIf="isTab === 2">
+  <div class="flex items-center w-full">
+    <input
+      [value]="data.value"
+      (blur)="eventHandler($event)"
+      type="text"
+      placeholder="Paste the image link..."
+      class="block w-full h-10 p-2 text-sm text-gray-700 border border-gray-300 rounded-lg bg-gray-50
       placeholder:text-gray-700 placeholder:font-normal placeholder:text-base
       focus:outline-[#7ea6ff] focus:shadow-lg dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
-      dark:text-white " [value]="data.value" (blur)="eventHandler($event)">
+      dark:text-white "
+    />
   </div>
 </div>
 
-<div class="" *ngIf="isGiph">
-  <input type="file"/>
-  <span>Upload image</span>
-</div>
+<!-- <div class="" *ngIf="isTab === 3">
+  <div class="flex items-center w-full gap-2">
+    <input type="search" placeholder="Search..." class="block w-full h-10 p-2 text-sm text-gray-700 border border-gray-300 rounded-lg bg-gray-50
+      placeholder:text-gray-700 placeholder:font-normal placeholder:text-base
+      focus:outline-[#7ea6ff] focus:shadow-lg dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
+      dark:text-white ">
+      <svg viewBox="0 0 163.79999999999998 35" focusable="false" class="giph-search-icon w-24">
+        <g fill="none" fill-rule="evenodd">
+          <path d="M4 4h20v27H4z" fill="#000"></path>
+          <g fill-rule="nonzero">
+            <path d="M0 3h4v29H0z" fill="#04ff8e"></path>
+            <path d="M24 11h4v21h-4z" fill="#8e2eff"></path>
+            <path d="M0 31h28v4H0z" fill="#00c5ff"></path>
+            <path d="M0 0h16v4H0z" fill="#fff152"></path>
+            <path d="M24 8V4h-4V0h-4v12h12V8" fill="#ff5b5b"></path>
+            <path d="M24 16v-4h4" fill="#551c99"></path>
+          </g>
+          <path d="M16 0v4h-4" fill="#999131"></path>
+          <path d="M59.1 12c-2-1.9-4.4-2.4-6.2-2.4-4.4 0-7.3 2.6-7.3 8 0 3.5 1.8 7.8 7.3 7.8 1.4 0 3.7-.3 5.2-1.4v-3.5h-6.9v-6h13.3v12.1c-1.7 3.5-6.4 5.3-11.7 5.3-10.7 0-14.8-7.2-14.8-14.3S42.7 3.2 52.9 3.2c3.8 0 7.1.8 10.7 4.4zm9.1 19.2V4h7.6v27.2zm20.1-7.4v7.3h-7.7V4h13.2c7.3 0 10.9 4.6 10.9 9.9 0 5.6-3.6 9.9-10.9 9.9zm0-6.5h5.5c2.1 0 3.2-1.6 3.2-3.3 0-1.8-1.1-3.4-3.2-3.4h-5.5zM125 31.2V20.9h-9.8v10.3h-7.7V4h7.7v10.3h9.8V4h7.6v27.2zm24.2-17.9l5.9-9.3h8.7v.3l-10.8 16v10.8h-7.7V20.3L135 4.3V4h8.7z" fill="#000" fill-rule="nonzero"></path>
+        </g>
+      </svg>
+  </div>
+</div> -->

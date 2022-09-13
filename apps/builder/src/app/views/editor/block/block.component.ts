@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { prefilledData, uuid } from '../editor';
 
 @Component({
@@ -10,11 +10,35 @@ export class BlockComponent implements OnInit {
 
   prefilledData: any;
   @Input() block: any = {};
+  @Output() addEndpointToItem = new EventEmitter<string>();
 
   constructor() { }
 
   ngOnInit(): void {
     this.prefilledData = prefilledData;
+
+    if (this.block.type === 'choice_input') {
+      this.addItem();
+    }
+  }
+
+  addItem(event: any = '') {
+    if (event) {
+      event.stopPropagation();
+    }
+
+    let itemId = uuid();
+    this.block.items.push({
+      id: itemId,
+      blockId: this.block.id,
+      content: "Click to edit",
+      type: 0
+    });
+    this.addEndpointToItem.emit('iteme-' + itemId)
+  }
+
+  onItemInput(index: number, event: any) {
+    this.block.items[index].content = event.target.value;
   }
 
   showRightClickPopover(type: string, id: string, e:any) {
@@ -33,15 +57,6 @@ export class BlockComponent implements OnInit {
     //   return false;
     // }
     // return true;
-  }
-
-  pushMultiInput(block: any,event:any) {
-    event.stopPropagation();
-    block.items.push({
-      id: uuid(),
-      content: "Click to edit",
-      type: 0
-    })
   }
 
 }
