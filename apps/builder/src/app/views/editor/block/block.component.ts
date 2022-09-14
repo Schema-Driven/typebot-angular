@@ -70,21 +70,7 @@ export class BlockComponent implements OnInit {
       type,
       id,
     });
-    // if (this.firstGroupId !== id && this.firstBlockId !== id) {
-    //   id = type + '-' + id;
-    //   if (document.getElementById(id)) {
-    //     let index = document.getElementById(id)?.getAttribute('data-popover-index');
-    //     this.rightClickPopovers[type].splice(index, 1);
-    //   }
-
-    //   this.rightClickPopovers[type].push({
-    //     position: { x: e.clientX, y: e.clientY },
-    //     type: type,
-    //     id: id,
-    //   });
-    //   return false;
-    // }
-    // return true;
+    return false;
   }
 
 }

@@ -320,11 +320,6 @@ export class EditorComponent extends Editor {
     }
   }
 
-  onItemRightClick(data: any) {
-    console.log("data", data)
-    this.showRightClickPopover(data.type, data.id, data.e)
-  }
-
   printJson() {
     this.setEdgesObject();
     console.log(this.typebot);

@@ -66,7 +66,7 @@
                   [block]="block"
                   [isLastBlock]="(b.blocks.length === blockIndex + 1 ? true : false)"
                   (manageItemEndpoints)="manageItemEndpoints($event)"
-                  (onItemRightClick)="onItemRightClick($event)">
+                  (onItemRightClick)="showRightClickPopover($event.type, $event.id, $event.e)">
                 </app-block>
               </div>
             </div>
