@@ -62,7 +62,12 @@
                 container="body"
                 (click)="showBlockOptionsPopover(blockOptionsPopover, block, groupIndex, blockIndex)">
                 <div class="draggable-custom-placeholder" *cdkDragPlaceholder></div>
-                <app-block [block]="block" (addEndpointToItem)="addEndpointToItem($event)"></app-block>
+                <app-block
+                  [block]="block"
+                  [isLastBlock]="(b.blocks.length === blockIndex + 1 ? true : false)"
+                  (manageItemEndpoints)="manageItemEndpoints($event)"
+                  (onItemRightClick)="showRightClickPopover($event.type, $event.id, $event.e)">
+                </app-block>
               </div>
             </div>
           </div>

@@ -70,7 +70,7 @@
           (blur)="onItemInput(itemIndex, $event)"
           (contextmenu)="showRightClickPopover('itemField', item.id, $event)"
           class="block w-[90%] pl-2 h-8 text-sm text-gray-700 rounded-lg bg-white placeholder:text-gray-400 placeholder:text-base focus:outline-[#7ea6ff] focus:shadow-lg dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
-          placeholder="{{item.content}}"
+          value="{{item.content}}"
         />
         <div
           (click)="addItem($event)"
@@ -80,9 +80,9 @@
             <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m6-6H6" />
           </svg>
         </div>
-        <div class="tp-endpoint" [id]="'iteme-' + item.id"></div>
+        <div class="tp-endpoint" [id]="'item-' + item.id"></div>
       </div>
-      <div class="default-button">
+      <div *ngIf="isLastBlock" class="default-button">
         <p class="bg-gray-50 border my-2 px-4 py-3 rounded-lg text-base text-gray-400 cursor-not-allowed">
           Default
         </p>
