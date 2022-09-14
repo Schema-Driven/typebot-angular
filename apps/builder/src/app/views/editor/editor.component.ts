@@ -251,22 +251,22 @@ export class EditorComponent extends Editor {
       groupIndex = document.getElementById(id)?.getAttribute('data-group-index');
       this.instance.removeGroup(id);
       this.groupBlocks.splice(groupIndex, 1);
-    }
-    else if (type === 'itemField') {
-      groupIndex = document.getElementById(id)?.getAttribute('data-item-index');
-      this.groupBlocks.splice(groupIndex, 1);
     } else if (type === 'block') {
       groupIndex = document.getElementById(id)?.closest('.grouper')?.getAttribute('data-group-index');
       blockIndex = document.getElementById(id)?.getAttribute('data-block-index');
       this._removeEndPoint(id);
       this.groupBlocks[groupIndex].blocks.splice(blockIndex, 1);
 
-
       // Remove empty groups
       if (this.groupBlocks[groupIndex].blocks.length === 0) {
         this.instance.removeGroup(this.groupBlocks[groupIndex].id);
         this.groupBlocks.splice(groupIndex, 1);
       }
+    } else if (type === 'itemField') {
+      groupIndex = document.getElementById(id)?.closest('.grouper')?.getAttribute('data-group-index');
+      blockIndex = document.getElementById(id)?.closest('.single-block')?.getAttribute('data-block-index');
+      let itemIndex = document.getElementById(id)?.getAttribute('data-item-index');
+      this.groupBlocks[groupIndex].blocks[blockIndex].items.splice(itemIndex, 1);
     }
 
     this.rightClickPopovers[type].splice(index, 1);
@@ -308,9 +308,21 @@ export class EditorComponent extends Editor {
     this.editedGroupName = -1;
   }
 
-  addEndpointToItem(id: string) {
-    console.log("addEndpointToItem", id)
-    this.manageNode(id, ['Right'], 'block');
+  manageItemEndpoints(data: any) {
+    if (data.action === 'add') {
+      data.itemIds.forEach((id: string) => {
+        this.manageNode(id, ['Right'], 'block');
+      });
+    } else {
+      data.itemIds.forEach((id: string) => {
+        this._removeEndPoint(id);
+      });
+    }
+  }
+
+  onItemRightClick(data: any) {
+    console.log("data", data)
+    this.showRightClickPopover(data.type, data.id, data.e)
   }
 
   printJson() {
