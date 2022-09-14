@@ -18,23 +18,30 @@
           class="absolute grouper z-2"
           [style]="('top:'+ b.position.y+'px;left:'+ b.position.x+'px')">
           <div cdkDrag class="py-4 bg-white single-group wrap-div w-72">
-            <h2 class="px-4" (contextmenu)="showRightClickPopover('group', b.id, $event)">
-              <span
-                (click)="onGroupNameClick(groupIndex)"
-                class="w-fit p-1 rounded-md transition-all cursor-text
-                {{editedGroupName === groupIndex ? 'hidden' : 'block'}}
-                {{groupIndex === 0 ? '' : 'hover:bg-gray-200'}}">
-                {{b.name}}
-              </span>
-              <input
-                [value]="b.name"
-                (change)="onGroupNameChange(b, $event)"
-                (blur)="editedGroupName = -1"
-                autofocus
-                class="w-full p-1 text-base text-gray-700 outline-2 outline outline-[#7ea6ff] shadow-md rounded-lg bg-white placeholder:text-gray-700 placeholder:font-normal placeholder:text-base focus:outline-[#7ea6ff]
-                {{editedGroupName === groupIndex ? 'block' : 'hidden'}}"
-              />
-            </h2>
+            <div class="px-4 flex items-center justify-between">
+              <h2 class="" (contextmenu)="showRightClickPopover('group', b.id, $event)">
+                <span
+                  (click)="onGroupNameClick(groupIndex)"
+                  class="w-fit p-1 rounded-md transition-all cursor-text
+                  {{editedGroupName === groupIndex ? 'hidden' : 'block'}}
+                  {{groupIndex === 0 ? '' : 'hover:bg-gray-200'}}">
+                  {{b.name}}
+                </span>
+                <input
+                  [value]="b.name"
+                  (change)="onGroupNameChange(b, $event)"
+                  (blur)="editedGroupName = -1"
+                  autofocus
+                  class="w-full p-1 text-base text-gray-700 outline-2 outline outline-[#7ea6ff] shadow-md rounded-lg bg-white placeholder:text-gray-700 placeholder:font-normal placeholder:text-base focus:outline-[#7ea6ff]
+                  {{editedGroupName === groupIndex ? 'block' : 'hidden'}}"
+                />
+              </h2>
+              <button type="button" class="play-button border rounded-md p-1.5 w-fit cursor-pointer hover:bg-gray-100" aria-label="Preview bot from this group">
+                <svg viewBox="0 0 24 24" focusable="false" class="w-3.5 h-3.5"  stroke="black" stroke-width="2px" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" fill="transparent">
+                  <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                </svg>
+              </button>
+            </div>
             <div
               cdkDropList
               [cdkDropListData]="b.blocks"
