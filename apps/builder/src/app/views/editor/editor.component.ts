@@ -320,12 +320,13 @@ export class EditorComponent extends Editor {
     }
   }
 
-  printJson() {
-    this.setEdgesObject();
+  async printJson() {
+    await this.setEdgesObject();
+    localStorage.setItem('editor', JSON.stringify(this.typebot));
     console.log(this.typebot);
   }
 
-  setEdgesObject() {
+  async setEdgesObject() {
     this.edges = [];
     let connections = this.instance.getConnections({
       scope: 'jsplumb_defaultscope',
