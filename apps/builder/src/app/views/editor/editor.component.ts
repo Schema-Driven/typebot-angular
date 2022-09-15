@@ -350,7 +350,7 @@ export class EditorComponent extends Editor {
 
   async printJson() {
     await this.setEdgesObject();
-    localStorage.setItem('editor', JSON.stringify(this.typebot));
+    this.editorService.setEditorJson(this.typebot);
     console.log(this.typebot);
   }
 

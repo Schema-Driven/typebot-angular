@@ -5,11 +5,12 @@
             <div class="flex w-9 xs:w-10 mr-2 mb-2 flex-shrink-0 items-center relative typebot-avatar-container ">
             <img class="w-9 h-9 rounded-full" *ngIf="item.icon" src="./../../../assets/ViewChat/profile.png" alt="">
         </div>
+        <div> Editor: {{this.editor}}</div>
     <div>
-            <h1>{{item.text}}</h1>  
+            <h1>{{item.text}}</h1>
             </div>
-        </div>  
-        </div> 
+        </div>
+        </div>
         <section *ngIf="loader">
             <div class="loading loading04">
                 <span>
