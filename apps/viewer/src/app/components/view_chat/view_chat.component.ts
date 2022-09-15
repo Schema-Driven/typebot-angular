@@ -1,22 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { EditorService } from '../../../../../builder/src/app/services/editor.service'
-
 @Component({
   selector: 'viewchat',
   templateUrl: './view_chat.component.html',
   styleUrls: ['./view_chat.component.css'],
 })
 export class ViewChat implements OnInit {
-  editor: any;
-
-  constructor(private router: Router, private editorService: EditorService) {}
-
-  ngOnInit() {
-    this.editorService.selectedEditorJson$.subscribe((data) => {
-      this.editor = data;
-    });
-  }
+  constructor(private router: Router) {}
+  ngOnInit() {}
 
   navigate(links: any[]) {
     this.router.navigate(links);
