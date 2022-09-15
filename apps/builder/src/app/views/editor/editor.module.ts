@@ -27,6 +27,8 @@ import { EmbedFieldComponent } from './editor-fields/embed-field/embed-field.com
 import { SafePipe } from '../../pipes/safe.pipe';
 import { CodeEditorFieldComponent } from './editor-fields/code-editor-field/code-editor-field.component';
 
+import { ViewChat } from '../../../../../viewer/src/app/components/view_chat/view_chat.component';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -53,6 +55,7 @@ import { CodeEditorFieldComponent } from './editor-fields/code-editor-field/code
     EmbedFieldComponent,
     SafePipe,
     CodeEditorFieldComponent,
+    ViewChat,
   ],
   providers: [EditorService],
 })

@@ -26,6 +26,7 @@ export class EditorComponent extends Editor {
   editedGroupName: number = -1;
   deg: number = 3;
   edges: Edge[] = [];
+  viewChat: boolean = false;
 
   typebot: TypeBot = {
     name: 'My Typebot',
@@ -36,7 +37,7 @@ export class EditorComponent extends Editor {
   constructor(
     private modalService: NgbModal,
     protected editorService: EditorService
-    ) {
+  ) {
     super(editorService);
   }
 
@@ -137,7 +138,8 @@ export class EditorComponent extends Editor {
 
   addGroupOrBlock(data: any, event: any, type: string) {
     let blockId = this.uuid();
-    let groupId = type === 'group' ? this.uuid() : event.container.data[0].groupId;
+    let groupId =
+      type === 'group' ? this.uuid() : event.container.data[0].groupId;
 
     let block = {
       ...JSON.parse(JSON.stringify(data)),
@@ -217,16 +219,19 @@ export class EditorComponent extends Editor {
       this.scaleLevel = this.scaleLevel - 0.1;
     }
 
-    this.wrapper.nativeElement.style.transform = 'scale(' + this.scaleLevel + ')';
+    this.wrapper.nativeElement.style.transform =
+      'scale(' + this.scaleLevel + ')';
     this.instance.setZoom(this.scaleLevel);
     // this.instance.repaint();
   }
 
-  showRightClickPopover(type: string, id: string, e:any) {
+  showRightClickPopover(type: string, id: string, e: any) {
     if (this.firstGroupId !== id && this.firstBlockId !== id) {
       id = type + '-' + id;
       if (document.getElementById(id)) {
-        let index = document.getElementById(id)?.getAttribute('data-popover-index');
+        let index = document
+          .getElementById(id)
+          ?.getAttribute('data-popover-index');
         this.rightClickPopovers[type].splice(index, 1);
       }
 
@@ -241,19 +246,26 @@ export class EditorComponent extends Editor {
   }
 
   popoverHandler(type: string, id: string, index: number) {
-    let groupIndex: any
+    let groupIndex: any;
     let blockIndex: any;
-    id = id.replace(type + "-", "");
+    id = id.replace(type + '-', '');
 
     if (type === 'connector') {
       this.deleteConnection(id);
     } else if (type === 'group') {
-      groupIndex = document.getElementById(id)?.getAttribute('data-group-index');
+      groupIndex = document
+        .getElementById(id)
+        ?.getAttribute('data-group-index');
       this.instance.removeGroup(id);
       this.groupBlocks.splice(groupIndex, 1);
     } else if (type === 'block') {
-      groupIndex = document.getElementById(id)?.closest('.grouper')?.getAttribute('data-group-index');
-      blockIndex = document.getElementById(id)?.getAttribute('data-block-index');
+      groupIndex = document
+        .getElementById(id)
+        ?.closest('.grouper')
+        ?.getAttribute('data-group-index');
+      blockIndex = document
+        .getElementById(id)
+        ?.getAttribute('data-block-index');
       this._removeEndPoint(id);
       this.groupBlocks[groupIndex].blocks.splice(blockIndex, 1);
 
@@ -263,27 +275,43 @@ export class EditorComponent extends Editor {
         this.groupBlocks.splice(groupIndex, 1);
       }
     } else if (type === 'itemField') {
-      groupIndex = document.getElementById(id)?.closest('.grouper')?.getAttribute('data-group-index');
-      blockIndex = document.getElementById(id)?.closest('.single-block')?.getAttribute('data-block-index');
-      let itemIndex = document.getElementById(id)?.getAttribute('data-item-index');
-      this.groupBlocks[groupIndex].blocks[blockIndex].items.splice(itemIndex, 1);
+      groupIndex = document
+        .getElementById(id)
+        ?.closest('.grouper')
+        ?.getAttribute('data-group-index');
+      blockIndex = document
+        .getElementById(id)
+        ?.closest('.single-block')
+        ?.getAttribute('data-block-index');
+      let itemIndex = document
+        .getElementById(id)
+        ?.getAttribute('data-item-index');
+      this.groupBlocks[groupIndex].blocks[blockIndex].items.splice(
+        itemIndex,
+        1
+      );
     }
 
     this.rightClickPopovers[type].splice(index, 1);
   }
 
-  showBlockOptionsPopover(popover: any, block: any, groupIndex: number, blockIndex: number) {
+  showBlockOptionsPopover(
+    popover: any,
+    block: any,
+    groupIndex: number,
+    blockIndex: number
+  ) {
     if (popover.isOpen()) {
       popover.close();
     } else {
       this.removeAllPopovers();
       this.editorService.setBlock(block);
-      popover.open({block, groupIndex, blockIndex});
+      popover.open({ block, groupIndex, blockIndex });
     }
   }
 
   removeAllPopovers() {
-    const elems = document.querySelectorAll('.input-popover')
+    const elems = document.querySelectorAll('.input-popover');
     elems.forEach((e) => {
       e.remove();
     });
@@ -291,7 +319,7 @@ export class EditorComponent extends Editor {
 
   open(content: any, groupIndex: number, blockIndex: number) {
     this.removeAllPopovers();
-    this.modalService.open(content, {ariaLabelledBy: 'block-modal'});
+    this.modalService.open(content, { ariaLabelledBy: 'block-modal' });
   }
 
   onGroupNameClick(index: number) {
