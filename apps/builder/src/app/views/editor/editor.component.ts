@@ -11,6 +11,7 @@ import Panzoom from '@panzoom/panzoom';
 import { Block, Edge, TypeBot } from './editor.interfaces';
 import { Editor } from './editor';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ActivatedRoute } from '@angular/router';
 import { EditorService } from '../../services/editor.service';
 
 @Component({
@@ -28,6 +29,7 @@ export class EditorComponent extends Editor {
   edges: Edge[] = [];
   viewChat: boolean = false;
   previewChat: boolean = false;
+  draw: string = 'false';
 
   typebot: TypeBot = {
     name: 'My Typebot',
@@ -37,6 +39,7 @@ export class EditorComponent extends Editor {
 
   constructor(
     private modalService: NgbModal,
+    private route: ActivatedRoute,
     protected editorService: EditorService
   ) {
     super(editorService);
@@ -44,6 +47,15 @@ export class EditorComponent extends Editor {
 
   ngOnInit() {
     this.createInstance(this.wrapper);
+
+    this.route.queryParams
+      .subscribe(params => {
+        this.draw = params['draw']
+        if (this.draw == 'true') {
+          this.drawEditor(localStorage.getItem('editor'))
+        }
+      }
+    );
 
     this.bindEvents();
 
@@ -75,9 +87,9 @@ export class EditorComponent extends Editor {
     // });
     // this.instance.repaintEverything();
 
-    this.manageNode(this.firstGroupId, ['Right'], 'group');
-    this.manageNode('be-' + this.firstBlockId, ['Right'], 'block');
-    this.groupBlockIdsMapping[this.firstBlockId] = this.firstGroupId;
+    // this.manageNode(this.firstGroupId, ['Right'], 'group');
+    // this.manageNode('be-' + this.firstBlockId, ['Right'], 'block');
+    // this.groupBlockIdsMapping[this.firstBlockId] = this.firstGroupId;
   }
 
   drop(event: CdkDragDrop<Block[]>, container: string) {
@@ -351,7 +363,8 @@ export class EditorComponent extends Editor {
 
   async printJson() {
     await this.setEdgesObject();
-    this.editorService.setEditorJson(this.typebot);
+    // this.editorService.setEditorJson(this.typebot);
+    localStorage.setItem('editor', JSON.stringify(this.typebot));
     console.log(this.typebot);
   }
 
