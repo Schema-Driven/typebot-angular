@@ -28,6 +28,7 @@ import { SafePipe } from '../../pipes/safe.pipe';
 import { CodeEditorFieldComponent } from './editor-fields/code-editor-field/code-editor-field.component';
 
 import { ViewChat } from '../../../../../viewer/src/app/components/view_chat/view_chat.component';
+import { PreviewChatModule } from '../preview_chat/previewchat.module';
 
 @NgModule({
   imports: [
@@ -37,6 +38,7 @@ import { ViewChat } from '../../../../../viewer/src/app/components/view_chat/vie
     DragDropModule,
     NgbPopoverModule,
     CKEditorModule,
+    PreviewChatModule,
   ],
   declarations: [
     DropTestComponent,

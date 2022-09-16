@@ -27,6 +27,7 @@ export class EditorComponent extends Editor {
   deg: number = 3;
   edges: Edge[] = [];
   viewChat: boolean = false;
+  previewChat: boolean = false;
 
   typebot: TypeBot = {
     name: 'My Typebot',

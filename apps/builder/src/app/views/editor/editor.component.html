@@ -36,7 +36,7 @@
                   {{editedGroupName === groupIndex ? 'block' : 'hidden'}}"
                 />
               </h2>
-              <button type="button" class="play-button border rounded-md p-1.5 w-fit cursor-pointer hover:bg-gray-100" aria-label="Preview bot from this group">
+              <button (click)="previewChat = true" type="button" class="play-button border rounded-md p-1.5 w-fit cursor-pointer hover:bg-gray-100" aria-label="Preview bot from this group">
                 <svg viewBox="0 0 24 24" focusable="false" class="w-3.5 h-3.5"  stroke="black" stroke-width="2px" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" fill="transparent">
                   <polygon points="5 3 19 12 5 21 5 3"></polygon>
                 </svg>
@@ -201,12 +201,15 @@
       </svg>
     </button>
 
-      <div *ngIf="viewChat" class="w-full max-w-[30rem] absolute z-50 pb-14 pt-6 px-8 view-chat-main right-0 bottom-16 h-[550px]">
-        <div class="px-2 py-6 bg-white rounded-2xl shadow-2xl h-full overflow-y-auto">
-          <viewchat></viewchat>
-        </div>
+    <div *ngIf="viewChat" class="w-full max-w-[30rem] absolute z-50 pb-14 pt-6 px-8 view-chat-main right-0 bottom-16 h-[550px]">
+      <div class="px-2 py-6 bg-white rounded-2xl shadow-2xl h-full overflow-y-auto">
       </div>
+    </div>
     <!-- CHAT VIEW ON BOTTOM RIGHT END-->
+
+    <div *ngIf="previewChat">
+      <previewchat></previewchat>
+    </div>
 
   </div>
 </div>
