@@ -460,6 +460,43 @@ export class Editor {
     });
   }
 
+  drawEditor(response: any) {
+    if (response) {
+      response = JSON.parse(response);
+      this.groupBlocks = response.groups;
+      let edges = response.edges;
+
+      console.log("groupBlocks", this.groupBlocks);
+      this.groupBlocks.forEach((gr) => {
+        this.manageNode(gr.id, ['Right'], 'group');
+
+        gr.blocks.forEach((b) => {
+          this.manageNode('be-' + b.id, ['Right'], 'block');
+        });
+      });
+
+      setTimeout(() => {
+        edges.forEach((edge: any) => {
+          // this.instance.manage(document.getElementById(edge.from.blockId))
+          // this.instance.manage(document.getElementById(edge.to.groupId))
+          // console.log({
+          //   source:edge.from.blockId,
+          //   target:edge.to.groupId,
+          // }, document.getElementById(edge.from.blockId))
+          // this.instance.batch(() => {
+            this.instance.connect({
+              source: document.getElementById(edge.from.blockId),
+              target: document.getElementById(edge.to.groupId),
+              anchors: ['Right', 'ContinuousLeft'],
+            })
+          // });
+        });
+      }, 100)
+
+    }
+
+  }
+
   manageNode(id: string, location: any, type: string) {
     setTimeout(() => {
       // this.instance.manage(document.getElementById(id));
