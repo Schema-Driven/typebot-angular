@@ -59,6 +59,10 @@ export class EditorComponent extends Editor {
 
     this.bindEvents();
 
+    if (this.draw == 'true') {
+      return;
+    }
+
     // this.panZoomController.pan(10, 10)
     // this.panZoomController.zoom(1, { animate: true });
     // this.panZoomController = Panzoom(this.wrapper.nativeElement, {
@@ -87,9 +91,9 @@ export class EditorComponent extends Editor {
     // });
     // this.instance.repaintEverything();
 
-    // this.manageNode(this.firstGroupId, ['Right'], 'group');
-    // this.manageNode('be-' + this.firstBlockId, ['Right'], 'block');
-    // this.groupBlockIdsMapping[this.firstBlockId] = this.firstGroupId;
+    this.manageNode(this.firstGroupId, ['Right'], 'group');
+    this.manageNode('be-' + this.firstBlockId, ['Right'], 'block');
+    this.groupBlockIdsMapping[this.firstBlockId] = this.firstGroupId;
   }
 
   drop(event: CdkDragDrop<Block[]>, container: string) {
@@ -366,6 +370,7 @@ export class EditorComponent extends Editor {
     // this.editorService.setEditorJson(this.typebot);
     localStorage.setItem('editor', JSON.stringify(this.typebot));
     console.log(this.typebot);
+    window.location.href = window.location.pathname + '?draw=true';
   }
 
   async setEdgesObject() {
@@ -384,5 +389,6 @@ export class EditorComponent extends Editor {
       });
     });
     this.typebot.edges = this.edges;
+    this.typebot.groups = this.groupBlocks;
   }
 }

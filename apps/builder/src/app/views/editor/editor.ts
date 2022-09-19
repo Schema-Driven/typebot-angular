@@ -467,31 +467,30 @@ export class Editor {
       let edges = response.edges;
 
       console.log("groupBlocks", this.groupBlocks);
-      this.groupBlocks.forEach((gr) => {
-        this.manageNode(gr.id, ['Right'], 'group');
 
-        gr.blocks.forEach((b) => {
-          this.manageNode('be-' + b.id, ['Right'], 'block');
+      this.instance.batch(() => {
+        this.groupBlocks.forEach((gr) => {
+          this.manageNode(gr.id, ['Right'], 'group');
+
+          gr.blocks.forEach((b) => {
+            this.manageNode('be-' + b.id, ['Right'], 'block');
+            this.groupBlockIdsMapping[b.id] = gr.id;
+          });
         });
+
+        setTimeout(() => {
+          edges.forEach((edge: any) => {
+              this.instance.connect({
+                source: document.getElementById(edge.from.blockId),
+                target: document.getElementById(edge.to.groupId),
+                anchors: ['Right', 'ContinuousLeft'],
+                endpointStyles: [this.sourceEndpoint, this.targetEndpoint],
+                scope: 'target_scope',
+                redrop: 'any',
+              })
+          });
+        }, 100)
       });
-
-      setTimeout(() => {
-        edges.forEach((edge: any) => {
-          // this.instance.manage(document.getElementById(edge.from.blockId))
-          // this.instance.manage(document.getElementById(edge.to.groupId))
-          // console.log({
-          //   source:edge.from.blockId,
-          //   target:edge.to.groupId,
-          // }, document.getElementById(edge.from.blockId))
-          // this.instance.batch(() => {
-            this.instance.connect({
-              source: document.getElementById(edge.from.blockId),
-              target: document.getElementById(edge.to.groupId),
-              anchors: ['Right', 'ContinuousLeft'],
-            })
-          // });
-        });
-      }, 100)
 
     }
 
@@ -599,7 +598,7 @@ export class Editor {
         this.instance.addClass(
           document.getElementById(
             this.groupBlockIdsMapping[
-              connector.getAttribute('connector-source-id')
+              connector.getAttribute('connector-source-id').replace('be-', '')
             ]
           ),
           'selected'
