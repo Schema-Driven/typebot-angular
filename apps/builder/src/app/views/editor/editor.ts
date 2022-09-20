@@ -1,6 +1,6 @@
 import { ElementRef } from '@angular/core';
 import { GroupStructuredBlock, GroupBlock } from "./editor.interfaces";
-import { ContainmentType, newInstance } from '@jsplumb/browser-ui';
+import { ContainmentType, EVENT_DRAG_STOP, newInstance } from '@jsplumb/browser-ui';
 import { FlowchartConnector } from '@jsplumb/connector-flowchart';
 import { AnchorLocations, AnchorSpec, AnchorOptions } from '@jsplumb/common';
 import { EditorService } from '../../services/editor.service';
@@ -472,8 +472,16 @@ export class Editor {
         this.groupBlocks.forEach((gr) => {
           this.manageNode(gr.id, ['Right'], 'group');
 
-          gr.blocks.forEach((b) => {
-            this.manageNode('be-' + b.id, ['Right'], 'block');
+          gr.blocks.forEach((b, i) => {
+            if (b.type === 'choice_input' && !b.options.isMultipleChoice) {
+              b.items.forEach((item: any) => {
+                this.manageNode('item-' + item.id, ['Right'], 'block');
+              });
+            }
+
+            if (gr.blocks.length - 1 === i) {
+              this.manageNode('be-' + b.id, ['Right'], 'block');
+            }
             this.groupBlockIdsMapping[b.id] = gr.id;
           });
         });
@@ -484,8 +492,12 @@ export class Editor {
                 source: document.getElementById(edge.from.blockId),
                 target: document.getElementById(edge.to.groupId),
                 anchors: ['Right', 'ContinuousLeft'],
-                endpointStyles: [this.sourceEndpoint, this.targetEndpoint],
-                scope: 'target_scope',
+                endpoints: [this.sourceEndpoint.endpoint, this.targetEndpoint.endpoint],
+                endpointStyles: [this.sourceEndpoint.paintStyle, this.targetEndpoint.paintStyle],
+                // detachable: false,
+                // reattach: true,
+                deleteEndpointsOnDetach: true,
+                scope: 'jsplumb_defaultscope',
                 redrop: 'any',
               })
           });
@@ -632,6 +644,14 @@ export class Editor {
         }
       );
     });
+
+    this.instance.bind(EVENT_DRAG_STOP, (drag: any) => {
+      if (drag.el._isJsPlumbGroup) {
+        const groupIndex: any = document.getElementById(drag.el.id)?.getAttribute('data-group-index');
+        this.groupBlocks[groupIndex].position.x = drag.el.offsetLeft;
+        this.groupBlocks[groupIndex].position.y = drag.el.offsetTop;
+      }
+    })
 
     window.addEventListener('click', (e: any) => {
 

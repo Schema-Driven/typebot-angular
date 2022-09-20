@@ -17,7 +17,7 @@
           [attr.data-jtk-managed]="b.id"
           class="absolute grouper z-2"
           [style]="('top:'+ b.position.y+'px;left:'+ b.position.x+'px')">
-          <div cdkDrag class="py-4 bg-white single-group wrap-div w-72">
+          <div class="py-4 bg-white single-group wrap-div w-72">
             <div class="px-4 flex items-center justify-between">
               <h2 class="" (contextmenu)="showRightClickPopover('group', b.id, $event)">
                 <span
