@@ -488,18 +488,21 @@ export class Editor {
 
         setTimeout(() => {
           edges.forEach((edge: any) => {
-              this.instance.connect({
-                source: document.getElementById(edge.from.blockId),
-                target: document.getElementById(edge.to.groupId),
-                anchors: ['Right', 'ContinuousLeft'],
-                endpoints: [this.sourceEndpoint.endpoint, this.targetEndpoint.endpoint],
-                endpointStyles: [this.sourceEndpoint.paintStyle, this.targetEndpoint.paintStyle],
-                // detachable: false,
-                // reattach: true,
-                deleteEndpointsOnDetach: true,
-                scope: 'jsplumb_defaultscope',
-                redrop: 'any',
-              })
+            let sourceId = (edge.from.itemId ? 'item-' + edge.from.itemId : 'be-' + edge.from.blockId);
+            let targetId = (edge.to.blockId ? edge.to.blockId : edge.to.groupId);
+
+            this.instance.connect({
+              source: document.getElementById(sourceId),
+              target: document.getElementById(targetId),
+              anchors: ['Right', 'ContinuousLeft'],
+              endpoints: [this.sourceEndpoint.endpoint, this.targetEndpoint.endpoint],
+              endpointStyles: [this.sourceEndpoint.paintStyle, this.targetEndpoint.paintStyle],
+              // detachable: false,
+              // reattach: true,
+              deleteEndpointsOnDetach: true,
+              scope: 'jsplumb_defaultscope',
+              redrop: 'any',
+            })
           });
         }, 100)
       });
@@ -590,8 +593,6 @@ export class Editor {
 
   bindEvents() {
     this.instance.bind('connection', (info: any, e: any) => {
-      console.log('info.connection', info);
-      console.log('connector', info.connection.connector);
 
       this.instance.setAttribute(
         info.connection.connector.canvas,

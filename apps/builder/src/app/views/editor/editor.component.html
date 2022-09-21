@@ -15,6 +15,7 @@
           [attr.data-group-index]="groupIndex"
           [id]="b.id"
           [attr.data-jtk-managed]="b.id"
+          data-identifier="group"
           class="absolute grouper z-2"
           [style]="('top:'+ b.position.y+'px;left:'+ b.position.x+'px')">
           <div class="py-4 bg-white single-group wrap-div w-72">
@@ -56,7 +57,7 @@
                 (cdkDragStarted)="cdkDragStarted($event)"
                 (contextmenu)="showRightClickPopover('block', block.id, $event)"
                 *ngFor="let block of b.blocks; let blockIndex = index"
-                class="px-4 single-block"
+                class="pl-4 mr-4 single-block"
                 [id]="block.id"
                 [attr.data-jtk-managed]="block.id"
                 [attr.data-block-index]="blockIndex"
@@ -67,6 +68,7 @@
                 triggers="manual"
                 placement="left"
                 container="body"
+                data-identifier="block"
                 (click)="showBlockOptionsPopover(blockOptionsPopover, block, groupIndex, blockIndex)">
                 <div class="draggable-custom-placeholder" *cdkDragPlaceholder></div>
                 <app-block

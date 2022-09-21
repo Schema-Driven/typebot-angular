@@ -2,7 +2,7 @@
   <div class="flex  w-full gap-2 px-2 text-sm">
     <img [src]="prefilledData[block.type].svg" class="w-4 h-4 mt-1" />
     <p *ngIf="block.type === 'start' else blockRender" class="mb-0 text-black text-base">{{ prefilledData[block.type].label }}</p>
-    <div *ngIf="block.type !== 'choice_input'" class="tp-endpoint" [id]="'be-' + block.id"></div>
+    <div *ngIf="block.type !== 'choice_input'" class="tp-endpoint" [id]="'be-' + block.id" data-identifier="block"></div>
   </div>
 </div>
 
@@ -64,7 +64,7 @@
         let itemIndex = index"
         [attr.data-item-index]="itemIndex"
         [id]="item.id"
-        class="bg-white p-2 rounded-lg shadow border w-full relative choice-input mb-3">
+        class="single-item bg-white p-2 rounded-lg shadow border w-full relative choice-input mb-3">
         <input
           (click)="$event.stopPropagation()"
           (blur)="onItemInput(itemIndex, $event)"
@@ -80,13 +80,13 @@
             <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m6-6H6" />
           </svg>
         </div>
-        <div class="tp-endpoint" [id]="'item-' + item.id"></div>
+        <div class="tp-endpoint" [id]="'item-' + item.id" data-identifier="item"></div>
       </div>
       <div *ngIf="isLastBlock" class="default-button">
         <p class="bg-gray-50 border my-2 px-4 py-3 rounded-lg text-base text-gray-400 cursor-not-allowed">
           Default
         </p>
-        <div class="tp-endpoint" [id]="'be-' + block.id"></div>
+        <div class="tp-endpoint" [id]="'be-' + block.id" data-identifier="block"></div>
       </div>
     </div>
   </div>

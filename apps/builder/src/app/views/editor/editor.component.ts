@@ -378,14 +378,28 @@ export class EditorComponent extends Editor {
     let connections = this.instance.getConnections({
       scope: 'jsplumb_defaultscope',
     });
+
     connections.forEach((con: any) => {
+      let from: any = {}, to: any = {};
+      let sourceIdentifier = document.getElementById(con.sourceId)?.getAttribute('data-identifier');
+      let targetIdentifier = document.getElementById(con.targetId)?.getAttribute('data-identifier');
+
+      from['blockId'] = document.getElementById(con.sourceId)?.closest('.single-block')?.getAttribute('id');
+      from['groupId'] = document.getElementById(con.sourceId)?.closest('.grouper')?.getAttribute('id');
+
+      if (sourceIdentifier === 'item') {
+        from['itemId'] = document.getElementById(con.sourceId)?.closest('.single-item')?.getAttribute('id');
+      }
+
+      to['groupId'] = document.getElementById(con.targetId)?.closest('.grouper')?.getAttribute('id');
+      if (targetIdentifier === 'block') {
+        to['blockId'] = document.getElementById(con.targetId)?.closest('.single-block')?.getAttribute('id');
+      }
+
       this.edges.push({
         id: this.uuid(),
-        from: {
-          blockId: con.sourceId,
-          groupId: this.groupBlockIdsMapping[con.sourceId],
-        },
-        to: { groupId: con.targetId },
+        from,
+        to
       });
     });
     this.typebot.edges = this.edges;
