@@ -20,7 +20,7 @@
           [style]="('top:'+ b.position.y+'px;left:'+ b.position.x+'px')">
           <div class="py-4 bg-white single-group wrap-div w-72">
             <div class="px-4 flex items-center justify-between">
-              <h2 class="" (contextmenu)="showRightClickPopover('group', b.id, $event)">
+              <h2 class="w-full" (contextmenu)="showRightClickPopover('group', b.id, $event)">
                 <span
                   (click)="onGroupNameClick(groupIndex)"
                   class="w-fit p-1 rounded-md transition-all cursor-text
@@ -88,10 +88,10 @@
             class="absolute z-50 w-56 cursor-pointer delete-popover"
             [style]="('transform:translate('+ (popover.position.x - 30)+'px, '+ (popover.position.y - 30) +'px')"
             [attr.id]="popover.id" [attr.data-popover-index]="i">
-            <div class="text-lg font-semibold bg-white border rounded-md shadow">
-              <div class="flex items-center gap-3 p-3 text-gray-500 hover:bg-gray-100"
+            <div class="text-base font-semibold bg-white border rounded-md shadow py-2">
+              <div class="flex items-center gap-3 px-3 py-2 text-gray-500 hover:bg-gray-100"
                 (click)="popoverHandler(popover.type, popover.id, i)">
-                <span class="w-5 h-5 popover-icon"><img class="w-full h-full"
+                <span class="w-4 h-4 popover-icon"><img class="w-full h-full"
                     src="../../../../assets/svgs/trash-solid.svg" /></span>
                 <p class="">Delete</p>
               </div>
@@ -103,10 +103,10 @@
             class="absolute z-50 w-56 cursor-pointer delete-popover"
             [style]="('transform:translate('+ (popover.position.x - 30)+'px, '+ (popover.position.y - 30) +'px')"
             [attr.id]="popover.id" [attr.data-popover-index]="i">
-            <div class="text-lg font-semibold bg-white border rounded-md shadow">
-              <div class="flex items-center gap-3 p-3 text-gray-500 hover:bg-gray-100"
+            <div class="text-base font-semibold bg-white border rounded-md shadow py-2">
+              <div class="flex items-center gap-3 px-3 py-2 text-gray-500 hover:bg-gray-100"
                 (click)="popoverHandler(popover.type, popover.id, i)">
-                <span class="w-5 h-5 popover-icon"><img class="w-full h-full"
+                <span class="w-4 h-4 popover-icon"><img class="w-full h-full"
                     src="../../../../assets/svgs/trash-solid.svg" /></span>
                 <p class="">Delete</p>
               </div>
@@ -118,10 +118,10 @@
             class="absolute z-50 w-56 cursor-pointer delete-popover"
             [style]="('transform:translate('+ (popover.position.x - 30)+'px, '+ (popover.position.y - 30) +'px')"
             [attr.id]="popover.id" [attr.data-popover-index]="i">
-            <div class="text-lg font-semibold bg-white border rounded-md shadow">
-              <div class="flex items-center gap-3 p-3 text-gray-500 hover:bg-gray-100"
+            <div class="text-base font-semibold bg-white border rounded-md shadow py-2">
+              <div class="flex items-center gap-3 px-3 py-2 text-gray-500 hover:bg-gray-100"
                 (click)="popoverHandler(popover.type, popover.id, i)">
-                <span class="w-5 h-5 popover-icon"><img class="w-full h-full"
+                <span class="w-4 h-4 popover-icon"><img class="w-full h-full"
                     src="../../../../assets/svgs/trash-solid.svg" /></span>
                 <p class="">Delete</p>
               </div>
@@ -133,10 +133,10 @@
             class="absolute z-50 w-56 cursor-pointer delete-popover"
             [style]="('transform:translate('+ (popover.position.x - 30)+'px, '+ (popover.position.y - 30) +'px')"
             [attr.id]="popover.id" [attr.data-popover-index]="i">
-            <div class="text-lg font-semibold bg-white border rounded-md shadow">
-              <div class="flex items-center gap-3 p-3 text-gray-500 hover:bg-gray-100"
+            <div class="text-base font-semibold bg-white border rounded-md shadow py-2">
+              <div class="flex items-center gap-3 px-3 py-2 text-gray-500 hover:bg-gray-100"
                 (click)="popoverHandler(popover.type, popover.id, i)">
-                <span class="w-5 h-5 popover-icon"><img class="w-full h-full"
+                <span class="w-4 h-4 popover-icon"><img class="w-full h-full"
                     src="../../../../assets/svgs/trash-solid.svg" /></span>
                 <p class="">Delete</p>
               </div>
