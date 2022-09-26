@@ -11,6 +11,11 @@ const routes: Routes = [
         './components/fields-data/editor-fields-data/editor-fields-data.module'
       ).then((m) => m.EditorFieldsDataModule),
   },
+  {
+    path: 'chat-bot',
+    loadChildren: () =>
+      import('./components/chat-bot/chat-bot.module').then((m) => m.ChatBotModule),
+  }
 ];
 
 @NgModule({

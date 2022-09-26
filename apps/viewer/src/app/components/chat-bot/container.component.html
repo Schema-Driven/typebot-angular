@@ -1,0 +1,5 @@
+<p>container works!</p>
+<div *ngFor="let bot of chatBotblocks">
+  "Type" {{ bot.type }}
+  <span *ngIf="fields.bubbles.indexOf(bot.type) === -1" (click)="renderNextStep()">Send</span>
+</div>
