@@ -6,11 +6,13 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class EditorService {
 
+  private editorJson$ = new BehaviorSubject<any>({});
   private groupBlocks$ = new BehaviorSubject<any>({});
   private block$ = new BehaviorSubject<any>({});
 
   selectedBlock$ = this.block$.asObservable();
   selectedGroupBlocks$ = this.block$.asObservable();
+  selectedEditorJson$ = this.editorJson$.asObservable();
 
   constructor() { }
 
@@ -20,5 +22,9 @@ export class EditorService {
 
   setBlock(block: any) {
     this.block$.next(block);
+  }
+
+  setEditorJson(editor: any) {
+    this.editorJson$.next(editor);
   }
 }

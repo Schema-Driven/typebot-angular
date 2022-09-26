@@ -11,6 +11,7 @@ import Panzoom from '@panzoom/panzoom';
 import { Block, Edge, TypeBot } from './editor.interfaces';
 import { Editor } from './editor';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ActivatedRoute } from '@angular/router';
 import { EditorService } from '../../services/editor.service';
 
 @Component({
@@ -26,6 +27,9 @@ export class EditorComponent extends Editor {
   editedGroupName: number = -1;
   deg: number = 3;
   edges: Edge[] = [];
+  viewChat: boolean = false;
+  previewChat: boolean = false;
+  draw: string = 'false';
 
   typebot: TypeBot = {
     name: 'My Typebot',
@@ -35,15 +39,29 @@ export class EditorComponent extends Editor {
 
   constructor(
     private modalService: NgbModal,
+    private route: ActivatedRoute,
     protected editorService: EditorService
-    ) {
+  ) {
     super(editorService);
   }
 
   ngOnInit() {
     this.createInstance(this.wrapper);
 
+    this.route.queryParams
+      .subscribe(params => {
+        this.draw = params['draw']
+        if (this.draw == 'true') {
+          this.drawEditor(localStorage.getItem('editor'))
+        }
+      }
+    );
+
     this.bindEvents();
+
+    if (this.draw == 'true') {
+      return;
+    }
 
     // this.panZoomController.pan(10, 10)
     // this.panZoomController.zoom(1, { animate: true });
@@ -137,7 +155,8 @@ export class EditorComponent extends Editor {
 
   addGroupOrBlock(data: any, event: any, type: string) {
     let blockId = this.uuid();
-    let groupId = type === 'group' ? this.uuid() : event.container.data[0].groupId;
+    let groupId =
+      type === 'group' ? this.uuid() : event.container.data[0].groupId;
 
     let block = {
       ...JSON.parse(JSON.stringify(data)),
@@ -217,16 +236,19 @@ export class EditorComponent extends Editor {
       this.scaleLevel = this.scaleLevel - 0.1;
     }
 
-    this.wrapper.nativeElement.style.transform = 'scale(' + this.scaleLevel + ')';
+    this.wrapper.nativeElement.style.transform =
+      'scale(' + this.scaleLevel + ')';
     this.instance.setZoom(this.scaleLevel);
     // this.instance.repaint();
   }
 
-  showRightClickPopover(type: string, id: string, e:any) {
+  showRightClickPopover(type: string, id: string, e: any) {
     if (this.firstGroupId !== id && this.firstBlockId !== id) {
       id = type + '-' + id;
       if (document.getElementById(id)) {
-        let index = document.getElementById(id)?.getAttribute('data-popover-index');
+        let index = document
+          .getElementById(id)
+          ?.getAttribute('data-popover-index');
         this.rightClickPopovers[type].splice(index, 1);
       }
 
@@ -241,49 +263,72 @@ export class EditorComponent extends Editor {
   }
 
   popoverHandler(type: string, id: string, index: number) {
-    let groupIndex: any
+    let groupIndex: any;
     let blockIndex: any;
-    id = id.replace(type + "-", "");
+    id = id.replace(type + '-', '');
 
     if (type === 'connector') {
       this.deleteConnection(id);
     } else if (type === 'group') {
-      groupIndex = document.getElementById(id)?.getAttribute('data-group-index');
+      groupIndex = document
+        .getElementById(id)
+        ?.getAttribute('data-group-index');
       this.instance.removeGroup(id);
       this.groupBlocks.splice(groupIndex, 1);
-    }
-    else if (type === 'itemField') {
-      groupIndex = document.getElementById(id)?.getAttribute('data-item-index');
-      this.groupBlocks.splice(groupIndex, 1);
     } else if (type === 'block') {
-      groupIndex = document.getElementById(id)?.closest('.grouper')?.getAttribute('data-group-index');
-      blockIndex = document.getElementById(id)?.getAttribute('data-block-index');
+      groupIndex = document
+        .getElementById(id)
+        ?.closest('.grouper')
+        ?.getAttribute('data-group-index');
+      blockIndex = document
+        .getElementById(id)
+        ?.getAttribute('data-block-index');
       this._removeEndPoint(id);
       this.groupBlocks[groupIndex].blocks.splice(blockIndex, 1);
-
 
       // Remove empty groups
       if (this.groupBlocks[groupIndex].blocks.length === 0) {
         this.instance.removeGroup(this.groupBlocks[groupIndex].id);
         this.groupBlocks.splice(groupIndex, 1);
       }
+    } else if (type === 'itemField') {
+      groupIndex = document
+        .getElementById(id)
+        ?.closest('.grouper')
+        ?.getAttribute('data-group-index');
+      blockIndex = document
+        .getElementById(id)
+        ?.closest('.single-block')
+        ?.getAttribute('data-block-index');
+      let itemIndex = document
+        .getElementById(id)
+        ?.getAttribute('data-item-index');
+      this.groupBlocks[groupIndex].blocks[blockIndex].items.splice(
+        itemIndex,
+        1
+      );
     }
 
     this.rightClickPopovers[type].splice(index, 1);
   }
 
-  showBlockOptionsPopover(popover: any, block: any, groupIndex: number, blockIndex: number) {
+  showBlockOptionsPopover(
+    popover: any,
+    block: any,
+    groupIndex: number,
+    blockIndex: number
+  ) {
     if (popover.isOpen()) {
       popover.close();
     } else {
       this.removeAllPopovers();
       this.editorService.setBlock(block);
-      popover.open({block, groupIndex, blockIndex});
+      popover.open({ block, groupIndex, blockIndex });
     }
   }
 
   removeAllPopovers() {
-    const elems = document.querySelectorAll('.input-popover')
+    const elems = document.querySelectorAll('.input-popover');
     elems.forEach((e) => {
       e.remove();
     });
@@ -291,7 +336,7 @@ export class EditorComponent extends Editor {
 
   open(content: any, groupIndex: number, blockIndex: number) {
     this.removeAllPopovers();
-    this.modalService.open(content, {ariaLabelledBy: 'block-modal'});
+    this.modalService.open(content, { ariaLabelledBy: 'block-modal' });
   }
 
   onGroupNameClick(index: number) {
@@ -308,31 +353,56 @@ export class EditorComponent extends Editor {
     this.editedGroupName = -1;
   }
 
-  addEndpointToItem(id: string) {
-    console.log("addEndpointToItem", id)
-    this.manageNode(id, ['Right'], 'block');
+  manageItemEndpoints(data: any) {
+    if (data.action === 'add') {
+      data.itemIds.forEach((id: string) => {
+        this.manageNode(id, ['Right'], 'block');
+      });
+    } else {
+      data.itemIds.forEach((id: string) => {
+        this._removeEndPoint(id);
+      });
+    }
   }
 
-  printJson() {
-    this.setEdgesObject();
+  async printJson() {
+    await this.setEdgesObject();
+    // this.editorService.setEditorJson(this.typebot);
+    localStorage.setItem('editor', JSON.stringify(this.typebot));
     console.log(this.typebot);
+    window.location.href = window.location.pathname + '?draw=true';
   }
 
-  setEdgesObject() {
+  async setEdgesObject() {
     this.edges = [];
     let connections = this.instance.getConnections({
       scope: 'jsplumb_defaultscope',
     });
+
     connections.forEach((con: any) => {
+      let from: any = {}, to: any = {};
+      let sourceIdentifier = document.getElementById(con.sourceId)?.getAttribute('data-identifier');
+      let targetIdentifier = document.getElementById(con.targetId)?.getAttribute('data-identifier');
+
+      from['blockId'] = document.getElementById(con.sourceId)?.closest('.single-block')?.getAttribute('id');
+      from['groupId'] = document.getElementById(con.sourceId)?.closest('.grouper')?.getAttribute('id');
+
+      if (sourceIdentifier === 'item') {
+        from['itemId'] = document.getElementById(con.sourceId)?.closest('.single-item')?.getAttribute('id');
+      }
+
+      to['groupId'] = document.getElementById(con.targetId)?.closest('.grouper')?.getAttribute('id');
+      if (targetIdentifier === 'block') {
+        to['blockId'] = document.getElementById(con.targetId)?.closest('.single-block')?.getAttribute('id');
+      }
+
       this.edges.push({
         id: this.uuid(),
-        from: {
-          blockId: con.sourceId,
-          groupId: this.groupBlockIdsMapping[con.sourceId],
-        },
-        to: { groupId: con.targetId },
+        from,
+        to
       });
     });
     this.typebot.edges = this.edges;
+    this.typebot.groups = this.groupBlocks;
   }
 }

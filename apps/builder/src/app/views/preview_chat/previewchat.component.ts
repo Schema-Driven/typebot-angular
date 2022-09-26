@@ -7,6 +7,7 @@ import {
   EventEmitter,
 } from '@angular/core';
 import { Router } from '@angular/router';
+import { EditorComponent } from '../editor/editor.component';
 
 @Component({
   selector: 'previewchat',
@@ -14,7 +15,11 @@ import { Router } from '@angular/router';
   styleUrls: ['./previewchat.component.css'],
 })
 export class PreviewChat implements OnInit {
-  constructor(private router: Router) {
+  previewChat: boolean = true;
+  constructor(
+    private router: Router,
+    private editorComponent: EditorComponent
+  ) {
     // ...
   }
   @Output() outputFromChild: EventEmitter<boolean> = new EventEmitter();
@@ -92,5 +97,6 @@ export class PreviewChat implements OnInit {
 
   sendDataToParent() {
     this.outputFromChild.emit(this.outputText);
+    this.editorComponent.previewChat = false;
   }
 }

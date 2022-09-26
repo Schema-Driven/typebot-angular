@@ -91,6 +91,28 @@
   fill: transparent;
 }
 
+::ng-deep .jtk-connector:not(.selected) path {
+  stroke: #9CA3AF;
+}
+
+::ng-deep .jtk-connector:not(.selected) path:nth-child(2) {
+  fill: #9CA3AF;
+}
+
+::ng-deep .jtk-hover path {
+  stroke: #1a5fff !important;
+}
+
+::ng-deep .jtk-hover path:nth-child(2) {
+  fill: #1a5fff !important;
+}
+
+::ng-deep .jtk-connector.selected path:nth-child(2) {
+  fill: #1a5fff;
+}
+
+
+
 .grouper.selected{
   outline: 2px solid #1a5fff;
   border-radius: 10px;
@@ -196,4 +218,9 @@ svg.endpointOnTarget.grouper.jtk-endpoint.jtk-endpoint-connected {
 
 ::ng-deep .file_input-field .input-field {
     display: block;
+}
+
+.custom-modal-main .custom-scrollbar {
+    height: 100%;
+    max-height: 100%;
 }

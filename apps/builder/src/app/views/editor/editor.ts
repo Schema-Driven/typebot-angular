@@ -1,6 +1,6 @@
 import { ElementRef } from '@angular/core';
 import { GroupStructuredBlock, GroupBlock } from "./editor.interfaces";
-import { ContainmentType, newInstance } from '@jsplumb/browser-ui';
+import { ContainmentType, EVENT_DRAG_STOP, newInstance } from '@jsplumb/browser-ui';
 import { FlowchartConnector } from '@jsplumb/connector-flowchart';
 import { AnchorLocations, AnchorSpec, AnchorOptions } from '@jsplumb/common';
 import { EditorService } from '../../services/editor.service';
@@ -460,6 +460,57 @@ export class Editor {
     });
   }
 
+  drawEditor(response: any) {
+    if (response) {
+      response = JSON.parse(response);
+      this.groupBlocks = response.groups;
+      let edges = response.edges;
+
+      console.log("groupBlocks", this.groupBlocks);
+
+      this.instance.batch(() => {
+        this.groupBlocks.forEach((gr) => {
+          this.manageNode(gr.id, ['Right'], 'group');
+
+          gr.blocks.forEach((b, i) => {
+            if (b.type === 'choice_input' && !b.options.isMultipleChoice) {
+              b.items.forEach((item: any) => {
+                this.manageNode('item-' + item.id, ['Right'], 'block');
+              });
+            }
+
+            if (gr.blocks.length - 1 === i) {
+              this.manageNode('be-' + b.id, ['Right'], 'block');
+            }
+            this.groupBlockIdsMapping[b.id] = gr.id;
+          });
+        });
+
+        setTimeout(() => {
+          edges.forEach((edge: any) => {
+            let sourceId = (edge.from.itemId ? 'item-' + edge.from.itemId : 'be-' + edge.from.blockId);
+            let targetId = (edge.to.blockId ? edge.to.blockId : edge.to.groupId);
+
+            this.instance.connect({
+              source: document.getElementById(sourceId),
+              target: document.getElementById(targetId),
+              anchors: ['Right', 'ContinuousLeft'],
+              endpoints: [this.sourceEndpoint.endpoint, this.targetEndpoint.endpoint],
+              endpointStyles: [this.sourceEndpoint.paintStyle, this.targetEndpoint.paintStyle],
+              // detachable: false,
+              // reattach: true,
+              deleteEndpointsOnDetach: true,
+              scope: 'jsplumb_defaultscope',
+              redrop: 'any',
+            })
+          });
+        }, 100)
+      });
+
+    }
+
+  }
+
   manageNode(id: string, location: any, type: string) {
     setTimeout(() => {
       // this.instance.manage(document.getElementById(id));
@@ -542,8 +593,6 @@ export class Editor {
 
   bindEvents() {
     this.instance.bind('connection', (info: any, e: any) => {
-      console.log('info.connection', info);
-      console.log('connector', info.connection.connector);
 
       this.instance.setAttribute(
         info.connection.connector.canvas,
@@ -562,7 +611,7 @@ export class Editor {
         this.instance.addClass(
           document.getElementById(
             this.groupBlockIdsMapping[
-              connector.getAttribute('connector-source-id')
+              connector.getAttribute('connector-source-id').replace('be-', '')
             ]
           ),
           'selected'
@@ -596,6 +645,14 @@ export class Editor {
         }
       );
     });
+
+    this.instance.bind(EVENT_DRAG_STOP, (drag: any) => {
+      if (drag.el._isJsPlumbGroup) {
+        const groupIndex: any = document.getElementById(drag.el.id)?.getAttribute('data-group-index');
+        this.groupBlocks[groupIndex].position.x = drag.el.offsetLeft;
+        this.groupBlocks[groupIndex].position.y = drag.el.offsetTop;
+      }
+    })
 
     window.addEventListener('click', (e: any) => {
 
