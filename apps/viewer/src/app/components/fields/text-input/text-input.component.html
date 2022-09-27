@@ -1,0 +1,25 @@
+<div (keyup.enter)="InputView()" id="InputToggle" *ngIf="senderView === true"
+  class="flex items-end w-full bg-white rounded-lg shadow-lg">
+  <textarea (keyup)="changeInputEvent($event)" cols="0" rows="6" *ngIf="isLong === true" [placeholder]="placeHolderText"
+    class="w-full p-4 outline-none"></textarea>
+  <input (keyup)="changeInputEvent($event)" class="flex-1 w-full p-4 bg-transparent focus:outline-none text-input"
+    *ngIf="isLong === false" [placeholder]="placeHolderText" />
+  <button (click)="InputView()" id="changeInputEventBtn"
+    class="bg-[#0042DA] py-2 px-4 justify-center font-semibold rounded-md text-white focus:outline-none flex items-center disabled:opacity-50 disabled:cursor-not-allowed disabled:brightness-100 transition-all filter hover:brightness-90 active:brightness-75 my-2 ml-2 mr-2"
+    disabled>
+    {{btnText}}
+  </button>
+</div>
+
+<div *ngIf="senderView === false" (click)="hideInputUserView()"
+  class="flex items-center justify-end w-full gap-2 receiver-view">
+  <span
+    class="bg-[#FF8E21] px-4 py-2 rounded-lg mr-2 whitespace-pre-wrap max-w-full cursor-pointer text-white">{{receiverText}}</span>
+  <figure class="relative flex items-center flex-shrink-0 w-9 h-9 "><img class="w-full h-full rounded-full"
+      src="./../../../assets/ViewChat/profile.png" alt=""></figure>
+</div>
+
+
+<!-- *ngIf="fields.bubbles.indexOf(bot.type) === -1"
+*ngIf="receiverTextView === true"
+-->

@@ -3,14 +3,24 @@ import { CommonModule } from '@angular/common';
 import { ChatBotRoutingModule } from './chat-bot-routing.module';
 import { ContainerComponent } from './container.component';
 
+import { UrlInputComponent } from '../fields/url-input/url-input.component';
+import { TextInputComponent } from '../fields/text-input/text-input.component';
+import { NumberInputComponent } from '../fields/number-input/number-input.component';
+import { EmailInputComponent } from '../fields/email-input/email-input.component';
+
+import { SafePipe } from '../../pipes/safe.pipe';
+import { HtmlPipe } from '../../pipes/html.pipe';
 
 @NgModule({
   declarations: [
-    ContainerComponent
+    ContainerComponent,
+    UrlInputComponent,
+    TextInputComponent,
+    NumberInputComponent,
+    EmailInputComponent,
+    SafePipe,
+    HtmlPipe,
   ],
-  imports: [
-    CommonModule,
-    ChatBotRoutingModule
-  ]
+  imports: [CommonModule, ChatBotRoutingModule],
 })
-export class ChatBotModule { }
+export class ChatBotModule {}
