@@ -19,12 +19,12 @@ export class TextInputComponent implements OnInit {
   changeInputEvent(event: any) {
     if (event.target.value !== '') {
       document
-        .getElementById('changeInputEventBtn')
+        .getElementById('changeTextInputEventBtn')
         ?.removeAttribute('disabled');
       event.target.setAttribute('value', event.target.value);
     } else {
       document
-        .getElementById('changeInputEventBtn')
+        .getElementById('changeTextInputEventBtn')
         ?.setAttribute('disabled', 'true');
     }
     this.receiverText = event.target.value;

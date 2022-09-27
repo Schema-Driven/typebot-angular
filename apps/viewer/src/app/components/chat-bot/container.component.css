@@ -27,14 +27,16 @@
     margin-bottom: 0;
     padding-top: 6px;
     padding-bottom: 20px;
-    width: 8%;
+    padding-left: 15px;
+    padding-right: 15px;
+    width: fit-content;
     justify-content: center;
     border-radius: 0.5rem;
 }
 .typebot-chat-view .loading.loading04 svg{
-    width: 14px;
-    height: 8px;
-    fill:#c3c3c3
+    width: 18px;
+    height: 10px;
+    fill:#7c7c7c
 }
 
 .loading span {
@@ -42,39 +44,39 @@
     margin: 0 -0.05em;
 }
 
-      /* code #4 */
-       .loading04 span {
-        animation: loading04 0.8s infinite;
-    }
+/* code #4 */
+.loading04 span {
+  animation: loading04 0.8s infinite;
+}
 
-    .loading04 span:nth-child(2) {
-        animation-delay: 0.2s;
-    }
+.loading04 span:nth-child(2) {
+  animation-delay: 0.2s;
+}
 
-    .loading04 span:nth-child(3) {
-        animation-delay: 0.3s;
-    }
+.loading04 span:nth-child(3) {
+  animation-delay: 0.3s;
+}
 
 
 
-    @keyframes loading04 {
+@keyframes loading04 {
 
-        0%,
-        100% {
-            transform: translateY(0);
-        }
+  0%,
+  100% {
+      transform: translateY(0);
+  }
 
-        50% {
-            transform: translateY(15px);
-        }
-    }
-    svg {
-        width: 5px;
-        height: 5px;
-    }
+  50% {
+      transform: translateY(15px);
+  }
+}
+svg {
+    width: 5px;
+    height: 5px;
+}
 
-    @media only screen and (max-width: 1199px) {
-        .typebot-chat-view {
-            max-width: 100% !important;
-      }
-    }
+@media only screen and (max-width: 1199px) {
+    .typebot-chat-view {
+        max-width: 100% !important;
+  }
+}

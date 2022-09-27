@@ -20,19 +20,27 @@ export class UrlInputComponent implements OnInit {
   changeInputEvent(event: any) {
     if (event.target.value !== '') {
       document
-        .getElementById('changeInputEventBtn')
+        .getElementById('changeUrlInputEventBtn')
         ?.removeAttribute('disabled');
       event.target.setAttribute('value', event.target.value);
       this.receiveText = event.target.value;
     } else {
       document
-        .getElementById('changeInputEventBtn')
+        .getElementById('changeUrlInputEventBtn')
         ?.setAttribute('disabled', 'true');
     }
   }
 
   InputView(event: any) {
     const isValid = event.target.reportValidity();
+    if (isValid) {
+      this.callbackFunc(event);
+      this.senderView = false;
+    }
+  }
+
+  clickInputView(event: any) {
+    const isValid = event.target.previousSibling.reportValidity();
     if (isValid) {
       this.callbackFunc(event);
       this.senderView = false;

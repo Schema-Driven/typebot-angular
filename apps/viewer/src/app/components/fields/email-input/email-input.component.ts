@@ -8,10 +8,9 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 export class EmailInputComponent implements OnInit {
   @Input() placeHolderText: any = '';
   @Input() btnText: any = '';
-  @Input() minValue: any = '';
-  @Input() maxValue: any = '';
-  @Input() stepValue: any = '';
+  @Input() error: any = '';
   @Output() callbackFunction = new EventEmitter();
+  @Output() callbackFunctionEnter = new EventEmitter();
   receiverText: string = '';
   senderView: boolean = true;
   constructor() {}
@@ -21,12 +20,12 @@ export class EmailInputComponent implements OnInit {
   changeInputEvent(event: any) {
     if (event.target.value !== '') {
       document
-        .getElementById('changeInputEventBtn')
+        .getElementById('changeEmailInputEventBtn')
         ?.removeAttribute('disabled');
       event.target.setAttribute('value', event.target.value);
     } else {
       document
-        .getElementById('changeInputEventBtn')
+        .getElementById('changeEmailInputEventBtn')
         ?.setAttribute('disabled', 'true');
     }
     this.receiverText = event.target.value;
@@ -34,6 +33,14 @@ export class EmailInputComponent implements OnInit {
 
   InputView(event: any) {
     const isValid = event.target.reportValidity();
+    if (isValid) {
+      this.callbackFuncEnter(event);
+      this.senderView = false;
+    }
+  }
+
+  clickInputView(event: any) {
+    const isValid = event.target.previousSibling.reportValidity();
     if (isValid) {
       this.callbackFunc(event);
       this.senderView = false;
@@ -46,5 +53,9 @@ export class EmailInputComponent implements OnInit {
 
   callbackFunc(e: any) {
     this.callbackFunction.emit(e);
+  }
+
+  callbackFuncEnter(e: any) {
+    this.callbackFunctionEnter.emit(e);
   }
 }

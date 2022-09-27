@@ -1,18 +1,22 @@
+import { HtmlParser } from '@angular/compiler';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { concat } from 'rxjs';
 
 @Component({
-  selector: 'app-number-input',
-  templateUrl: './number-input.component.html',
-  styleUrls: ['./number-input.component.css'],
+  selector: 'app-date-input',
+  templateUrl: './date-input.component.html',
+  styleUrls: ['./date-input.component.css'],
 })
-export class NumberInputComponent implements OnInit {
+export class DateInputComponent implements OnInit {
   @Input() placeHolderText: any = '';
   @Input() btnText: any = '';
-  @Input() minValue: any = '';
-  @Input() maxValue: any = '';
-  @Input() stepValue: any = '';
+  @Input() error: any = '';
+  @Input() rangeValue: any = '';
+  @Input() timeValue: any = '';
+  @Input() fromLabel: any = '';
+  @Input() toLabel: any = '';
   @Output() callbackFunction = new EventEmitter();
-  receiverText: string = '';
+  receiverText: any = '';
   senderView: boolean = true;
   constructor() {}
 
@@ -21,15 +25,22 @@ export class NumberInputComponent implements OnInit {
   changeInputEvent(event: any) {
     if (event.target.value !== '') {
       document
-        .getElementById('changeNumberInputEventBtn')
+        .getElementById('changeDateInputEventBtn')
         ?.removeAttribute('disabled');
-      event.target.setAttribute('value', event.target.value);
+      if (this.rangeValue === true) {
+        let ele1 = <HTMLInputElement>document.getElementById('fromDate');
+        ele1?.setAttribute('value', ele1?.value);
+        let ele2 = <HTMLInputElement>document.getElementById('toDate');
+        ele2?.setAttribute('value', ele2?.value);
+        this.receiverText = ele1.value + ' to ' + ele2.value;
+      } else {
+        this.receiverText = event.target.value;
+      }
     } else {
       document
-        .getElementById('changeNumberInputEventBtn')
+        .getElementById('changeDateInputEventBtn')
         ?.setAttribute('disabled', 'true');
     }
-    this.receiverText = event.target.value;
   }
 
   InputView(event: any) {
