@@ -10,15 +10,21 @@
           <div *ngIf="bot?.type === 'text'" class="p-4 rounded-lg bg-gray-50 w-fit {{bot?.type}}-main"
             [innerHTML]="bot.content.html ? bot.content.html  : '<p>Type the content here</p>'  ">
           </div>
-          <div *ngIf="bot?.type === 'image'" class="w-full p-4 rounded-lg bg-gray-50 {{bot?.type}}-main">
-            <img alt="Group Image" class="object-cover w-full h-full " [src]="bot.content.url">
+          <div *ngIf="bot?.type === 'image'" class="w-fit p-4 rounded-lg bg-gray-50 {{bot?.type}}-main">
+            <img alt="Bubble Image" class="object-cover w-full h-full " [src]="bot.content.url">
           </div>
           <div *ngIf="bot?.type === 'video'" class="p-4 rounded-lg bg-gray-50 w-80 {{bot?.type}}-main">
-            <iframe [src]="bot?.content.id | safe" class="object-cover" allowfullscreen
+            <iframe *ngIf="bot?.content.id !== ''" [src]="bot?.content.id | safe" class="object-cover" allowfullscreen
               style="width: 100%; height: 100%;">
             </iframe>
+            <div *ngIf="bot?.content.id === ''">
+              <video controls autoplay>
+                <source src="" type="video/mp4">
+              </video>
+            </div>
           </div>
-          <div *ngIf="bot?.type === 'embed'" class="p-4 rounded-lg bg-gray-50 w-fit"
+          <div *ngIf="bot?.type === 'embed'"
+            class="{{bot?.content.url ? 'w-fit':'h-96 w-full'}} p-4 rounded-lg bg-gray-50 "
             [innerHTML]="bot?.content.url | html">
           </div>
           <div *ngIf="bot?.type === 'text_input'" class="w-full {{bot?.type}}-main">
@@ -39,10 +45,10 @@
           </div>
           <div *ngIf="bot?.type === 'email_input'" class="w-full {{bot?.type}}-main">
             <app-email-input [placeHolderText]="bot?.options.labels.placeholder" [btnText]="bot?.options.labels.button"
-              (callbackFunction)="emailVerificationBtn($event)"
-              (callbackFunctionEnter)="emailVerificationEnter($event)">
+              (callbackFunction)="emailVerification($event)">
             </app-email-input>
-            <p *ngIf="emailError === true" class="p-4 rounded-lg bg-gray-50 w-fit">{{bot?.options.retryMessageContent}}
+            <p *ngIf="emailError === true" class="p-4 rounded-lg bg-gray-50 w-fit mt-3">
+              {{bot?.options.retryMessageContent}}
             </p>
           </div>
           <div *ngIf="bot?.type === 'date_input'" class="w-full {{bot?.type}}-main">

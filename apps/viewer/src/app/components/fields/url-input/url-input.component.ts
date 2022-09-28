@@ -11,11 +11,10 @@ export class UrlInputComponent implements OnInit {
   @Output() callbackFunction = new EventEmitter();
   receiveText: string = '';
   senderView: boolean = true;
+  editable: boolean = true;
   constructor() {}
 
-  ngOnInit(): void {
-    console.log(this.placeHolderText, this.btnText);
-  }
+  ngOnInit(): void {}
 
   changeInputEvent(event: any) {
     if (event.target.value !== '') {
@@ -32,18 +31,18 @@ export class UrlInputComponent implements OnInit {
   }
 
   InputView(event: any) {
-    const isValid = event.target.reportValidity();
-    if (isValid) {
-      this.callbackFunc(event);
-      this.senderView = false;
-    }
-  }
-
-  clickInputView(event: any) {
-    const isValid = event.target.previousSibling.reportValidity();
-    if (isValid) {
-      this.callbackFunc(event);
-      this.senderView = false;
+    if (event.detail === 0) {
+      const isValid = event.target.reportValidity();
+      if (isValid) {
+        this.callbackFunc(event);
+        this.senderView = false;
+      }
+    } else if (event.detail === 1) {
+      const isValid = event.target.previousSibling.reportValidity();
+      if (isValid) {
+        this.callbackFunc(event);
+        this.senderView = false;
+      }
     }
   }
 
@@ -52,6 +51,9 @@ export class UrlInputComponent implements OnInit {
   }
 
   callbackFunc(e: any) {
-    this.callbackFunction.emit(e);
+    if (this.editable === true) {
+      this.callbackFunction.emit(e);
+      this.editable = false;
+    }
   }
 }

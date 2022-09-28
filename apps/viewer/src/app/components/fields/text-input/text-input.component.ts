@@ -12,6 +12,7 @@ export class TextInputComponent implements OnInit {
   @Output() callbackFunction = new EventEmitter();
   receiverText: string = '';
   senderView: boolean = true;
+  editable: boolean = true;
   constructor() {}
 
   ngOnInit(): void {}
@@ -40,6 +41,9 @@ export class TextInputComponent implements OnInit {
   }
 
   callbackFunc(e: any) {
-    this.callbackFunction.emit(e);
+    if (this.editable === true) {
+      this.callbackFunction.emit(e);
+      this.editable = false;
+    }
   }
 }

@@ -68,7 +68,6 @@ export class ContainerComponent implements OnInit {
   }
 
   renderNextStep() {
-    console.log('after email');
     if (this.chatBotblocks.length === this.blocks.length) {
       return;
     }
@@ -89,23 +88,35 @@ export class ContainerComponent implements OnInit {
     }, 2000);
   }
 
-  emailVerificationBtn(event: any) {
+  emailVerification(event: any) {
     var mailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-    if (event.target.previousSibling.value.match(mailFormat)) {
-      this.renderNextStep();
+    if (event.detail === 1) {
+      if (event.target.previousSibling.value.match(mailFormat)) {
+        this.renderNextStep();
+      } else {
+        this.emailError = true;
+        this.loadingBot = true;
+        // const lastEle = this.chatBotblocks.length - 1;
+        setTimeout(() => {
+          this.loadingBot = false;
+          // this.chatBotblocks.push(this.chatBotblocks[lastEle]);
+          // this.blocks.push(this.blocks[this.chatBotblocks.length - 1]);
+          // console.log(this.blocks);
+          // console.log(this.chatBotblocks);
+        }, 2000);
+      }
     } else {
-      this.emailError = true;
-      this.renderNextStep();
-    }
-  }
-
-  emailVerificationEnter(event: any) {
-    var mailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-    if (event.target.value.match(mailFormat)) {
-      this.renderNextStep();
-    } else {
-      this.emailError = true;
-      this.renderNextStep();
+      if (event.target.value.match(mailFormat)) {
+        this.renderNextStep();
+      } else {
+        this.emailError = true;
+        this.loadingBot = true;
+        const lastEle = this.chatBotblocks.length - 1;
+        setTimeout(() => {
+          this.loadingBot = false;
+          this.chatBotblocks.push(this.chatBotblocks[lastEle]);
+        }, 2000);
+      }
     }
   }
 }

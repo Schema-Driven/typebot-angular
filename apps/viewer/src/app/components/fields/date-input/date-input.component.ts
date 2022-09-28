@@ -18,6 +18,7 @@ export class DateInputComponent implements OnInit {
   @Output() callbackFunction = new EventEmitter();
   receiverText: any = '';
   senderView: boolean = true;
+  editable: boolean = true;
   constructor() {}
 
   ngOnInit(): void {}
@@ -44,19 +45,8 @@ export class DateInputComponent implements OnInit {
   }
 
   InputView(event: any) {
-    const isValid = event.target.reportValidity();
-    if (isValid) {
-      this.callbackFunc(event);
-      this.senderView = false;
-    }
-  }
-
-  clickInputView(event: any) {
-    const isValid = event.target.previousSibling.reportValidity();
-    if (isValid) {
-      this.callbackFunc(event);
-      this.senderView = false;
-    }
+    this.callbackFunc(event);
+    this.senderView = false;
   }
 
   hideInputUserView() {
@@ -64,6 +54,9 @@ export class DateInputComponent implements OnInit {
   }
 
   callbackFunc(e: any) {
-    this.callbackFunction.emit(e);
+    if (this.editable === true) {
+      this.callbackFunction.emit(e);
+      this.editable = false;
+    }
   }
 }
