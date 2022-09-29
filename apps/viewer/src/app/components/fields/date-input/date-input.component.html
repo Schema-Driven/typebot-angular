@@ -1,0 +1,43 @@
+<div id="InputToggle" *ngIf="senderView === true && rangeValue === false"
+  class="flex items-end w-fit bg-white rounded-lg shadow-lg">
+  <input type="{{timeValue? 'datetime-local' :'date'}}" (keyup.enter)="InputView($event)"
+    (change)="changeInputEvent($event)" id="Date" name="Date"
+    class="flex-1 w-full p-4 bg-transparent focus:outline-none" autocomplete="Date" [placeholder]="placeHolderText"
+    value="" />
+  <button type="button" (click)="InputView($event)" id="changeDateInputEventBtn"
+    class="bg-[#0042DA] py-2 px-4 justify-center font-semibold rounded-md text-white focus:outline-none flex items-center disabled:opacity-50 disabled:cursor-not-allowed disabled:brightness-100 transition-all filter hover:brightness-90 active:brightness-75 my-2 ml-2 mr-2"
+    disabled>
+    {{btnText}}
+  </button>
+</div>
+<div id="InputToggle" *ngIf="senderView === true && rangeValue === true"
+  class="flex items-end w-fit bg-white rounded-lg shadow-lg">
+  <div class="p-4">
+    <div class="flex items-center gap-1 mb-2">
+      <label class="font-bold" [for]="fromLabel">{{fromLabel}}</label>
+      <input type="{{timeValue? 'datetime-local' :'date'}}" (keyup.enter)="InputView($event)"
+        (change)="changeInputEvent($event)" id="fromDate" name="Date"
+        class="flex-1 w-full bg-transparent focus:outline-none" autocomplete="Date" [placeholder]="placeHolderText"
+        value="" />
+    </div>
+    <div class="flex items-center gap-1 mt-2">
+      <label class="font-bold" [for]="toLabel">{{toLabel}}</label>
+      <input type="{{timeValue? 'datetime-local' :'date'}}" (keyup.enter)="InputView($event)"
+        (change)="changeInputEvent($event)" id="toDate" name="Date"
+        class="flex-1 w-full bg-transparent focus:outline-none" autocomplete="Date" [placeholder]="placeHolderText"
+        value="" />
+    </div>
+  </div>
+  <button type="button" (click)="InputView($event)" id="changeDateInputEventBtn"
+    class="bg-[#0042DA] py-2 px-4 justify-center font-semibold rounded-md text-white focus:outline-none flex items-center disabled:opacity-50 disabled:cursor-not-allowed disabled:brightness-100 transition-all filter hover:brightness-90 active:brightness-75 my-2 ml-2 mr-2"
+    disabled>
+    {{btnText}}
+  </button>
+</div>
+<div (click)="hideInputUserView()" *ngIf="senderView === false"
+  class="flex items-center justify-end w-full gap-2 receiver-view">
+  <span
+    class="bg-[#FF8E21] px-4 py-2 rounded-lg mr-2 whitespace-pre-wrap max-w-full cursor-pointer text-white">{{receiverText}}</span>
+  <figure *ngIf="false" class="relative flex items-center flex-shrink-0 w-9 h-9 "><img
+      class="w-full h-full rounded-full" src="./../../../assets/ViewChat/profile.png" alt=""></figure>
+</div>
