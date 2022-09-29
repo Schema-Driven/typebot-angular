@@ -12,18 +12,24 @@ export class UrlInputComponent implements OnInit {
   receiveText: string = '';
   senderView: boolean = true;
   editable: boolean = true;
+  onInput = 0;
   constructor() {}
 
   ngOnInit(): void {}
 
   changeInputEvent(event: any) {
+    if (this.onInput == 0) {
+      event.target.value = 'https://';
+    }
     if (event.target.value !== '') {
+      this.onInput = 1;
       document
         .getElementById('changeUrlInputEventBtn')
         ?.removeAttribute('disabled');
       event.target.setAttribute('value', event.target.value);
       this.receiveText = event.target.value;
     } else {
+      this.onInput = 0;
       document
         .getElementById('changeUrlInputEventBtn')
         ?.setAttribute('disabled', 'true');

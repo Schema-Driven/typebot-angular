@@ -22,7 +22,8 @@ export class ContainerComponent implements OnInit {
     ],
   };
   loadingBot: boolean = false;
-  emailError: boolean = false;
+  botCounter = 0;
+  offset: any = 0;
 
   constructor() {}
 
@@ -68,7 +69,7 @@ export class ContainerComponent implements OnInit {
   }
 
   renderNextStep() {
-    if (this.chatBotblocks.length === this.blocks.length) {
+    if (this.botCounter === this.blocks.length) {
       return;
     }
 
@@ -76,14 +77,14 @@ export class ContainerComponent implements OnInit {
 
     setTimeout(() => {
       this.loadingBot = false;
-      this.chatBotblocks.push(this.blocks[this.chatBotblocks.length]);
-
+      this.chatBotblocks.push(this.blocks[this.botCounter]);
+      this.botCounter++;
       if (
-        this.fields.bubbles.indexOf(
-          this.blocks[this.chatBotblocks.length - 1].type
-        ) !== -1
+        this.fields.bubbles.indexOf(this.blocks[this.botCounter - 1].type) !==
+        -1
       ) {
         this.renderNextStep();
+        this.calculateTop(this.blocks[this.botCounter]);
       }
     }, 2000);
   }
@@ -94,29 +95,77 @@ export class ContainerComponent implements OnInit {
       if (event.target.previousSibling.value.match(mailFormat)) {
         this.renderNextStep();
       } else {
-        this.emailError = true;
         this.loadingBot = true;
-        // const lastEle = this.chatBotblocks.length - 1;
+        const lastEle = this.chatBotblocks.length - 1;
         setTimeout(() => {
           this.loadingBot = false;
-          // this.chatBotblocks.push(this.chatBotblocks[lastEle]);
-          // this.blocks.push(this.blocks[this.chatBotblocks.length - 1]);
-          // console.log(this.blocks);
-          // console.log(this.chatBotblocks);
+          const validationError = {
+            type: 'error',
+            message: this.chatBotblocks[lastEle].options.retryMessageContent,
+          };
+          this.chatBotblocks.push(validationError);
+          this.chatBotblocks.push(this.chatBotblocks[lastEle]);
         }, 2000);
       }
     } else {
       if (event.target.value.match(mailFormat)) {
         this.renderNextStep();
       } else {
-        this.emailError = true;
         this.loadingBot = true;
         const lastEle = this.chatBotblocks.length - 1;
         setTimeout(() => {
           this.loadingBot = false;
+          const validationError = {
+            type: 'error',
+            message: this.chatBotblocks[lastEle].options.retryMessageContent,
+          };
+          this.chatBotblocks.push(validationError);
           this.chatBotblocks.push(this.chatBotblocks[lastEle]);
         }, 2000);
       }
     }
+  }
+
+  UrlVerification(event: any) {
+    var urlFormat = /(.|\s)*\S(.|\s)*/;
+    if (event.detail === 1) {
+      if (event.target.previousSibling.value.match(urlFormat)) {
+        this.renderNextStep();
+      } else {
+        this.loadingBot = true;
+        const lastEle = this.chatBotblocks.length - 1;
+        setTimeout(() => {
+          this.loadingBot = false;
+          const validationError = {
+            type: 'error',
+            message: this.chatBotblocks[lastEle].options.retryMessageContent,
+          };
+          this.chatBotblocks.push(validationError);
+          this.chatBotblocks.push(this.chatBotblocks[lastEle]);
+        }, 2000);
+      }
+    } else {
+      if (event.target.value.match(urlFormat)) {
+        this.renderNextStep();
+      } else {
+        this.loadingBot = true;
+        const lastEle = this.chatBotblocks.length - 1;
+        setTimeout(() => {
+          this.loadingBot = false;
+          const validationError = {
+            type: 'error',
+            message: this.chatBotblocks[lastEle].options.retryMessageContent,
+          };
+          this.chatBotblocks.push(validationError);
+          this.chatBotblocks.push(this.chatBotblocks[lastEle]);
+        }, 2000);
+      }
+    }
+  }
+
+  calculateTop(data: any) {
+    this.offset = document.getElementById('flex-col')?.offsetHeight;
+    const element = <HTMLSelectElement>document.getElementById('flex-image');
+    element.style.top = this.offset + this.offset - 70 + 'px';
   }
 }

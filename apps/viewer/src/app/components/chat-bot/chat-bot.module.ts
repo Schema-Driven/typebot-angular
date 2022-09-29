@@ -8,6 +8,7 @@ import { TextInputComponent } from '../fields/text-input/text-input.component';
 import { NumberInputComponent } from '../fields/number-input/number-input.component';
 import { EmailInputComponent } from '../fields/email-input/email-input.component';
 import { DateInputComponent } from '../fields/date-input/date-input.component';
+import { PhoneInputComponent } from '../fields/phone-input/phone-input.component';
 
 import { SafePipe } from '../../pipes/safe.pipe';
 import { HtmlPipe } from '../../pipes/html.pipe';
@@ -20,6 +21,7 @@ import { HtmlPipe } from '../../pipes/html.pipe';
     NumberInputComponent,
     EmailInputComponent,
     DateInputComponent,
+    PhoneInputComponent,
     SafePipe,
     HtmlPipe,
   ],

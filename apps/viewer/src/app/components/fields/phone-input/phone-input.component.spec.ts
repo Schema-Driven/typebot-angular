@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EditorFieldsDataComponent } from './editor-fields-data.component';
+import { PhoneInputComponent } from './phone-input.component';
 
-describe('EditorFieldsDataComponent', () => {
-  let component: EditorFieldsDataComponent;
-  let fixture: ComponentFixture<EditorFieldsDataComponent>;
+describe('PhoneInputComponent', () => {
+  let component: PhoneInputComponent;
+  let fixture: ComponentFixture<PhoneInputComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ EditorFieldsDataComponent ]
+      declarations: [ PhoneInputComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(EditorFieldsDataComponent);
+    fixture = TestBed.createComponent(PhoneInputComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

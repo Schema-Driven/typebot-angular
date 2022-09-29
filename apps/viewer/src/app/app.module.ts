@@ -7,10 +7,9 @@ import { AppComponent } from './app.component';
 import { ViewChatModule } from './components/view_chat/view_chat.module';
 
 import { HttpClientModule } from '@angular/common/http';
-import { EditorFieldsDataComponent } from './components/fields/editor-fields-data/editor-fields-data.component';
 
 @NgModule({
-  declarations: [AppComponent, EditorFieldsDataComponent],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
