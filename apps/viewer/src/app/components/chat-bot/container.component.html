@@ -9,7 +9,7 @@
         </div>
       </div>
       <div id="flex-col" class="w-full">
-        <div class="mt-3" *ngFor="let bot of chatBotblocks">
+        <div class="mb-3" *ngFor="let bot of chatBotblocks">
           <!-- "Type" {{ bot.type }} -->
           <div id="{{bot.type}}" *ngIf="bot?.type === 'text'" class="p-4 rounded-lg bg-gray-50 w-fit {{bot?.type}}-main"
             [innerHTML]="bot.content.html ? bot.content.html  : '<p>Type the content here</p>'  ">
@@ -60,8 +60,10 @@
               [timeValue]="bot?.options.hasTime" [fromLabel]="bot?.options.labels.from"
               [toLabel]="bot?.options.labels.to">
             </app-date-input>
-            <p *ngIf="false" class="p-4 rounded-lg bg-gray-50 w-fit">{{bot?.options.retryMessageContent}}
-            </p>
+          </div>
+          <div *ngIf="bot?.type === 'phone_number_input'" class="w-full {{bot?.type}}-main">
+            <app-phone-input [placeHolderText]="bot?.options.labels.placeholder" [btnText]="bot?.options.labels.button"
+              (callbackFunction)="renderNextStep()"></app-phone-input>
           </div>
           <div *ngIf="bot.type === 'error'" class="w-full {{bot?.type}}-main">
             <p class="p-4 rounded-lg bg-gray-50 w-fit mt-3">
