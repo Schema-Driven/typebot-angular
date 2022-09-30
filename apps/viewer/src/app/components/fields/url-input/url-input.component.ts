@@ -40,13 +40,13 @@ export class UrlInputComponent implements OnInit {
     if (event.detail === 0) {
       const isValid = event.target.reportValidity();
       if (isValid) {
-        this.callbackFunc(event);
+        this.callbackFunc(event.target.value);
         this.senderView = false;
       }
     } else if (event.detail === 1) {
       const isValid = event.target.previousSibling.reportValidity();
       if (isValid) {
-        this.callbackFunc(event);
+        this.callbackFunc(event.target.previousSibling.value);
         this.senderView = false;
       }
     }

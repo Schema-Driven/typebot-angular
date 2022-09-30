@@ -63,7 +63,7 @@
           </div>
           <div *ngIf="bot?.type === 'phone_number_input'" class="w-full {{bot?.type}}-main">
             <app-phone-input [placeHolderText]="bot?.options.labels.placeholder" [btnText]="bot?.options.labels.button"
-              (callbackFunction)="renderNextStep()"></app-phone-input>
+              (callbackFunction)="PhoneNumVerification($event)"></app-phone-input>
           </div>
           <div *ngIf="bot.type === 'error'" class="w-full {{bot?.type}}-main">
             <p class="p-4 rounded-lg bg-gray-50 w-fit mt-3">

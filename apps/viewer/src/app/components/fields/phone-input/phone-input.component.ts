@@ -52,9 +52,20 @@ export class PhoneInputComponent implements OnInit {
     this.receiverText = event.target.value;
   }
 
-  InputView() {
-    this.callbackFunc(event);
-    this.senderView = false;
+  InputView(event: any) {
+    if (event.detail === 0) {
+      const isValid = event.target.reportValidity();
+      if (isValid) {
+        this.callbackFunc(event.target.value);
+        this.senderView = false;
+      }
+    } else if (event.detail === 1) {
+      const isValid = event.target.previousSibling.reportValidity();
+      if (isValid) {
+        this.callbackFunc(event.target.previousSibling.value);
+        this.senderView = false;
+      }
+    }
   }
 
   hideInputUserView() {
