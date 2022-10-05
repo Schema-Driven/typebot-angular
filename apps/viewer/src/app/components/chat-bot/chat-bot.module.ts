@@ -25,5 +25,6 @@ import { HtmlPipe } from '../../pipes/html.pipe';
     HtmlPipe,
   ],
   imports: [CommonModule, ChatBotRoutingModule, PhoneInputModule],
+  exports: [ContainerComponent],
 })
 export class ChatBotModule {}
