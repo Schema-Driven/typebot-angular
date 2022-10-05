@@ -1,7 +1,7 @@
-<div id="InputToggle" *ngIf="senderView === true" class="flex items-end w-fit bg-white rounded-lg shadow-lg">
+<div id="InputToggle" *ngIf="senderView === true" class="flex items-end bg-white rounded-lg shadow-lg w-fit">
   <div class="flex">
-    <div *ngIf="false" class="w-12 gap-1 relative px-2 flex items-center">
-      <svg class="w-14 h-14 text-gray-500 " xmlns="http://www.w3.org/2000/svg" viewBox="0 0 75 50">
+    <div *ngIf="false" class="relative flex items-center w-12 gap-1 px-2">
+      <svg class="text-gray-500 w-14 h-14 " xmlns="http://www.w3.org/2000/svg" viewBox="0 0 75 50">
         <title>International</title>
         <g class="PhoneInputInternationalIconGlobe" stroke="currentColor" fill="none" stroke-width="2"
           stroke-miterlimit="10">
@@ -23,11 +23,12 @@
     </div>
     <form #f="ngForm" [formGroup]="phoneForm">
       <div class="wrapper">
+        <input type="phone" />
       </div>
     </form>
   </div>
   <button (click)="InputView($event)" id="changeTextInputEventBtn"
-    class="bg-[#0042DA] py-2 px-4 justify-center font-semibold rounded-md text-white focus:outline-none flex items-center disabled:opacity-50 disabled:cursor-not-allowed disabled:brightness-100 transition-all filter hover:brightness-90 active:brightness-75 my-2 ml-2 mr-2"
+    class="bg-[#0042DA] app-btn-bg py-2 px-4 justify-center font-semibold rounded-md text-white focus:outline-none flex items-center disabled:opacity-50 disabled:cursor-not-allowed disabled:brightness-100 transition-all filter hover:brightness-90 active:brightness-75 my-2 ml-2 mr-2"
     disabled>
     {{btnText}}
   </button>
@@ -36,7 +37,7 @@
 <div *ngIf="senderView === false" (click)="hideInputUserView()"
   class="flex items-center justify-end w-full gap-2 receiver-view">
   <span
-    class="bg-[#FF8E21] px-4 py-2 rounded-lg mr-2 whitespace-pre-wrap max-w-full cursor-pointer text-white">{{receiverText}}</span>
+    class="bg-[#FF8E21] app-bg-color px-4 py-2 rounded-lg mr-2 whitespace-pre-wrap max-w-full cursor-pointer text-white">{{receiverText}}</span>
   <figure *ngIf="false" class="relative flex items-center flex-shrink-0 w-9 h-9 "><img
       class="w-full h-full rounded-full" src="./../../../assets/ViewChat/profile.png" alt=""></figure>
 </div>
