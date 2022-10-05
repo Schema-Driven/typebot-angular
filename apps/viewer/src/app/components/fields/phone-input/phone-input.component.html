@@ -23,16 +23,6 @@
     </div>
     <form #f="ngForm" [formGroup]="phoneForm">
       <div class="wrapper">
-        <ngx-intl-tel-input (keyup.enter)="InputView($event)" (keyup)="changeInputEvent($event)"
-          [cssClass]="'custom flex-1 w-full p-4 bg-transparent focus:outline-none text-input'"
-          [customPlaceholder]="placeHolderText" [enableAutoCountrySelect]="true" [enablePlaceholder]="true"
-          [searchCountryFlag]="true" [searchCountryField]="[
-            SearchCountryField.Iso2,
-            SearchCountryField.Name
-          ]" [selectFirstCountry]="false" [maxLength]="15" [phoneValidation]="true" [separateDialCode]="false"
-          [numberFormat]="PhoneNumberFormat.National" name="phone" formControlName="phone"
-          [enableAutoCountrySelect]="true">
-        </ngx-intl-tel-input>
       </div>
     </form>
   </div>

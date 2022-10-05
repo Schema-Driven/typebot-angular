@@ -1,11 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { countries } from '../../../../../../builder/src/app/views/editor/country';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import {
-  SearchCountryField,
-  CountryISO,
-  PhoneNumberFormat,
-} from 'ngx-intl-tel-input';
 
 @Component({
   selector: 'app-phone-input',
@@ -22,14 +17,6 @@ export class PhoneInputComponent implements OnInit {
   countriesObj = countries;
   selectedCountry = '';
 
-  separateDialCode = false;
-  SearchCountryField = SearchCountryField;
-  CountryISO = CountryISO;
-  PhoneNumberFormat = PhoneNumberFormat;
-  preferredCountries: CountryISO[] = [
-    CountryISO.UnitedStates,
-    CountryISO.UnitedKingdom,
-  ];
   phoneForm = new FormGroup({
     phone: new FormControl(undefined, [Validators.required]),
   });
@@ -89,9 +76,5 @@ export class PhoneInputComponent implements OnInit {
         ele?.setAttribute('value', num);
       }
     }
-  }
-
-  changePreferredCountries() {
-    this.preferredCountries = [CountryISO.India, CountryISO.Canada];
   }
 }
