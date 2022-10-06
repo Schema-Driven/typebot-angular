@@ -66,4 +66,11 @@ export class HeaderBarComponent implements OnInit {
     console.log(data);
     this.showComp = data;
   }
+
+  changeUrl() {
+    this.navigate(['/', 'editor']);
+    if (window.location.pathname.match('editor')) {
+      window.location.href = window.location.pathname + '?draw=true';
+    }
+  }
 }

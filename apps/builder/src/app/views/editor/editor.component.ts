@@ -48,14 +48,12 @@ export class EditorComponent extends Editor {
   ngOnInit() {
     this.createInstance(this.wrapper);
 
-    this.route.queryParams
-      .subscribe(params => {
-        this.draw = params['draw']
-        if (this.draw == 'true') {
-          this.drawEditor(localStorage.getItem('editor'))
-        }
+    this.route.queryParams.subscribe((params) => {
+      this.draw = params['draw'];
+      if (this.draw == 'true') {
+        this.drawEditor(localStorage.getItem('editor'));
       }
-    );
+    });
 
     this.bindEvents();
 
@@ -149,7 +147,10 @@ export class EditorComponent extends Editor {
       );
       this.removeEmptyGroupBlocks(event.previousContainer.data);
     }
-
+    // this.printJson();
+    this.setEdgesObject();
+    localStorage.setItem('editor', JSON.stringify(this.typebot));
+    console.log(this.typebot);
     // this.editorService.setGroupBlocks(this.groupBlocks);
   }
 
@@ -380,26 +381,46 @@ export class EditorComponent extends Editor {
     });
 
     connections.forEach((con: any) => {
-      let from: any = {}, to: any = {};
-      let sourceIdentifier = document.getElementById(con.sourceId)?.getAttribute('data-identifier');
-      let targetIdentifier = document.getElementById(con.targetId)?.getAttribute('data-identifier');
+      let from: any = {},
+        to: any = {};
+      let sourceIdentifier = document
+        .getElementById(con.sourceId)
+        ?.getAttribute('data-identifier');
+      let targetIdentifier = document
+        .getElementById(con.targetId)
+        ?.getAttribute('data-identifier');
 
-      from['blockId'] = document.getElementById(con.sourceId)?.closest('.single-block')?.getAttribute('id');
-      from['groupId'] = document.getElementById(con.sourceId)?.closest('.grouper')?.getAttribute('id');
+      from['blockId'] = document
+        .getElementById(con.sourceId)
+        ?.closest('.single-block')
+        ?.getAttribute('id');
+      from['groupId'] = document
+        .getElementById(con.sourceId)
+        ?.closest('.grouper')
+        ?.getAttribute('id');
 
       if (sourceIdentifier === 'item') {
-        from['itemId'] = document.getElementById(con.sourceId)?.closest('.single-item')?.getAttribute('id');
+        from['itemId'] = document
+          .getElementById(con.sourceId)
+          ?.closest('.single-item')
+          ?.getAttribute('id');
       }
 
-      to['groupId'] = document.getElementById(con.targetId)?.closest('.grouper')?.getAttribute('id');
+      to['groupId'] = document
+        .getElementById(con.targetId)
+        ?.closest('.grouper')
+        ?.getAttribute('id');
       if (targetIdentifier === 'block') {
-        to['blockId'] = document.getElementById(con.targetId)?.closest('.single-block')?.getAttribute('id');
+        to['blockId'] = document
+          .getElementById(con.targetId)
+          ?.closest('.single-block')
+          ?.getAttribute('id');
       }
 
       this.edges.push({
         id: this.uuid(),
         from,
-        to
+        to,
       });
     });
     this.typebot.edges = this.edges;

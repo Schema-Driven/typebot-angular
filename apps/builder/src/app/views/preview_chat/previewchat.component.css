@@ -195,3 +195,9 @@
     .loading.loading04{
         width: 16% !important;
     }
+::ng-deep .app-btn-bg{
+  background-color: #0042DA;
+}
+::ng-deep .app-bg-color{
+  background-color: #FF8E21;
+}
