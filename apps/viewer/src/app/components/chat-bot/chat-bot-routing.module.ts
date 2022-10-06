@@ -5,12 +5,12 @@ import { ContainerComponent } from './container.component';
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'chat-bot',
     component: ContainerComponent,
     children: [
       //add child-paths here ...
     ],
-  }
+  },
 ];
 
 @NgModule({

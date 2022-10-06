@@ -1,107 +1,92 @@
-<div class="h-12 w-full bg-blue-500 header">
-    <div class="relative bg-white">
-      <div class="mx-auto  sm:px-4 pr-6">
-        <div class="flex justify-between items-center border-b-2 border-gray-100
-          py-2 md:justify-start md:space-x-10">
-          <div class="flex justify-start lg:w-0 lg:flex-1 h-left">
+<div class="w-full h-12 bg-blue-500 header">
+  <div class="relative bg-white">
+    <div class="pr-6 mx-auto sm:px-4">
+      <div class="flex items-center justify-between py-2 border-b-2 border-gray-100 md:justify-start md:space-x-10">
+        <div class="flex justify-start lg:w-0 lg:flex-1 h-left">
 
-            <a class="bg-gray-100 rounded-lg p-0.5 w-10 h-10 flex
+          <a class="bg-gray-100 rounded-lg p-0.5 w-10 h-10 flex
               items-center justify-center">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M15
-                  19l-7-7 7-7"/>
-              </svg>
-            </a>
-            <a class="text-base font-normal text-black
-                hover:text-gray-900 flex items-center ml-4 justify-center font-medium lg-s">
-              <img src="assets/svgs/setting.svg" class="w-7 h-7 mr-2 mt-1.5 ">
-              My Typebot</a>
-            <div class="flex items-center ml-3 rg-btn">
-              <a href="#" class="bg-gray-100 rounded-md p-0.5 w-7 h-7 mr-2 
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15
+                  19l-7-7 7-7" />
+            </svg>
+          </a>
+          <a
+            class="flex items-center justify-center ml-4 text-base font-normal font-medium text-black hover:text-gray-900 lg-s">
+            <img src="assets/svgs/setting.svg" class="w-7 h-7 mr-2 mt-1.5 ">
+            My Typebot</a>
+          <div class="flex items-center ml-3 rg-btn">
+            <a href="#" class="bg-gray-100 rounded-md p-0.5 w-7 h-7 mr-2
                   flex items-center justify-center">
-                <img src="assets/svgs/reverse.svg" class="h-3.5 w-3.5">
+              <img src="assets/svgs/reverse.svg" class="h-3.5 w-3.5">
 
-              </a>
-              <a href="#" class="bg-gray-100 rounded-md p-0.5 w-7 h-7 flex
+            </a>
+            <a href="#" class="bg-gray-100 rounded-md p-0.5 w-7 h-7 flex
                   items-center justify-center">
-                <img src="assets/svgs/forward.svg" class="h-3.5 w-3.5">
-              </a>
-              <span class="text-gray-500 ml-4 flex items-center text-sm">
-                Saving...</span>
-            </div>
+              <img src="assets/svgs/forward.svg" class="h-3.5 w-3.5">
+            </a>
+            <span class="flex items-center ml-4 text-sm text-gray-500">
+              Saving...</span>
           </div>
-          <div class="-mr-2 -my-2 md:hidden">
-            <button type="button" class="bg-white rounded-md p-2 inline-flex
-                items-center justify-center text-gray-400 hover:text-gray-500
-                hover:bg-gray-100 focus:outline-none focus:ring-2
-                focus:ring-inset focus:ring-indigo-500" aria-expanded="false">
-              <span class="sr-only">Open menu</span>
-              <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
-                stroke="currentColor" aria-hidden="true">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M4
+        </div>
+        <div class="-my-2 -mr-2 md:hidden">
+          <button type="button"
+            class="inline-flex items-center justify-center p-2 text-gray-400 bg-white rounded-md hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
+            aria-expanded="false">
+            <span class="sr-only">Open menu</span>
+            <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+              stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4
                     6h16M4 12h16M4 18h16" />
-              </svg>
-            </button>
-          </div>
-          <nav class="hidden md:flex space-x-6 ceb-nav">
-            <button
-              [ngClass]="{'active': flowAct}"
-                class= "text-base font-medium text-black py-1.5 px-4 rounded-md hover:bg-gray-100 hover:text-gray-900"
-              (click)="navigate(['/', 'editor'])"
-              >
-              Flow 
-            </button>
-            <!-- onclick="themeClick()" -->
-            <button 
-              [ngClass]="{'active': themeAct}"
-              class="text-base font-medium text-black py-1.5 px-4 rounded-md hover:bg-gray-100 hover:text-gray-900"
-              (click)="navigate(['/', 'theme'])"
-              >    
-              Theme
-            </button>
-            <button 
-              [ngClass]="{'active': settingAct}"
-              class="text-base font-medium text-black py-1.5 px-4 rounded-md hover:bg-gray-100 hover:text-gray-900"
-              (click)="navigate(['/', 'msetting'])"
-              >    
-              Setting
-            </button>
-            <button 
-              [ngClass]="{'active': shareAct}"
-              class="text-base font-medium text-black py-1.5 px-4 rounded-md hover:bg-gray-100 hover:text-gray-900"
-              (click)="navigate(['/', 'share'])"
-              >    
-              Share
-            </button>
-          </nav>
-          <div class="hidden md:flex items-center justify-end md:flex-1
-                lg:w-0 r-btn">
-            <a href="" class="ml-8 whitespace-nowrap inline-flex
-                  items-center justify-center px-2 py-2 mr-3 border
-                  border-transparent rounded-md shadow-sm text-base font-medium
-                  text-white bg-gray-100">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5
-                     text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M12
+            </svg>
+          </button>
+        </div>
+        <nav class="hidden space-x-6 md:flex ceb-nav">
+          <button [ngClass]="{'active': flowAct}"
+            class="text-base font-medium text-black py-1.5 px-4 rounded-md hover:bg-gray-100 hover:text-gray-900"
+            (click)="changeUrl()">
+            Flow
+          </button>
+          <!-- onclick="themeClick()" -->
+          <button [ngClass]="{'active': themeAct}"
+            class="text-base font-medium text-black py-1.5 px-4 rounded-md hover:bg-gray-100 hover:text-gray-900"
+            (click)="navigate(['/', 'theme'])">
+            Theme
+          </button>
+          <button [ngClass]="{'active': settingAct}"
+            class="text-base font-medium text-black py-1.5 px-4 rounded-md hover:bg-gray-100 hover:text-gray-900"
+            (click)="navigate(['/', 'msetting'])">
+            Setting
+          </button>
+          <button [ngClass]="{'active': shareAct}"
+            class="text-base font-medium text-black py-1.5 px-4 rounded-md hover:bg-gray-100 hover:text-gray-900"
+            (click)="navigate(['/', 'share'])">
+            Share
+          </button>
+        </nav>
+        <div class="items-center justify-end hidden md:flex md:flex-1 lg:w-0 r-btn">
+          <a href=""
+            class="inline-flex items-center justify-center px-2 py-2 ml-8 mr-3 text-base font-medium text-white bg-gray-100 border border-transparent rounded-md shadow-sm whitespace-nowrap">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-black" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12
                       4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0
                       0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
-              </svg>
-            </a>
-            <button *ngIf="showComp==false" class="whitespace-nowrap inline-flex items-center
-                    rounded-md shadow-sm justify-center bg-gray-100 px-4 py-2
-                    text-base font-medium text-gray-500 hover:text-gray-900"
-                    (click)="onPress()">
-              Preview </button>
-              
-              <div  *ngIf="showComp">
-                <previewchat (outputFromChild) = "receiveChildData($event)"></previewchat>
-            </div>
- 
-            <button class="ml-3 whitespace-nowrap inline-flex items-center
-                    justify-center px-4 py-2 rounded-md shadow-sm text-base
-                    font-medium text-white bg-blue-600">Publish</button>
+            </svg>
+          </a>
+          <button *ngIf="showComp==false"
+            class="inline-flex items-center justify-center px-4 py-2 text-base font-medium text-gray-500 bg-gray-100 rounded-md shadow-sm whitespace-nowrap hover:text-gray-900"
+            (click)="onPress()">
+            Preview </button>
+
+          <div *ngIf="showComp">
+            <previewchat (outputFromChild)="receiveChildData($event)"></previewchat>
           </div>
+
+          <button
+            class="inline-flex items-center justify-center px-4 py-2 ml-3 text-base font-medium text-white bg-blue-600 rounded-md shadow-sm whitespace-nowrap">Publish</button>
         </div>
       </div>
     </div>
+  </div>
