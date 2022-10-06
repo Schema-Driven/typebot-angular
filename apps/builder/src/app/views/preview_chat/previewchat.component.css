@@ -96,6 +96,12 @@
     padding-right: 0.75rem;
     padding-top: 2.5rem;
     min-height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+.css-muvlrb::-webkit-scrollbar {
+  width: 10px;
+  opacity: 0;
 }
 #lite-badge{
     top: auto;
@@ -197,6 +203,9 @@
     }
 ::ng-deep .app-btn-bg{
   background-color: #0042DA;
+}
+::ng-deep .app-btn-bg[disabled]{
+  opacity: 0.5;
 }
 ::ng-deep .app-bg-color{
   background-color: #FF8E21;

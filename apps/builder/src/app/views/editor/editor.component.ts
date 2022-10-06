@@ -147,10 +147,9 @@ export class EditorComponent extends Editor {
       );
       this.removeEmptyGroupBlocks(event.previousContainer.data);
     }
-    // this.printJson();
     this.setEdgesObject();
     localStorage.setItem('editor', JSON.stringify(this.typebot));
-    console.log(this.typebot);
+
     // this.editorService.setGroupBlocks(this.groupBlocks);
   }
 

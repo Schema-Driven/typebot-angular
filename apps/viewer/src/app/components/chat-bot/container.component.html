@@ -1,5 +1,5 @@
 <div class="flex flex-col items-center w-full h-full text-base bg-cover">
-  <div class="w-full min-h-full px-3 py-10 mb-10 rounded lg:max-w-screen-md lg:px-5">
+  <div class="w-full min-h-full py-10 mb-10 rounded lg:max-w-screen-md">
     <div class="flex">
       <div class="relative flex items-center flex-shrink-0 w-10 mb-2 mr-2 ">
         <div id="flex-image" class="absolute top-0 flex items-center w-10 h-10 mb-4 xs:mb-2 typebot-avatar-container ">
@@ -33,17 +33,17 @@
             class="{{bot?.content.url ? 'w-fit':'h-96 w-full'}} p-4 rounded-lg bg-gray-50 "
             [innerHTML]="bot?.content.url | html">
           </div>
-          <div *ngIf="bot?.type === 'text_input'" class="w-fit {{bot?.type}}-main">
+          <div *ngIf="bot?.type === 'text_input'" class="w-full {{bot?.type}}-main">
             <app-text-input [isLong]="bot?.options.isLong" [placeHolderText]="bot?.options.labels.placeholder"
               [btnText]="bot?.options.labels.button" (callbackFunction)="renderNextStep()">
             </app-text-input>
           </div>
-          <div *ngIf="bot?.type === 'url_input'" class="w-fit {{bot?.type}}-main">
+          <div *ngIf="bot?.type === 'url_input'" class="w-full {{bot?.type}}-main">
             <app-url-input [placeHolderText]="bot?.options.labels.placeholder" [btnText]="bot?.options.labels.button"
               (callbackFunction)="UrlVerification($event)">
             </app-url-input>
           </div>
-          <div *ngIf="bot?.type === 'number_input'" class="w-fit {{bot?.type}}-main">
+          <div *ngIf="bot?.type === 'number_input'" class="w-full {{bot?.type}}-main">
             <app-number-input [placeHolderText]="bot?.options.labels.placeholder" [btnText]="bot?.options.labels.button"
               [minValue]="bot?.options.min" [maxValue]="bot?.options.max" [stepValue]="bot?.options.step"
               (callbackFunction)="renderNextStep()">
