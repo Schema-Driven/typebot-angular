@@ -22,7 +22,8 @@ export class ContainerComponent implements OnInit {
     ],
   };
   loadingBot: boolean = false;
-  emailError: boolean = false;
+  botCounter = 0;
+  offset: any = 0;
 
   constructor() {}
 
@@ -68,7 +69,7 @@ export class ContainerComponent implements OnInit {
   }
 
   renderNextStep() {
-    if (this.chatBotblocks.length === this.blocks.length) {
+    if (this.botCounter === this.blocks.length) {
       return;
     }
 
@@ -76,47 +77,86 @@ export class ContainerComponent implements OnInit {
 
     setTimeout(() => {
       this.loadingBot = false;
-      this.chatBotblocks.push(this.blocks[this.chatBotblocks.length]);
-
+      this.chatBotblocks.push(this.blocks[this.botCounter]);
+      this.botCounter++;
       if (
-        this.fields.bubbles.indexOf(
-          this.blocks[this.chatBotblocks.length - 1].type
-        ) !== -1
+        this.fields.bubbles.indexOf(this.blocks[this.botCounter - 1].type) !==
+        -1
       ) {
         this.renderNextStep();
+        this.calculateTop();
       }
     }, 2000);
   }
 
-  emailVerification(event: any) {
+  emailVerification(val: any) {
+    console.log(val);
     var mailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-    if (event.detail === 1) {
-      if (event.target.previousSibling.value.match(mailFormat)) {
-        this.renderNextStep();
-      } else {
-        this.emailError = true;
-        this.loadingBot = true;
-        // const lastEle = this.chatBotblocks.length - 1;
-        setTimeout(() => {
-          this.loadingBot = false;
-          // this.chatBotblocks.push(this.chatBotblocks[lastEle]);
-          // this.blocks.push(this.blocks[this.chatBotblocks.length - 1]);
-          // console.log(this.blocks);
-          // console.log(this.chatBotblocks);
-        }, 2000);
-      }
+
+    if (val.match(mailFormat)) {
+      this.renderNextStep();
     } else {
-      if (event.target.value.match(mailFormat)) {
-        this.renderNextStep();
-      } else {
-        this.emailError = true;
-        this.loadingBot = true;
-        const lastEle = this.chatBotblocks.length - 1;
-        setTimeout(() => {
-          this.loadingBot = false;
-          this.chatBotblocks.push(this.chatBotblocks[lastEle]);
-        }, 2000);
-      }
+      this.loadingBot = true;
+      const lastEle = this.chatBotblocks.length - 1;
+      setTimeout(() => {
+        this.loadingBot = false;
+        const validationError = {
+          type: 'error',
+          message: this.chatBotblocks[lastEle].options.retryMessageContent,
+        };
+        this.chatBotblocks.push(validationError);
+        this.calculateTop();
+        this.chatBotblocks.push(this.chatBotblocks[lastEle]);
+      }, 2000);
     }
+  }
+
+  UrlVerification(val: any) {
+    var urlFormat =
+      /(https?:\/\/)?(www\.)?[a-z0-9-]+\.(com|org)(\.[a-z]{2,3})?/;
+
+    if (val.match(urlFormat)) {
+      this.renderNextStep();
+    } else {
+      this.loadingBot = true;
+      const lastEle = this.chatBotblocks.length - 1;
+      setTimeout(() => {
+        this.loadingBot = false;
+        const validationError = {
+          type: 'error',
+          message: this.chatBotblocks[lastEle].options.retryMessageContent,
+        };
+        this.chatBotblocks.push(validationError);
+        this.calculateTop();
+        this.chatBotblocks.push(this.chatBotblocks[lastEle]);
+      }, 2000);
+    }
+  }
+
+  PhoneNumVerification(val: any) {
+    var numFormat = /^[+]*[(]{0,1}[0-9]{1,3}[)]{0,1}[-\s\./0-9]*$/g;
+
+    if (val.match(numFormat)) {
+      this.renderNextStep();
+    } else {
+      this.loadingBot = true;
+      const lastEle = this.chatBotblocks.length - 1;
+      setTimeout(() => {
+        this.loadingBot = false;
+        const validationError = {
+          type: 'error',
+          message: this.chatBotblocks[lastEle].options.retryMessageContent,
+        };
+        this.chatBotblocks.push(validationError);
+        this.calculateTop();
+        this.chatBotblocks.push(this.chatBotblocks[lastEle]);
+      }, 2000);
+    }
+  }
+
+  calculateTop() {
+    this.offset = document.getElementById('flex-col')?.offsetHeight;
+    const element = <HTMLSelectElement>document.getElementById('flex-image');
+    element.style.top = this.offset - 35 + 'px';
   }
 }

@@ -8,6 +8,7 @@ import { TextInputComponent } from '../fields/text-input/text-input.component';
 import { NumberInputComponent } from '../fields/number-input/number-input.component';
 import { EmailInputComponent } from '../fields/email-input/email-input.component';
 import { DateInputComponent } from '../fields/date-input/date-input.component';
+import { PhoneInputModule } from '../fields/phone-input/phone-input.module';
 
 import { SafePipe } from '../../pipes/safe.pipe';
 import { HtmlPipe } from '../../pipes/html.pipe';
@@ -23,6 +24,7 @@ import { HtmlPipe } from '../../pipes/html.pipe';
     SafePipe,
     HtmlPipe,
   ],
-  imports: [CommonModule, ChatBotRoutingModule],
+  imports: [CommonModule, ChatBotRoutingModule, PhoneInputModule],
+  exports: [ContainerComponent],
 })
 export class ChatBotModule {}

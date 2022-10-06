@@ -10,6 +10,8 @@ import { MembersModule } from './views/members/members.module';
 import { BillingModule } from './views/billing/billing.module';
 import { HeaderBarModule } from './views/header/header-bar.module';
 import { CreateModule } from './views/create/create.module';
+
+import { HttpClientModule } from '@angular/common/http';
 @NgModule({
   declarations: [AppComponent, Dashboard],
   imports: [
@@ -21,6 +23,7 @@ import { CreateModule } from './views/create/create.module';
     MembersModule,
     BillingModule,
     CreateModule,
+    HttpClientModule,
   ],
   exports: [AppRoutingModule, CommonModule],
   providers: [],

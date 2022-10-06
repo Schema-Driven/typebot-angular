@@ -15,6 +15,7 @@
     "viewer": "yarn workspace viewer"
   },
   "devDependencies": {
+    "@types/events": "^3.0.0",
     "prettier": "latest",
     "turbo": "latest"
   },
