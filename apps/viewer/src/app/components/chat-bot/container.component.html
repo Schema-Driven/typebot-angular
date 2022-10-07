@@ -65,6 +65,10 @@
             <app-phone-input [placeHolderText]="bot?.options.labels.placeholder" [btnText]="bot?.options.labels.button"
               (callbackFunction)="PhoneNumVerification($event)"></app-phone-input>
           </div>
+          <div *ngIf="bot?.type === 'choice_input'" class="w-full {{bot?.type}}-main">
+            <app-choice-input (callbackFunction)="renderNextStep()" [items]="bot.items"
+              [multipleChoice]="bot.options.isMultipleChoice"></app-choice-input>
+          </div>
           <div *ngIf="bot.type === 'error'" class="w-full {{bot?.type}}-main">
             <p class="p-4 mt-3 rounded-lg bg-gray-50 w-fit">
               {{bot?.message}}
