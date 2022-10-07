@@ -1,3 +1,4 @@
+import { CdkDragMove } from '@angular/cdk/drag-drop';
 import {
   Component,
   OnInit,
@@ -5,6 +6,8 @@ import {
   Input,
   Output,
   EventEmitter,
+  ViewChild,
+  NgZone,
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { EditorComponent } from '../editor/editor.component';
@@ -16,24 +19,29 @@ import { EditorComponent } from '../editor/editor.component';
 })
 export class PreviewChat implements OnInit {
   previewChat: boolean = true;
+  @Output() outputFromChild: EventEmitter<boolean> = new EventEmitter();
+  @Input() showComp: boolean = false;
+  outputText = false;
+  toggle: boolean = false;
+  popup = false;
+  loader: boolean = false;
+  i = 0;
+
   constructor(
     private router: Router,
     private editorComponent: EditorComponent
   ) {
     // ...
   }
-  @Output() outputFromChild: EventEmitter<boolean> = new EventEmitter();
-  @Input() showComp: boolean = false;
-  outputText = false;
-  toggle: boolean = false;
+
   ngOnInit(): void {
     console.log('preview Click');
   }
-  popup = false;
+
   navigate(links: any[]) {
     this.router.navigate(links);
   }
-  loader: boolean = false;
+
   sms = [
     {
       text: 'Hi',
@@ -70,7 +78,7 @@ export class PreviewChat implements OnInit {
       icon: true,
     },
   ];
-  i = 0;
+
   myInterval = setInterval(() => {
     if (this.myArray.length == this.i) {
       clearInterval(this.myInterval);
@@ -98,5 +106,9 @@ export class PreviewChat implements OnInit {
   sendDataToParent() {
     this.outputFromChild.emit(this.outputText);
     this.editorComponent.previewChat = false;
+  }
+
+  dragStart(event: any) {
+    let colElement = document.getElementById('col-resizer');
   }
 }
