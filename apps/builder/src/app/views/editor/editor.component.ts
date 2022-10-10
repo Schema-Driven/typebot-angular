@@ -32,7 +32,7 @@ export class EditorComponent extends Editor {
   draw: string = 'false';
 
   typebot: TypeBot = {
-    name: 'My Typebot',
+    name: 'Schema Typebot',
     edges: this.edges,
     groups: this.groupBlocks,
   };
@@ -50,7 +50,7 @@ export class EditorComponent extends Editor {
 
     this.route.queryParams.subscribe((params) => {
       this.draw = params['draw'];
-      if (this.draw == 'true') {
+      if(localStorage.getItem('editor') !== undefined && localStorage.getItem('editor') !== null){
         this.drawEditor(localStorage.getItem('editor'));
       }
     });
@@ -232,7 +232,7 @@ export class EditorComponent extends Editor {
     // check maximum and minimum level of zoom
     if (type === 'increase' && this.scaleLevel <= 1.2) {
       this.scaleLevel = this.scaleLevel + 0.1;
-    } else if (type === 'decrease' && this.scaleLevel > 0.8) {
+    } else if (type === 'decrease' && this.scaleLevel > 0.6) {
       this.scaleLevel = this.scaleLevel - 0.1;
     }
 
@@ -367,10 +367,16 @@ export class EditorComponent extends Editor {
 
   async printJson() {
     await this.setEdgesObject();
-    // this.editorService.setEditorJson(this.typebot);
+    this.editorService.setEditorJson(this.typebot);
+    var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(this.typebot));
+    let anchor = document.createElement('a');
+    anchor.setAttribute("href",     dataStr     );
+    anchor.setAttribute("download", "typebot.json");
+    anchor.click();
+
     localStorage.setItem('editor', JSON.stringify(this.typebot));
     console.log(this.typebot);
-    window.location.href = window.location.pathname + '?draw=true';
+    //window.location.href = window.location.pathname + '?draw=true';
   }
 
   async setEdgesObject() {
