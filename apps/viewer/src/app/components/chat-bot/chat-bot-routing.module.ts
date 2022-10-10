@@ -5,7 +5,7 @@ import { ContainerComponent } from './container.component';
 
 const routes: Routes = [
   {
-    path: 'chat-bot',
+    path: 'viewer',
     component: ContainerComponent,
     children: [
       //add child-paths here ...

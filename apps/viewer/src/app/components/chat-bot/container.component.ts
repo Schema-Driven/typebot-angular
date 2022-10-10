@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-
+import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'chat-bot-container',
   templateUrl: './container.component.html',
   styleUrls: ['./container.component.css'],
 })
 export class ContainerComponent implements OnInit {
+  preview = true;
   editor: any;
   edges: any;
   blocks: any = [];
@@ -25,7 +26,23 @@ export class ContainerComponent implements OnInit {
   botCounter = 0;
   offset: any = 0;
 
-  constructor() {}
+  constructor(private route: ActivatedRoute) {
+    this.route.queryParams.subscribe((params) => {
+      this.preview = params['preview'] != 'true' ? true : false;
+    });
+  }
+
+  onFileSelected(event : any) {
+      var reader = new FileReader();
+      reader.onload = function (e : any){
+        var obj = JSON.parse(e.target.result);
+        localStorage.setItem('editor',JSON.stringify(obj));
+        window.location.reload();
+      };
+      reader.readAsText(event.target.files[0]);
+  }
+
+  
 
   ngOnInit(): void {
     this.editor = localStorage.getItem('editor');

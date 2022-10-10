@@ -60,6 +60,7 @@ export class HeaderBarComponent implements OnInit {
   }
   onPress() {
     this.showComp = true;
+    this.router.navigateByUrl('/editor?preview=true');
     //this.router.navigateByUrl('/previewchat');
   }
   receiveChildData(data: any) {
