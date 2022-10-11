@@ -55,38 +55,91 @@ export class ContainerComponent implements OnInit {
     }
   }
 
+  // buildBlocksStructure() {
+  //   this.editor.edges.forEach((edge: any) => {
+  //     this.setBlocksData(edge.to);
+  //   });
+  // }
+
   buildBlocksStructure() {
-    this.editor.edges.forEach((edge: any) => {
-      this.setBlocksData(edge.to);
-    });
-  }
-
-  setBlocksData(data: any) {
     this.editor.groups.forEach((group: any) => {
-      if (group.id === data.groupId) {
-        group.blocks.forEach((block: any) => {
-          if (block.type === 'embed') {
-            let testing = block.content.url;
-            testing = testing.toString();
-            if (testing.startsWith('<iframe')) {
-              this.iframeCheck = true;
-            } else {
-              this.iframeCheck = false;
-            }
-          }
-
-          if (data.blockId === undefined) {
-            this.blocks.push(block);
-          }
-
-          if (block.id === data.blockId) {
-            this.blocks.push(block);
-          }
-        });
-        return;
+      if (group.name === 'Start') {
+        this.setBlocksData(group.id);
       }
     });
   }
+
+  setBlocksData(Id: any) {
+    this.editor.edges.forEach((edge: any) => {
+      if (Id === edge.from.groupId && edge.to.blockId !== undefined) {
+        this.editor.groups.forEach((group: any) => {
+          group.blocks.forEach((block: any) => {
+            if (block.id === edge.to.blockId) {
+              this.blocks.push(block);
+              // this.renderNextStep();
+            }
+          });
+        });
+        this.setBlocksData(edge.to.groupId);
+      } else if (
+        Id === edge.from.groupId &&
+        edge.to.blockId !== undefined &&
+        edge.to.groupId !== undefined
+      ) {
+        this.editor.groups.forEach((group: any) => {
+          group.blocks.forEach((block: any) => {
+            if (block.id === edge.to.blockId) {
+              this.blocks.push(block);
+              // this.renderNextStep();
+            }
+          });
+        });
+        console.log(edge.to.groupId);
+        this.setBlocksData(edge.to.groupId);
+      } else if (
+        Id === edge.from.groupId &&
+        edge.to.groupId !== undefined &&
+        edge.to.blockId === undefined
+      ) {
+        this.editor.groups.forEach((group: any) => {
+          if (group.id === edge.to.groupId) {
+            group.blocks.forEach((block: any) => {
+              this.blocks.push(block);
+              // this.renderNextStep();
+            });
+          }
+        });
+        this.setBlocksData(edge.to.groupId);
+      }
+    });
+  }
+
+  // setBlocksData(data: any) {
+  //   this.editor.groups.forEach((group: any) => {
+  //     if (group.id === data.groupId) {
+  //       group.blocks.forEach((block: any) => {
+  //         if (block.type === 'embed') {
+  //           let testing = block.content.url;
+  //           testing = testing.toString();
+  //           if (testing.startsWith('<iframe')) {
+  //             this.iframeCheck = true;
+  //           } else {
+  //             this.iframeCheck = false;
+  //           }
+  //         }
+
+  //         if (data.blockId === undefined) {
+  //           this.blocks.push(block);
+  //         }
+
+  //         if (block.id === data.blockId) {
+  //           this.blocks.push(block);
+  //         }
+  //       });
+  //       return;
+  //     }
+  //   });
+  // }
 
   renderChatBot() {
     if (this.blocks) {
