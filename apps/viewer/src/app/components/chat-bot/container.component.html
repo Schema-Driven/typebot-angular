@@ -1,14 +1,21 @@
 <div class="flex flex-col items-center w-full h-full text-base bg-cover">
   <div *ngIf="preview" class="w-72 h-24 py-4">
     <div class="flex justify-center items-center w-full">
-        <label for="dropzone-file" class="flex flex-col justify-center items-center w-full bg-gray-50 rounded-lg border-2 border-gray-300 border-dashed cursor-pointer dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
-            <div class="flex flex-col justify-center items-center pt-5 pb-6">
-                <svg aria-hidden="true" class="mb-3 w-10 h-10 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
-                <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">SELECT TYPEBOT FILE</span></p>
-                <p class="text-xs text-gray-500 dark:text-gray-400">JSON</p>
-            </div>
-            <input id="dropzone-file" type="file" class="hidden" accept="application/json" (change)="onFileSelected($event)"/>
-        </label>
+      <label for="dropzone-file"
+        class="flex flex-col justify-center items-center w-full bg-gray-50 rounded-lg border-2 border-gray-300 border-dashed cursor-pointer dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+        <div class="flex flex-col justify-center items-center pt-5 pb-6">
+          <svg aria-hidden="true" class="mb-3 w-10 h-10 text-gray-400" fill="none" stroke="currentColor"
+            viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+          </svg>
+          <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">SELECT TYPEBOT
+              FILE</span></p>
+          <p class="text-xs text-gray-500 dark:text-gray-400">JSON</p>
+        </div>
+        <input id="dropzone-file" type="file" class="hidden" accept="application/json"
+          (change)="onFileSelected($event)" />
+      </label>
     </div>
   </div>
   <div class="w-full min-h-full py-10 mb-10 rounded lg:max-w-screen-md">
@@ -42,8 +49,9 @@
             </div>
           </div>
           <div id="{{bot.type}}" *ngIf="bot?.type === 'embed'"
-            class="{{bot?.content.url ? 'w-fit':'h-96 w-full'}} p-4 rounded-lg bg-gray-50 "
-            [innerHTML]="bot?.content.url | html">
+            class="{{bot?.content.url ? 'w-fit':'h-96 w-full'}} p-4 rounded-lg bg-gray-50 ">
+            <div *ngIf="iframeCheck === true" [innerHTML]="bot?.content.url | html"></div>
+            <iframe *ngIf="iframeCheck === false" [src]="bot?.content.url | safe"></iframe>
           </div>
           <div *ngIf="bot?.type === 'text_input'" class="w-full {{bot?.type}}-main">
             <app-text-input [isLong]="bot?.options.isLong" [placeHolderText]="bot?.options.labels.placeholder"

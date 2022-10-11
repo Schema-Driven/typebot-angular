@@ -25,6 +25,7 @@ export class ContainerComponent implements OnInit {
   loadingBot: boolean = false;
   botCounter = 0;
   offset: any = 0;
+  iframeCheck: boolean = true;
 
   constructor(private route: ActivatedRoute) {
     this.route.queryParams.subscribe((params) => {
@@ -32,17 +33,15 @@ export class ContainerComponent implements OnInit {
     });
   }
 
-  onFileSelected(event : any) {
-      var reader = new FileReader();
-      reader.onload = function (e : any){
-        var obj = JSON.parse(e.target.result);
-        localStorage.setItem('editor',JSON.stringify(obj));
-        window.location.reload();
-      };
-      reader.readAsText(event.target.files[0]);
+  onFileSelected(event: any) {
+    var reader = new FileReader();
+    reader.onload = function (e: any) {
+      var obj = JSON.parse(e.target.result);
+      localStorage.setItem('editor', JSON.stringify(obj));
+      window.location.reload();
+    };
+    reader.readAsText(event.target.files[0]);
   }
-
-  
 
   ngOnInit(): void {
     this.editor = localStorage.getItem('editor');
@@ -66,6 +65,16 @@ export class ContainerComponent implements OnInit {
     this.editor.groups.forEach((group: any) => {
       if (group.id === data.groupId) {
         group.blocks.forEach((block: any) => {
+          if (block.type === 'embed') {
+            let testing = block.content.url;
+            testing = testing.toString();
+            if (testing.startsWith('<iframe')) {
+              this.iframeCheck = true;
+            } else {
+              this.iframeCheck = false;
+            }
+          }
+
           if (data.blockId === undefined) {
             this.blocks.push(block);
           }
