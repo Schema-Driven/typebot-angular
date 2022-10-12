@@ -10,11 +10,12 @@ export class ChoiceInputComponent implements OnInit {
   @Input() items: any = [];
   @Input() multipleChoice: boolean = false;
   @Output() callbackFunction = new EventEmitter();
-
+  @Output() nextStep = new EventEmitter();
   receiverText: any = '';
   senderView: boolean = true;
   editable: boolean = true;
   sendBtn: boolean = false;
+  callFuncOnce: boolean = true;
   result: string = '';
   constructor() {}
 
@@ -24,7 +25,10 @@ export class ChoiceInputComponent implements OnInit {
     if (this.multipleChoice === false) {
       this.receiverText = event.target.innerText;
       this.senderView = false;
-      this.callbackFunction.emit();
+      if (this.callFuncOnce === true) {
+        this.callbackFunction.emit(event.target.id);
+        this.callFuncOnce = false;
+      }
     } else {
       if (event.target.classList.contains('selectable')) {
         event.target.classList.remove('selectable');
@@ -34,7 +38,6 @@ export class ChoiceInputComponent implements OnInit {
       } else {
         event.target.classList.add('selectable');
         this.result = this.result.replace(event.target.innerText, '');
-        // console.log(text);
       }
     }
   }
@@ -48,5 +51,6 @@ export class ChoiceInputComponent implements OnInit {
     this.senderView = false;
     this.sendBtn = false;
     this.result = '';
+    this.nextStep.emit();
   }
 }

@@ -26,6 +26,7 @@ export class ContainerComponent implements OnInit {
   botCounter = 0;
   offset: any = 0;
   iframeCheck: boolean = true;
+  loopCheck: boolean = true;
 
   constructor(private route: ActivatedRoute) {
     this.route.queryParams.subscribe((params) => {
@@ -71,45 +72,50 @@ export class ContainerComponent implements OnInit {
 
   setBlocksData(Id: any) {
     this.editor.edges.forEach((edge: any) => {
-      if (Id === edge.from.groupId && edge.to.blockId !== undefined) {
-        this.editor.groups.forEach((group: any) => {
-          group.blocks.forEach((block: any) => {
-            if (block.id === edge.to.blockId) {
-              this.blocks.push(block);
-              // this.renderNextStep();
-            }
-          });
-        });
-        this.setBlocksData(edge.to.groupId);
-      } else if (
-        Id === edge.from.groupId &&
-        edge.to.blockId !== undefined &&
-        edge.to.groupId !== undefined
-      ) {
-        this.editor.groups.forEach((group: any) => {
-          group.blocks.forEach((block: any) => {
-            if (block.id === edge.to.blockId) {
-              this.blocks.push(block);
-              // this.renderNextStep();
-            }
-          });
-        });
-        console.log(edge.to.groupId);
-        this.setBlocksData(edge.to.groupId);
-      } else if (
-        Id === edge.from.groupId &&
-        edge.to.groupId !== undefined &&
-        edge.to.blockId === undefined
-      ) {
-        this.editor.groups.forEach((group: any) => {
-          if (group.id === edge.to.groupId) {
+      if (edge.from.itemId === undefined) {
+        if (
+          Id === edge.from.groupId &&
+          edge.to.blockId !== undefined &&
+          edge.to.groupId !== undefined
+        ) {
+          this.editor.groups.forEach((group: any) => {
             group.blocks.forEach((block: any) => {
-              this.blocks.push(block);
-              // this.renderNextStep();
+              if (block.id === edge.to.blockId) {
+                this.blocks.push(block);
+              }
             });
-          }
-        });
-        this.setBlocksData(edge.to.groupId);
+          });
+          this.setBlocksData(edge.to.groupId);
+        } else if (
+          Id === edge.from.groupId &&
+          edge.to.groupId !== undefined &&
+          edge.to.blockId === undefined
+        ) {
+          this.editor.groups.forEach((group: any) => {
+            if (group.id === edge.to.groupId) {
+              group.blocks.forEach((block: any) => {
+                if (block.type !== 'choice_input' && this.loopCheck === true) {
+                  this.blocks.push(block);
+                } else {
+                  let choice = block.options?.isMultipleChoice;
+                  if (choice === false) {
+                    if (this.loopCheck === true) {
+                      this.blocks.push(block);
+                      this.loopCheck = false;
+                    }
+                  } else {
+                    if (choice === true) {
+                      this.blocks.push(block);
+                    }
+                  }
+                }
+              });
+            }
+          });
+          this.setBlocksData(edge.to.groupId);
+        }
+      } else {
+        return;
       }
     });
   }
@@ -169,7 +175,6 @@ export class ContainerComponent implements OnInit {
   }
 
   emailVerification(val: any) {
-    console.log(val);
     var mailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
     if (val.match(mailFormat)) {
@@ -231,6 +236,41 @@ export class ContainerComponent implements OnInit {
         this.chatBotblocks.push(this.chatBotblocks[lastEle]);
       }, 2000);
     }
+  }
+
+  choiceInputFlow(id: any) {
+    this.editor.edges.forEach((edge: any) => {
+      if (
+        id === edge.from.itemId &&
+        edge.to.blockId === undefined &&
+        edge.to.groupId !== undefined
+      ) {
+        this.editor.groups.forEach((group: any) => {
+          if (group.id === edge.to.groupId) {
+            group.blocks.forEach((block: any) => {
+              this.blocks.push(block);
+            });
+          }
+        });
+        this.loopCheck = true;
+        this.setBlocksData(edge.to.groupId);
+      } else if (
+        id === edge.from.itemId &&
+        edge.to.blockId !== undefined &&
+        edge.to.groupId !== undefined
+      ) {
+        this.editor.groups.forEach((group: any) => {
+          group.blocks.forEach((block: any) => {
+            if (block.id === edge.to.blockId) {
+              this.blocks.push(block);
+            }
+          });
+        });
+        this.loopCheck = true;
+        this.setBlocksData(edge.to.groupId);
+      }
+    });
+    this.renderNextStep();
   }
 
   calculateTop() {
