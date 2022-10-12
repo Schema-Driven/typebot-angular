@@ -5,7 +5,7 @@
   </div>
   <div class="chakra-stack css-dmsrvy">
     <div class="css-e03czl">
-      <button type="button" class="chakra-button css-1d0ox2v">Restart</button>
+      <button type="button" (click)="reloadComp()" class="chakra-button css-1d0ox2v">Restart</button>
       <button type="button" aria-label="Close" class="css-1ebs9oc hover:bg-gray-100" (click)="sendDataToParent()">
         <svg viewBox="0 0 24 24" focusable="false" class="chakra-icon css-onkibi" aria-hidden="true">
           <path fill="currentColor"
@@ -70,7 +70,7 @@
                   </span>
                 </div>
               </section> -->
-          <div>
+          <div *ngIf="reloader">
             <chat-bot-container></chat-bot-container>
           </div>
         </div>

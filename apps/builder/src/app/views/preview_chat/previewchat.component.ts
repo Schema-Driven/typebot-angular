@@ -25,6 +25,7 @@ export class PreviewChat implements OnInit {
   toggle: boolean = false;
   popup = false;
   loader: boolean = false;
+  reloader: boolean = true;
   i = 0;
 
   constructor(
@@ -110,5 +111,12 @@ export class PreviewChat implements OnInit {
 
   dragStart(event: any) {
     let colElement = document.getElementById('col-resizer');
+  }
+
+  reloadComp() {
+    this.reloader = false;
+    setTimeout(() => {
+      this.reloader = true;
+    }, 0.01);
   }
 }
