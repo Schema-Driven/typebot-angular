@@ -27,6 +27,7 @@ export class PreviewChat implements OnInit {
   loader: boolean = false;
   reloader: boolean = true;
   i = 0;
+  oldx = 0;
 
   constructor(
     private router: Router,
@@ -35,9 +36,7 @@ export class PreviewChat implements OnInit {
     // ...
   }
 
-  ngOnInit(): void {
-    console.log('preview Click');
-  }
+  ngOnInit(): void {}
 
   navigate(links: any[]) {
     this.router.navigate(links);
@@ -101,7 +100,6 @@ export class PreviewChat implements OnInit {
   }
   compoClose() {
     this.showComp = false;
-    console.log(this.showComp);
   }
 
   sendDataToParent() {
@@ -110,7 +108,16 @@ export class PreviewChat implements OnInit {
   }
 
   dragStart(event: any) {
-    let colElement = document.getElementById('col-resizer');
+    let colElement = <HTMLElement>document.getElementById('col-resizer');
+    let wid = colElement?.offsetWidth;
+    if (event.pageX < this.oldx) {
+      wid = wid + 3;
+      colElement?.setAttribute('style', `width:${wid}px`);
+    } else if (event.pageX > this.oldx) {
+      wid = wid - 3;
+      colElement?.setAttribute('style', `width:${wid}px`);
+    }
+    this.oldx = event.pageX;
   }
 
   reloadComp() {

@@ -1,8 +1,9 @@
-<div #resizeBox id="col-resizer" class="comp-render">
-  <div id="resize-btn" class="resizer-main" cdkDrag cdkDragLockAxis="x" (cdkDragMoved)="dragStart($event)">
+<div #resizeBox id="col-resizer" class="comp-render" style="">
+  <div (mousemove)="dragStart($event)" id="resize-btn" class="resizer-main">
     <div class="first-line"></div>
     <div class="second-line"></div>
   </div>
+
   <div class="chakra-stack css-dmsrvy">
     <div class="css-e03czl">
       <button type="button" (click)="reloadComp()" class="chakra-button css-1d0ox2v">Restart</button>
