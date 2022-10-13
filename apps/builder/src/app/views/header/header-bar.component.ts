@@ -60,10 +60,16 @@ export class HeaderBarComponent implements OnInit {
   }
   onPress() {
     this.showComp = true;
+    this.router.navigateByUrl('/editor?preview=true');
     //this.router.navigateByUrl('/previewchat');
   }
   receiveChildData(data: any) {
     console.log(data);
     this.showComp = data;
+  }
+
+  changeUrl() {
+    this.navigate(['/', 'editor']);
+    window.location.assign('/editor?draw=true');
   }
 }

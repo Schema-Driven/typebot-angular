@@ -11,7 +11,6 @@
     border-bottom-left-radius: 15px;
     box-shadow: 0 4px 6px -1px rgb(0 0 0 / 10%), 0 2px 4px -1px rgb(0 0 0 / 6%);
     margin-top: 2px;
-    overflow: hidden;
 }
 .css-onkibi {
     width: 1em;
@@ -96,6 +95,13 @@
     padding-right: 0.75rem;
     padding-top: 2.5rem;
     min-height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    position: relative;
+}
+.css-muvlrb::-webkit-scrollbar {
+  width: 10px;
+  opacity: 0;
 }
 #lite-badge{
     top: auto;
@@ -195,3 +201,66 @@
     .loading.loading04{
         width: 16% !important;
     }
+::ng-deep .app-btn-bg{
+  background-color: #0042DA;
+}
+::ng-deep .app-btn-bg[disabled]{
+  opacity: 0.5;
+}
+::ng-deep .app-bg-color{
+  background-color: #FF8E21;
+}
+.css-muvlrb:hover .resizer-main{
+  opacity: 1;
+}
+.resizer-main {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    width: 15px;
+    height: 50px;
+    border-width: 1px;
+    background-color: white;
+    cursor: col-resize;
+    position: absolute;
+    left: -7.5px;
+    top: calc(50% - 56px);
+}
+.first-line{
+  width: 2px;
+  background-color:#D1D5DB;
+  height: 70%;
+  margin-right: 0.125rem;
+}
+.second-line{
+  width: 2px;
+  background-color:#D1D5DB;
+  height: 70%;
+  margin-right: 0.125rem;
+}
+
+
+.dragHandle {
+  position: absolute;
+  background-color: red;
+}
+
+.dragHandle.corner {
+  width: 15px;
+  height: 15px;
+  cursor: nwse-resize;
+}
+
+.dragHandle.right {
+  width: 2px;
+  height: 100%;
+  cursor: ew-resize;
+}
+
+.dragHandle.bottom {
+  height: 2px;
+  width: 100%;
+  cursor: ns-resize;
+}

@@ -5,7 +5,7 @@ import { ViewChat } from './components/view_chat/view_chat.component';
 const routes: Routes = [
   { path: 'viewchat', component: ViewChat },
   {
-    path: 'chat-bot',
+    path: '',
     loadChildren: () =>
       import('./components/chat-bot/chat-bot.module').then(
         (m) => m.ChatBotModule

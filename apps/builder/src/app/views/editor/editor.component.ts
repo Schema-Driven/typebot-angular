@@ -32,7 +32,7 @@ export class EditorComponent extends Editor {
   draw: string = 'false';
 
   typebot: TypeBot = {
-    name: 'My Typebot',
+    name: 'Schema Typebot',
     edges: this.edges,
     groups: this.groupBlocks,
   };
@@ -48,14 +48,12 @@ export class EditorComponent extends Editor {
   ngOnInit() {
     this.createInstance(this.wrapper);
 
-    this.route.queryParams
-      .subscribe(params => {
-        this.draw = params['draw']
-        if (this.draw == 'true') {
-          this.drawEditor(localStorage.getItem('editor'))
-        }
+    this.route.queryParams.subscribe((params) => {
+      this.draw = params['draw'];
+      if(localStorage.getItem('editor') !== undefined && localStorage.getItem('editor') !== null){
+        this.drawEditor(localStorage.getItem('editor'));
       }
-    );
+    });
 
     this.bindEvents();
 
@@ -149,6 +147,8 @@ export class EditorComponent extends Editor {
       );
       this.removeEmptyGroupBlocks(event.previousContainer.data);
     }
+    this.setEdgesObject();
+    localStorage.setItem('editor', JSON.stringify(this.typebot));
 
     // this.editorService.setGroupBlocks(this.groupBlocks);
   }
@@ -232,7 +232,7 @@ export class EditorComponent extends Editor {
     // check maximum and minimum level of zoom
     if (type === 'increase' && this.scaleLevel <= 1.2) {
       this.scaleLevel = this.scaleLevel + 0.1;
-    } else if (type === 'decrease' && this.scaleLevel > 0.8) {
+    } else if (type === 'decrease' && this.scaleLevel > 0.6) {
       this.scaleLevel = this.scaleLevel - 0.1;
     }
 
@@ -367,10 +367,16 @@ export class EditorComponent extends Editor {
 
   async printJson() {
     await this.setEdgesObject();
-    // this.editorService.setEditorJson(this.typebot);
+    this.editorService.setEditorJson(this.typebot);
+    var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(this.typebot));
+    let anchor = document.createElement('a');
+    anchor.setAttribute("href",     dataStr     );
+    anchor.setAttribute("download", "typebot.json");
+    anchor.click();
+
     localStorage.setItem('editor', JSON.stringify(this.typebot));
     console.log(this.typebot);
-    window.location.href = window.location.pathname + '?draw=true';
+    //window.location.href = window.location.pathname + '?draw=true';
   }
 
   async setEdgesObject() {
@@ -380,26 +386,46 @@ export class EditorComponent extends Editor {
     });
 
     connections.forEach((con: any) => {
-      let from: any = {}, to: any = {};
-      let sourceIdentifier = document.getElementById(con.sourceId)?.getAttribute('data-identifier');
-      let targetIdentifier = document.getElementById(con.targetId)?.getAttribute('data-identifier');
+      let from: any = {},
+        to: any = {};
+      let sourceIdentifier = document
+        .getElementById(con.sourceId)
+        ?.getAttribute('data-identifier');
+      let targetIdentifier = document
+        .getElementById(con.targetId)
+        ?.getAttribute('data-identifier');
 
-      from['blockId'] = document.getElementById(con.sourceId)?.closest('.single-block')?.getAttribute('id');
-      from['groupId'] = document.getElementById(con.sourceId)?.closest('.grouper')?.getAttribute('id');
+      from['blockId'] = document
+        .getElementById(con.sourceId)
+        ?.closest('.single-block')
+        ?.getAttribute('id');
+      from['groupId'] = document
+        .getElementById(con.sourceId)
+        ?.closest('.grouper')
+        ?.getAttribute('id');
 
       if (sourceIdentifier === 'item') {
-        from['itemId'] = document.getElementById(con.sourceId)?.closest('.single-item')?.getAttribute('id');
+        from['itemId'] = document
+          .getElementById(con.sourceId)
+          ?.closest('.single-item')
+          ?.getAttribute('id');
       }
 
-      to['groupId'] = document.getElementById(con.targetId)?.closest('.grouper')?.getAttribute('id');
+      to['groupId'] = document
+        .getElementById(con.targetId)
+        ?.closest('.grouper')
+        ?.getAttribute('id');
       if (targetIdentifier === 'block') {
-        to['blockId'] = document.getElementById(con.targetId)?.closest('.single-block')?.getAttribute('id');
+        to['blockId'] = document
+          .getElementById(con.targetId)
+          ?.closest('.single-block')
+          ?.getAttribute('id');
       }
 
       this.edges.push({
         id: this.uuid(),
         from,
-        to
+        to,
       });
     });
     this.typebot.edges = this.edges;

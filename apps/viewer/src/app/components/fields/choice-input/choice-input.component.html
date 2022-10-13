@@ -1,0 +1,23 @@
+<div>
+  <div *ngIf="senderView" class="flex gap-2 items-center flex-wrap">
+    <div *ngFor="let item of items">
+      <button (click)="clickEvent($event)" [id]="item.id"
+        class="text-white py-2 px-4 text-left font-semibold rounded-md transition-all filter hover:brightness-90 active:brightness-75 duration-100 focus:outline-none app-bg-btn {{multipleChoice?'selectable':''}}">
+        {{item.content}}
+      </button>
+    </div>
+  </div>
+</div>
+<div (click)="hideInputUserView()" *ngIf="senderView === false"
+  class="flex items-center justify-end w-full gap-2 receiver-view">
+  <span
+    class="bg-[#FF8E21] app-bg-color px-4 py-2 rounded-lg mr-2 whitespace-pre-wrap max-w-full cursor-pointer text-white">{{receiverText}}</span>
+  <figure *ngIf="false" class="relative flex items-center flex-shrink-0 w-9 h-9 "><img
+      class="w-full h-full rounded-full" src="./../../../assets/ViewChat/profile.png" alt=""></figure>
+</div>
+<div class="sendBtn" *ngIf="sendBtn">
+  <button (click)="sendEvent()"
+    class="text-white py-2 px-4 text-left font-semibold rounded-md transition-all filter hover:brightness-90 active:brightness-75 duration-100 focus:outline-none app-bg-btn mt-3">
+    Send
+  </button>
+</div>
