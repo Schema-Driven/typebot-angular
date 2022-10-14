@@ -11,7 +11,7 @@
         <!-- [id]="b.id"
           [attr.data-jtk-managed]="b.id" -->
         <div *ngFor="let b of groupBlocks; let groupIndex = index" [attr.data-group-index]="groupIndex" [id]="b.id"
-          [attr.data-jtk-managed]="b.id" data-identifier="group" class="absolute grouper z-2"
+          [attr.data-jtk-managed]="b.id" data-identifier="group" class="{{b.name}} absolute grouper z-2"
           [style]="('top:'+ b.position.y+'px;left:'+ b.position.x+'px')">
           <div class="py-4 bg-white single-group wrap-div w-72">
             <div class="flex items-center justify-between px-4">
@@ -40,8 +40,8 @@
               <div cdkDrag [cdkDragDisabled]="block.type === 'start'" [disablePopover]="block.type === 'start'"
                 (cdkDragStarted)="cdkDragStarted($event)"
                 (contextmenu)="showRightClickPopover('block', block.id, $event)"
-                *ngFor="let block of b.blocks; let blockIndex = index" class="pl-4 mr-4 single-block" [id]="block.id"
-                [attr.data-jtk-managed]="block.id" [attr.data-block-index]="blockIndex"
+                *ngFor="let block of b.blocks; let blockIndex = index" class="{{block.type}} pl-4 mr-4 single-block"
+                [id]="block.id" [attr.data-jtk-managed]="block.id" [attr.data-block-index]="blockIndex"
                 #blockOptionsPopover="ngbPopover" popoverClass="input-popover" [ngbPopover]="popContent"
                 [autoClose]="'outside'" triggers="manual" placement="left" container="body" data-identifier="block"
                 (click)="showBlockOptionsPopover(blockOptionsPopover, block, groupIndex, blockIndex)">

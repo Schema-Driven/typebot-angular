@@ -1,6 +1,10 @@
 import { ElementRef } from '@angular/core';
-import { GroupStructuredBlock, GroupBlock } from "./editor.interfaces";
-import { ContainmentType, EVENT_DRAG_STOP, newInstance } from '@jsplumb/browser-ui';
+import { GroupStructuredBlock, GroupBlock } from './editor.interfaces';
+import {
+  ContainmentType,
+  EVENT_DRAG_STOP,
+  newInstance,
+} from '@jsplumb/browser-ui';
 import { FlowchartConnector } from '@jsplumb/connector-flowchart';
 import { AnchorLocations, AnchorSpec, AnchorOptions } from '@jsplumb/common';
 import { EditorService } from '../../services/editor.service';
@@ -12,22 +16,19 @@ export function uuid() {
       performance.now &&
       performance.now() * 1000) ||
     0; //Time in microseconds since page-load or 0 if unsupported
-  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(
-    /[xy]/g,
-    function (c) {
-      var r = Math.random() * 16; //random number between 0 and 16
-      if (d > 0) {
-        //Use timestamp until depleted
-        r = (d + r) % 16 | 0;
-        d = Math.floor(d / 16);
-      } else {
-        //Use microseconds since page-load if supported
-        r = (d2 + r) % 16 | 0;
-        d2 = Math.floor(d2 / 16);
-      }
-      return (c === 'x' ? r : (r & 0x3) | 0x8).toString(16);
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+    var r = Math.random() * 16; //random number between 0 and 16
+    if (d > 0) {
+      //Use timestamp until depleted
+      r = (d + r) % 16 | 0;
+      d = Math.floor(d / 16);
+    } else {
+      //Use microseconds since page-load if supported
+      r = (d2 + r) % 16 | 0;
+      d2 = Math.floor(d2 / 16);
     }
-  );
+    return (c === 'x' ? r : (r & 0x3) | 0x8).toString(16);
+  });
 }
 
 export const structuredBlocks: GroupStructuredBlock[] = [
@@ -37,26 +38,26 @@ export const structuredBlocks: GroupStructuredBlock[] = [
     blocks: [
       {
         id: uuid(),
-        content: {html: "", plainText:""},
+        content: { html: '', plainText: '' },
         type: 'text',
       },
       {
         id: uuid(),
         content: {
-          url: ""
+          url: '',
         },
         type: 'image',
       },
       {
         id: uuid(),
-        content: {id:"", type:"", url: ""},
-        type: 'video'
+        content: { id: '', type: '', url: '' },
+        type: 'video',
       },
       {
         id: uuid(),
-        content: {url:'', height: 400},
-        type: 'embed'
-      }
+        content: { url: '', height: 400 },
+        type: 'embed',
+      },
     ],
   },
   {
@@ -67,47 +68,50 @@ export const structuredBlocks: GroupStructuredBlock[] = [
         id: uuid(),
         options: {
           isLong: false,
-          labels: {button: "Send", placeholder: "Type your answer..."}
+          labels: { button: 'Send', placeholder: 'Type your answer...' },
         },
         type: 'text_input',
       },
       {
         id: uuid(),
         options: {
-          labels: {button: "Send", placeholder: "Type a number..."}
+          labels: { button: 'Send', placeholder: 'Type a number...' },
         },
         type: 'number_input',
       },
       {
         id: uuid(),
         options: {
-          labels: {button: "Send", placeholder: "Type your email..."},
-          retryMessageContent: "This email doesn't seem to be valid. Can you type it again?"
+          labels: { button: 'Send', placeholder: 'Type your email...' },
+          retryMessageContent:
+            "This email doesn't seem to be valid. Can you type it again?",
         },
         type: 'email_input',
       },
       {
         id: uuid(),
         options: {
-          labels: {button: "Send", placeholder: "Type a URL..."},
-          retryMessageContent: "This URL doesn't seem to be valid. Can you type it again?"
+          labels: { button: 'Send', placeholder: 'Type a URL...' },
+          retryMessageContent:
+            "This URL doesn't seem to be valid. Can you type it again?",
         },
         type: 'url_input',
       },
       {
         id: uuid(),
         options: {
-          labels: {to: "To:", from: "From:", button: "Send"},
+          labels: { to: 'To:', from: 'From:', button: 'Send' },
           hasTime: false,
-          isRange: false
+          isRange: false,
         },
         type: 'date_input',
       },
       {
         id: uuid(),
         options: {
-          labels: {button: "Send", placeholder: "Type your phone number..."},
-          retryMessageContent: "This phone number doesn't seem to be valid. Can you type it again?"
+          labels: { button: 'Send', placeholder: 'Type your phone number...' },
+          retryMessageContent:
+            "This phone number doesn't seem to be valid. Can you type it again?",
         },
         type: 'phone_number_input',
       },
@@ -115,32 +119,32 @@ export const structuredBlocks: GroupStructuredBlock[] = [
         id: uuid(),
         items: [],
         options: {
-          buttonLabel: "Send",
-          isMultipleChoice: false
+          buttonLabel: 'Send',
+          isMultipleChoice: false,
         },
         type: 'choice_input',
       },
       {
         id: uuid(),
         options: {
-          currency: "USD",
-          labels: {button: "Pay", success: "Success"},
-          providers: "stripe"
+          currency: 'USD',
+          labels: { button: 'Pay', success: 'Success' },
+          providers: 'stripe',
         },
         type: 'payment_input',
       },
       {
         id: uuid(),
         options: {
-          buttonTypes: "Numbers",
+          buttonTypes: 'Numbers',
           customIcon: {
             isEnabled: false,
-            svg:"",
+            svg: '',
           },
           labels: {
-            left: "",
-            right: "",
-            button: "Send",
+            left: '',
+            right: '',
+            button: 'Send',
           },
           length: 10,
         },
@@ -150,15 +154,16 @@ export const structuredBlocks: GroupStructuredBlock[] = [
         id: uuid(),
         options: {
           labels: {
-            button: "Upload",
-            placeholder: "<strong>Click to upload</strong> or drag and drop<br> (size limit: 10MB)"
+            button: 'Upload',
+            placeholder:
+              '<strong>Click to upload</strong> or drag and drop<br> (size limit: 10MB)',
           },
           isMultipleAllowed: false,
           isRequired: true,
-          sizeLimit: 10
+          sizeLimit: 10,
         },
         type: 'file_input',
-      }
+      },
     ],
   },
   // {
@@ -220,107 +225,106 @@ export const structuredBlocks: GroupStructuredBlock[] = [
   // },
 ];
 
-export const prefilledData : any = {
+export const prefilledData: any = {
   start: {
     label: 'Start',
-    svg: 'assets/svgs/flag.svg'
+    svg: 'assets/svgs/flag.svg',
   },
   text: {
     label: 'Text',
-    svg: 'assets/svgs/text.svg'
+    svg: 'assets/svgs/text.svg',
   },
   image: {
     label: 'Image',
-    svg: 'assets/svgs/image.svg'
+    svg: 'assets/svgs/image.svg',
   },
   video: {
     label: 'Video',
-    svg: 'assets/svgs/video.svg'
+    svg: 'assets/svgs/video.svg',
   },
   embed: {
     label: 'Embed',
-    svg: 'assets/svgs/embed.svg'
+    svg: 'assets/svgs/embed.svg',
   },
   text_input: {
     label: 'Text',
-    svg: 'assets/svgs/input-text.svg'
+    svg: 'assets/svgs/input-text.svg',
   },
   number_input: {
     label: 'Number',
-    svg: 'assets/svgs/input-number.svg'
+    svg: 'assets/svgs/input-number.svg',
   },
   email_input: {
     label: 'Email',
-    svg: 'assets/svgs/input-email.svg'
+    svg: 'assets/svgs/input-email.svg',
   },
   url_input: {
     label: 'Website',
-    svg: 'assets/svgs/input-website.svg'
+    svg: 'assets/svgs/input-website.svg',
   },
   date_input: {
     label: 'Date',
-    svg: 'assets/svgs/input-date.svg'
+    svg: 'assets/svgs/input-date.svg',
   },
   phone_number_input: {
     label: 'Phone',
-    svg: 'assets/svgs/input-phone.svg'
+    svg: 'assets/svgs/input-phone.svg',
   },
   choice_input: {
     label: 'Button',
-    svg: 'assets/svgs/input-button.svg'
+    svg: 'assets/svgs/input-button.svg',
   },
   payment_input: {
     label: 'Payment',
-    svg: 'assets/svgs/input-payment.svg'
+    svg: 'assets/svgs/input-payment.svg',
   },
   rating_input: {
     label: 'Rating',
-    svg: 'assets/svgs/star.svg'
+    svg: 'assets/svgs/star.svg',
   },
   file_input: {
     label: 'File',
-    svg: 'assets/svgs/file.svg'
+    svg: 'assets/svgs/file.svg',
   },
   set_variable: {
     label: 'Set Variable',
-    svg: 'assets/svgs/logic-variable.svg'
+    svg: 'assets/svgs/logic-variable.svg',
   },
   condition: {
     label: 'Condition',
-    svg: 'assets/svgs/logic-condition.svg'
+    svg: 'assets/svgs/logic-condition.svg',
   },
   redirect: {
     label: 'Redirect',
-    svg: 'assets/svgs/logic-redirect.svg'
+    svg: 'assets/svgs/logic-redirect.svg',
   },
   code: {
     label: 'Code',
-    svg: 'assets/svgs/logic-code.svg'
+    svg: 'assets/svgs/logic-code.svg',
   },
   typebot_link: {
     label: 'Typeot',
-    svg: 'assets/svgs/logic-typebot.svg'
+    svg: 'assets/svgs/logic-typebot.svg',
   },
   webhook: {
     label: 'Webhooks',
-    svg: 'assets/svgs/integeration-webhook.svg'
+    svg: 'assets/svgs/integeration-webhook.svg',
   },
   email: {
     label: 'Email',
-    svg: 'assets/svgs/integeration-email.svg'
+    svg: 'assets/svgs/integeration-email.svg',
   },
-}
+};
 
 export class Editor {
-
   instance: any;
   wrapperElement: any;
   groupBlockIdsMapping: any = {};
   rightClickPopovers: any = {
-    'connector': [],
-    'group': [],
-    'block': [],
-    'itemField': []
+    connector: [],
+    group: [],
+    block: [],
+    itemField: [],
   };
 
   firstGroupId = this.uuid();
@@ -390,7 +394,10 @@ export class Editor {
   groupSourceEndpoint = {
     endpoint: {
       type: 'Dot',
-      options: { radius: 6, cssClass: 'endpoint group-source-endpoint grouper' },
+      options: {
+        radius: 6,
+        cssClass: 'endpoint group-source-endpoint grouper',
+      },
     },
     paintStyle: {
       fill: 'transparent',
@@ -420,9 +427,9 @@ export class Editor {
         id: 'connected_arrow',
         events: {
           click: function () {
-              alert('you clicked on the arrow overlay')
-          }
-        }
+            alert('you clicked on the arrow overlay');
+          },
+        },
       },
     },
   ];
@@ -437,9 +444,7 @@ export class Editor {
     },
   };
 
-  constructor(editorService: EditorService) {
-
-  }
+  constructor(editorService: EditorService) {}
 
   createInstance(wrapper: ElementRef) {
     this.wrapperElement = wrapper;
@@ -466,7 +471,7 @@ export class Editor {
       this.groupBlocks = response.groups;
       let edges = response.edges;
 
-      console.log("groupBlocks", this.groupBlocks);
+      console.log('groupBlocks', this.groupBlocks);
 
       this.instance.batch(() => {
         this.groupBlocks.forEach((gr) => {
@@ -488,27 +493,33 @@ export class Editor {
 
         setTimeout(() => {
           edges.forEach((edge: any) => {
-            let sourceId = (edge.from.itemId ? 'item-' + edge.from.itemId : 'be-' + edge.from.blockId);
-            let targetId = (edge.to.blockId ? edge.to.blockId : edge.to.groupId);
+            let sourceId = edge.from.itemId
+              ? 'item-' + edge.from.itemId
+              : 'be-' + edge.from.blockId;
+            let targetId = edge.to.blockId ? edge.to.blockId : edge.to.groupId;
 
             this.instance.connect({
               source: document.getElementById(sourceId),
               target: document.getElementById(targetId),
               anchors: ['Right', 'ContinuousLeft'],
-              endpoints: [this.sourceEndpoint.endpoint, this.targetEndpoint.endpoint],
-              endpointStyles: [this.sourceEndpoint.paintStyle, this.targetEndpoint.paintStyle],
+              endpoints: [
+                this.sourceEndpoint.endpoint,
+                this.targetEndpoint.endpoint,
+              ],
+              endpointStyles: [
+                this.sourceEndpoint.paintStyle,
+                this.targetEndpoint.paintStyle,
+              ],
               // detachable: false,
               // reattach: true,
               deleteEndpointsOnDetach: true,
               scope: 'jsplumb_defaultscope',
               redrop: 'any',
-            })
+            });
           });
-        }, 100)
+        }, 100);
       });
-
     }
-
   }
 
   manageNode(id: string, location: any, type: string) {
@@ -518,8 +529,13 @@ export class Editor {
     });
   }
 
-  _addEndPoint(id: string, sourceAnchors: Array<AnchorSpec>, type: string = 'block') {
-    let sourcePoint = type === 'block' ? this.sourceEndpoint : this.groupSourceEndpoint;
+  _addEndPoint(
+    id: string,
+    sourceAnchors: Array<AnchorSpec>,
+    type: string = 'block'
+  ) {
+    let sourcePoint =
+      type === 'block' ? this.sourceEndpoint : this.groupSourceEndpoint;
 
     if (type === 'group') {
       this.instance.addGroup({
@@ -540,7 +556,7 @@ export class Editor {
     }
 
     if (id === this.firstBlockId) {
-      this.instance.toggleDraggable(document.getElementById(id))
+      this.instance.toggleDraggable(document.getElementById(id));
     }
   }
 
@@ -593,7 +609,6 @@ export class Editor {
 
   bindEvents() {
     this.instance.bind('connection', (info: any, e: any) => {
-
       this.instance.setAttribute(
         info.connection.connector.canvas,
         'connector-source-id',
@@ -624,7 +639,10 @@ export class Editor {
         );
       });
 
-      this.instance.on(info.connection.connector.canvas, 'contextmenu', (e: any) => {
+      this.instance.on(
+        info.connection.connector.canvas,
+        'contextmenu',
+        (e: any) => {
           e.preventDefault();
           let connector = e.target.closest('.jtk-connector');
           let type = 'connector';
@@ -632,7 +650,9 @@ export class Editor {
 
           if (document.getElementById(id)) {
             // if any coonector popover found then delete it first
-            let index = document.getElementById(id)?.getAttribute('data-popover-index');
+            let index = document
+              .getElementById(id)
+              ?.getAttribute('data-popover-index');
             this.rightClickPopovers[type].splice(index, 1);
           }
 
@@ -648,19 +668,23 @@ export class Editor {
 
     this.instance.bind(EVENT_DRAG_STOP, (drag: any) => {
       if (drag.el._isJsPlumbGroup) {
-        const groupIndex: any = document.getElementById(drag.el.id)?.getAttribute('data-group-index');
+        const groupIndex: any = document
+          .getElementById(drag.el.id)
+          ?.getAttribute('data-group-index');
         this.groupBlocks[groupIndex].position.x = drag.el.offsetLeft;
         this.groupBlocks[groupIndex].position.y = drag.el.offsetTop;
       }
-    })
+    });
 
     window.addEventListener('click', (e: any) => {
-
       if (e.target.nodeName !== 'path') {
         this.removeSelectedBorder();
       }
 
-      this.removeCloneDeletePopup(this.wrapperElement.nativeElement.children, e);
+      this.removeCloneDeletePopup(
+        this.wrapperElement.nativeElement.children,
+        e
+      );
     });
 
     this.instance.bind('beforeDrop', (ci: any) => {
@@ -683,15 +707,21 @@ export class Editor {
 
     if (isAllowToRemove) {
       this.resetRightClickPopovers();
+      const removePopStyleClass = document.querySelectorAll(
+        '.popover-outline-style'
+      );
+      removePopStyleClass.forEach((e) => {
+        e.classList.remove('popover-outline-style');
+      });
     }
   }
 
   resetRightClickPopovers() {
     this.rightClickPopovers = {
-      'connector': [],
-      'group': [],
-      'block': [],
-      'itemField': []
+      connector: [],
+      group: [],
+      block: [],
+      itemField: [],
     };
   }
 
@@ -719,6 +749,4 @@ export class Editor {
       }
     );
   }
-
 }
-

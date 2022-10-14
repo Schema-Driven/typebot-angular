@@ -24,12 +24,14 @@ export class EditorComponent extends Editor {
   wrapper!: ElementRef;
   panZoomController: any;
   scaleLevel: number = 1;
+  translateLevel: number = 10;
   editedGroupName: number = -1;
   deg: number = 3;
   edges: Edge[] = [];
   viewChat: boolean = false;
   previewChat: boolean = false;
   draw: string = 'false';
+  oldx: any;
 
   typebot: TypeBot = {
     name: 'Schema Typebot',
@@ -50,7 +52,10 @@ export class EditorComponent extends Editor {
 
     this.route.queryParams.subscribe((params) => {
       this.draw = params['draw'];
-      if(localStorage.getItem('editor') !== undefined && localStorage.getItem('editor') !== null){
+      if (
+        localStorage.getItem('editor') !== undefined &&
+        localStorage.getItem('editor') !== null
+      ) {
         this.drawEditor(localStorage.getItem('editor'));
       }
     });
@@ -242,24 +247,49 @@ export class EditorComponent extends Editor {
     // this.instance.repaint();
   }
 
-  showRightClickPopover(type: string, id: string, e: any) {
-    if (this.firstGroupId !== id && this.firstBlockId !== id) {
-      id = type + '-' + id;
-      if (document.getElementById(id)) {
-        let index = document
-          .getElementById(id)
-          ?.getAttribute('data-popover-index');
-        this.rightClickPopovers[type].splice(index, 1);
-      }
+  // zoomHandlerWheel(event: any) {
+  //   console.log(event);
+  //   if (event.offsetX < this.oldx) {
+  //     this.scaleLevel = this.scaleLevel + 0.1;
+  //     this.translateLevel = this.translateLevel + 10;
+  //   } else if (event.offsetX > this.oldx) {
+  //     this.scaleLevel = this.scaleLevel - 0.1;
+  //     this.translateLevel = this.translateLevel - 10;
+  //   }
+  //   this.wrapper.nativeElement.style.transform =
+  //     'scale(' + this.scaleLevel + ') ';
+  //   this.oldx = event.offsetX;
+  //   console.log(this.oldx);
+  // }
 
-      this.rightClickPopovers[type].push({
-        position: { x: e.clientX, y: e.clientY },
-        type: type,
-        id: id,
-      });
-      return false;
+  showRightClickPopover(type: string, id: string, e: any) {
+    const startGroupBlock = document.getElementById(id) as HTMLElement;
+    if (
+      startGroupBlock.classList.contains('Start') ||
+      startGroupBlock.classList.contains('start')
+    ) {
+      return;
+    } else {
+      let styleId = document.getElementById(id) as HTMLElement;
+      styleId.classList.add('popover-outline-style');
+      if (this.firstGroupId !== id && this.firstBlockId !== id) {
+        id = type + '-' + id;
+        if (document.getElementById(id)) {
+          let index = document
+            .getElementById(id)
+            ?.getAttribute('data-popover-index');
+          this.rightClickPopovers[type].splice(index, 1);
+        }
+
+        this.rightClickPopovers[type].push({
+          position: { x: e.clientX, y: e.clientY },
+          type: type,
+          id: id,
+        });
+        return false;
+      }
+      return true;
     }
-    return true;
   }
 
   popoverHandler(type: string, id: string, index: number) {
@@ -368,10 +398,12 @@ export class EditorComponent extends Editor {
   async printJson() {
     await this.setEdgesObject();
     this.editorService.setEditorJson(this.typebot);
-    var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(this.typebot));
+    var dataStr =
+      'data:text/json;charset=utf-8,' +
+      encodeURIComponent(JSON.stringify(this.typebot));
     let anchor = document.createElement('a');
-    anchor.setAttribute("href",     dataStr     );
-    anchor.setAttribute("download", "typebot.json");
+    anchor.setAttribute('href', dataStr);
+    anchor.setAttribute('download', 'typebot.json');
     anchor.click();
 
     localStorage.setItem('editor', JSON.stringify(this.typebot));
