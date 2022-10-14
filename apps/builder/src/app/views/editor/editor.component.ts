@@ -32,6 +32,8 @@ export class EditorComponent extends Editor {
   previewChat: boolean = false;
   draw: string = 'false';
   oldx: any;
+  editorSettings: boolean = false;
+  saveFlow: boolean = false;
 
   typebot: TypeBot = {
     name: 'Schema Typebot',
@@ -48,6 +50,12 @@ export class EditorComponent extends Editor {
   }
 
   ngOnInit() {
+    window.addEventListener('click', (e) => {
+      const target = e.target as HTMLTextAreaElement;
+      if (!target.classList.contains('setting-icon')) {
+        this.editorSettings = false;
+      }
+    });
     this.createInstance(this.wrapper);
 
     this.route.queryParams.subscribe((params) => {
@@ -395,7 +403,7 @@ export class EditorComponent extends Editor {
     }
   }
 
-  async printJson() {
+  async exportFlow() {
     await this.setEdgesObject();
     this.editorService.setEditorJson(this.typebot);
     var dataStr =
@@ -405,9 +413,25 @@ export class EditorComponent extends Editor {
     anchor.setAttribute('href', dataStr);
     anchor.setAttribute('download', 'typebot.json');
     anchor.click();
+  }
+
+  async printJson() {
+    await this.setEdgesObject();
+    this.editorService.setEditorJson(this.typebot);
+    // var dataStr =
+    //   'data:text/json;charset=utf-8,' +
+    //   encodeURIComponent(JSON.stringify(this.typebot));
+    // let anchor = document.createElement('a');
+    // anchor.setAttribute('href', dataStr);
+    // anchor.setAttribute('download', 'typebot.json');
+    // anchor.click();
 
     localStorage.setItem('editor', JSON.stringify(this.typebot));
     console.log(this.typebot);
+    this.saveFlow = true;
+    setTimeout(() => {
+      this.saveFlow = false;
+    }, 1000);
     //window.location.href = window.location.pathname + '?draw=true';
   }
 
