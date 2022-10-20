@@ -233,3 +233,7 @@ svg.endpointOnTarget.grouper.jtk-endpoint.jtk-endpoint-connected {
 ::ng-deep .single-block.popover-outline-style .single-block-placeholder{
   outline: 2px solid #1a5fff;
 }
+
+::ng-deep .css-muvlrb .typebot-chat-view .file-uploader-main {
+    display: none;
+}
