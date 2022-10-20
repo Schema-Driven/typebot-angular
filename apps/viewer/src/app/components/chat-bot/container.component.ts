@@ -56,12 +56,6 @@ export class ContainerComponent implements OnInit {
     }
   }
 
-  // buildBlocksStructure() {
-  //   this.editor.edges.forEach((edge: any) => {
-  //     this.setBlocksData(edge.to);
-  //   });
-  // }
-
   buildBlocksStructure() {
     this.editor.groups.forEach((group: any) => {
       if (group.name === 'Start') {
@@ -120,33 +114,6 @@ export class ContainerComponent implements OnInit {
     });
   }
 
-  // setBlocksData(data: any) {
-  //   this.editor.groups.forEach((group: any) => {
-  //     if (group.id === data.groupId) {
-  //       group.blocks.forEach((block: any) => {
-  //         if (block.type === 'embed') {
-  //           let testing = block.content.url;
-  //           testing = testing.toString();
-  //           if (testing.startsWith('<iframe')) {
-  //             this.iframeCheck = true;
-  //           } else {
-  //             this.iframeCheck = false;
-  //           }
-  //         }
-
-  //         if (data.blockId === undefined) {
-  //           this.blocks.push(block);
-  //         }
-
-  //         if (block.id === data.blockId) {
-  //           this.blocks.push(block);
-  //         }
-  //       });
-  //       return;
-  //     }
-  //   });
-  // }
-
   renderChatBot() {
     if (this.blocks) {
       this.renderNextStep();
@@ -172,6 +139,8 @@ export class ContainerComponent implements OnInit {
         this.calculateTop();
       }
     }, 2000);
+
+    window.scrollBy(0, 1000);
   }
 
   emailVerification(val: any) {
