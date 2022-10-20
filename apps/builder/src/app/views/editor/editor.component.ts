@@ -487,4 +487,9 @@ export class EditorComponent extends Editor {
     this.typebot.edges = this.edges;
     this.typebot.groups = this.groupBlocks;
   }
+
+  showRightBar() {
+    console.log('editor called');
+    this.editorService.sendClickEvent();
+  }
 }

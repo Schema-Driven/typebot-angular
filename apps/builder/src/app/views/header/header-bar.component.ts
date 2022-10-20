@@ -1,5 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { EditorService } from '../../services/editor.service';
 
 @Component({
   selector: 'header-bar',
@@ -7,15 +9,21 @@ import { Router } from '@angular/router';
   styleUrls: ['./header-bar.component.css'],
 })
 export class HeaderBarComponent implements OnInit {
-  constructor(private router: Router) {
-    // ...
-  }
-
   flowAct: boolean = false;
   themeAct: boolean = false;
   settingAct: boolean = false;
   shareAct: boolean = false;
   showComp: boolean = false;
+  clickEventSubscription: Subscription;
+
+  constructor(private router: Router, private shared: EditorService) {
+    // ...
+
+    this.clickEventSubscription = this.shared.getClickEvent().subscribe(() => {
+      this.onPress();
+    });
+  }
+
   ngOnInit(): void {}
 
   navigate(links: any[]) {
