@@ -14,6 +14,7 @@ export class HeaderBarComponent implements AfterContentInit {
   settingAct: boolean = false;
   shareAct: boolean = false;
   showComp: boolean = false;
+  toggleBotName: boolean = false;
   clickEventSubscription: Subscription;
 
   constructor(private router: Router, private shared: EditorService) {
@@ -69,5 +70,19 @@ export class HeaderBarComponent implements AfterContentInit {
   receiveChildData(data: any) {
     console.log(data);
     this.showComp = data;
+  }
+
+  toggleSpan(e: any) {
+    e.target.setAttribute('hidden', 'hidden');
+    e.target.nextSibling.classList.remove('hidden');
+  }
+
+  toggleInput(e: any) {
+    e.target.classList.add('hidden');
+    e.target.previousSibling.setAttribute('hidden', '');
+  }
+
+  setValue(e: any) {
+    e.target.previousSibling.innerText = e.target.value;
   }
 }
