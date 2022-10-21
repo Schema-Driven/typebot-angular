@@ -17,15 +17,15 @@
             <img src="assets/svgs/setting.svg" class="w-7 h-7 mr-2 mt-1.5 ">
             Schema Typebot</a>
           <div class="flex items-center ml-3 rg-btn">
-            <a href="#" class="bg-gray-100 rounded-md p-0.5 w-7 h-7 mr-2
-                  flex items-center justify-center">
+            <button disabled class="bg-gray-100 rounded-md p-0.5 w-7 h-7 mr-2
+                  flex items-center justify-center cursor-not-allowed opacity-40">
               <img src="assets/svgs/reverse.svg" class="h-3.5 w-3.5">
 
-            </a>
-            <a href="#" class="bg-gray-100 rounded-md p-0.5 w-7 h-7 flex
-                  items-center justify-center">
+            </button>
+            <button disabled class="bg-gray-100 rounded-md p-0.5 w-7 h-7 flex
+                  items-center justify-center cursor-not-allowed opacity-40">
               <img src="assets/svgs/forward.svg" class="h-3.5 w-3.5">
-            </a>
+            </button>
             <span class="flex items-center ml-4 text-sm text-gray-500">
               Saving...</span>
           </div>
@@ -45,7 +45,7 @@
         <nav class="hidden space-x-6 md:flex ceb-nav">
           <button [ngClass]="{'active': flowAct}"
             class="text-base font-medium text-black py-1.5 px-4 rounded-md hover:bg-gray-100 hover:text-gray-900"
-            (click)="changeUrl()">
+            (click)="navigate(['/', 'editor'])">
             Flow
           </button>
           <!-- onclick="themeClick()" -->

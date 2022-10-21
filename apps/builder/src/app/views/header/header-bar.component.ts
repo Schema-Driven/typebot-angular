@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, AfterContentInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { EditorService } from '../../services/editor.service';
@@ -8,7 +8,7 @@ import { EditorService } from '../../services/editor.service';
   templateUrl: './header-bar.component.html',
   styleUrls: ['./header-bar.component.css'],
 })
-export class HeaderBarComponent implements OnInit {
+export class HeaderBarComponent implements AfterContentInit {
   flowAct: boolean = false;
   themeAct: boolean = false;
   settingAct: boolean = false;
@@ -24,43 +24,40 @@ export class HeaderBarComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
-
-  navigate(links: any[]) {
-    this.router.navigate(links);
-    if (links[1] == 'editor') {
+  ngAfterContentInit(): void {
+    if (window.location.pathname === '/editor') {
       this.flowClick();
-    } else if (links[1] == 'theme') {
+    } else if (window.location.pathname === '/theme') {
       this.themeClick();
-    } else if (links[1] == 'msetting') {
+    } else if (window.location.pathname === '/msetting') {
       this.settingClick();
-    } else if (links[1] == 'share') {
+    } else if (window.location.pathname === '/share') {
       this.shareClick();
     }
   }
+
+  navigate(links: any[]) {
+    this.router.navigate(links);
+  }
   flowClick() {
-    console.log('Flow click');
     this.flowAct = true;
     this.themeAct = false;
     this.settingAct = false;
     this.shareAct = false;
   }
   themeClick() {
-    console.log('Theme click');
     this.flowAct = false;
     this.themeAct = true;
     this.settingAct = false;
     this.shareAct = false;
   }
   settingClick() {
-    console.log('Setting click');
     this.flowAct = false;
     this.themeAct = false;
     this.settingAct = true;
     this.shareAct = false;
   }
   shareClick() {
-    console.log('Share click');
     this.flowAct = false;
     this.themeAct = false;
     this.settingAct = false;
@@ -72,9 +69,5 @@ export class HeaderBarComponent implements OnInit {
   receiveChildData(data: any) {
     console.log(data);
     this.showComp = data;
-  }
-
-  changeUrl() {
-    this.navigate(['/', 'editor']);
   }
 }
