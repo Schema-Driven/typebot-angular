@@ -18,9 +18,10 @@
               <span class="tooltip-text">Change icon</span>
             </div>
             <div class="tooltip max-w-[150px] break-words">
-              <span (click)="toggleSpan($event)" class="text-sm text-gray-700 cursor-pointer leading-4"
-                id="recieve-typebot-name" hidden>Schema Typebot</span>
-              <input
+              <span (click)="toggleSpan($event);focusInput.focus()"
+                class="text-sm text-gray-700 cursor-pointer leading-4" id="recieve-typebot-name" hidden>Schema
+                Typebot</span>
+              <input #focusInput
                 class="cursor-pointer py-1 px-2 text-sm text-gray-700 rounded-lg placeholder:text-gray-700 placeholder:font-normal placeholder:text-sm focus:outline-[#7ea6ff] focus:shadow-[#7ea6ff] focus:shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white w-full hidden"
                 (keyup.enter)="toggleInput($event)" (keyup)="setValue($event)" (blur)="toggleInput($event)"
                 id="typebot-name" type="text" placeholder="Schema Typebot">
