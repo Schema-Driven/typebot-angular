@@ -173,7 +173,7 @@ svg.endpointOnTarget.grouper.jtk-endpoint.jtk-endpoint-connected {
 
 
 ::ng-deep .input-popover {
-  z-index: 9;
+  z-index: 10;
 }
 
 ::ng-deep .input-popover .popover-body{
