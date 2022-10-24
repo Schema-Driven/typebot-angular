@@ -227,6 +227,8 @@
     left: -7.5px;
     top: calc(50% - 56px);
     opacity: 0;
+    z-index: 9;
+    cursor: col-resize;
 }
 .first-line{
   width: 2px;
@@ -238,4 +240,12 @@
   width: 2px;
   background-color:#D1D5DB;
   height: 70%;
+}
+
+
+/*resizer css*/
+
+.resizable .resizers{
+  width: 100%;
+  height: 100%;
 }
