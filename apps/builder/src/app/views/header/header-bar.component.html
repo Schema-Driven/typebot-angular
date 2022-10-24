@@ -13,9 +13,28 @@
             </svg>
           </a>
           <a class="flex items-center justify-center gap-1 ml-4 hover:text-gray-900">
-            <div class="tooltip icon-tooltip hover:bg-gray-100 cursor-pointer w-10 h-10 p-2 rounded-lg">
-              <img src="assets/svgs/setting.svg" class="w-6 h-6">
+            <div (click)="toggleEmoji()"
+              class="changeable-icon tooltip icon-tooltip hover:bg-gray-100 cursor-pointer w-10 h-10 rounded-lg flex items-center justify-center">
+              <img id="emoji-default" src="assets/svgs/setting.svg" class="w-6 h-6 changeable-icon">
+              <span id="changed-emoji" class="hidden text-xl changeable-icon"></span>
               <span class="tooltip-text">Change icon</span>
+            </div>
+            <div
+              class="bg-white py-6 px-4 shadow-lg rounded-lg h-80 w-72 z-50 absolute left-10 top-16 emoji-main hidden changeable-icon">
+              <input type="text"
+                class="block w-full h-10 p-2 text-sm text-gray-700 border border-gray-300 rounded-lg placeholder:text-gray-700 placeholder:font-normal placeholder:text-base focus:outline-[#7ea6ff] focus:shadow-lg dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white mb-4 changeable-icon"
+                placeholder="Search..." (keyup)="getEmojiResult($event)">
+              <div class="h-[80%] overflow-y-auto overflow-x-hidden custom-scrollbar changeable-icon">
+                <div *ngIf="changeEmojiView" class="emoji-container grid grid-cols-7 gap-1 changeable-icon">
+                  <button *ngFor="let emoji of emojiArray" (click)="replaceEmoji($event)"
+                    class="hover:bg-gray-100 p-1 rounded-lg changeable-icon">{{emoji.emoji}}</button>
+                </div>
+                <div *ngIf="!changeEmojiView"
+                  class="emoji-container grid grid-cols-7 gap-1 changeable-icon searched-emoji">
+                  <button *ngFor="let emoji of searchedEmoji" (click)="replaceEmoji($event)"
+                    class="hover:bg-gray-100 p-1 rounded-lg changeable-icon">{{emoji.emoji}}</button>
+                </div>
+              </div>
             </div>
             <div class="tooltip max-w-[150px] break-words">
               <span (click)="toggleSpan($event);focusInput.focus()"
