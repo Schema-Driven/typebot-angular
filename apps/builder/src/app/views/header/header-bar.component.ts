@@ -21,6 +21,7 @@ export class HeaderBarComponent implements AfterContentInit {
   emojiArray: any = emojis;
   searchedEmoji: any = [];
   changeEmojiView: boolean = true;
+  saveTypeBot: boolean = false;
 
   constructor(private router: Router, private shared: EditorService) {
     this.clickEventSubscription = this.shared
@@ -148,5 +149,15 @@ export class HeaderBarComponent implements AfterContentInit {
 
   showHelpModal() {
     this.shared.sendHelpClickEvent();
+  }
+
+  savingTypeBot(e: any) {
+    this.saveTypeBot = true;
+
+    setTimeout(() => {
+      this.saveTypeBot = false;
+    }, 2000);
+
+    e.target.innerText = 'Published';
   }
 }

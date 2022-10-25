@@ -68,8 +68,15 @@
               <span class="flex items-center ml-1 text-sm text-black font-medium">
                 Help</span>
             </div>
-            <span class="flex items-center ml-4 text-sm text-gray-500">
-              Saving...</span>
+            <span *ngIf="saveTypeBot" class="flex items-center ml-4 text-sm text-gray-500 font-medium ">
+              Saving
+              <div class="lds-ring">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+              </div>
+            </span>
           </div>
         </div>
         <div class="-my-2 -mr-2 md:hidden">
@@ -152,8 +159,20 @@
             <previewchat (outputFromChild)="receiveChildData($event)"></previewchat>
           </div>
 
-          <button
-            class="inline-flex items-center justify-center px-4 py-2 ml-3 text-sm font-medium text-white bg-blue-600 rounded-md shadow-sm whitespace-nowrap hover:bg-blue-700">Publish</button>
+          <button (click)="savingTypeBot($event)"
+            class="inline-flex items-center justify-center px-4 py-2 ml-3 text-sm font-medium text-white bg-blue-600 rounded-md shadow-sm whitespace-nowrap hover:bg-blue-700">
+            <span *ngIf="!saveTypeBot; else publishLoader">Publish</span>
+            <ng-template #publishLoader>
+              <div class="h-4 flex w-12 items-center publish-btn-loader">
+                <div class="lds-ring">
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                </div>
+              </div>
+            </ng-template>
+          </button>
         </div>
       </div>
     </div>
