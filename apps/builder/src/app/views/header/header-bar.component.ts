@@ -151,13 +151,15 @@ export class HeaderBarComponent implements AfterContentInit {
     this.shared.sendHelpClickEvent();
   }
 
-  savingTypeBot(e: any) {
+  async savingTypeBot(e: any) {
     this.saveTypeBot = true;
-
-    setTimeout(() => {
+    await setTimeout(() => {
       this.saveTypeBot = false;
+      e.target.innerText = 'Published';
+      document.querySelector('.publish-btn-main')?.setAttribute('disabled', '');
+      document
+        .querySelector('.publish-btn-main')
+        ?.setAttribute('style', 'opacity:0.5;cursor:not-allowed');
     }, 2000);
-
-    e.target.innerText = 'Published';
   }
 }

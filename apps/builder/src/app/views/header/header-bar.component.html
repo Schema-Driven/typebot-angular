@@ -160,7 +160,7 @@
           </div>
 
           <button (click)="savingTypeBot($event)"
-            class="inline-flex items-center justify-center px-4 py-2 ml-3 text-sm font-medium text-white bg-blue-600 rounded-md shadow-sm whitespace-nowrap hover:bg-blue-700">
+            class="inline-flex items-center justify-center px-4 py-2 ml-3 text-sm font-medium text-white bg-blue-600 rounded-md shadow-sm whitespace-nowrap hover:bg-blue-700 publish-btn-main">
             <span *ngIf="!saveTypeBot; else publishLoader">Publish</span>
             <ng-template #publishLoader>
               <div class="h-4 flex w-12 items-center publish-btn-loader">
