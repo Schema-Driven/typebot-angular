@@ -34,6 +34,7 @@ export class EditorComponent extends Editor {
   oldx: any;
   editorSettings: boolean = false;
   saveFlow: boolean = false;
+  clickEventSubscription: any;
 
   typebot: TypeBot = {
     name: 'Schema Typebot',
@@ -50,6 +51,11 @@ export class EditorComponent extends Editor {
   }
 
   ngOnInit() {
+    this.clickEventSubscription = this.editorService
+      .getHelpClickEvent()
+      .subscribe(() => {
+        this.viewChat = true;
+      });
     window.addEventListener('click', (e) => {
       const target = e.target as HTMLTextAreaElement;
       if (!target.classList.contains('setting-icon')) {
@@ -489,7 +495,6 @@ export class EditorComponent extends Editor {
   }
 
   showRightBar() {
-    console.log('editor called');
-    this.editorService.sendClickEvent();
+    this.editorService.sendPreviewClickEvent();
   }
 }

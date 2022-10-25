@@ -23,9 +23,11 @@ export class HeaderBarComponent implements AfterContentInit {
   changeEmojiView: boolean = true;
 
   constructor(private router: Router, private shared: EditorService) {
-    this.clickEventSubscription = this.shared.getClickEvent().subscribe(() => {
-      this.onPress();
-    });
+    this.clickEventSubscription = this.shared
+      .getPreviewClickEvent()
+      .subscribe(() => {
+        this.onPress();
+      });
     window.addEventListener('click', (e) => {
       const target = e.target as HTMLTextAreaElement;
       if (!target.classList.contains('access-popup')) {
@@ -142,5 +144,9 @@ export class HeaderBarComponent implements AfterContentInit {
 
   toggleAccessPop() {
     this.accessPopup = !this.accessPopup;
+  }
+
+  showHelpModal() {
+    this.shared.sendHelpClickEvent();
   }
 }

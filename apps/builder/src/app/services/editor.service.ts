@@ -8,7 +8,8 @@ export class EditorService {
   private editorJson$ = new BehaviorSubject<any>({});
   private groupBlocks$ = new BehaviorSubject<any>({});
   private block$ = new BehaviorSubject<any>({});
-  private subject = new Subject<any>();
+  private previewClick = new Subject<any>();
+  private helpClick = new Subject<any>();
 
   selectedBlock$ = this.block$.asObservable();
   selectedGroupBlocks$ = this.block$.asObservable();
@@ -28,10 +29,19 @@ export class EditorService {
     this.editorJson$.next(editor);
   }
 
-  sendClickEvent() {
-    this.subject.next(eval);
+  sendPreviewClickEvent() {
+    this.previewClick.next(eval);
   }
-  getClickEvent(): Observable<any> {
-    return this.subject.asObservable();
+
+  sendHelpClickEvent() {
+    this.helpClick.next(eval);
+  }
+
+  getPreviewClickEvent(): Observable<any> {
+    return this.previewClick.asObservable();
+  }
+
+  getHelpClickEvent(): Observable<any> {
+    return this.helpClick.asObservable();
   }
 }
