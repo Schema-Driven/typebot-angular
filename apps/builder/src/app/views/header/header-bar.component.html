@@ -98,15 +98,41 @@
           </button>
         </nav>
         <div class="items-center justify-end hidden md:flex md:flex-1 lg:w-0 r-btn">
-          <a href=""
-            class="inline-flex items-center justify-center px-2 py-2 ml-8 mr-3 text-sm font-medium text-white bg-gray-100 border border-transparent rounded-md shadow-sm whitespace-nowrap hover:bg-gray-200">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-black" fill="none" viewBox="0 0 24 24"
-              stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M12
+          <div class="relative">
+            <a (click)="toggleAccessPop()"
+              class="inline-flex items-center justify-center px-2 py-2 ml-8 mr-3 text-sm font-medium text-white bg-gray-100 border border-transparent rounded-md shadow-sm whitespace-nowrap hover:bg-gray-200 cursor-pointer access-popup tooltip">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-black access-popup" fill="none"
+                viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path class="access-popup" stroke-linecap="round" stroke-linejoin="round" d="M12
                       4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0
                       0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
-            </svg>
-          </a>
+              </svg>
+              <span class="tooltip-text">Invite users to collaborate</span>
+            </a>
+            <div *ngIf="accessPopup"
+              class="bg-white w-[400px] p-4 border shadow-lg box-border rounded-lg top-12 right-0 absolute access-popup">
+              <div class="flex items-center justify-between gap-3 access-popup">
+                <input placeholder="colleague@company.com"
+                  class="border py-1.5 px-2 text-sm text-gray-700 rounded-lg placeholder:text-gray-700 placeholder:font-normal placeholder:text-sm focus:outline-[#7ea6ff] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white w-full access-popup"
+                  type="text">
+                <select name="for-invite" id="for-invite"
+                  class="cursor-pointer inline-flex items-center justify-center px-2 py-1.5 text-sm font-medium text-black bg-gray-100 rounded-md shadow-sm whitespace-nowrap hover:bg-gray-200 outline-none access-popup">
+                  <option value="can-view" class="bg-white access-popup" selected>Can view</option>
+                  <option value="can-edit" class="bg-white access-popup">Can edit</option>
+                </select>
+                <button
+                  class="inline-flex items-center justify-center px-4 py-1.5 text-sm font-medium text-white bg-blue-600 rounded-md shadow-sm whitespace-nowrap hover:bg-blue-700 access-popup">invite</button>
+              </div>
+              <div class="flex items-center gap-2 text-black mt-6 access-popup">
+                <img id="emoji-default" src="assets/svgs/setting.svg" class="w-6 h-6 access-popup">
+                <p class="font-normal text-base access-popup">Everyone at user name workspace <span
+                    class="access-popup px-2 py-1.5 rounded-lg text-sm font-normal text-black bg-gray-100 ml-2">Full
+                    access</span>
+                </p>
+              </div>
+            </div>
+          </div>
+
           <button *ngIf="!showComp"
             class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-black bg-gray-100 rounded-md shadow-sm whitespace-nowrap hover:bg-gray-200"
             (click)="onPress()">

@@ -75,6 +75,11 @@
     margin-right: auto;
 }
 
+.access-popup.tooltip .tooltip-text{
+    left: -70px;
+    top: 46px;
+}
+
 .tooltip:hover  .tooltip-text {
   visibility: visible;
 }
