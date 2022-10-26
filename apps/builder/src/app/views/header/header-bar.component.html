@@ -183,7 +183,8 @@
           <div *ngIf="unPublishPopup"
             class="absolute right-4 z-50 w-72 cursor-pointer delete-popover top-14 access-popup">
             <div class="py-2 text-base font-normal bg-white border rounded-md shadow access-popup">
-              <div class="flex items-center gap-3 px-3 py-2 text-gray-500 hover:bg-gray-100 access-popup">
+              <div (click)="publishText = 'Closed';unPublishPopup = false"
+                class="flex items-center gap-3 px-3 py-2 text-gray-500 hover:bg-gray-100 access-popup">
                 <span class="w-5 h-5 access-popup"><svg xmlns="http://www.w3.org/2000/svg" fill="none"
                     viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 access-popup">
                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -192,7 +193,8 @@
                 </span>
                 <p class="access-popup">Close typebot to new responses</p>
               </div>
-              <div class="flex items-center gap-3 px-3 py-2 text-gray-500 hover:bg-gray-100 access-popup">
+              <div (click)="unpublishTypeBot()"
+                class="flex items-center gap-3 px-3 py-2 text-gray-500 hover:bg-gray-100 access-popup">
                 <span class="w-5 h-5 access-popup"><svg viewBox="0 0 24 24" focusable="false"
                     class="w-4 h-4 access-popup" stroke-width="2px" stroke-linecap="round" stroke-linejoin="round"
                     aria-hidden="true" stroke="currentColor" fill="none">

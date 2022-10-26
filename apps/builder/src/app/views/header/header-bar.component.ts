@@ -171,4 +171,14 @@ export class HeaderBarComponent implements AfterContentInit {
   toggleUnpublish() {
     this.unPublishPopup = !this.unPublishPopup;
   }
+
+  unpublishTypeBot() {
+    this.publishText = 'Publish';
+    document.querySelector('.publish-btn-main')?.removeAttribute('disabled');
+    document
+      .querySelector('.publish-btn-main')
+      ?.setAttribute('style', 'opacity:1;cursor:pointer');
+    this.publishArrowDown = false;
+    this.unPublishPopup = false;
+  }
 }
