@@ -22,6 +22,9 @@ export class HeaderBarComponent implements AfterContentInit {
   searchedEmoji: any = [];
   changeEmojiView: boolean = true;
   saveTypeBot: boolean = false;
+  publishArrowDown: boolean = false;
+  unPublishPopup: boolean = false;
+  publishText: string = 'Publish';
 
   constructor(private router: Router, private shared: EditorService) {
     this.clickEventSubscription = this.shared
@@ -33,6 +36,7 @@ export class HeaderBarComponent implements AfterContentInit {
       const target = e.target as HTMLTextAreaElement;
       if (!target.classList.contains('access-popup')) {
         this.accessPopup = false;
+        this.unPublishPopup = false;
       }
     });
   }
@@ -155,11 +159,16 @@ export class HeaderBarComponent implements AfterContentInit {
     this.saveTypeBot = true;
     await setTimeout(() => {
       this.saveTypeBot = false;
-      e.target.innerText = 'Published';
+      this.publishText = 'Published';
       document.querySelector('.publish-btn-main')?.setAttribute('disabled', '');
       document
         .querySelector('.publish-btn-main')
         ?.setAttribute('style', 'opacity:0.5;cursor:not-allowed');
+      this.publishArrowDown = true;
     }, 2000);
+  }
+
+  toggleUnpublish() {
+    this.unPublishPopup = !this.unPublishPopup;
   }
 }
