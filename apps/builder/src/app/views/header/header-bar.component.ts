@@ -39,6 +39,19 @@ export class HeaderBarComponent implements AfterContentInit {
         this.unPublishPopup = false;
       }
     });
+    window.addEventListener('click', function () {
+      console.log('clicked');
+      const undo = document.querySelector('#undoBtn') as HTMLInputElement;
+      undo?.removeAttribute('disabled');
+      undo.style.cursor = 'pointer';
+      undo.style.opacity = '1';
+      undo.addEventListener('click', function () {
+        const redo = document.querySelector('#redoBtn') as HTMLInputElement;
+        redo?.removeAttribute('disabled');
+        redo.style.cursor = 'pointer';
+        redo.style.opacity = '1';
+      });
+    });
   }
 
   ngAfterContentInit(): void {
