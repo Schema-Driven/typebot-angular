@@ -1,4 +1,11 @@
-import { Component, AfterContentInit } from '@angular/core';
+import {
+  Component,
+  AfterContentInit,
+  Input,
+  OnChanges,
+  OnInit,
+  DoCheck,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { EditorService } from '../../services/editor.service';
@@ -9,7 +16,9 @@ import { emojis } from './emoji';
   templateUrl: './header-bar.component.html',
   styleUrls: ['./header-bar.component.css'],
 })
-export class HeaderBarComponent implements AfterContentInit {
+export class HeaderBarComponent implements AfterContentInit, DoCheck {
+  @Input() editorGroupBlocks: any = [];
+  @Input() editorGroupBlockEdges: any = [];
   flowAct: boolean = false;
   themeAct: boolean = false;
   settingAct: boolean = false;
@@ -39,19 +48,6 @@ export class HeaderBarComponent implements AfterContentInit {
         this.unPublishPopup = false;
       }
     });
-    window.addEventListener('click', function () {
-      console.log('clicked');
-      const undo = document.querySelector('#undoBtn') as HTMLInputElement;
-      undo?.removeAttribute('disabled');
-      undo.style.cursor = 'pointer';
-      undo.style.opacity = '1';
-      undo.addEventListener('click', function () {
-        const redo = document.querySelector('#redoBtn') as HTMLInputElement;
-        redo?.removeAttribute('disabled');
-        redo.style.cursor = 'pointer';
-        redo.style.opacity = '1';
-      });
-    });
   }
 
   ngAfterContentInit(): void {
@@ -64,6 +60,15 @@ export class HeaderBarComponent implements AfterContentInit {
     } else if (window.location.pathname === '/share') {
       this.shareClick();
     }
+  }
+
+  ngDoCheck(): void {
+    // console.log(
+    //   'Groups',
+    //   this.editorGroupBlocks,
+    //   'edges',
+    //   this.editorGroupBlockEdges
+    // );
   }
 
   navigate(links: any[]) {

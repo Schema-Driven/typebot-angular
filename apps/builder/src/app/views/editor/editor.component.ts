@@ -62,6 +62,7 @@ export class EditorComponent extends Editor {
         this.editorSettings = false;
       }
     });
+
     this.createInstance(this.wrapper);
 
     this.route.queryParams.subscribe((params) => {
@@ -71,6 +72,7 @@ export class EditorComponent extends Editor {
         localStorage.getItem('editor') !== null
       ) {
         this.drawEditor(localStorage.getItem('editor'));
+        this.replayActive(this.typebot);
       }
     });
 
@@ -116,6 +118,7 @@ export class EditorComponent extends Editor {
   drop(event: CdkDragDrop<Block[]>, container: string) {
     console.log('event', event);
     console.log('container', container);
+
     if (event.previousContainer === event.container) {
       moveItemInArray(
         event.container.data,
@@ -168,7 +171,7 @@ export class EditorComponent extends Editor {
     }
     this.setEdgesObject();
     localStorage.setItem('editor', JSON.stringify(this.typebot));
-
+    this.replayActive(this.typebot);
     // this.editorService.setGroupBlocks(this.groupBlocks);
   }
 
@@ -497,4 +500,52 @@ export class EditorComponent extends Editor {
   showRightBar() {
     this.editorService.sendPreviewClickEvent();
   }
+
+  replayActive(typeBot: any) {
+    let i: number = 0;
+    let pop: any = [];
+    let edge: any = [];
+    if (typeBot.groups.length > 1 || typeBot.edges.length > 1) {
+      const undo = <any>document.querySelector('#undoBtn');
+      removeUndoBtnStyle(undo);
+      undo.addEventListener('click', function () {
+        if (typeBot.groups.length > 1 || typeBot.edges.length > 0) {
+          pop = typeBot.groups.pop();
+          edge = typeBot.edges.pop();
+          const redo = <any>document.querySelector('#redoBtn');
+          removeRedoBtnStyle(redo);
+          redo.addEventListener('click', function () {
+            // typeBot.groups.push(pop);
+            addRedoBtnStyle(redo);
+            removeUndoBtnStyle(undo);
+            pop = [];
+          });
+        } else {
+          addUndoBtnStyle(undo);
+        }
+      });
+    }
+  }
+}
+
+function removeUndoBtnStyle(btn: any) {
+  btn?.removeAttribute('disabled');
+  btn.style.cursor = 'pointer';
+  btn.style.opacity = '1';
+}
+function addUndoBtnStyle(btn: any) {
+  btn?.setAttribute('disabled', '');
+  btn.style.cursor = 'not-allowed';
+  btn.style.opacity = '0.5';
+}
+
+function removeRedoBtnStyle(btn: any) {
+  btn?.removeAttribute('disabled');
+  btn.style.cursor = 'pointer';
+  btn.style.opacity = '1';
+}
+function addRedoBtnStyle(btn: any) {
+  btn?.setAttribute('disabled', '');
+  btn.style.cursor = 'not-allowed';
+  btn.style.opacity = '0.5';
 }
