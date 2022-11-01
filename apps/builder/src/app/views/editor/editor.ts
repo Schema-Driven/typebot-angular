@@ -326,6 +326,7 @@ export class Editor {
     block: [],
     itemField: [],
   };
+  savePoppedEle: any = [];
 
   firstGroupId = this.uuid();
   firstBlockId = this.uuid();
@@ -609,6 +610,12 @@ export class Editor {
 
   bindEvents() {
     this.instance.bind('connection', (info: any, e: any) => {
+      const undo = <any>document.querySelector('#undoBtn');
+      undo?.removeAttribute('disabled');
+      undo.style.cursor = 'pointer';
+      undo.style.opacity = '1';
+      this.savePoppedEle.push(info.sourceId);
+
       this.instance.setAttribute(
         info.connection.connector.canvas,
         'connector-source-id',

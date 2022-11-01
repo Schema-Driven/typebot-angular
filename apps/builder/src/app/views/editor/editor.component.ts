@@ -72,7 +72,6 @@ export class EditorComponent extends Editor {
         localStorage.getItem('editor') !== null
       ) {
         this.drawEditor(localStorage.getItem('editor'));
-        this.replayActive(this.typebot);
       }
     });
 
@@ -113,6 +112,18 @@ export class EditorComponent extends Editor {
     this.manageNode(this.firstGroupId, ['Right'], 'group');
     this.manageNode('be-' + this.firstBlockId, ['Right'], 'block');
     this.groupBlockIdsMapping[this.firstBlockId] = this.firstGroupId;
+
+    // let typeBotObject: any = localStorage.getItem('editor');
+
+    // if (typeBotObject.groups.length > 1) {
+    //   typeBotObject = JSON.parse(typeBotObject);
+    //   this.typebot = typeBotObject;
+    //   if (typeBotObject.groups.length > 1 || typeBotObject.edges.length > 1) {
+    //     this.replayActive(typeBotObject);
+    //   } else {
+    //     console.log('replay not called');
+    //   }
+    // }
   }
 
   drop(event: CdkDragDrop<Block[]>, container: string) {
@@ -171,7 +182,10 @@ export class EditorComponent extends Editor {
     }
     this.setEdgesObject();
     localStorage.setItem('editor', JSON.stringify(this.typebot));
-    this.replayActive(this.typebot);
+
+    let savedArray = this.saveUserActions(this.typebot);
+    this.replayActive(this.typebot, savedArray);
+    console.log(this.typebot);
     // this.editorService.setGroupBlocks(this.groupBlocks);
   }
 
@@ -501,51 +515,78 @@ export class EditorComponent extends Editor {
     this.editorService.sendPreviewClickEvent();
   }
 
-  replayActive(typeBot: any) {
-    let i: number = 0;
-    let pop: any = [];
-    let edge: any = [];
-    if (typeBot.groups.length > 1 || typeBot.edges.length > 1) {
-      const undo = <any>document.querySelector('#undoBtn');
-      removeUndoBtnStyle(undo);
-      undo.addEventListener('click', function () {
-        if (typeBot.groups.length > 1 || typeBot.edges.length > 0) {
-          pop = typeBot.groups.pop();
-          edge = typeBot.edges.pop();
-          const redo = <any>document.querySelector('#redoBtn');
-          removeRedoBtnStyle(redo);
-          redo.addEventListener('click', function () {
-            // typeBot.groups.push(pop);
-            addRedoBtnStyle(redo);
-            removeUndoBtnStyle(undo);
-            pop = [];
-          });
-        } else {
-          addUndoBtnStyle(undo);
-        }
-      });
-    }
+  saveUserActions = (groupBlockEdge: any) => {
+    let lastGroup = groupBlockEdge.groups.length - 1;
+    let lastBlock = groupBlockEdge.groups[lastGroup].blocks.length - 1;
+    this.savePoppedEle.push(groupBlockEdge.groups[lastGroup].id);
+
+    console.log(this.savePoppedEle);
+    return this.savePoppedEle;
+  };
+
+  replayActive(typeBot: any, saveArray: any) {
+    const undo = <any>document.querySelector('#undoBtn');
+    this.removeUndoBtnStyle(undo);
+    undo.addEventListener('click', () => {
+      this.undoBtnFunction(typeBot, undo, saveArray);
+    });
   }
-}
 
-function removeUndoBtnStyle(btn: any) {
-  btn?.removeAttribute('disabled');
-  btn.style.cursor = 'pointer';
-  btn.style.opacity = '1';
-}
-function addUndoBtnStyle(btn: any) {
-  btn?.setAttribute('disabled', '');
-  btn.style.cursor = 'not-allowed';
-  btn.style.opacity = '0.5';
-}
+  undoBtnFunction(typeBot: any, undoBtn: any, saveArray: any) {
+    let popEleId: any;
+    if (saveArray !== undefined) {
+      popEleId = saveArray.pop();
+    }
+    console.log(popEleId);
+    if (typeBot.groups.length > 1 || typeBot.edges.length > 1) {
+      typeBot.groups.forEach((group: any, key: any) => {
+        if (popEleId === group.id) {
+          typeBot.groups.splice(key, 1);
+          return;
+        } else {
+          group.blocks.forEach((block: any, key: any) => {
+            if (popEleId === block.id) {
+              group.blocks.splice(key, 1);
+              return;
+            }
+          });
+        }
 
-function removeRedoBtnStyle(btn: any) {
-  btn?.removeAttribute('disabled');
-  btn.style.cursor = 'pointer';
-  btn.style.opacity = '1';
-}
-function addRedoBtnStyle(btn: any) {
-  btn?.setAttribute('disabled', '');
-  btn.style.cursor = 'not-allowed';
-  btn.style.opacity = '0.5';
+        typeBot.edges.forEach((edge: any, key: any) => {
+          if (popEleId === `be-${edge.from.blockId}`) {
+            console.log(popEleId);
+            console.log(`be-${edge.from.blockId}`);
+            typeBot.edges.splice(key, 1);
+          }
+        });
+      });
+      const redo = <any>document.querySelector('#redoBtn');
+      this.removeRedoBtnStyle(redo);
+    } else {
+      this.addUndoBtnStyle(undoBtn);
+    }
+    console.log(typeBot);
+  }
+
+  removeUndoBtnStyle(btn: any) {
+    btn?.removeAttribute('disabled');
+    btn.style.cursor = 'pointer';
+    btn.style.opacity = '1';
+  }
+  addUndoBtnStyle(btn: any) {
+    btn?.setAttribute('disabled', '');
+    btn.style.cursor = 'not-allowed';
+    btn.style.opacity = '0.5';
+  }
+
+  removeRedoBtnStyle(btn: any) {
+    btn?.removeAttribute('disabled');
+    btn.style.cursor = 'pointer';
+    btn.style.opacity = '1';
+  }
+  addRedoBtnStyle(btn: any) {
+    btn?.setAttribute('disabled', '');
+    btn.style.cursor = 'not-allowed';
+    btn.style.opacity = '0.5';
+  }
 }
