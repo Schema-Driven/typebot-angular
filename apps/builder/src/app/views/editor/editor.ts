@@ -593,6 +593,7 @@ export class Editor {
   }
 
   deleteConnection(id: string) {
+    console.log('delete');
     let con = this.instance.getConnections({ source: id }); // Get all source el. connection(s) except the new connection which is being established
     if (con.length != 0 && document.getElementById(id)) {
       for (var i = 0; i < con.length; i++) {
@@ -614,8 +615,12 @@ export class Editor {
       undo?.removeAttribute('disabled');
       undo.style.cursor = 'pointer';
       undo.style.opacity = '1';
-      this.savePoppedEle.push(info.sourceId);
-
+      let data = {
+        type: 'edge',
+        id: info.sourceId,
+      };
+      this.savePoppedEle.push(data);
+      console.log(this.savePoppedEle);
       this.instance.setAttribute(
         info.connection.connector.canvas,
         'connector-source-id',

@@ -441,14 +441,6 @@ export class EditorComponent extends Editor {
   async printJson() {
     await this.setEdgesObject();
     this.editorService.setEditorJson(this.typebot);
-    // var dataStr =
-    //   'data:text/json;charset=utf-8,' +
-    //   encodeURIComponent(JSON.stringify(this.typebot));
-    // let anchor = document.createElement('a');
-    // anchor.setAttribute('href', dataStr);
-    // anchor.setAttribute('download', 'typebot.json');
-    // anchor.click();
-
     localStorage.setItem('editor', JSON.stringify(this.typebot));
     console.log(this.typebot);
     this.saveFlow = true;
@@ -515,51 +507,78 @@ export class EditorComponent extends Editor {
     this.editorService.sendPreviewClickEvent();
   }
 
-  saveUserActions = (groupBlockEdge: any) => {
-    let lastGroup = groupBlockEdge.groups.length - 1;
-    let lastBlock = groupBlockEdge.groups[lastGroup].blocks.length - 1;
-    this.savePoppedEle.push(groupBlockEdge.groups[lastGroup].id);
-
+  saveUserActions = (groupBlock: any) => {
+    let lastGroup = groupBlock.groups.length - 1;
+    let lastBlock = groupBlock.groups[lastGroup].blocks.length - 1;
+    if (groupBlock.groups[lastGroup].blocks.length === 1) {
+      let data = {
+        type: 'group',
+        id: groupBlock.groups[lastGroup].id,
+      };
+      this.savePoppedEle.push(data);
+    } else if (groupBlock.groups[lastGroup].blocks.length > 1) {
+      let data = {
+        type: 'block',
+        id: groupBlock.groups[lastGroup].blocks[lastBlock].id,
+      };
+      this.savePoppedEle.push(data);
+    }
     console.log(this.savePoppedEle);
     return this.savePoppedEle;
   };
 
   replayActive(typeBot: any, saveArray: any) {
     const undo = <any>document.querySelector('#undoBtn');
-    this.removeUndoBtnStyle(undo);
-    undo.addEventListener('click', () => {
-      this.undoBtnFunction(typeBot, undo, saveArray);
-    });
+    if (typeBot.groups.length > 1 || typeBot.edges.length > 1) {
+      this.removeUndoBtnStyle(undo);
+      undo.addEventListener('click', () => {
+        this.undoBtnFunction(typeBot, undo, saveArray);
+      });
+    } else {
+      this.addUndoBtnStyle(undo);
+    }
   }
 
   undoBtnFunction(typeBot: any, undoBtn: any, saveArray: any) {
-    let popEleId: any;
-    if (saveArray !== undefined) {
-      popEleId = saveArray.pop();
-    }
-    console.log(popEleId);
-    if (typeBot.groups.length > 1 || typeBot.edges.length > 1) {
-      typeBot.groups.forEach((group: any, key: any) => {
-        if (popEleId === group.id) {
-          typeBot.groups.splice(key, 1);
-          return;
-        } else {
+    let popElementId: any;
+    console.log(saveArray.length);
+    if (saveArray.length > 0) {
+      popElementId = saveArray.splice(-1);
+      console.log(popElementId[0]);
+      if (popElementId[0].type === 'group') {
+        typeBot.groups.forEach((group: any, key: any) => {
+          if (popElementId[0].id === group.id) {
+            console.log('group', group.id);
+            typeBot.groups.splice(key, 1);
+            return;
+          }
+        });
+      } else if (popElementId[0].type === 'edge') {
+        typeBot.edges.forEach((edge: any, key: any) => {
+          if (popElementId[0].id === `be-${edge.from.blockId}`) {
+            console.log('edge');
+            let a = <any>(
+              document.querySelector(
+                `[connector-source-id=be-${edge.from.blockId}]`
+              )
+            );
+            console.log(a);
+            this.deleteConnection(popElementId[0].id);
+          }
+        });
+      } else if (popElementId[0].type === 'block') {
+        typeBot.groups.forEach((group: any) => {
           group.blocks.forEach((block: any, key: any) => {
-            if (popEleId === block.id) {
+            if (popElementId[0].id === block.id) {
+              console.log('block', block.id);
               group.blocks.splice(key, 1);
               return;
             }
           });
-        }
-
-        typeBot.edges.forEach((edge: any, key: any) => {
-          if (popEleId === `be-${edge.from.blockId}`) {
-            console.log(popEleId);
-            console.log(`be-${edge.from.blockId}`);
-            typeBot.edges.splice(key, 1);
-          }
         });
-      });
+      } else {
+        console.log('Invalid access');
+      }
       const redo = <any>document.querySelector('#redoBtn');
       this.removeRedoBtnStyle(redo);
     } else {
