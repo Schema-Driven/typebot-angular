@@ -611,10 +611,6 @@ export class Editor {
 
   bindEvents() {
     this.instance.bind('connection', (info: any, e: any) => {
-      const undo = <any>document.querySelector('#undoBtn');
-      undo?.removeAttribute('disabled');
-      undo.style.cursor = 'pointer';
-      undo.style.opacity = '1';
       let data = {
         type: 'edge',
         id: info.sourceId,

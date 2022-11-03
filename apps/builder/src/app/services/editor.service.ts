@@ -10,6 +10,7 @@ export class EditorService {
   private block$ = new BehaviorSubject<any>({});
   private previewClick = new Subject<any>();
   private helpClick = new Subject<any>();
+  private undoClick = new Subject<any>();
 
   selectedBlock$ = this.block$.asObservable();
   selectedGroupBlocks$ = this.block$.asObservable();
@@ -37,11 +38,19 @@ export class EditorService {
     this.helpClick.next(eval);
   }
 
+  undoClickEvent() {
+    this.undoClick.next(eval);
+  }
+
   getPreviewClickEvent(): Observable<any> {
     return this.previewClick.asObservable();
   }
 
   getHelpClickEvent(): Observable<any> {
     return this.helpClick.asObservable();
+  }
+
+  getUndoClickEvent(): Observable<any> {
+    return this.undoClick.asObservable();
   }
 }

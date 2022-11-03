@@ -35,6 +35,10 @@ export class EditorComponent extends Editor {
   editorSettings: boolean = false;
   saveFlow: boolean = false;
   clickEventSubscription: any;
+  undoEventSubscription: any;
+  eventCheck: boolean = true;
+  collectTypeBot: any;
+  collectSavedArray: any;
 
   typebot: TypeBot = {
     name: 'Schema Typebot',
@@ -55,6 +59,12 @@ export class EditorComponent extends Editor {
       .getHelpClickEvent()
       .subscribe(() => {
         this.viewChat = true;
+      });
+    this.undoEventSubscription = this.editorService
+      .getUndoClickEvent()
+      .subscribe(() => {
+        const undo = <any>document.querySelector('#undoBtn');
+        this.undoBtnFunction(this.collectTypeBot, undo, this.collectSavedArray);
       });
     window.addEventListener('click', (e) => {
       const target = e.target as HTMLTextAreaElement;
@@ -112,18 +122,6 @@ export class EditorComponent extends Editor {
     this.manageNode(this.firstGroupId, ['Right'], 'group');
     this.manageNode('be-' + this.firstBlockId, ['Right'], 'block');
     this.groupBlockIdsMapping[this.firstBlockId] = this.firstGroupId;
-
-    // let typeBotObject: any = localStorage.getItem('editor');
-
-    // if (typeBotObject.groups.length > 1) {
-    //   typeBotObject = JSON.parse(typeBotObject);
-    //   this.typebot = typeBotObject;
-    //   if (typeBotObject.groups.length > 1 || typeBotObject.edges.length > 1) {
-    //     this.replayActive(typeBotObject);
-    //   } else {
-    //     console.log('replay not called');
-    //   }
-    // }
   }
 
   drop(event: CdkDragDrop<Block[]>, container: string) {
@@ -183,9 +181,10 @@ export class EditorComponent extends Editor {
     this.setEdgesObject();
     localStorage.setItem('editor', JSON.stringify(this.typebot));
 
-    let savedArray = this.saveUserActions(this.typebot);
-    this.replayActive(this.typebot, savedArray);
-    console.log(this.typebot);
+    const undo = <any>document.querySelector('#undoBtn');
+    if (undo.classList.contains('cursor-not-allowed')) {
+      this.removeUndoBtnStyle(undo);
+    }
     // this.editorService.setGroupBlocks(this.groupBlocks);
   }
 
@@ -202,6 +201,7 @@ export class EditorComponent extends Editor {
 
     if (type === 'group') {
       // Add New Group Block
+      this.saveUserActions('group', groupId);
       this.groupBlocks.push({
         id: groupId,
         name: `Group # ${this.groupBlocks.length + 1}`,
@@ -219,6 +219,7 @@ export class EditorComponent extends Editor {
       }, 100);
     } else {
       // Add Block to Group
+      this.saveUserActions('block', blockId);
       this.groupBlocks.map((group) => {
         if (group.id == groupId) {
           // group.blocks.push(block);
@@ -442,7 +443,6 @@ export class EditorComponent extends Editor {
     await this.setEdgesObject();
     this.editorService.setEditorJson(this.typebot);
     localStorage.setItem('editor', JSON.stringify(this.typebot));
-    console.log(this.typebot);
     this.saveFlow = true;
     setTimeout(() => {
       this.saveFlow = false;
@@ -507,36 +507,20 @@ export class EditorComponent extends Editor {
     this.editorService.sendPreviewClickEvent();
   }
 
-  saveUserActions = (groupBlock: any) => {
-    let lastGroup = groupBlock.groups.length - 1;
-    let lastBlock = groupBlock.groups[lastGroup].blocks.length - 1;
-    if (groupBlock.groups[lastGroup].blocks.length === 1) {
+  saveUserActions = (type: string, groupBlockEdge: any) => {
+    if (type === 'group' || type === 'block') {
       let data = {
-        type: 'group',
-        id: groupBlock.groups[lastGroup].id,
-      };
-      this.savePoppedEle.push(data);
-    } else if (groupBlock.groups[lastGroup].blocks.length > 1) {
-      let data = {
-        type: 'block',
-        id: groupBlock.groups[lastGroup].blocks[lastBlock].id,
+        type: type,
+        id: groupBlockEdge,
       };
       this.savePoppedEle.push(data);
     }
-    console.log(this.savePoppedEle);
-    return this.savePoppedEle;
+    this.replayActive(this.typebot, this.savePoppedEle);
   };
 
   replayActive(typeBot: any, saveArray: any) {
-    const undo = <any>document.querySelector('#undoBtn');
-    if (typeBot.groups.length > 1 || typeBot.edges.length > 1) {
-      this.removeUndoBtnStyle(undo);
-      undo.addEventListener('click', () => {
-        this.undoBtnFunction(typeBot, undo, saveArray);
-      });
-    } else {
-      this.addUndoBtnStyle(undo);
-    }
+    this.collectTypeBot = typeBot;
+    this.collectSavedArray = saveArray;
   }
 
   undoBtnFunction(typeBot: any, undoBtn: any, saveArray: any) {
@@ -554,18 +538,7 @@ export class EditorComponent extends Editor {
           }
         });
       } else if (popElementId[0].type === 'edge') {
-        typeBot.edges.forEach((edge: any, key: any) => {
-          if (popElementId[0].id === `be-${edge.from.blockId}`) {
-            console.log('edge');
-            let a = <any>(
-              document.querySelector(
-                `[connector-source-id=be-${edge.from.blockId}]`
-              )
-            );
-            console.log(a);
-            this.deleteConnection(popElementId[0].id);
-          }
-        });
+        this.deleteConnection(popElementId[0].id);
       } else if (popElementId[0].type === 'block') {
         typeBot.groups.forEach((group: any) => {
           group.blocks.forEach((block: any, key: any) => {
@@ -577,14 +550,13 @@ export class EditorComponent extends Editor {
           });
         });
       } else {
-        console.log('Invalid access');
+        console.log('Invalid element access');
       }
       const redo = <any>document.querySelector('#redoBtn');
       this.removeRedoBtnStyle(redo);
     } else {
       this.addUndoBtnStyle(undoBtn);
     }
-    console.log(typeBot);
   }
 
   removeUndoBtnStyle(btn: any) {

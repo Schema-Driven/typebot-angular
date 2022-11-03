@@ -173,6 +173,10 @@ export class HeaderBarComponent implements AfterContentInit, DoCheck {
     this.shared.sendHelpClickEvent();
   }
 
+  undoModal() {
+    this.shared.undoClickEvent();
+  }
+
   async savingTypeBot(e: any) {
     this.saveTypeBot = true;
     await setTimeout(() => {
