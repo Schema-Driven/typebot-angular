@@ -27,17 +27,14 @@ export class PreviewChat implements OnInit {
   loader: boolean = false;
   reloader: boolean = true;
   i = 0;
+  oldx = 0;
 
   constructor(
     private router: Router,
     private editorComponent: EditorComponent
-  ) {
-    // ...
-  }
+  ) {}
 
-  ngOnInit(): void {
-    console.log('preview Click');
-  }
+  ngOnInit(): void {}
 
   navigate(links: any[]) {
     this.router.navigate(links);
@@ -101,7 +98,6 @@ export class PreviewChat implements OnInit {
   }
   compoClose() {
     this.showComp = false;
-    console.log(this.showComp);
   }
 
   sendDataToParent() {
@@ -109,8 +105,52 @@ export class PreviewChat implements OnInit {
     this.editorComponent.previewChat = false;
   }
 
-  dragStart(event: any) {
-    let colElement = document.getElementById('col-resizer');
+  dragStart() {
+    const minimum_size = 20;
+    let original_width = 0;
+    let original_height = 0;
+    let original_x = 0;
+    let original_y = 0;
+    let original_mouse_x = 0;
+    let original_mouse_y = 0;
+    let colElement = <HTMLElement>document.getElementById('col-resizer');
+    let btn = <HTMLInputElement>document.getElementById('resize-btn');
+    btn.addEventListener('mousedown', function (e: any) {
+      console.log(e);
+      e.preventDefault();
+      original_width = parseFloat(
+        getComputedStyle(colElement, null)
+          .getPropertyValue('width')
+          .replace('px', '')
+      );
+      original_height = parseFloat(
+        getComputedStyle(colElement, null)
+          .getPropertyValue('height')
+          .replace('px', '')
+      );
+      original_x = colElement.getBoundingClientRect().left;
+      original_y = colElement.getBoundingClientRect().top;
+      original_mouse_x = e.pageX;
+      original_mouse_y = e.pageY;
+      window.addEventListener('mousemove', resize);
+      window.addEventListener('mouseup', stopResize);
+    });
+    function resize(e: any) {
+      // const height = original_height + (e.pageY - original_mouse_y);
+      const width = original_width - (e.pageX - original_mouse_x);
+      // if (height > minimum_size) {
+      //   colElement.style.height = height + 'px';
+      // }
+      if (width > minimum_size && width >= 450) {
+        colElement.style.width = width + 'px';
+        // colElement.style.left =
+        //   original_x + (e.pageX - original_mouse_x) + 'px';
+      }
+    }
+
+    function stopResize() {
+      window.removeEventListener('mousemove', resize);
+    }
   }
 
   reloadComp() {

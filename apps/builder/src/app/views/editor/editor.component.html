@@ -11,7 +11,7 @@
         <!-- [id]="b.id"
           [attr.data-jtk-managed]="b.id" -->
         <div *ngFor="let b of groupBlocks; let groupIndex = index" [attr.data-group-index]="groupIndex" [id]="b.id"
-          [attr.data-jtk-managed]="b.id" data-identifier="group" class="absolute grouper z-2"
+          [attr.data-jtk-managed]="b.id" data-identifier="group" class="{{b.name}} absolute grouper z-2"
           [style]="('top:'+ b.position.y+'px;left:'+ b.position.x+'px')">
           <div class="py-4 bg-white single-group wrap-div w-72">
             <div class="flex items-center justify-between px-4">
@@ -25,7 +25,7 @@
                   class="w-full p-1 text-base text-gray-700 outline-2 outline outline-[#7ea6ff] shadow-md rounded-lg bg-white placeholder:text-gray-700 placeholder:font-normal placeholder:text-base focus:outline-[#7ea6ff]
                   {{editedGroupName === groupIndex ? 'block' : 'hidden'}}" />
               </h2>
-              <button (click)="previewChat = true" type="button"
+              <button (click)="showRightBar()" type="button"
                 class="play-button border rounded-md p-1.5 w-fit cursor-pointer hover:bg-gray-100"
                 aria-label="Preview bot from this group">
                 <svg viewBox="0 0 24 24" focusable="false" class="w-3.5 h-3.5" stroke="black" stroke-width="2px"
@@ -40,8 +40,8 @@
               <div cdkDrag [cdkDragDisabled]="block.type === 'start'" [disablePopover]="block.type === 'start'"
                 (cdkDragStarted)="cdkDragStarted($event)"
                 (contextmenu)="showRightClickPopover('block', block.id, $event)"
-                *ngFor="let block of b.blocks; let blockIndex = index" class="pl-4 mr-4 single-block" [id]="block.id"
-                [attr.data-jtk-managed]="block.id" [attr.data-block-index]="blockIndex"
+                *ngFor="let block of b.blocks; let blockIndex = index" class="{{block.type}} pl-4 mr-4 single-block"
+                [id]="block.id" [attr.data-jtk-managed]="block.id" [attr.data-block-index]="blockIndex"
                 #blockOptionsPopover="ngbPopover" popoverClass="input-popover" [ngbPopover]="popContent"
                 [autoClose]="'outside'" triggers="manual" placement="left" container="body" data-identifier="block"
                 (click)="showBlockOptionsPopover(blockOptionsPopover, block, groupIndex, blockIndex)">
@@ -143,13 +143,30 @@
         </svg>
       </div>
       <div class="custom-shadow-icon">
-        <a href="#" class="bg-white hover:bg-gray-200 rounded-md p-0.5 w-8 h-8 flex items-center justify-center">
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-            stroke-width="2">
+        <a (click)="editorSettings = true"
+          class="{{editorSettings? 'bg-gray-200':'bg-white'}} hover:bg-gray-200 rounded-md  w-8 h-8 flex items-center justify-center cursor-pointer">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-full h-full setting-icon p-1.5" fill="none"
+            viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round"
               d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z" />
           </svg>
         </a>
+        <div *ngIf="editorSettings"
+          class="absolute right-0 z-50 w-56 cursor-pointer delete-popover top-10 editor-settings-popover">
+          <div class="py-2 text-base font-normal bg-white border rounded-md shadow">
+            <div class="flex items-center gap-3 px-3 py-2 text-gray-500 hover:bg-gray-100 setting-icon">
+              <span class="w-5 h-5 popover-icon setting-icon"><img class="w-full h-full setting-icon"
+                  src="../../../../assets/svgs/settings.svg" /></span>
+              <p class="setting-icon">Editor settings</p>
+            </div>
+            <div (click)="exportFlow()"
+              class="flex items-center gap-3 px-3 py-2 text-gray-500 hover:bg-gray-100 setting-icon">
+              <span class="w-5 h-5 popover-icon setting-icon"><img class="w-full h-full setting-icon"
+                  src="../../../../assets/svgs/download.svg" /></span>
+              <p class="setting-icon">Export flow</p>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="mt-4 custom-shadow-icon">
         <a (click)="zoomHandler('increase')"
@@ -255,3 +272,18 @@
   </div>
 </ng-template>
 <!-- End Modal body content -->
+
+<!--Flow save popup-->
+<div *ngIf="saveFlow" class="absolute top-0 z-50 flex items-center justify-center w-full h-full bg-black bg-opacity-50">
+  <div class="text-[#1a5fff] w-[500px] h-[300px] bg-white shadow-lg rounded-lg flex items-center justify-center">
+    <div>
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+        class="w-24 h-24 mx-auto">
+        <path stroke-linecap="round" stroke-linejoin="round"
+          d="M11.35 3.836c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m8.9-4.414c.376.023.75.05 1.124.08 1.131.094 1.976 1.057 1.976 2.192V16.5A2.25 2.25 0 0118 18.75h-2.25m-7.5-10.5H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V18.75m-7.5-10.5h6.375c.621 0 1.125.504 1.125 1.125v9.375m-8.25-3l1.5 1.5 3-3.75" />
+      </svg>
+      <p class="mt-5 text-xl font-semibold text-gray-600">Data flow saved successfully</p>
+    </div>
+  </div>
+</div>
+<!--Flow save end-->

@@ -111,7 +111,9 @@
   fill: #1a5fff;
 }
 
-
+.grouper{
+  border-radius: 10px;
+}
 
 .grouper.selected{
   outline: 2px solid #1a5fff;
@@ -171,7 +173,7 @@ svg.endpointOnTarget.grouper.jtk-endpoint.jtk-endpoint-connected {
 
 
 ::ng-deep .input-popover {
-  z-index: 9;
+  z-index: 10;
 }
 
 ::ng-deep .input-popover .popover-body{
@@ -223,4 +225,15 @@ svg.endpointOnTarget.grouper.jtk-endpoint.jtk-endpoint-connected {
 .custom-modal-main .custom-scrollbar {
     height: 100%;
     max-height: 100%;
+}
+
+.grouper.popover-outline-style {
+  outline: 2px solid #1a5fff
+}
+::ng-deep .single-block.popover-outline-style .single-block-placeholder{
+  outline: 2px solid #1a5fff;
+}
+
+::ng-deep .css-muvlrb .typebot-chat-view .file-uploader-main {
+    display: none;
 }

@@ -24,12 +24,21 @@ export class EditorComponent extends Editor {
   wrapper!: ElementRef;
   panZoomController: any;
   scaleLevel: number = 1;
+  translateLevel: number = 10;
   editedGroupName: number = -1;
   deg: number = 3;
   edges: Edge[] = [];
   viewChat: boolean = false;
   previewChat: boolean = false;
   draw: string = 'false';
+  oldx: any;
+  editorSettings: boolean = false;
+  saveFlow: boolean = false;
+  clickEventSubscription: any;
+  undoEventSubscription: any;
+  eventCheck: boolean = true;
+  collectTypeBot: any;
+  collectSavedArray: any;
 
   typebot: TypeBot = {
     name: 'Schema Typebot',
@@ -46,11 +55,32 @@ export class EditorComponent extends Editor {
   }
 
   ngOnInit() {
+    this.clickEventSubscription = this.editorService
+      .getHelpClickEvent()
+      .subscribe(() => {
+        this.viewChat = true;
+      });
+    this.undoEventSubscription = this.editorService
+      .getUndoClickEvent()
+      .subscribe(() => {
+        const undo = <any>document.querySelector('#undoBtn');
+        this.undoBtnFunction(this.collectTypeBot, undo, this.collectSavedArray);
+      });
+    window.addEventListener('click', (e) => {
+      const target = e.target as HTMLTextAreaElement;
+      if (!target.classList.contains('setting-icon')) {
+        this.editorSettings = false;
+      }
+    });
+
     this.createInstance(this.wrapper);
 
     this.route.queryParams.subscribe((params) => {
       this.draw = params['draw'];
-      if(localStorage.getItem('editor') !== undefined && localStorage.getItem('editor') !== null){
+      if (
+        localStorage.getItem('editor') !== undefined &&
+        localStorage.getItem('editor') !== null
+      ) {
         this.drawEditor(localStorage.getItem('editor'));
       }
     });
@@ -97,6 +127,7 @@ export class EditorComponent extends Editor {
   drop(event: CdkDragDrop<Block[]>, container: string) {
     console.log('event', event);
     console.log('container', container);
+
     if (event.previousContainer === event.container) {
       moveItemInArray(
         event.container.data,
@@ -150,6 +181,10 @@ export class EditorComponent extends Editor {
     this.setEdgesObject();
     localStorage.setItem('editor', JSON.stringify(this.typebot));
 
+    const undo = <any>document.querySelector('#undoBtn');
+    if (undo.classList.contains('cursor-not-allowed')) {
+      this.removeUndoBtnStyle(undo);
+    }
     // this.editorService.setGroupBlocks(this.groupBlocks);
   }
 
@@ -166,6 +201,7 @@ export class EditorComponent extends Editor {
 
     if (type === 'group') {
       // Add New Group Block
+      this.saveUserActions('group', groupId);
       this.groupBlocks.push({
         id: groupId,
         name: `Group # ${this.groupBlocks.length + 1}`,
@@ -183,6 +219,7 @@ export class EditorComponent extends Editor {
       }, 100);
     } else {
       // Add Block to Group
+      this.saveUserActions('block', blockId);
       this.groupBlocks.map((group) => {
         if (group.id == groupId) {
           // group.blocks.push(block);
@@ -242,24 +279,49 @@ export class EditorComponent extends Editor {
     // this.instance.repaint();
   }
 
-  showRightClickPopover(type: string, id: string, e: any) {
-    if (this.firstGroupId !== id && this.firstBlockId !== id) {
-      id = type + '-' + id;
-      if (document.getElementById(id)) {
-        let index = document
-          .getElementById(id)
-          ?.getAttribute('data-popover-index');
-        this.rightClickPopovers[type].splice(index, 1);
-      }
+  // zoomHandlerWheel(event: any) {
+  //   console.log(event);
+  //   if (event.offsetX < this.oldx) {
+  //     this.scaleLevel = this.scaleLevel + 0.1;
+  //     this.translateLevel = this.translateLevel + 10;
+  //   } else if (event.offsetX > this.oldx) {
+  //     this.scaleLevel = this.scaleLevel - 0.1;
+  //     this.translateLevel = this.translateLevel - 10;
+  //   }
+  //   this.wrapper.nativeElement.style.transform =
+  //     'scale(' + this.scaleLevel + ') ';
+  //   this.oldx = event.offsetX;
+  //   console.log(this.oldx);
+  // }
 
-      this.rightClickPopovers[type].push({
-        position: { x: e.clientX, y: e.clientY },
-        type: type,
-        id: id,
-      });
-      return false;
+  showRightClickPopover(type: string, id: string, e: any) {
+    const startGroupBlock = document.getElementById(id) as HTMLElement;
+    if (
+      startGroupBlock.classList.contains('Start') ||
+      startGroupBlock.classList.contains('start')
+    ) {
+      return;
+    } else {
+      let styleId = document.getElementById(id) as HTMLElement;
+      styleId.classList.add('popover-outline-style');
+      if (this.firstGroupId !== id && this.firstBlockId !== id) {
+        id = type + '-' + id;
+        if (document.getElementById(id)) {
+          let index = document
+            .getElementById(id)
+            ?.getAttribute('data-popover-index');
+          this.rightClickPopovers[type].splice(index, 1);
+        }
+
+        this.rightClickPopovers[type].push({
+          position: { x: e.clientX, y: e.clientY },
+          type: type,
+          id: id,
+        });
+        return false;
+      }
+      return true;
     }
-    return true;
   }
 
   popoverHandler(type: string, id: string, index: number) {
@@ -365,17 +427,26 @@ export class EditorComponent extends Editor {
     }
   }
 
+  async exportFlow() {
+    await this.setEdgesObject();
+    this.editorService.setEditorJson(this.typebot);
+    var dataStr =
+      'data:text/json;charset=utf-8,' +
+      encodeURIComponent(JSON.stringify(this.typebot));
+    let anchor = document.createElement('a');
+    anchor.setAttribute('href', dataStr);
+    anchor.setAttribute('download', 'typebot.json');
+    anchor.click();
+  }
+
   async printJson() {
     await this.setEdgesObject();
     this.editorService.setEditorJson(this.typebot);
-    var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(this.typebot));
-    let anchor = document.createElement('a');
-    anchor.setAttribute("href",     dataStr     );
-    anchor.setAttribute("download", "typebot.json");
-    anchor.click();
-
     localStorage.setItem('editor', JSON.stringify(this.typebot));
-    console.log(this.typebot);
+    this.saveFlow = true;
+    setTimeout(() => {
+      this.saveFlow = false;
+    }, 1000);
     //window.location.href = window.location.pathname + '?draw=true';
   }
 
@@ -430,5 +501,83 @@ export class EditorComponent extends Editor {
     });
     this.typebot.edges = this.edges;
     this.typebot.groups = this.groupBlocks;
+  }
+
+  showRightBar() {
+    this.editorService.sendPreviewClickEvent();
+  }
+
+  saveUserActions = (type: string, groupBlockEdge: any) => {
+    if (type === 'group' || type === 'block') {
+      let data = {
+        type: type,
+        id: groupBlockEdge,
+      };
+      this.savePoppedEle.push(data);
+    }
+    this.replayActive(this.typebot, this.savePoppedEle);
+  };
+
+  replayActive(typeBot: any, saveArray: any) {
+    this.collectTypeBot = typeBot;
+    this.collectSavedArray = saveArray;
+  }
+
+  undoBtnFunction(typeBot: any, undoBtn: any, saveArray: any) {
+    let popElementId: any;
+    console.log(saveArray.length);
+    if (saveArray.length > 0) {
+      popElementId = saveArray.splice(-1);
+      console.log(popElementId[0]);
+      if (popElementId[0].type === 'group') {
+        typeBot.groups.forEach((group: any, key: any) => {
+          if (popElementId[0].id === group.id) {
+            console.log('group', group.id);
+            typeBot.groups.splice(key, 1);
+            return;
+          }
+        });
+      } else if (popElementId[0].type === 'edge') {
+        this.deleteConnection(popElementId[0].id);
+      } else if (popElementId[0].type === 'block') {
+        typeBot.groups.forEach((group: any) => {
+          group.blocks.forEach((block: any, key: any) => {
+            if (popElementId[0].id === block.id) {
+              console.log('block', block.id);
+              group.blocks.splice(key, 1);
+              return;
+            }
+          });
+        });
+      } else {
+        console.log('Invalid element access');
+      }
+      const redo = <any>document.querySelector('#redoBtn');
+      this.removeRedoBtnStyle(redo);
+    } else {
+      this.addUndoBtnStyle(undoBtn);
+    }
+  }
+
+  removeUndoBtnStyle(btn: any) {
+    btn?.removeAttribute('disabled');
+    btn.style.cursor = 'pointer';
+    btn.style.opacity = '1';
+  }
+  addUndoBtnStyle(btn: any) {
+    btn?.setAttribute('disabled', '');
+    btn.style.cursor = 'not-allowed';
+    btn.style.opacity = '0.5';
+  }
+
+  removeRedoBtnStyle(btn: any) {
+    btn?.removeAttribute('disabled');
+    btn.style.cursor = 'pointer';
+    btn.style.opacity = '1';
+  }
+  addRedoBtnStyle(btn: any) {
+    btn?.setAttribute('disabled', '');
+    btn.style.cursor = 'not-allowed';
+    btn.style.opacity = '0.5';
   }
 }

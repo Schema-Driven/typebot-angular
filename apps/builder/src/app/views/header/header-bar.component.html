@@ -2,32 +2,81 @@
   <div class="relative bg-white">
     <div class="pr-6 mx-auto sm:px-4">
       <div class="flex items-center justify-between py-2 border-b-2 border-gray-100 md:justify-start md:space-x-10">
-        <div class="flex justify-start lg:w-0 lg:flex-1 h-left">
+        <div class="flex justify-start items-center lg:w-0 lg:flex-1">
 
-          <a class="bg-gray-100 rounded-lg p-0.5 w-10 h-10 flex
-              items-center justify-center">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
+          <a class="bg-gray-100 rounded-lg p-0.5 w-8 h-8 flex
+              items-center justify-center cursor-pointer hover:bg-gray-200">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24"
               stroke="currentColor" stroke-width="2">
               <path stroke-linecap="round" stroke-linejoin="round" d="M15
                   19l-7-7 7-7" />
             </svg>
           </a>
-          <a
-            class="flex items-center justify-center ml-4 text-base font-normal font-medium text-black hover:text-gray-900 lg-s">
-            <img src="assets/svgs/setting.svg" class="w-7 h-7 mr-2 mt-1.5 ">
-            Schema Typebot</a>
+          <a class="flex items-center justify-center gap-1 ml-4 hover:text-gray-900">
+            <div (click)="toggleEmoji()"
+              class="changeable-icon tooltip icon-tooltip hover:bg-gray-100 cursor-pointer w-10 h-10 rounded-lg flex items-center justify-center">
+              <img id="emoji-default" src="assets/svgs/setting.svg" class="w-6 h-6 changeable-icon">
+              <span id="changed-emoji" class="hidden text-xl changeable-icon"></span>
+              <span class="tooltip-text">Change icon</span>
+            </div>
+            <div
+              class="bg-white py-6 px-4 shadow-lg rounded-lg h-80 w-72 z-50 absolute left-10 top-16 emoji-main hidden changeable-icon">
+              <input type="text"
+                class="block w-full h-10 p-2 text-sm text-gray-700 border border-gray-300 rounded-lg placeholder:text-gray-700 placeholder:font-normal placeholder:text-base focus:outline-[#7ea6ff] focus:shadow-lg dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white mb-4 changeable-icon"
+                placeholder="Search..." (keyup)="getEmojiResult($event)">
+              <div class="h-[80%] overflow-y-auto overflow-x-hidden custom-scrollbar changeable-icon">
+                <div *ngIf="changeEmojiView" class="emoji-container grid grid-cols-7 gap-1 changeable-icon">
+                  <button *ngFor="let emoji of emojiArray" (click)="replaceEmoji($event)"
+                    class="hover:bg-gray-100 p-1 rounded-lg changeable-icon">{{emoji.emoji}}</button>
+                </div>
+                <div *ngIf="!changeEmojiView"
+                  class="emoji-container grid grid-cols-7 gap-1 changeable-icon searched-emoji">
+                  <button *ngFor="let emoji of searchedEmoji" (click)="replaceEmoji($event)"
+                    class="hover:bg-gray-100 p-1 rounded-lg changeable-icon">{{emoji.emoji}}</button>
+                </div>
+              </div>
+            </div>
+            <div class="tooltip max-w-[150px] break-words">
+              <span (click)="toggleSpan($event);focusInput.focus()"
+                class="text-sm text-gray-700 cursor-pointer leading-4" id="recieve-typebot-name" hidden>Schema
+                Typebot</span>
+              <input #focusInput
+                class="cursor-pointer py-1 px-2 text-sm text-gray-700 rounded-lg placeholder:text-gray-700 placeholder:font-normal placeholder:text-sm focus:outline-[#7ea6ff] focus:shadow-[#7ea6ff] focus:shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white w-full hidden"
+                (keyup.enter)="toggleInput($event)" (keyup)="setValue($event)" (blur)="toggleInput($event)"
+                id="typebot-name" type="text" placeholder="Schema Typebot">
+              <span class="tooltip-text">Rename</span>
+            </div>
+          </a>
           <div class="flex items-center ml-3 rg-btn">
-            <a href="#" class="bg-gray-100 rounded-md p-0.5 w-7 h-7 mr-2
-                  flex items-center justify-center">
+            <button (click)="undoModal()" id="undoBtn" disabled class="tooltip bg-gray-100 hover:bg-gray-200 rounded-md p-0.5 w-7 h-7 mr-2
+                  flex items-center justify-center cursor-not-allowed opacity-40">
               <img src="assets/svgs/reverse.svg" class="h-3.5 w-3.5">
-
-            </a>
-            <a href="#" class="bg-gray-100 rounded-md p-0.5 w-7 h-7 flex
-                  items-center justify-center">
+              <span class="tooltip-text">Undo</span>
+            </button>
+            <button id="redoBtn" disabled class="tooltip bg-gray-100 hover:bg-gray-200 rounded-md p-0.5 w-7 h-7 flex
+                  items-center justify-center cursor-not-allowed opacity-40">
               <img src="assets/svgs/forward.svg" class="h-3.5 w-3.5">
-            </a>
-            <span class="flex items-center ml-4 text-sm text-gray-500">
-              Saving...</span>
+              <span class="tooltip-text">Redo</span>
+            </button>
+            <div (click)="showHelpModal()"
+              class="help-main flex items-center ml-2 bg-gray-100  rounded-lg px-3 py-1 cursor-pointer hover:bg-gray-200">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                stroke="currentColor" class="w-4 h-4">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M16.712 4.33a9.027 9.027 0 011.652 1.306c.51.51.944 1.064 1.306 1.652M16.712 4.33l-3.448 4.138m3.448-4.138a9.014 9.014 0 00-9.424 0M19.67 7.288l-4.138 3.448m4.138-3.448a9.014 9.014 0 010 9.424m-4.138-5.976a3.736 3.736 0 00-.88-1.388 3.737 3.737 0 00-1.388-.88m2.268 2.268a3.765 3.765 0 010 2.528m-2.268-4.796a3.765 3.765 0 00-2.528 0m4.796 4.796c-.181.506-.475.982-.88 1.388a3.736 3.736 0 01-1.388.88m2.268-2.268l4.138 3.448m0 0a9.027 9.027 0 01-1.306 1.652c-.51.51-1.064.944-1.652 1.306m0 0l-3.448-4.138m3.448 4.138a9.014 9.014 0 01-9.424 0m5.976-4.138a3.765 3.765 0 01-2.528 0m0 0a3.736 3.736 0 01-1.388-.88 3.737 3.737 0 01-.88-1.388m2.268 2.268L7.288 19.67m0 0a9.024 9.024 0 01-1.652-1.306 9.027 9.027 0 01-1.306-1.652m0 0l4.138-3.448M4.33 16.712a9.014 9.014 0 010-9.424m4.138 5.976a3.765 3.765 0 010-2.528m0 0c.181-.506.475-.982.88-1.388a3.736 3.736 0 011.388-.88m-2.268 2.268L4.33 7.288m6.406 1.18L7.288 4.33m0 0a9.024 9.024 0 00-1.652 1.306A9.025 9.025 0 004.33 7.288" />
+              </svg>
+              <span class="flex items-center ml-1 text-sm text-black font-medium">
+                Help</span>
+            </div>
+            <span *ngIf="saveTypeBot" class="flex items-center ml-4 text-sm text-gray-500 font-medium ">
+              Saving
+              <div class="lds-ring">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+              </div>
+            </span>
           </div>
         </div>
         <div class="-my-2 -mr-2 md:hidden">
@@ -44,39 +93,65 @@
         </div>
         <nav class="hidden space-x-6 md:flex ceb-nav">
           <button [ngClass]="{'active': flowAct}"
-            class="text-base font-medium text-black py-1.5 px-4 rounded-md hover:bg-gray-100 hover:text-gray-900"
-            (click)="changeUrl()">
+            class="text-sm font-medium text-black py-1.5 px-4 rounded-md hover:bg-gray-100 hover:text-gray-900"
+            (click)="navigate(['/', 'editor'])">
             Flow
           </button>
           <!-- onclick="themeClick()" -->
           <button [ngClass]="{'active': themeAct}"
-            class="text-base font-medium text-black py-1.5 px-4 rounded-md hover:bg-gray-100 hover:text-gray-900"
+            class="text-sm font-medium text-black py-1.5 px-4 rounded-md hover:bg-gray-100 hover:text-gray-900"
             (click)="navigate(['/', 'theme'])">
             Theme
           </button>
           <button [ngClass]="{'active': settingAct}"
-            class="text-base font-medium text-black py-1.5 px-4 rounded-md hover:bg-gray-100 hover:text-gray-900"
+            class="text-sm font-medium text-black py-1.5 px-4 rounded-md hover:bg-gray-100 hover:text-gray-900"
             (click)="navigate(['/', 'msetting'])">
             Setting
           </button>
           <button [ngClass]="{'active': shareAct}"
-            class="text-base font-medium text-black py-1.5 px-4 rounded-md hover:bg-gray-100 hover:text-gray-900"
+            class="text-sm font-medium text-black py-1.5 px-4 rounded-md hover:bg-gray-100 hover:text-gray-900"
             (click)="navigate(['/', 'share'])">
             Share
           </button>
         </nav>
         <div class="items-center justify-end hidden md:flex md:flex-1 lg:w-0 r-btn">
-          <a href=""
-            class="inline-flex items-center justify-center px-2 py-2 ml-8 mr-3 text-base font-medium text-white bg-gray-100 border border-transparent rounded-md shadow-sm whitespace-nowrap">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-black" fill="none" viewBox="0 0 24 24"
-              stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M12
+          <div class="relative">
+            <a (click)="toggleAccessPop()"
+              class="inline-flex items-center justify-center px-2 py-2 ml-8 mr-3 text-sm font-medium text-white bg-gray-100 border border-transparent rounded-md shadow-sm whitespace-nowrap hover:bg-gray-200 cursor-pointer access-popup tooltip">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-black access-popup" fill="none"
+                viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path class="access-popup" stroke-linecap="round" stroke-linejoin="round" d="M12
                       4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0
                       0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
-            </svg>
-          </a>
-          <button *ngIf="showComp==false"
-            class="inline-flex items-center justify-center px-4 py-2 text-base font-medium text-gray-500 bg-gray-100 rounded-md shadow-sm whitespace-nowrap hover:text-gray-900"
+              </svg>
+              <span class="tooltip-text">Invite users to collaborate</span>
+            </a>
+            <div *ngIf="accessPopup"
+              class="bg-white w-[400px] p-4 border shadow-lg box-border rounded-lg top-12 right-0 absolute access-popup">
+              <div class="flex items-center justify-between gap-3 access-popup">
+                <input placeholder="colleague@company.com"
+                  class="border py-1.5 px-2 text-sm text-gray-700 rounded-lg placeholder:text-gray-700 placeholder:font-normal placeholder:text-sm focus:outline-[#7ea6ff] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white w-full access-popup"
+                  type="text">
+                <select name="for-invite" id="for-invite"
+                  class="cursor-pointer inline-flex items-center justify-center px-2 py-1.5 text-sm font-medium text-black bg-gray-100 rounded-md shadow-sm whitespace-nowrap hover:bg-gray-200 outline-none access-popup">
+                  <option value="can-view" class="bg-white access-popup" selected>Can view</option>
+                  <option value="can-edit" class="bg-white access-popup">Can edit</option>
+                </select>
+                <button
+                  class="inline-flex items-center justify-center px-4 py-1.5 text-sm font-medium text-white bg-blue-600 rounded-md shadow-sm whitespace-nowrap hover:bg-blue-700 access-popup">invite</button>
+              </div>
+              <div class="flex items-center gap-2 text-black mt-6 access-popup">
+                <img id="emoji-default" src="assets/svgs/setting.svg" class="w-6 h-6 access-popup">
+                <p class="font-normal text-base access-popup">Everyone at user name workspace <span
+                    class="access-popup px-2 py-1.5 rounded-lg text-sm font-normal text-black bg-gray-100 ml-2">Full
+                    access</span>
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <button *ngIf="!showComp"
+            class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-black bg-gray-100 rounded-md shadow-sm whitespace-nowrap hover:bg-gray-200"
             (click)="onPress()">
             Preview </button>
 
@@ -84,8 +159,53 @@
             <previewchat (outputFromChild)="receiveChildData($event)"></previewchat>
           </div>
 
-          <button
-            class="inline-flex items-center justify-center px-4 py-2 ml-3 text-base font-medium text-white bg-blue-600 rounded-md shadow-sm whitespace-nowrap">Publish</button>
+          <button (click)="savingTypeBot($event)"
+            class="{{publishArrowDown?' rounded-tl-md rounded-bl-md ':' rounded-md '}}inline-flex items-center justify-center px-4 py-2 ml-3 text-sm font-medium text-white bg-blue-600  shadow-sm whitespace-nowrap hover:bg-blue-700 publish-btn-main">
+            <span *ngIf="!saveTypeBot; else publishLoader">{{publishText}}</span>
+            <ng-template #publishLoader>
+              <div class="h-4 flex w-12 items-center publish-btn-loader">
+                <div class="lds-ring">
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                </div>
+              </div>
+            </ng-template>
+          </button>
+          <div class="access-popup" *ngIf="publishArrowDown" (click)="toggleUnpublish()"
+            class="{{unPublishPopup?' bg-blue-700 ':' bg-blue-600 '}}flex items-center justify-center text-sm font-medium text-white bg-blue-600  rounded-tr-md rounded-br-md shadow-sm whitespace-nowrap hover:bg-blue-700 h-9 w-8 border-l cursor-pointer access-popup">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+              stroke="currentColor" class="w-5 h-5 access-popup">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+            </svg>
+          </div>
+          <div *ngIf="unPublishPopup"
+            class="absolute right-4 z-50 w-72 cursor-pointer delete-popover top-14 access-popup">
+            <div class="py-2 text-base font-normal bg-white border rounded-md shadow access-popup">
+              <div (click)="publishText = 'Closed';unPublishPopup = false"
+                class="flex items-center gap-3 px-3 py-2 text-gray-500 hover:bg-gray-100 access-popup">
+                <span class="w-5 h-5 access-popup"><svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                    viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 access-popup">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
+                  </svg>
+                </span>
+                <p class="access-popup">Close typebot to new responses</p>
+              </div>
+              <div (click)="unpublishTypeBot()"
+                class="flex items-center gap-3 px-3 py-2 text-gray-500 hover:bg-gray-100 access-popup">
+                <span class="w-5 h-5 access-popup"><svg viewBox="0 0 24 24" focusable="false"
+                    class="w-4 h-4 access-popup" stroke-width="2px" stroke-linecap="round" stroke-linejoin="round"
+                    aria-hidden="true" stroke="currentColor" fill="none">
+                    <path d="M22.61 16.95A5 5 0 0 0 18 10h-1.26a8 8 0 0 0-7.05-6M5 5a8 8 0 0 0 4 15h9a5 5 0 0 0 1.7-.3">
+                    </path>
+                    <line x1="1" y1="1" x2="23" y2="23"></line>
+                  </svg></span>
+                <p class="access-popup">Unpublish typebot</p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
