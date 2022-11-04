@@ -67,11 +67,13 @@ export class BlockComponent implements OnInit {
     });
   }
 
-  onItemInput(index: number, event: any) {
-    if (event.target.value === '') {
-      this.block.items.splice([index], 1);
-    } else {
-      this.block.items[index].content = event.target.value;
+  onItemInput(index: number, itemsLength: number, event: any) {
+    if (itemsLength > 1) {
+      if (event.target.value === '') {
+        this.block.items.splice([index], 1);
+      } else {
+        this.block.items[index].content = event.target.value;
+      }
     }
   }
 
