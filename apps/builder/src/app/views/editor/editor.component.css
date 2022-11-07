@@ -79,6 +79,14 @@
   z-index:1;
 }
 
+::ng-deep svg.jtk-dragging path{
+  stroke: #1a5fff !important;
+}
+
+::ng-deep svg.jtk-dragging path:nth-child(2){
+  fill: #1a5fff !important;
+}
+
 ::ng-deep  .jtk-hover{
   cursor: pointer;
 }
