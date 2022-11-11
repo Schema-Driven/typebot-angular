@@ -78,7 +78,8 @@
             [style]="('transform:translate('+ (popover.position.x - 30)+'px, '+ (popover.position.y - 30) +'px')"
             [attr.id]="popover.id" [attr.data-popover-index]="i">
             <div class="py-2 text-base font-semibold bg-white border rounded-md shadow">
-              <div class="flex items-center gap-3 px-3 py-2 text-gray-500 hover:bg-gray-100">
+              <div (click)="duplicateElement(popover.type, popover.id, i)"
+                class="flex items-center gap-3 px-3 py-2 text-gray-500 hover:bg-gray-100">
                 <span class="w-4 h-4 popover-icon">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
                     stroke="currentColor" class="w-full h-full">
@@ -103,7 +104,8 @@
             [style]="('transform:translate('+ (popover.position.x - 30)+'px, '+ (popover.position.y - 30) +'px')"
             [attr.id]="popover.id" [attr.data-popover-index]="i">
             <div class="py-2 text-base font-semibold bg-white border rounded-md shadow">
-              <div class="flex items-center gap-3 px-3 py-2 text-gray-500 hover:bg-gray-100">
+              <div (click)="duplicateElement(popover.type, popover.id, i)"
+                class="flex items-center gap-3 px-3 py-2 text-gray-500 hover:bg-gray-100">
                 <span class="w-4 h-4 popover-icon">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
                     stroke="currentColor" class="w-full h-full">
@@ -128,7 +130,8 @@
             [style]="('transform:translate('+ (popover.position.x - 30)+'px, '+ (popover.position.y - 30) +'px')"
             [attr.id]="popover.id" [attr.data-popover-index]="i">
             <div class="py-2 text-base font-semibold bg-white border rounded-md shadow">
-              <div class="flex items-center gap-3 px-3 py-2 text-gray-500 hover:bg-gray-100">
+              <div (click)="duplicateElement(popover.type, popover.id, i)"
+                class="flex items-center gap-3 px-3 py-2 text-gray-500 hover:bg-gray-100">
                 <span class="w-4 h-4 popover-icon">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
                     stroke="currentColor" class="w-full h-full">
@@ -174,7 +177,7 @@
         </svg>
       </div>
       <div class="custom-shadow-icon">
-        <a (click)="editorSettings = true"
+        <a (click)="editorSettingsToggle()"
           class="{{editorSettings? 'bg-gray-200':'bg-white'}} hover:bg-gray-200 rounded-md  w-8 h-8 flex items-center justify-center cursor-pointer">
           <svg xmlns="http://www.w3.org/2000/svg" class="w-full h-full setting-icon p-1.5" fill="none"
             viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
