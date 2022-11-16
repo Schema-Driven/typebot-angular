@@ -409,22 +409,44 @@ export class EditorComponent extends Editor {
     this.rightClickPopovers[type].splice(index, 1);
   }
 
-  duplicateElement(type: string, id: string, index: number) {
+  async duplicateElement(type: string, id: string, index: number) {
     let Groups = this.groupBlocks;
     let copyGroup: any = {};
     let copyBlock: any = {};
     let copyItemField: any = {};
     if (type === 'group') {
-      Groups.forEach((group: any, key: number) => {
+      Groups.forEach((group: any) => {
+        console.log(group);
         if (id === 'group-' + group.id) {
-          this.groupBlocks.push(group);
+          let oldgrpId = [];
+          copyGroup = {
+            id: this.uuid(),
+            name: group.name + 'copy',
+            position: {
+              x: group.position.x + 20,
+              y: group.position.y + 20,
+            },
+            draggable: true,
+            blocks: [],
+          };
+          group.blocks.forEach((block: any, key: number) => {
+            copyGroup.blocks[key] = {
+              id: this.uuid(),
+              content: block.content,
+              type: block.type,
+              groupId: copyGroup.id,
+            };
+            this.groupBlocks.push(copyGroup);
+            this.manageNode(`be-${block.id}`, ['Right'], 'block');
+          });
+
+          console.log(this.groupBlocks);
         }
       });
     } else if (type === 'block') {
       Groups.forEach((group: any, key: number) => {
         group.blocks.forEach((block: any, key: any) => {
           if ('block-' + block.id === id) {
-            console.log(block);
             if (
               block.type === 'text' ||
               block.type === 'video' ||
