@@ -370,15 +370,6 @@ export class EditorComponent extends Editor {
       } else {
         // Remove blocks
         this.saveUserActions(type, id, 'deleted');
-        this.manageNode(
-          `be-${
-            this.groupBlocks[this.groupBlocks.length - 1].blocks[
-              this.groupBlocks[0].blocks.length - 1
-            ].id
-          }`,
-          ['Right'],
-          'block'
-        );
         this.oldGroup.push(
           this.groupBlocks[groupIndex].blocks.splice(blockIndex, 1)[0]
         );
@@ -416,9 +407,7 @@ export class EditorComponent extends Editor {
     let copyItemField: any = {};
     if (type === 'group') {
       Groups.forEach((group: any) => {
-        console.log(group);
         if (id === 'group-' + group.id) {
-          let oldgrpId = [];
           copyGroup = {
             id: this.uuid(),
             name: group.name + 'copy',
@@ -430,19 +419,45 @@ export class EditorComponent extends Editor {
             blocks: [],
           };
           group.blocks.forEach((block: any, key: number) => {
-            copyGroup.blocks[key] = {
-              id: this.uuid(),
-              content: block.content,
-              type: block.type,
-              groupId: copyGroup.id,
-            };
-            this.groupBlocks.push(copyGroup);
-            this.manageNode(`be-${block.id}`, ['Right'], 'block');
+            if (
+              block.type === 'text' ||
+              block.type === 'video' ||
+              block.type === 'embed' ||
+              block.type === 'image'
+            ) {
+              copyGroup.blocks[key] = {
+                id: this.uuid(),
+                content: block.content,
+                type: block.type,
+                groupId: copyGroup.id,
+              };
+            } else if (block.type === 'choice_input') {
+              copyGroup.blocks[key] = {
+                groupId: block.groupId,
+                id: this.uuid(),
+                items: block.items,
+                options: block.options,
+                type: block.type,
+              };
+            } else {
+              copyGroup.blocks[key] = {
+                groupId: block.groupId,
+                id: this.uuid(),
+                options: block.options,
+                type: block.type,
+              };
+            }
           });
-
-          console.log(this.groupBlocks);
         }
       });
+      this.groupBlocks.push(copyGroup);
+      var lastEle = this.groupBlocks[(this, this.groupBlocks.length - 1)];
+      this.manageNode(lastEle.id, ['Right'], 'group');
+      this.manageNode(
+        'be-' + copyGroup.blocks[copyGroup.blocks.length - 1].id,
+        ['Right'],
+        'block'
+      );
     } else if (type === 'block') {
       Groups.forEach((group: any, key: number) => {
         group.blocks.forEach((block: any, key: any) => {
@@ -480,7 +495,6 @@ export class EditorComponent extends Editor {
           }
         });
       });
-      // this.manageNode(copyGroup.id, ['Right'], 'group');
     } else if (type === 'itemField') {
       Groups.forEach((group: any, key: number) => {
         group.blocks.forEach((block: any, key: any) => {
