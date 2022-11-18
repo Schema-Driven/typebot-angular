@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef, Attribute } from '@angular/core';
+import { Component, ViewChild, ElementRef, Attribute, ComponentFactoryResolver } from '@angular/core';
 import {
   CdkDrag,
   CdkDragDrop,
@@ -13,6 +13,7 @@ import { Editor } from './editor';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ActivatedRoute } from '@angular/router';
 import { EditorService } from '../../services/editor.service';
+import panzoom from '@panzoom/panzoom';
 
 @Component({
   selector: 'editor',
@@ -58,6 +59,7 @@ export class EditorComponent extends Editor {
   }
 
   ngOnInit() {
+
     this.clickEventSubscription = this.editorService
       .getHelpClickEvent()
       .subscribe(() => {
@@ -99,33 +101,17 @@ export class EditorComponent extends Editor {
       return;
     }
 
-    // this.panZoomController.pan(10, 10)
-    // this.panZoomController.zoom(1, { animate: true });
-    // this.panZoomController = Panzoom(this.wrapper.nativeElement, {
-    //   minScale: 0.6,
-    //   maxScale: 1.5,
-    //   increment: 0.1,
-    //   cursor: "",
-    //   excludeClass: 'grouper'
-    // });
+    const elem = <any>document.getElementById('group_wrapper_main')
+    const panzoom = Panzoom(elem, {
+      maxScale: 5,
+      touchAction:true,
+      cursor:'default',
+      excludeClass: 'grouper'
+    })
+    elem.parentElement.addEventListener('wheel', function(event:any){
+      panzoom.zoomWithWheel(event)
 
-    // this.wrapper.nativeElement.parentElement.addEventListener('wheel', (e: any) => {
-    //   if(e.ctrlKey == true) {
-    //     e.preventDefault();
-    //     this.panZoomController.zoomWithWheel(e)
-    //   } else {
-    //     e.preventDefault();
-    //     var deltaY = e.deltaY || e.wheelDeltaY || (-e.deltaY);
-    //     var deltaX = e.deltaX || e.wheelDeltaX || (-e.deltaX);
-    //     this.panZoomController.pan(deltaX/2, deltaY/2, {
-    //       // animate: true,
-    //       relative: true,
-    //     });
-    //   }
-
-    //   this.zoomHandler(this.panZoomController.getScale(), 'scroller');
-    // });
-    // this.instance.repaintEverything();
+    })
 
     this.manageNode(this.firstGroupId, ['Right'], 'group');
     this.manageNode('be-' + this.firstBlockId, ['Right'], 'block');
@@ -287,20 +273,21 @@ export class EditorComponent extends Editor {
     // this.instance.repaint();
   }
 
-  // zoomHandlerWheel(event: any) {
-  //   console.log(event);
-  //   if (event.offsetX < this.oldx) {
-  //     this.scaleLevel = this.scaleLevel + 0.1;
-  //     this.translateLevel = this.translateLevel + 10;
-  //   } else if (event.offsetX > this.oldx) {
-  //     this.scaleLevel = this.scaleLevel - 0.1;
-  //     this.translateLevel = this.translateLevel - 10;
-  //   }
-  //   this.wrapper.nativeElement.style.transform =
-  //     'scale(' + this.scaleLevel + ') ';
-  //   this.oldx = event.offsetX;
-  //   console.log(this.oldx);
-  // }
+  zoomHandlerWheel(event: any) {
+    console.log(event,event.target.getZoom());
+    event.target.getZoom();
+    if (event.offsetX < this.oldx) {
+      this.scaleLevel = this.scaleLevel + 0.1;
+      this.translateLevel = this.translateLevel + 10;
+    } else if (event.offsetX > this.oldx) {
+      this.scaleLevel = this.scaleLevel - 0.1;
+      this.translateLevel = this.translateLevel - 10;
+    }
+    this.wrapper.nativeElement.style.transform =
+      'scale(' + this.scaleLevel + ') ';
+    this.oldx = event.offsetX;
+    console.log(this.oldx);
+  }
 
   showRightClickPopover(type: string, id: string, e: any) {
     const startGroupBlock = document.getElementById(id) as HTMLElement;
