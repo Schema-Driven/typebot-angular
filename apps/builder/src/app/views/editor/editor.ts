@@ -593,7 +593,6 @@ export class Editor {
   }
 
   deleteConnection(id: string) {
-    console.log('delete');
     let con = this.instance.getConnections({ source: id }); // Get all source el. connection(s) except the new connection which is being established
     if (con.length != 0 && document.getElementById(id)) {
       for (var i = 0; i < con.length; i++) {
@@ -613,10 +612,10 @@ export class Editor {
     this.instance.bind('connection', (info: any, e: any) => {
       let data = {
         type: 'edge',
-        id: info.sourceId,
+        source: info.sourceId,
+        target: info.targetId,
       };
       this.savePoppedEle.push(data);
-      console.log(this.savePoppedEle);
       this.instance.setAttribute(
         info.connection.connector.canvas,
         'connector-source-id',

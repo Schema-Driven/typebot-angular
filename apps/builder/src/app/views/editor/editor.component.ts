@@ -36,9 +36,12 @@ export class EditorComponent extends Editor {
   saveFlow: boolean = false;
   clickEventSubscription: any;
   undoEventSubscription: any;
+  redoEventSubscription: any;
   eventCheck: boolean = true;
   collectTypeBot: any;
   collectSavedArray: any;
+  redoArray: any = [];
+  oldGroup: any = [];
 
   typebot: TypeBot = {
     name: 'Schema Typebot',
@@ -65,6 +68,11 @@ export class EditorComponent extends Editor {
       .subscribe(() => {
         const undo = <any>document.querySelector('#undoBtn');
         this.undoBtnFunction(this.collectTypeBot, undo, this.collectSavedArray);
+      });
+    this.redoEventSubscription = this.editorService
+      .getRedoClickEvent()
+      .subscribe(() => {
+        this.redoBtnFunction();
       });
     window.addEventListener('click', (e) => {
       const target = e.target as HTMLTextAreaElement;
@@ -201,7 +209,7 @@ export class EditorComponent extends Editor {
 
     if (type === 'group') {
       // Add New Group Block
-      this.saveUserActions('group', groupId);
+      this.saveUserActions('group', groupId, 'dragged');
       this.groupBlocks.push({
         id: groupId,
         name: `Group # ${this.groupBlocks.length + 1}`,
@@ -219,7 +227,7 @@ export class EditorComponent extends Editor {
       }, 100);
     } else {
       // Add Block to Group
-      this.saveUserActions('block', blockId);
+      this.saveUserActions('block', blockId, 'dragged');
       this.groupBlocks.map((group) => {
         if (group.id == groupId) {
           // group.blocks.push(block);
@@ -325,18 +333,22 @@ export class EditorComponent extends Editor {
   }
 
   popoverHandler(type: string, id: string, index: number) {
+    const undo = <any>document.querySelector('#undoBtn');
+    if (undo.classList.contains('cursor-not-allowed')) {
+      this.removeUndoBtnStyle(undo);
+    }
     let groupIndex: any;
     let blockIndex: any;
     id = id.replace(type + '-', '');
-
     if (type === 'connector') {
       this.deleteConnection(id);
     } else if (type === 'group') {
+      this.saveUserActions(type, id, 'deleted');
       groupIndex = document
         .getElementById(id)
         ?.getAttribute('data-group-index');
       this.instance.removeGroup(id);
-      this.groupBlocks.splice(groupIndex, 1);
+      this.oldGroup.push(this.groupBlocks.splice(groupIndex, 1)[0]);
     } else if (type === 'block') {
       groupIndex = document
         .getElementById(id)
@@ -346,12 +358,26 @@ export class EditorComponent extends Editor {
         .getElementById(id)
         ?.getAttribute('data-block-index');
       this._removeEndPoint(id);
-      this.groupBlocks[groupIndex].blocks.splice(blockIndex, 1);
 
-      // Remove empty groups
-      if (this.groupBlocks[groupIndex].blocks.length === 0) {
-        this.instance.removeGroup(this.groupBlocks[groupIndex].id);
-        this.groupBlocks.splice(groupIndex, 1);
+      if (this.groupBlocks[groupIndex].blocks.length === 1) {
+        this.saveUserActions(
+          (type = 'group'),
+          this.groupBlocks[groupIndex].id,
+          'deleted'
+        );
+        this.oldGroup.push(this.groupBlocks.splice(groupIndex, 1)[0]);
+        this.rightClickPopovers.block.splice(0, 1);
+      } else {
+        // Remove blocks
+        this.saveUserActions(type, id, 'deleted');
+        this.oldGroup.push(
+          this.groupBlocks[groupIndex].blocks.splice(blockIndex, 1)[0]
+        );
+        // Remove empty groups
+        if (this.groupBlocks[groupIndex].blocks.length === 0) {
+          this.instance.removeGroup(this.groupBlocks[groupIndex].id);
+          this.groupBlocks.splice(groupIndex, 1);
+        }
       }
     } else if (type === 'itemField') {
       groupIndex = document
@@ -371,6 +397,124 @@ export class EditorComponent extends Editor {
       );
     }
 
+    this.rightClickPopovers[type].splice(index, 1);
+  }
+
+  async duplicateElement(type: string, id: string, index: number) {
+    let Groups = this.groupBlocks;
+    let copyGroup: any = {};
+    let copyBlock: any = {};
+    let copyItemField: any = {};
+    if (type === 'group') {
+      Groups.forEach((group: any) => {
+        if (id === 'group-' + group.id) {
+          copyGroup = {
+            id: this.uuid(),
+            name: group.name + 'copy',
+            position: {
+              x: group.position.x + 20,
+              y: group.position.y + 20,
+            },
+            draggable: true,
+            blocks: [],
+          };
+          group.blocks.forEach((block: any, key: number) => {
+            if (
+              block.type === 'text' ||
+              block.type === 'video' ||
+              block.type === 'embed' ||
+              block.type === 'image'
+            ) {
+              copyGroup.blocks[key] = {
+                id: this.uuid(),
+                content: block.content,
+                type: block.type,
+                groupId: copyGroup.id,
+              };
+            } else if (block.type === 'choice_input') {
+              copyGroup.blocks[key] = {
+                groupId: block.groupId,
+                id: this.uuid(),
+                items: block.items,
+                options: block.options,
+                type: block.type,
+              };
+            } else {
+              copyGroup.blocks[key] = {
+                groupId: block.groupId,
+                id: this.uuid(),
+                options: block.options,
+                type: block.type,
+              };
+            }
+          });
+        }
+      });
+      this.groupBlocks.push(copyGroup);
+      var lastEle = this.groupBlocks[(this, this.groupBlocks.length - 1)];
+      this.manageNode(lastEle.id, ['Right'], 'group');
+      this.manageNode(
+        'be-' + copyGroup.blocks[copyGroup.blocks.length - 1].id,
+        ['Right'],
+        'block'
+      );
+    } else if (type === 'block') {
+      Groups.forEach((group: any, key: number) => {
+        group.blocks.forEach((block: any, key: any) => {
+          if ('block-' + block.id === id) {
+            if (
+              block.type === 'text' ||
+              block.type === 'video' ||
+              block.type === 'embed' ||
+              block.type === 'image'
+            ) {
+              copyBlock = {
+                groupId: block.groupId,
+                id: this.uuid(),
+                content: block.content,
+                type: block.type,
+              };
+            } else if (block.type === 'choice_input') {
+              copyBlock = {
+                groupId: block.groupId,
+                id: this.uuid(),
+                items: block.items,
+                options: block.options,
+                type: block.type,
+              };
+            } else {
+              copyBlock = {
+                groupId: block.groupId,
+                id: this.uuid(),
+                options: block.options,
+                type: block.type,
+              };
+            }
+            group.blocks.push(copyBlock);
+            this.rearrangeEndPoints(group.blocks, key, false);
+          }
+        });
+      });
+    } else if (type === 'itemField') {
+      Groups.forEach((group: any, key: number) => {
+        group.blocks.forEach((block: any, key: any) => {
+          if (block.type === 'choice_input') {
+            block.items.forEach((item: any) => {
+              if ('itemField-' + item.id === id) {
+                copyItemField = {
+                  blockId: item.blockId,
+                  id: this.uuid(),
+                  content: item.content,
+                  type: item.type,
+                };
+                block.items.push(copyItemField);
+                this.rearrangeEndPoints(group.blocks, key, false);
+              }
+            });
+          }
+        });
+      });
+    }
     this.rightClickPopovers[type].splice(index, 1);
   }
 
@@ -447,6 +591,8 @@ export class EditorComponent extends Editor {
     setTimeout(() => {
       this.saveFlow = false;
     }, 1000);
+    this.redoArray = [];
+    this.savePoppedEle = [];
     //window.location.href = window.location.pathname + '?draw=true';
   }
 
@@ -507,11 +653,12 @@ export class EditorComponent extends Editor {
     this.editorService.sendPreviewClickEvent();
   }
 
-  saveUserActions = (type: string, groupBlockEdge: any) => {
+  saveUserActions = (type: string, groupBlockEdge: any, reference: string) => {
     if (type === 'group' || type === 'block') {
       let data = {
         type: type,
         id: groupBlockEdge,
+        text: reference,
       };
       this.savePoppedEle.push(data);
     }
@@ -525,30 +672,51 @@ export class EditorComponent extends Editor {
 
   undoBtnFunction(typeBot: any, undoBtn: any, saveArray: any) {
     let popElementId: any;
-    console.log(saveArray.length);
     if (saveArray.length > 0) {
       popElementId = saveArray.splice(-1);
-      console.log(popElementId[0]);
       if (popElementId[0].type === 'group') {
-        typeBot.groups.forEach((group: any, key: any) => {
-          if (popElementId[0].id === group.id) {
-            console.log('group', group.id);
-            typeBot.groups.splice(key, 1);
-            return;
-          }
-        });
-      } else if (popElementId[0].type === 'edge') {
-        this.deleteConnection(popElementId[0].id);
-      } else if (popElementId[0].type === 'block') {
-        typeBot.groups.forEach((group: any) => {
-          group.blocks.forEach((block: any, key: any) => {
-            if (popElementId[0].id === block.id) {
-              console.log('block', block.id);
-              group.blocks.splice(key, 1);
+        if (popElementId[0].text === 'dragged') {
+          typeBot.groups.forEach((group: any, key: any) => {
+            if (popElementId[0].id === group.id) {
+              let a = typeBot.groups.splice(key, 1);
+              this.instance.removeGroup(group.id);
+              this.redoArray.push(a[0]);
+            }
+          });
+        } else {
+          let oldGroup = this.oldGroup.splice(-1);
+          this.groupBlocks.push(oldGroup[0]);
+          this.manageNode(oldGroup[0].id, ['Right'], 'group');
+          this.manageNode(
+            `be-${oldGroup[0].blocks[oldGroup[0].blocks.length - 1].id}`,
+            ['Right'],
+            'block'
+          );
+          this.redoArray.forEach((redo: any) => {
+            if (oldGroup[0].id !== redo.id) {
+              this.redoArray.push(oldGroup[0]);
+            } else {
               return;
             }
           });
-        });
+          // console.log(this.redoArray);
+        }
+      } else if (popElementId[0].type === 'edge') {
+        this.redoArray.push(popElementId[0]);
+        this.deleteConnection(popElementId[0].source);
+      } else if (popElementId[0].type === 'block') {
+        if (popElementId[0].text === 'dragged') {
+          typeBot.groups.forEach((group: any) => {
+            group.blocks.forEach((block: any, key: any) => {
+              if (popElementId[0].id === block.id) {
+                let a = group.blocks.splice(key, 1);
+                this.redoArray.push(a[0]);
+                return;
+              }
+            });
+          });
+        } else {
+        }
       } else {
         console.log('Invalid element access');
       }
@@ -556,6 +724,67 @@ export class EditorComponent extends Editor {
       this.removeRedoBtnStyle(redo);
     } else {
       this.addUndoBtnStyle(undoBtn);
+    }
+  }
+
+  redoBtnFunction() {
+    const redo = <any>document.querySelector('#redoBtn');
+    const undo = <any>document.querySelector('#undoBtn');
+    if (this.redoArray.length > 0) {
+      let a = this.redoArray.splice(-1);
+      if (a[0].name !== undefined && a[0].blocks.length > 0) {
+        this.typebot.groups.push(a[0]);
+        let data = {
+          type: 'group',
+          id: a[0].id,
+          text: 'dragged',
+        };
+        // this.manageNode(a[0].id, ['Right'], 'group');
+        this.manageNode(
+          `be-${a[0].blocks[a[0].blocks.length - 1].id}`,
+          ['Right'],
+          'block'
+        );
+        this.savePoppedEle.push(data);
+        this.removeUndoBtnStyle(undo);
+      } else if (a[0].type === 'edge') {
+        this.instance.connect({
+          source: document.getElementById(a[0].source),
+          target: document.getElementById(a[0].target),
+          anchors: ['Right', 'ContinuousLeft'],
+          endpoints: [
+            this.sourceEndpoint.endpoint,
+            this.targetEndpoint.endpoint,
+          ],
+          endpointStyles: [
+            this.sourceEndpoint.paintStyle,
+            this.targetEndpoint.paintStyle,
+          ],
+
+          deleteEndpointsOnDetach: true,
+          scope: 'jsplumb_defaultscope',
+          redrop: 'any',
+        });
+      } else {
+        let data = {
+          type: 'block',
+          id: a[0].id,
+          text: 'dragged',
+        };
+        this.typebot.groups.forEach((group: any) => {
+          if (group.id === a[0].groupId) {
+            // this.manageNode(
+            //   'be-' + group.blocks[group.blocks.length - 1].id,
+            //   ['Right'],
+            //   'block'
+            // );
+            group.blocks.push(a[0]);
+          }
+        });
+        this.savePoppedEle.push(data);
+      }
+    } else {
+      this.addRedoBtnStyle(redo);
     }
   }
 
@@ -579,5 +808,9 @@ export class EditorComponent extends Editor {
     btn?.setAttribute('disabled', '');
     btn.style.cursor = 'not-allowed';
     btn.style.opacity = '0.5';
+  }
+
+  editorSettingsToggle() {
+    this.editorSettings = !this.editorSettings;
   }
 }

@@ -112,8 +112,10 @@ export class HeaderBarComponent implements AfterContentInit, DoCheck {
   }
 
   toggleInput(e: any) {
-    e.target.classList.add('hidden');
-    e.target.previousSibling.setAttribute('hidden', '');
+    if (e.target.value !== '') {
+      e.target.classList.add('hidden');
+      e.target.previousSibling.setAttribute('hidden', '');
+    }
   }
 
   setValue(e: any) {
@@ -173,8 +175,12 @@ export class HeaderBarComponent implements AfterContentInit, DoCheck {
     this.shared.sendHelpClickEvent();
   }
 
-  undoModal() {
+  undoBtn() {
     this.shared.undoClickEvent();
+  }
+
+  redoBtn() {
+    this.shared.redoClickEvent();
   }
 
   async savingTypeBot(e: any) {
