@@ -13,7 +13,6 @@ import { Editor } from './editor';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ActivatedRoute } from '@angular/router';
 import { EditorService } from '../../services/editor.service';
-import panzoom from '@panzoom/panzoom';
 
 @Component({
   selector: 'editor',
@@ -43,7 +42,6 @@ export class EditorComponent extends Editor {
   collectSavedArray: any;
   redoArray: any = [];
   oldGroup: any = [];
-
   typebot: TypeBot = {
     name: 'Schema Typebot',
     edges: this.edges,
@@ -106,11 +104,10 @@ export class EditorComponent extends Editor {
       maxScale: 5,
       touchAction:true,
       cursor:'default',
-      excludeClass: 'grouper'
+      excludeClass: 'grouper',
     })
     elem.parentElement.addEventListener('wheel', function(event:any){
-      panzoom.zoomWithWheel(event)
-
+      panzoom.zoomWithWheel(event);
     })
 
     this.manageNode(this.firstGroupId, ['Right'], 'group');
