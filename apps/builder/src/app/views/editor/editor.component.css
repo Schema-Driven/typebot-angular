@@ -245,3 +245,7 @@ svg.endpointOnTarget.grouper.jtk-endpoint.jtk-endpoint-connected {
 ::ng-deep .css-muvlrb .typebot-chat-view .file-uploader-main {
     display: none;
 }
+
+::ng-deep .recieveDragedBox .draggable-custom-placeholder{
+  opacity: 0;
+}
