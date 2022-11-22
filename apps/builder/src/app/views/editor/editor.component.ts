@@ -1,4 +1,10 @@
-import { Component, ViewChild, ElementRef, Attribute, ComponentFactoryResolver } from '@angular/core';
+import {
+  Component,
+  ViewChild,
+  ElementRef,
+  Attribute,
+  ComponentFactoryResolver,
+} from '@angular/core';
 import {
   CdkDrag,
   CdkDragDrop,
@@ -13,6 +19,7 @@ import { Editor } from './editor';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ActivatedRoute } from '@angular/router';
 import { EditorService } from '../../services/editor.service';
+
 
 @Component({
   selector: 'editor',
@@ -57,7 +64,6 @@ export class EditorComponent extends Editor {
   }
 
   ngOnInit() {
-
     this.clickEventSubscription = this.editorService
       .getHelpClickEvent()
       .subscribe(() => {
@@ -99,20 +105,35 @@ export class EditorComponent extends Editor {
       return;
     }
 
-    const elem = <any>document.getElementById('group_wrapper_main')
+    /* //////// Pan And Zoom Function //////// */
+    const elem = <any>document.getElementById('group_wrapper_main');
     const panzoom = Panzoom(elem, {
       maxScale: 5,
-      touchAction:true,
-      cursor:'default',
+      touchAction: true,
+      cursor: 'default',
       excludeClass: 'grouper',
-    })
-    elem.parentElement.addEventListener('wheel', function(event:any){
-      panzoom.zoomWithWheel(event);
-    })
+      disableZoom:true
+    });
+
+    elem.parentElement.addEventListener('wheel',  (event: any) => {
+    //   panzoom.zoomWithWheel(event);
+      if (event.deltaY < 0)
+      {
+        this.zoomHandler("increase")
+      }
+      else if (event.deltaY > 0)
+      {
+        this.zoomHandler("decrease")
+      }
+    });
+
+    /* //////// Pan And Zoom Function End //////// */
 
     this.manageNode(this.firstGroupId, ['Right'], 'group');
     this.manageNode('be-' + this.firstBlockId, ['Right'], 'block');
     this.groupBlockIdsMapping[this.firstBlockId] = this.firstGroupId;
+
+    // this.customPanAndZoom();
   }
 
   drop(event: CdkDragDrop<Block[]>, container: string) {
@@ -260,30 +281,14 @@ export class EditorComponent extends Editor {
     // check maximum and minimum level of zoom
     if (type === 'increase' && this.scaleLevel <= 1.2) {
       this.scaleLevel = this.scaleLevel + 0.1;
-    } else if (type === 'decrease' && this.scaleLevel > 0.6) {
+    } else if (type === 'decrease' && this.scaleLevel > 0.2) {
       this.scaleLevel = this.scaleLevel - 0.1;
     }
 
     this.wrapper.nativeElement.style.transform =
       'scale(' + this.scaleLevel + ')';
     this.instance.setZoom(this.scaleLevel);
-    // this.instance.repaint();
-  }
-
-  zoomHandlerWheel(event: any) {
-    console.log(event,event.target.getZoom());
-    event.target.getZoom();
-    if (event.offsetX < this.oldx) {
-      this.scaleLevel = this.scaleLevel + 0.1;
-      this.translateLevel = this.translateLevel + 10;
-    } else if (event.offsetX > this.oldx) {
-      this.scaleLevel = this.scaleLevel - 0.1;
-      this.translateLevel = this.translateLevel - 10;
-    }
-    this.wrapper.nativeElement.style.transform =
-      'scale(' + this.scaleLevel + ') ';
-    this.oldx = event.offsetX;
-    console.log(this.oldx);
+    this.instance.repaint();
   }
 
   showRightClickPopover(type: string, id: string, e: any) {
@@ -349,14 +354,26 @@ export class EditorComponent extends Editor {
           this.groupBlocks[groupIndex].id,
           'deleted'
         );
+        this.instance.removeGroup(this.groupBlocks[groupIndex].id);
         this.oldGroup.push(this.groupBlocks.splice(groupIndex, 1)[0]);
         this.rightClickPopovers.block.splice(0, 1);
       } else {
         // Remove blocks
-        this.saveUserActions(type, id, 'deleted');
+        let element2 = this.groupBlocks[groupIndex].blocks[blockIndex];
+        this._removeEndPoint(element2.id);
+        this._removeEndPoint('be-' + element2.id);
         this.oldGroup.push(
-          this.groupBlocks[groupIndex].blocks.splice(blockIndex, 1)[0]
+          this.groupBlocks[groupIndex].blocks.splice(blockIndex, 1)
         );
+        this.manageNode(
+          'be-' +
+            this.groupBlocks[groupIndex].blocks[
+              this.groupBlocks[groupIndex].blocks.length - 1
+            ].id,
+          ['Right'],
+          'block'
+        );
+        this.saveUserActions(type, id, 'deleted');
         // Remove empty groups
         if (this.groupBlocks[groupIndex].blocks.length === 0) {
           this.instance.removeGroup(this.groupBlocks[groupIndex].id);
@@ -375,16 +392,20 @@ export class EditorComponent extends Editor {
       let itemIndex = document
         .getElementById(id)
         ?.getAttribute('data-item-index');
-      this.groupBlocks[groupIndex].blocks[blockIndex].items.splice(
-        itemIndex,
-        1
-      );
+      let itemFieldLength =
+        this.groupBlocks[groupIndex].blocks[blockIndex].items.length;
+      if (itemFieldLength > 1) {
+        this.groupBlocks[groupIndex].blocks[blockIndex].items.splice(
+          itemIndex,
+          1
+        );
+      }
     }
 
     this.rightClickPopovers[type].splice(index, 1);
   }
 
-  async duplicateElement(type: string, id: string, index: number) {
+  duplicateElement(type: string, id: string, index: number) {
     let Groups = this.groupBlocks;
     let copyGroup: any = {};
     let copyBlock: any = {};
@@ -423,6 +444,10 @@ export class EditorComponent extends Editor {
                 options: block.options,
                 type: block.type,
               };
+              copyGroup.blocks[key].items.forEach((item: any) => {
+                item.id = this.uuid();
+                item.blockId = copyGroup.blocks[key].id;
+              });
             } else {
               copyGroup.blocks[key] = {
                 groupId: block.groupId,
@@ -435,7 +460,8 @@ export class EditorComponent extends Editor {
         }
       });
       this.groupBlocks.push(copyGroup);
-      var lastEle = this.groupBlocks[(this, this.groupBlocks.length - 1)];
+      var lastEle = this.groupBlocks[this.groupBlocks.length - 1];
+
       this.manageNode(lastEle.id, ['Right'], 'group');
       this.manageNode(
         'be-' + copyGroup.blocks[copyGroup.blocks.length - 1].id,
@@ -777,6 +803,7 @@ export class EditorComponent extends Editor {
     btn.style.cursor = 'pointer';
     btn.style.opacity = '1';
   }
+
   addUndoBtnStyle(btn: any) {
     btn?.setAttribute('disabled', '');
     btn.style.cursor = 'not-allowed';
@@ -788,6 +815,7 @@ export class EditorComponent extends Editor {
     btn.style.cursor = 'pointer';
     btn.style.opacity = '1';
   }
+
   addRedoBtnStyle(btn: any) {
     btn?.setAttribute('disabled', '');
     btn.style.cursor = 'not-allowed';
@@ -797,4 +825,5 @@ export class EditorComponent extends Editor {
   editorSettingsToggle() {
     this.editorSettings = !this.editorSettings;
   }
+
 }
