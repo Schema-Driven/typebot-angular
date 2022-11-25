@@ -20,7 +20,6 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ActivatedRoute } from '@angular/router';
 import { EditorService } from '../../services/editor.service';
 
-
 @Component({
   selector: 'editor',
   templateUrl: './editor.component.html',
@@ -54,6 +53,8 @@ export class EditorComponent extends Editor {
     edges: this.edges,
     groups: this.groupBlocks,
   };
+  Group:any
+  Block:any
 
   constructor(
     private modalService: NgbModal,
@@ -87,6 +88,11 @@ export class EditorComponent extends Editor {
       }
     });
 
+    // this.editorService.selectedGroupBlocks$.subscribe((group)=>{
+    //   this.Group = group;
+    // })
+
+
     this.createInstance(this.wrapper);
 
     this.route.queryParams.subscribe((params) => {
@@ -112,18 +118,15 @@ export class EditorComponent extends Editor {
       touchAction: true,
       cursor: 'default',
       excludeClass: 'grouper',
-      disableZoom:true
+      disableZoom: true,
     });
 
-    elem.parentElement.addEventListener('wheel',  (event: any) => {
-    //   panzoom.zoomWithWheel(event);
-      if (event.deltaY < 0)
-      {
-        this.zoomHandler("increase")
-      }
-      else if (event.deltaY > 0)
-      {
-        this.zoomHandler("decrease")
+    elem.parentElement.addEventListener('wheel', (event: any) => {
+      //   panzoom.zoomWithWheel(event);
+      if (event.deltaY < 0) {
+        this.zoomHandler('increase');
+      } else if (event.deltaY > 0) {
+        this.zoomHandler('decrease');
       }
     });
 
@@ -169,7 +172,8 @@ export class EditorComponent extends Editor {
         event,
         'group'
       );
-
+      this._removeEndPoint(event.previousContainer.data[event.previousIndex].id);
+      this._removeEndPoint('be-' + event.previousContainer.data[event.previousIndex].id);
       this.rearrangeEndPoints(
         event.previousContainer.data,
         event.previousIndex,
@@ -182,7 +186,6 @@ export class EditorComponent extends Editor {
         event,
         'block'
       );
-
       this.rearrangeEndPoints(
         event.previousContainer.data,
         event.previousIndex,
@@ -392,16 +395,18 @@ export class EditorComponent extends Editor {
       let itemIndex = document
         .getElementById(id)
         ?.getAttribute('data-item-index');
+
       let itemFieldLength =
         this.groupBlocks[groupIndex].blocks[blockIndex].items.length;
       if (itemFieldLength > 1) {
-        this.groupBlocks[groupIndex].blocks[blockIndex].items.splice(
+        let item = this.groupBlocks[groupIndex].blocks[blockIndex].items.splice(
           itemIndex,
           1
         );
+        this._removeEndPoint('item-'+ item[0].id);
+        console.log(item)
       }
     }
-
     this.rightClickPopovers[type].splice(index, 1);
   }
 
@@ -436,18 +441,31 @@ export class EditorComponent extends Editor {
                 type: block.type,
                 groupId: copyGroup.id,
               };
+              console.log(key, ':', 'original block',block)
+              console.log(key, ':','copied block', copyGroup.blocks[key] )
+              this.Block = copyGroup.blocks[key];
+              // this.editorService.setBlock(this.Block)
             } else if (block.type === 'choice_input') {
               copyGroup.blocks[key] = {
-                groupId: block.groupId,
+                groupId: copyGroup.id,
                 id: this.uuid(),
-                items: block.items,
+                items: [],
                 options: block.options,
                 type: block.type,
               };
-              copyGroup.blocks[key].items.forEach((item: any) => {
-                item.id = this.uuid();
-                item.blockId = copyGroup.blocks[key].id;
-              });
+              let Length = block.items.length;
+              for (let index = 0; index < Length; index++) {
+                copyItemField = block.items[index];
+                copyGroup.blocks[key].items.push(copyItemField);
+                copyGroup.blocks[key].items[index]={
+                  id : this.uuid(),
+                  content:copyItemField.content,
+                  blockId:copyItemField.blockId,
+                  type:0
+                }
+                let itemId = copyGroup.blocks[key].items[index].id;
+                this.manageNode('item-' + itemId, ['Right'], 'block')
+              }
             } else {
               copyGroup.blocks[key] = {
                 groupId: block.groupId,
@@ -461,7 +479,6 @@ export class EditorComponent extends Editor {
       });
       this.groupBlocks.push(copyGroup);
       var lastEle = this.groupBlocks[this.groupBlocks.length - 1];
-
       this.manageNode(lastEle.id, ['Right'], 'group');
       this.manageNode(
         'be-' + copyGroup.blocks[copyGroup.blocks.length - 1].id,
@@ -488,11 +505,23 @@ export class EditorComponent extends Editor {
               copyBlock = {
                 groupId: block.groupId,
                 id: this.uuid(),
-                items: block.items,
+                items: [],
                 options: block.options,
                 type: block.type,
               };
-            } else {
+              let Length = block.items.length;
+              for (let index = 0; index < Length; index++) {
+                copyItemField = block.items[index];
+                group.blocks[key].items[index]={
+                  id : this.uuid(),
+                  content:copyItemField.content,
+                  blockId:copyItemField.blockId,
+                  type:0
+                }
+                let itemId = group.blocks[key].items[index].id;
+                this.manageNode('item-' + itemId, ['Right'], 'block')
+              }
+            }else {
               copyBlock = {
                 groupId: block.groupId,
                 id: this.uuid(),
@@ -515,10 +544,11 @@ export class EditorComponent extends Editor {
                   blockId: item.blockId,
                   id: this.uuid(),
                   content: item.content,
-                  type: item.type,
+                  type: 0,
                 };
                 block.items.push(copyItemField);
-                this.rearrangeEndPoints(group.blocks, key, false);
+                this.manageNode('item-' + copyItemField.id, ['Right'], 'block')
+                // this.rearrangeEndPoints(group.blocks, key, false);
               }
             });
           }
@@ -825,5 +855,4 @@ export class EditorComponent extends Editor {
   editorSettingsToggle() {
     this.editorSettings = !this.editorSettings;
   }
-
 }

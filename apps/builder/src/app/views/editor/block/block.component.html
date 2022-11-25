@@ -1,5 +1,5 @@
 <div class="{{block.type + '-block'}} py-3 px-2 my-2 text-xs border rounded-lg single-block-placeholder bg-gray-50">
-  <div class="flex  w-full gap-2 px-2 text-sm">
+  <div class="flex  w-full gap-2 px-2 text-sm truncate">
     <img [src]="prefilledData[block.type].svg" class="w-4 h-4 mt-1" />
     <p *ngIf="block.type === 'start' else blockRender" class="mb-0 text-black text-base">{{
       prefilledData[block.type].label }}</p>
@@ -57,7 +57,7 @@
       <div *ngFor="let item of block.items;
         let itemIndex = index" [attr.data-item-index]="itemIndex" [id]="item.id"
         class="single-item bg-white p-2 rounded-lg shadow hover:shadow-lg border w-full relative choice-input mb-3">
-        <input (click)="$event.stopPropagation()" (blur)="onItemInput(itemIndex,block.items.length, $event)"
+        <input (click)="$event.stopPropagation()" (key)="onItemInput(itemIndex,block.items.length, $event)"
           (contextmenu)="showRightClickPopover('itemField', item.id, $event)" (keyup.enter)="addItem($event)"
           class="cursor-pointer block w-[90%] pl-2 h-8 text-sm text-gray-700 rounded-lg bg-white placeholder:text-gray-400 placeholder:text-base focus:outline-[#7ea6ff] focus:shadow-lg dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
           placeholder="{{item.content}}" />

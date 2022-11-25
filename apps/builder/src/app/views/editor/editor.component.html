@@ -7,9 +7,9 @@
     <div class="rightSide">
       <!-- <div class="drawing" #drawing> -->
 
-        <div id="group_wrapper_main">
-          <div id="zoom" class="group_wrapper_inner">
-            <div id="panzoom_excluded_element" class="groups-wrapper" #wrapper>
+      <div id="group_wrapper_main">
+        <div id="zoom" class="group_wrapper_inner">
+          <div id="panzoom_excluded_element" class="groups-wrapper" #wrapper>
             <!-- [id]="b.id"
               [attr.data-jtk-managed]="b.id" -->
             <div *ngFor="let b of groupBlocks; let groupIndex = index" [attr.data-group-index]="groupIndex" [id]="b.id"
@@ -23,8 +23,8 @@
                       {{groupIndex === 0 ? '' : 'hover:bg-gray-200'}}">
                       {{b.name}}
                     </span>
-                    <input [value]="b.name" (change)="onGroupNameChange(b, $event)" (blur)="editedGroupName = -1" autofocus
-                      class="w-full p-1 text-base text-gray-700 outline-2 outline outline-[#7ea6ff] shadow-md rounded-lg bg-white placeholder:text-gray-700 placeholder:font-normal placeholder:text-base focus:outline-[#7ea6ff]
+                    <input [value]="b.name" (change)="onGroupNameChange(b, $event)" (blur)="editedGroupName = -1"
+                      autofocus class="w-full p-1 text-base text-gray-700 outline-2 outline outline-[#7ea6ff] shadow-md rounded-lg bg-white placeholder:text-gray-700 placeholder:font-normal placeholder:text-base focus:outline-[#7ea6ff]
                       {{editedGroupName === groupIndex ? 'block' : 'hidden'}}" />
                   </h2>
                   <button (click)="showRightBar()" type="button"
@@ -158,9 +158,9 @@
             <div cdkDropList (cdkDropListDropped)="drop($event, 'container')" (click)="onDragRecieverContainer()"
               class="recieveDragedBox my-element">
             </div>
-            </div>
           </div>
         </div>
+      </div>
 
       <!-- </div> -->
     </div>
