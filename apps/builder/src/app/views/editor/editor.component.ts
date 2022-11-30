@@ -437,20 +437,16 @@ export class EditorComponent extends Editor {
             ) {
               copyGroup.blocks[key] = {
                 id: this.uuid(),
-                content: block.content,
+                content: {...block.content},
                 type: block.type,
                 groupId: copyGroup.id,
               };
-              console.log(key, ':', 'original block',block)
-              console.log(key, ':','copied block', copyGroup.blocks[key] )
-              this.Block = copyGroup.blocks[key];
-              // this.editorService.setBlock(this.Block)
             } else if (block.type === 'choice_input') {
               copyGroup.blocks[key] = {
                 groupId: copyGroup.id,
                 id: this.uuid(),
                 items: [],
-                options: block.options,
+                options:{...block.options},
                 type: block.type,
               };
               let Length = block.items.length;
@@ -473,6 +469,14 @@ export class EditorComponent extends Editor {
                 options: block.options,
                 type: block.type,
               };
+              copyGroup.blocks[key].options= {
+                labels:{
+                  ...block.options.labels
+                },
+              }
+              if(copyGroup.blocks[key].options.retryMessageContent === undefined){
+                copyGroup.blocks[key].options.retryMessageContent = block.options.retryMessageContent
+              }
             }
           });
         }
@@ -498,7 +502,9 @@ export class EditorComponent extends Editor {
               copyBlock = {
                 groupId: block.groupId,
                 id: this.uuid(),
-                content: block.content,
+                content: {
+                  ...block.content
+                },
                 type: block.type,
               };
             } else if (block.type === 'choice_input') {
@@ -506,7 +512,9 @@ export class EditorComponent extends Editor {
                 groupId: block.groupId,
                 id: this.uuid(),
                 items: [],
-                options: block.options,
+                options:{
+                  ...block.options
+                },
                 type: block.type,
               };
               let Length = block.items.length;
@@ -525,9 +533,19 @@ export class EditorComponent extends Editor {
               copyBlock = {
                 groupId: block.groupId,
                 id: this.uuid(),
-                options: block.options,
+                options: {
+                  ...block.options
+                },
                 type: block.type,
               };
+              copyBlock.options= {
+                labels:{
+                  ...block.options.labels
+                },
+              }
+              if(copyBlock.options.retryMessageContent === undefined){
+                copyBlock.options.retryMessageContent = block.options.retryMessageContent
+              }
             }
             group.blocks.push(copyBlock);
             this.rearrangeEndPoints(group.blocks, key, false);
@@ -548,7 +566,6 @@ export class EditorComponent extends Editor {
                 };
                 block.items.push(copyItemField);
                 this.manageNode('item-' + copyItemField.id, ['Right'], 'block')
-                // this.rearrangeEndPoints(group.blocks, key, false);
               }
             });
           }
