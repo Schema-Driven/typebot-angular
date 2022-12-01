@@ -10,20 +10,18 @@ import { CdkDrag, CdkDropList } from '@angular/cdk/drag-drop';
 })
 export class BlockComponent implements OnInit {
   prefilledData: any;
-  // behaviourBlock: any;
   @Input() block: any = {};
   @Input() isLastBlock: boolean = false;
   @Output() manageItemEndpoints = new EventEmitter();
   @Output() onItemRightClick = new EventEmitter();
 
   deg: number = 3;
+  itemCheck: boolean = true;
 
   constructor(private editorService: EditorService) {}
 
   ngOnInit(): void {
     this.editorService.selectedBlock$.subscribe((b) => {
-      // this.behaviourBlock = b;
-
       if (b.type === 'choice_input') {
         this.onMultipleChoiceChange(b);
       }
@@ -37,15 +35,30 @@ export class BlockComponent implements OnInit {
   }
 
   onMultipleChoiceChange(b: any) {
-    let itemIds: any = [];
-    b.items.forEach((element: any) => {
-      itemIds.push('item-' + element.id);
-    });
-
-    this.manageItemEndpoints.emit({
-      itemIds,
-      action: b.options.isMultipleChoice ? 'remove' : 'add',
-    });
+    if(b.options.isMultipleChoice !== false && this.itemCheck === true){
+      let itemIds: any = [];
+      b.items.forEach((element: any) => {
+        itemIds.push('item-' + element.id);
+      });
+      this.manageItemEndpoints.emit({
+        itemIds,
+        // action: b.options.isMultipleChoice ? 'remove' : 'add',
+        action: 'remove',
+      });
+      this.itemCheck = false;
+      console.log('removed')
+    }else if(b.options.isMultipleChoice === false && this.itemCheck === false){
+      let itemIds: any = [];
+      b.items.forEach((element: any) => {
+        itemIds.push('item-' + element.id);
+      });
+      this.manageItemEndpoints.emit({
+        itemIds,
+        action: 'add',
+      });
+      this.itemCheck = true;
+      console.log('added')
+    }
   }
 
   addItem(event: any = '') {
@@ -67,13 +80,22 @@ export class BlockComponent implements OnInit {
     });
   }
 
-  onItemInput(index: number, itemsLength: number, event: any) {
+  delItemInput(index: number, itemsLength: number, event: any) {
+    let itemId = event.target.nextSibling.nextSibling.id
     if (itemsLength > 1) {
       if (event.target.value === '') {
+        this.manageItemEndpoints.emit({
+          itemIds: [itemId],
+          action: 'remove',
+        });
         this.block.items.splice([index], 1);
-      } else {
-        this.block.items[index].content = event.target.value;
       }
+    }
+  }
+
+  setItemInput(index: number, event: any) {
+    if(this.block.items[index].content !== undefined){
+      this.block.items[index].content = event.target.value;
     }
   }
 
