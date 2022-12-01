@@ -1,7 +1,7 @@
 <div class="{{block.type + '-block'}} py-3 px-2 my-2 text-xs border rounded-lg single-block-placeholder bg-gray-50">
-  <div class="flex  w-full gap-2 px-2 text-sm">
+  <div class="flex w-full gap-2 px-2 text-sm truncate">
     <img [src]="prefilledData[block.type].svg" class="w-4 h-4 mt-1" />
-    <p *ngIf="block.type === 'start' else blockRender" class="mb-0 text-black text-base">{{
+    <p *ngIf="block.type === 'start' else blockRender" class="mb-0 text-base text-black">{{
       prefilledData[block.type].label }}</p>
     <div *ngIf="block.type !== 'choice_input'" class="tp-endpoint" [id]="'be-' + block.id" data-identifier="block">
     </div>
@@ -17,7 +17,7 @@
   <!-- Image Rendering -->
   <div *ngIf="block.type === 'image'">
     <img *ngIf="block.content.url else clickToEdit" [src]="block.content.url" alt="Group Image"
-      class="rounded-lg w-full h-full object-cover">
+      class="object-cover w-full h-full rounded-lg">
   </div>
 
   <!-- Video Rendering -->
@@ -29,7 +29,7 @@
 
   <!-- Embed Rendering -->
   <div *ngIf="block.type === 'embed'">
-    <p *ngIf="block.content.url else clickToEdit" class="mb-0 text-gray-400 text-base">Show embed</p>
+    <p *ngIf="block.content.url else clickToEdit" class="mb-0 text-base text-gray-400">Show embed</p>
   </div>
 
   <!-- Simple Inputs -->
@@ -44,11 +44,11 @@
   </p>
 
   <div *ngIf="block.type === 'rating_input'">
-    <p class="mb-0 text-gray-400 text-base">Rate from 0 to {{block.options.length}}</p>
+    <p class="mb-0 text-base text-gray-400">Rate from 0 to {{block.options.length}}</p>
   </div>
 
   <div *ngIf="block.type === 'file_input'">
-    <p class="mb-0 text-gray-400 text-base">Collect File{{block.options.isMultipleAllowed ? 's' : ''}}</p>
+    <p class="mb-0 text-base text-gray-400">Collect File{{block.options.isMultipleAllowed ? 's' : ''}}</p>
   </div>
 
   <!-- Muliple Choice Input -->
@@ -56,8 +56,8 @@
     <div class="w-full">
       <div *ngFor="let item of block.items;
         let itemIndex = index" [attr.data-item-index]="itemIndex" [id]="item.id"
-        class="single-item bg-white p-2 rounded-lg shadow hover:shadow-lg border w-full relative choice-input mb-3">
-        <input (click)="$event.stopPropagation()" (blur)="onItemInput(itemIndex,block.items.length, $event)"
+        class="relative w-full p-2 mb-3 bg-white border rounded-lg shadow single-item hover:shadow-lg choice-input">
+        <input (click)="$event.stopPropagation()" (blur)="delItemInput(itemIndex,block.items.length, $event)" (keyup)="setItemInput(itemIndex, $event)"
           (contextmenu)="showRightClickPopover('itemField', item.id, $event)" (keyup.enter)="addItem($event)"
           class="cursor-pointer block w-[90%] pl-2 h-8 text-sm text-gray-700 rounded-lg bg-white placeholder:text-gray-400 placeholder:text-base focus:outline-[#7ea6ff] focus:shadow-lg dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
           placeholder="{{item.content}}" />
@@ -71,7 +71,7 @@
         <div class="tp-endpoint" [id]="'item-' + item.id" data-identifier="item"></div>
       </div>
       <div *ngIf="isLastBlock" class="default-button">
-        <p class="bg-gray-50 border my-2 px-4 py-3 rounded-lg text-base text-gray-400 cursor-not-allowed">
+        <p class="px-4 py-3 my-2 text-base text-gray-400 border rounded-lg cursor-not-allowed bg-gray-50">
           Default
         </p>
         <div class="tp-endpoint" [id]="'be-' + block.id" data-identifier="block"></div>
@@ -81,5 +81,5 @@
 </ng-template>
 
 <ng-template #clickToEdit>
-  <p class="mb-0 text-gray-400 text-base">Click to edit...</p>
+  <p class="mb-0 text-base text-gray-400">Click to edit...</p>
 </ng-template>
