@@ -363,8 +363,12 @@ export class EditorComponent extends Editor {
       } else {
         // Remove blocks
         let element2 = this.groupBlocks[groupIndex].blocks[blockIndex];
-        this._removeEndPoint(element2.id);
-        this._removeEndPoint('be-' + element2.id);
+        if(element2.type === 'choice_input'){
+          this._removeEndPoint("be-"+id);
+          element2.items.forEach((item:any) => {
+            this._removeEndPoint("item-"+item.id);
+          });
+        }
         this.oldGroup.push(
           this.groupBlocks[groupIndex].blocks.splice(blockIndex, 1)
         );
@@ -376,6 +380,7 @@ export class EditorComponent extends Editor {
           ['Right'],
           'block'
         );
+
         this.saveUserActions(type, id, 'deleted');
         // Remove empty groups
         if (this.groupBlocks[groupIndex].blocks.length === 0) {
@@ -404,7 +409,6 @@ export class EditorComponent extends Editor {
           1
         );
         this._removeEndPoint('item-'+ item[0].id);
-        console.log(item)
       }
     }
     this.rightClickPopovers[type].splice(index, 1);
@@ -508,6 +512,10 @@ export class EditorComponent extends Editor {
                 type: block.type,
               };
             } else if (block.type === 'choice_input') {
+              this._removeEndPoint('be-' + block.id);
+              block.items.forEach((item:any)=>{
+                this._removeEndPoint('item-' + item.id);
+              })
               copyBlock = {
                 groupId: block.groupId,
                 id: this.uuid(),
@@ -624,6 +632,7 @@ export class EditorComponent extends Editor {
     } else {
       data.itemIds.forEach((id: string) => {
         this._removeEndPoint(id);
+        this._removeEndPoint('item-'+id);
       });
     }
   }
