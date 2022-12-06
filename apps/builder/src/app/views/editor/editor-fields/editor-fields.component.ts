@@ -36,6 +36,9 @@ export class EditorFieldsComponent implements OnInit {
         case 'embed':
           this.setEmbedBubbleField(this.block.content);
         break;
+        case 'audio':
+          this.setAudioBubbleField(this.block.content);
+        break;
         case 'text_input':
           this.setTextInputFields(this.block.options);
         break;
@@ -87,6 +90,12 @@ export class EditorFieldsComponent implements OnInit {
     this.fields = [
       { key: 'url', parentKey: '', value: content.url, height:content.height , type: 'embed' },
       // { key: 'height', parentKey: '', value: content.height, type: 'embed' }
+    ]
+  }
+
+  setAudioBubbleField(content: any) {
+    this.fields = [
+      { key: 'url', parentKey: '', value: content.url , type: 'audio' },
     ]
   }
 

@@ -28,6 +28,7 @@ import { SafePipe } from '../../pipes/safe.pipe';
 import { CodeEditorFieldComponent } from './editor-fields/code-editor-field/code-editor-field.component';
 
 import { PreviewChatModule } from '../preview_chat/previewchat.module';
+import { AudioFieldComponent } from './editor-fields/audio-field/audio-field.component';
 
 @NgModule({
   imports: [
@@ -56,6 +57,7 @@ import { PreviewChatModule } from '../preview_chat/previewchat.module';
     EmbedFieldComponent,
     SafePipe,
     CodeEditorFieldComponent,
+    AudioFieldComponent,
   ],
   providers: [EditorService],
 })
