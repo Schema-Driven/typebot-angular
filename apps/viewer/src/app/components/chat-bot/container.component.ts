@@ -129,6 +129,14 @@ export class ContainerComponent implements OnInit {
 
     setTimeout(() => {
       this.loadingBot = false;
+      if(this.blocks[this.botCounter].type === 'embed'){
+        let block = this.blocks[this.botCounter]
+        let url = block.content.url.toString();
+        console.log(url)
+        if(url.startsWith("http")){
+          this.iframeCheck = false;
+        }
+      }
       this.chatBotblocks.push(this.blocks[this.botCounter]);
       this.botCounter++;
       if (
