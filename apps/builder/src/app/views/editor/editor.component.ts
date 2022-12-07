@@ -372,6 +372,7 @@ export class EditorComponent extends Editor {
         this.oldGroup.push(
           this.groupBlocks[groupIndex].blocks.splice(blockIndex, 1)
         );
+        this._removeEndPoint("be-"+id);
         this.manageNode(
           'be-' +
             this.groupBlocks[groupIndex].blocks[

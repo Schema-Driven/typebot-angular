@@ -58,6 +58,11 @@ export const structuredBlocks: GroupStructuredBlock[] = [
         content: { url: '', height: 400 },
         type: 'embed',
       },
+      {
+        id: uuid(),
+        content: { url: ''},
+        type: 'audio',
+      },
     ],
   },
   {
@@ -245,6 +250,10 @@ export const prefilledData: any = {
   embed: {
     label: 'Embed',
     svg: 'assets/svgs/embed.svg',
+  },
+  audio: {
+    label: 'Audio',
+    svg: 'assets/svgs/audio.svg',
   },
   text_input: {
     label: 'Text',

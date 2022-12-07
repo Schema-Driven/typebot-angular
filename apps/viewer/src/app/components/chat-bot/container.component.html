@@ -53,6 +53,11 @@
             <div *ngIf="iframeCheck === true" [innerHTML]="bot?.content.url | html"></div>
             <iframe *ngIf="iframeCheck === false" [src]="bot?.content.url | safe"></iframe>
           </div>
+          <div id="{{bot.type}}" *ngIf="bot?.type === 'audio'"
+            class="w-fit p-4 rounded-lg bg-gray-50 ">
+            <audio class="" [src]="bot.content.url | safe" id="viewer_audio" controls>
+            </audio>
+          </div>
           <div *ngIf="bot?.type === 'text_input'" class="w-full {{bot?.type}}-main">
             <app-text-input [isLong]="bot?.options.isLong" [placeHolderText]="bot?.options.labels.placeholder"
               [btnText]="bot?.options.labels.button" (callbackFunction)="renderNextStep()">

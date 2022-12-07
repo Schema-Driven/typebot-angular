@@ -129,6 +129,14 @@ export class ContainerComponent implements OnInit {
 
     setTimeout(() => {
       this.loadingBot = false;
+      if(this.blocks[this.botCounter].type === 'embed'){
+        let block = this.blocks[this.botCounter]
+        let url = block.content.url.toString();
+        console.log(url)
+        if(url.startsWith("http")){
+          this.iframeCheck = false;
+        }
+      }
       this.chatBotblocks.push(this.blocks[this.botCounter]);
       this.botCounter++;
       if (
@@ -243,8 +251,10 @@ export class ContainerComponent implements OnInit {
   }
 
   calculateTop() {
-    this.offset = document.getElementById('flex-col')?.offsetHeight;
+    let ele = <HTMLInputElement>document.getElementById('flex-col');
+    this.offset = ele.offsetHeight;
     const element = <HTMLSelectElement>document.getElementById('flex-image');
     element.style.top = this.offset - 35 + 'px';
+    ele.scrollTo(0, ele.scrollHeight);
   }
 }
