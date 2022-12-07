@@ -32,6 +32,12 @@
     <p *ngIf="block.content.url else clickToEdit" class="mb-0 text-base text-gray-400">Show embed</p>
   </div>
 
+  <!-- Audio Rendering -->
+  <div class="w-full" *ngIf="block.type === 'audio'">
+    <audio class="w-full" [src]="block.content.url | safe" id="audio" controls>
+    </audio>
+  </div>
+
   <!-- Simple Inputs -->
   <p *ngIf="block.type === 'text_input'
     || block.type === 'number_input'

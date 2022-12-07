@@ -32,6 +32,8 @@ export class BlockComponent implements OnInit {
     if (this.block.type === 'choice_input' && this.block?.items?.length === 0) {
       this.addItem();
     }
+
+
   }
 
   onMultipleChoiceChange(b: any) {
@@ -117,4 +119,17 @@ export class BlockComponent implements OnInit {
   dropListEnterPredicate(b: any) {
     return function (drag: CdkDrag, drop: CdkDropList) {};
   }
+
+
+  handleFiles(event:any) {
+    console.log(
+      event
+    )
+    var files = event.target.files;
+    let a = <HTMLInputElement>document.getElementById("#src");
+    a.getAttribute("src");
+    <any>document.getElementById("audio")?.onload;
+  }
+
+
 }

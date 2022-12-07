@@ -10,6 +10,8 @@ export class AudioFieldComponent implements OnInit {
 
   @Input() data: any = {};
   block: any = {};
+  isTab = 1;
+  localUrl: any;
 
 
   constructor(private editorService: EditorService) { }
@@ -21,12 +23,26 @@ export class AudioFieldComponent implements OnInit {
   }
 
   eventHandler(event: any) {
-    this.block.content['url'] = event.target.value;
-    this.editorService.setBlock(this.block);
-  }
-  updateHeight(event: any) {
-    this.block.content['height'] = event.target.value;
+    this.block.content[this.data.key] = event.target.value;
     this.editorService.setBlock(this.block);
   }
 
+  chooseVideoHandler(event: any) {
+    const maxAllowedSize = 4 * 1024 * 1024;
+      if (event.target.files && event.target.files[0]) {
+        var reader = new FileReader();
+        reader.onload = (event: any) => {
+            this.localUrl = event.target.result;
+            this.block.content[this.data.key] = this.localUrl;
+            this.editorService.setBlock(this.block);
+          }
+        if(event.target.files[0].size < maxAllowedSize){
+          reader.readAsDataURL(event.target.files[0]);
+        }
+        else{
+          alert('Maximum audio file size allowed is 4MB')
+        }
+      }
+    }
 }
+

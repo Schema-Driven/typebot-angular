@@ -216,6 +216,11 @@ svg.endpointOnTarget.grouper.jtk-endpoint.jtk-endpoint-connected {
   overflow-y: auto;
 }
 
+.audio-field{
+  width: 36rem;
+  overflow-y: auto;
+}
+
 .video-field{
   width: 25rem;
   overflow-y: auto;

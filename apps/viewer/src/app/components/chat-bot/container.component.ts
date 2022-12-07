@@ -251,8 +251,10 @@ export class ContainerComponent implements OnInit {
   }
 
   calculateTop() {
-    this.offset = document.getElementById('flex-col')?.offsetHeight;
+    let ele = <HTMLInputElement>document.getElementById('flex-col');
+    this.offset = ele.offsetHeight;
     const element = <HTMLSelectElement>document.getElementById('flex-image');
     element.style.top = this.offset - 35 + 'px';
+    ele.scrollTo(0, ele.scrollHeight);
   }
 }

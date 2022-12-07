@@ -1,1 +1,29 @@
-<p>audio-field works!</p>
+<div class="flex flex-wrap gap-2 text-sm font-medium text-center text-gray-900 dark:text-gray-400 w-96 mb-4">
+  <p (click)="isTab = 1 " aria-current="page"
+    class="{{isTab === 1 ? 'bg-gray-100 ' : ''}}inline-block px-4 py-2 text-gray-900 hover:bg-gray-100 rounded-lg active dark:bg-gray-800 dark:text-blue-500 cursor-pointer">
+    Upload</p>
+<!--
+  <p (click)="isTab = 2 "
+    class="{{isTab === 2 ? 'bg-gray-100 ' : ''}}inline-block px-4 py-2 rounded-lg text-gray-900 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-300 cursor-pointer">
+    Embed link</p> -->
+</div>
+
+<div class="w-full" *ngIf="isTab === 1">
+  <div
+    class="relative w-fit mx-auto bg-[#0042da] hover:bg-[#0036b4] text-white rounded-lg px-3 py-2 text-sm font-medium">
+    <input (blur)="chooseVideoHandler($event)" type="file" class="w-full absolute inset-0 opacity-0"
+      accept="audio" />
+    <span class=" ">Choose a file</span>
+  </div>
+</div>
+
+<!-- <div class="" *ngIf="isTab === 2">
+  <div class="flex items-center w-full">
+    <input [value]="data.value" (blur)="eventHandler($event)" type="text" placeholder="Paste the audio file link..." class="block w-full h-10 p-2 text-sm text-gray-700 border border-gray-300 rounded-lg bg-gray-50
+      placeholder:text-gray-700 placeholder:font-normal placeholder:text-base
+      focus:outline-[#7ea6ff] focus:shadow-lg dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
+      dark:text-white " />
+  </div>
+  <p class="text-gray-400 mt-2 text-sm text-center">Works with .MP3s and .WAVs</p>
+</div> -->
+
