@@ -438,6 +438,7 @@ export class EditorComponent extends Editor {
               block.type === 'text' ||
               block.type === 'video' ||
               block.type === 'embed' ||
+              block.type === 'audio' ||
               block.type === 'image'
             ) {
               copyGroup.blocks[key] = {
@@ -502,6 +503,7 @@ export class EditorComponent extends Editor {
               block.type === 'text' ||
               block.type === 'video' ||
               block.type === 'embed' ||
+              block.type === 'audio' ||
               block.type === 'image'
             ) {
               copyBlock = {
