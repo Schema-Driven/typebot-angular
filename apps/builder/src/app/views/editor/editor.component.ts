@@ -88,10 +88,6 @@ export class EditorComponent extends Editor {
       }
     });
 
-    // this.editorService.selectedGroupBlocks$.subscribe((group)=>{
-    //   this.Group = group;
-    // })
-
 
     this.createInstance(this.wrapper);
 
