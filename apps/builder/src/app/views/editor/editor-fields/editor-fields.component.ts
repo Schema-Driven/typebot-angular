@@ -64,6 +64,9 @@ export class EditorFieldsComponent implements OnInit {
         case 'file_input':
           this.setFileInputFields(this.block.options);
         break;
+        case 'payment_input':
+          this.setPaymentInputField(this.block.options);
+        break;
       }
     }
   }
@@ -169,6 +172,17 @@ export class EditorFieldsComponent implements OnInit {
     this.fields = [
       { key: 'isMultipleChoice', parentKey: '', label: 'Multiple choice?', value: options.isMultipleChoice, type: 'radio' },
       { key: 'buttonLabel', parentKey: '', label: 'Button Label:', value: options.buttonLabel, type: 'text_input' ,  dependent: { key: 'isMultipleChoice', parentKey: '', value: true }},
+    ]
+  }
+
+  setPaymentInputField(options:any){
+    this.fields = [
+      { key: "paymentProvider", parentKey: '', label: 'Provider:', value: options?.providers , type: 'dropdown' },
+      { key: 'paymentProvider', parentKey: '', label: 'Account:', value: options?.accounts , type: 'dropdown' },
+      { key: 'paymentProvider', parentKey: '', label: 'Price amount:', value: 30.00 , type: 'text_input' },
+      { key: 'paymentProvider', parentKey: '', label: 'Currency:', value: options?.currency , type: 'text_input' },
+      { key: 'button', parentKey: 'labels', label: 'Button Label:', value: options.labels.button, type: 'text_input' },
+      { key: 'successMessage', parentKey: '', label: 'Success message:', value: options.labels.success, type: 'text_input' }
     ]
   }
 
