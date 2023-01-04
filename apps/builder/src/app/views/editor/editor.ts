@@ -138,7 +138,6 @@ export const structuredBlocks: GroupStructuredBlock[] = [
             { label:"stripe", value:"stripe" },
           ],
           accounts:[
-            {label:'Select an account', value:"Select an account"},
             {label:'Connect New', value:"+ Connect New"},
           ]
         },
