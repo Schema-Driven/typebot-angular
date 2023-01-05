@@ -29,6 +29,7 @@ import { CodeEditorFieldComponent } from './editor-fields/code-editor-field/code
 
 import { PreviewChatModule } from '../preview_chat/previewchat.module';
 import { AudioFieldComponent } from './editor-fields/audio-field/audio-field.component';
+import { SelectFieldComponent } from './editor-fields/select-field/select-field.component';
 
 
 @NgModule({
@@ -59,6 +60,7 @@ import { AudioFieldComponent } from './editor-fields/audio-field/audio-field.com
     SafePipe,
     CodeEditorFieldComponent,
     AudioFieldComponent,
+    SelectFieldComponent,
   ],
   providers: [EditorService],
 })
