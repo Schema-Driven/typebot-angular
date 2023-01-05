@@ -177,8 +177,8 @@ export class EditorFieldsComponent implements OnInit {
 
   setPaymentInputField(options:any){
     this.fields = [
-      { key: "paymentProvider", parentKey: '', label: 'Provider:', value: options?.providers , type: 'text_input' },
-      { key: 'paymentProvider', parentKey: '', label: 'Account:', value: 'Connect New' , type: 'text_input' },
+      { key: "paymentProvider", parentKey: '', label: 'Provider:', value: 'Stripe', dropDownValue:'Stripe' , type: 'select' },
+      { key: 'paymentProvider', parentKey: '', label: 'Account:', value: 'Select an account', dropDownValue:'+ Connect New' , type: 'select' },
       { key: 'paymentProvider', parentKey: '', label: 'Price amount:', value: 30.00 , type: 'text_input' },
       { key: 'paymentProvider', parentKey: '', label: 'Currency:', value: options?.currency , type: 'text_input' },
       { key: 'button', parentKey: 'labels', label: 'Button Label:', value: options.labels.button, type: 'text_input' },
