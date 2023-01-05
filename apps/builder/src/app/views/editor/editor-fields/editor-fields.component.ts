@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { EditorService } from '../../../services/editor.service';
 import { countries } from '../country';
+import { currencies } from '../../editor/currency'
 
 @Component({
   selector: 'app-editor-fields',
@@ -180,7 +181,7 @@ export class EditorFieldsComponent implements OnInit {
       { key: "paymentProvider", parentKey: '', label: 'Provider:', value: 'Stripe', dropDownValue:'Stripe' , type: 'select' },
       { key: 'paymentProvider', parentKey: '', label: 'Account:', value: 'Select an account', dropDownValue:'+ Connect New' , type: 'select' },
       { key: 'paymentProvider', parentKey: '', label: 'Price amount:', value: 30.00 , type: 'text_input' },
-      { key: 'paymentProvider', parentKey: '', label: 'Currency:', value: options?.currency , type: 'text_input' },
+      { key: 'paymentProvider', parentKey: '', label: 'Currency:', value: currencies , type: 'dropdown' },
       { key: 'button', parentKey: 'labels', label: 'Button Label:', value: options.labels.button, type: 'text_input' },
       { key: 'successMessage', parentKey: '', label: 'Success message:', value: options.labels.success, type: 'text_input' }
     ]
