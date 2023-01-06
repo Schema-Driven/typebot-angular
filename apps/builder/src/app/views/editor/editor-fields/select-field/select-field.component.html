@@ -20,3 +20,46 @@
     <button class="p-2 text-left hover:bg-gray-100 hide-modal block w-full" (click)="getValue($event)">{{data.dropDownValue}}</button>
   </div>
 </div>
+
+<!--Connect New Modal-->
+<div *ngIf="connectNewModal" class="connect-new-modal">
+  <div class="custom-modal-main">
+    <div
+      class="px-6 py-4 bg-white border rounded-lg shadow w-[28rem] max-h-[400px] overflow-x-hidden  relative custom-scrollbar z-50 mx-auto">
+      <div aria-label="Close"
+        class="p-2 ml-auto text-gray-700 rounded-lg cursor-pointer hover:bg-gray-100 w-fit">
+        <svg viewBox="0 0 24 24" focusable="false" class="w-3 h-3" aria-hidden="true">
+          <path fill="currentColor"
+            d="M.439,21.44a1.5,1.5,0,0,0,2.122,2.121L11.823,14.3a.25.25,0,0,1,.354,0l9.262,9.263a1.5,1.5,0,1,0,2.122-2.121L14.3,12.177a.25.25,0,0,1,0-.354l9.263-9.262A1.5,1.5,0,0,0,21.439.44L12.177,9.7a.25.25,0,0,1-.354,0L2.561.44A1.5,1.5,0,0,0,.439,2.561L9.7,11.823a.25.25,0,0,1,0,.354Z">
+          </path>
+        </svg>
+      </div>
+      <div class="absolute top-0 flex items-center justify-center h-full -right-7">
+        <div class="inline-block w-3 overflow-hidden">
+          <div class="h-8 origin-top-left transform rotate-45 bg-white border shadow "></div>
+        </div>
+      </div>
+      <div class="custom-modal-content">
+        <label class="block mb-1 text-base font-medium text-gray-700 dark:text-gray-300">
+          Account name:<span class="text-red-500">*</span>
+        </label>
+        <input type="text" class="border rounded-lg block w-full p-2 text-sm text-gray-700" placeholder="Typebot">
+        <label class="block my-2 text-base font-medium text-gray-700 dark:text-gray-300">
+          Test Keys:<span><a class="border rounded-full" title="tooltip_text">?</a></span>
+        </label>
+        <div class="grid grid-cols-2 gap-2 w-full items-center">
+          <input type="text" class="border rounded-lg block w-2/4 p-2 text-sm text-gray-700" placeholder="pk_test_...">
+          <input type="text" class="border rounded-lg block w-2/4 p-2 text-sm text-gray-700" placeholder="sk_test_...">
+        </div>
+        <label class="block my-2 text-base font-medium text-gray-700 dark:text-gray-300">
+          Live Keys:
+        </label>
+        <div class="grid grid-cols-2 gap-2 w-full items-center">
+          <input type="text" class="border rounded-lg block w-2/4 p-2 text-sm text-gray-700" placeholder="pk_live_...">
+          <input type="text" class="border rounded-lg block w-2/4 p-2 text-sm text-gray-700" placeholder="sk_live_...">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--Connect New Modal End-->

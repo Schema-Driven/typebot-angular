@@ -12,6 +12,7 @@ export class SelectFieldComponent implements OnInit {
   block: any = {};
   isShow: boolean = true;
   toggleSelectDiv : boolean = false;
+  connectNewModal: boolean = false;
 
   constructor(private editorService: EditorService) { }
 
@@ -27,7 +28,11 @@ export class SelectFieldComponent implements OnInit {
   }
 
   getValue(event:any){
-    event.target.parentNode.previousElementSibling.innerText = event.target.innerText
+    if(event.target.innerText == '+ Connect New'){
+      this.connectNewModal = true;
+    }else{
+      event.target.parentNode.previousElementSibling.innerText = event.target.innerText
+    }
   }
 
   toggleDropDown(){
