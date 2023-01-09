@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output } from '@angular/core';
 import { EditorService } from '../../../../services/editor.service';
 
 @Component({
@@ -30,8 +30,16 @@ export class SelectFieldComponent implements OnInit {
   getValue(event:any){
     if(event.target.innerText == '+ Connect New'){
       this.connectNewModal = true;
+      event.target.addEventListener('click', function(){
+        let el = document.getElementById('connect_new_modal') as HTMLInputElement;
+        el.classList.replace('hidden','block');
+        document.getElementById('close-stripe-modal')?.addEventListener('click', function(){
+          el.classList.replace('block','hidden');
+        })
+      })
     }else{
-      event.target.parentNode.previousElementSibling.innerText = event.target.innerText
+      // event.target.parentNode.previousElementSibling.innerText = event.target.innerText
+      this.toggleSelectDiv = false;
     }
   }
 
