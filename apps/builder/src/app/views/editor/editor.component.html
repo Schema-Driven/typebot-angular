@@ -351,20 +351,20 @@
         <label class="block my-4 text-base font-medium text-gray-700 dark:text-gray-300 stripe-modal-content">
           Account name:<span class="text-red-500">*</span>
         </label>
-        <input type="text" class="stripe-modal-content border outline-none rounded-lg block w-full p-2 text-sm text-gray-700" placeholder="Typebot">
+        <input (change)="checkStripeField()" id="account" value="" type="text" class="stripe-modal-content stripe-input border outline-none rounded-lg block w-full p-2 text-sm text-gray-700" placeholder="Typebot">
         <label class="flex items-center my-4 text-base font-medium text-gray-700 dark:text-gray-300 stripe-modal-content ">
           Test Keys:<span><a class="border rounded-full border-gray-700 p-1 w-5 h-5 flex items-center justify-center ml-2 stripe-modal-content" title="Will be used when previewing the bot">?</a></span>
         </label>
         <div class="grid grid-cols-2 gap-2 w-full items-center stripe-modal-content">
-          <input type="text" class="stripe-modal-content border rounded-lg block w-full outline-none p-2 text-sm text-gray-700" placeholder="pk_test_...">
-          <input type="text" class="stripe-modal-content border rounded-lg block w-full outline-none p-2 text-sm text-gray-700" placeholder="sk_test_...">
+          <input (change)="checkStripeField()" id="pk_test" value="" type="text" class="stripe-modal-content stripe-input border rounded-lg block w-full outline-none p-2 text-sm text-gray-700" placeholder="pk_test_...">
+          <input (change)="checkStripeField()" id="sk_test" value="" type="text" class="stripe-modal-content stripe-input border rounded-lg block w-full outline-none p-2 text-sm text-gray-700" placeholder="sk_test_...">
         </div>
         <label class="block my-4 text-base font-medium text-gray-700 dark:text-gray-300 stripe-modal-content">
           Live Keys:
         </label>
         <div class="grid grid-cols-2 gap-2 w-full items-center">
-          <input type="text" class="stripe-modal-content border rounded-lg block w-full outline-none p-2 text-sm text-gray-700" placeholder="pk_live_...">
-          <input type="text" class="stripe-modal-content border rounded-lg block w-full outline-none p-2 text-sm text-gray-700" placeholder="sk_live_...">
+          <input (change)="checkStripeField()" id="pk_live" value="" type="text" class="stripe-modal-content stripe-input border rounded-lg block w-full outline-none p-2 text-sm text-gray-700" placeholder="pk_live_...">
+          <input (change)="checkStripeField()" id="sk_live" value="" type="text" class="stripe-modal-content stripe-input border rounded-lg block w-full outline-none p-2 text-sm text-gray-700" placeholder="sk_live_...">
         </div>
         <div>
           <p class="flex items-center mt-4 stripe-modal-content">(You can find your keys
@@ -376,7 +376,7 @@
           </p>
         </div>
         <div class="connect-btn w-full stripe-modal-content">
-          <button disabled class="block rounded-md px-4 py-2 ml-auto mt-4 text-sm font-medium text-white bg-blue-600  shadow-sm whitespace-nowrap publish-btn-main bg-opacity-50 stripe-modal-content">
+          <button id="connect_stripe_btn" disabled class="block rounded-md px-4 py-2 ml-auto mt-4 text-sm font-medium text-white bg-blue-600  shadow-sm whitespace-nowrap publish-btn-main bg-opacity-50 stripe-modal-content">
             Connect
           </button>
         </div>

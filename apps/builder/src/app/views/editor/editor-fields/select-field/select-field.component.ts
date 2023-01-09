@@ -40,25 +40,20 @@ export class SelectFieldComponent implements OnInit , OnChanges {
   getValue(event:any){
     if(event.target.innerText == '+ Connect New'){
       this.connectNewModal = true;
-      event.target.addEventListener('click', function(){
-        console.log('connect')
-        let el = document.getElementById('connect_new_modal') as HTMLInputElement;
-        el.classList.replace('hidden','block');
-        document.getElementById('close-stripe-modal')?.addEventListener('click', function(){
-          el.classList.replace('block','hidden');
-        })
-      })
     }else{
-      // event.target.parentNode.previousElementSibling.innerText = event.target.innerText
-      // this.toggleSelectDiv = false;
       let ele = document.getElementsByClassName("custom-select-dropdown")[0] as HTMLInputElement;
       ele.classList.replace('block','hidden');
     }
   }
 
   toggleDropDown(event:any){
-    // this.toggleSelectDiv = !this.toggleSelectDiv;
-    // let ele = document.getElementsByClassName("custom-select-dropdown")[0] as HTMLInputElement;
+    document.getElementById('connect_new')?.addEventListener('click', function(){
+      let el = document.getElementById('connect_new_modal') as HTMLInputElement;
+      el.classList.replace('hidden','block');
+      document.getElementById('close-stripe-modal')?.addEventListener('click', function(){
+        el.classList.replace('block','hidden');
+      })
+    })
     let ele = event.target.nextElementSibling;
     if(ele.classList.contains('hidden')){
       ele.classList.replace('hidden','block');
