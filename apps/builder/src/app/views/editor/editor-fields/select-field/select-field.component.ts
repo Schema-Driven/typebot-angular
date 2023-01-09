@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, Output } from '@angular/core';
+import { Component, Input, OnInit, Output, OnChanges } from '@angular/core';
 import { EditorService } from '../../../../services/editor.service';
 
 @Component({
@@ -6,7 +6,7 @@ import { EditorService } from '../../../../services/editor.service';
   templateUrl: './select-field.component.html',
   styleUrls: ['./select-field.component.css']
 })
-export class SelectFieldComponent implements OnInit {
+export class SelectFieldComponent implements OnInit , OnChanges {
 
   @Input() data: any = {};
   block: any = {};
@@ -25,12 +25,23 @@ export class SelectFieldComponent implements OnInit {
       this.isShow = false;
     }
 
+    window.onclick = function(event:any){
+      if(!event.target?.classList.contains('stripe-modal-content')){
+        let ele = document.getElementById('connect_new_modal') as HTMLInputElement;
+        ele.classList.replace('block','hidden');
+      }
+    }
+
+  }
+
+  ngOnChanges(){
   }
 
   getValue(event:any){
     if(event.target.innerText == '+ Connect New'){
       this.connectNewModal = true;
       event.target.addEventListener('click', function(){
+        console.log('connect')
         let el = document.getElementById('connect_new_modal') as HTMLInputElement;
         el.classList.replace('hidden','block');
         document.getElementById('close-stripe-modal')?.addEventListener('click', function(){
@@ -39,12 +50,22 @@ export class SelectFieldComponent implements OnInit {
       })
     }else{
       // event.target.parentNode.previousElementSibling.innerText = event.target.innerText
-      this.toggleSelectDiv = false;
+      // this.toggleSelectDiv = false;
+      let ele = document.getElementsByClassName("custom-select-dropdown")[0] as HTMLInputElement;
+      ele.classList.replace('block','hidden');
     }
   }
 
-  toggleDropDown(){
-    this.toggleSelectDiv = !this.toggleSelectDiv;
+  toggleDropDown(event:any){
+    // this.toggleSelectDiv = !this.toggleSelectDiv;
+    // let ele = document.getElementsByClassName("custom-select-dropdown")[0] as HTMLInputElement;
+    let ele = event.target.nextElementSibling;
+    if(ele.classList.contains('hidden')){
+      ele.classList.replace('hidden','block');
+    }else{
+      ele.classList.replace('block','hidden');
+    }
+
   }
 
 }

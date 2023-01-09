@@ -3,7 +3,7 @@
     {{data.label}}
   </label>
   <button
-    (click)="toggleDropDown()"
+    (click)="toggleDropDown($event)"
     class="hide-modal block w-full h-10 p-2 text-gray-700 border border-gray-300 rounded-lg relative
   bg-gray-50 text-base focus:bg-gray-200 text-left font-medium hover:bg-gray-200">
     {{data.value}}
@@ -12,12 +12,11 @@
     </svg>
   </button>
   <div
-    *ngIf = toggleSelectDiv
     class="absolute w-full py-2 z-10 text-sm bg-white overflow-y-auto
      text-gray-700 shadow-lg border rounded-lg max-h-[35vh] custom-select-dropdown
-     hide-modal mt-2
+     hide-modal mt-2 hidden
     ">
-    <button [id]="data.dropDownValue == '+ Connect New' ? 'connect_new' : data.dropDownValue" class="p-2 text-left hover:bg-gray-100 hide-modal block w-full" (click)="getValue($event)">{{data.dropDownValue}}</button>
+    <button [id]="data.dropDownValue == '+ Connect New' ? 'connect_new' : data.dropDownValue" class="p-2 text-left hover:bg-gray-100 hide-modal block w-full stripe-modal-content" (click)="getValue($event)">{{data.dropDownValue}}</button>
   </div>
 </div>
 
