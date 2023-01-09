@@ -26,3 +26,8 @@
   align-items: center;
   cursor: pointer;
 }
+
+::ng-deep .custom-select-dropdown{
+  width: 100% !important;
+  padding-right: 0px !important;
+}

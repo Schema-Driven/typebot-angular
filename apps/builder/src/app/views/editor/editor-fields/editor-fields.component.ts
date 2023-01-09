@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { EditorService } from '../../../services/editor.service';
 import { countries } from '../country';
+import { currencies } from '../../editor/currency'
 
 @Component({
   selector: 'app-editor-fields',
@@ -63,6 +64,9 @@ export class EditorFieldsComponent implements OnInit {
         break;
         case 'file_input':
           this.setFileInputFields(this.block.options);
+        break;
+        case 'payment_input':
+          this.setPaymentInputField(this.block.options);
         break;
       }
     }
@@ -169,6 +173,21 @@ export class EditorFieldsComponent implements OnInit {
     this.fields = [
       { key: 'isMultipleChoice', parentKey: '', label: 'Multiple choice?', value: options.isMultipleChoice, type: 'radio' },
       { key: 'buttonLabel', parentKey: '', label: 'Button Label:', value: options.buttonLabel, type: 'text_input' ,  dependent: { key: 'isMultipleChoice', parentKey: '', value: true }},
+    ]
+  }
+
+  setPaymentInputField(options:any){
+    this.fields = [
+      { key: "provider", parentKey: '', label: 'Provider:', value: 'Stripe', dropDownValue:'Stripe' , type: 'select' },
+      { key: 'account', parentKey: '', label: 'Account:', value: 'Select an account', dropDownValue:'+ Connect New' , type: 'select' },
+      { key: 'price_amount', parentKey: '', label: 'Price amount:', value: 30.00 , type: 'text_input' },
+      { key: 'currency', parentKey: '', label: 'Currency:', value: currencies , type: 'dropdown' },
+      { key: 'button', parentKey: 'labels', label: 'Button Label:', value: options.labels.button, type: 'text_input' },
+      { key: 'successMessage', parentKey: '', label: 'Success message:', value: options.labels.success, type: 'text_input' },
+      { key: 'additional_info', parentKey: '', label: 'Additional Information',placeholder:'Additional Information', value:'', type: 'radio' },
+      { key: 'name', parentKey: '', inputType:'text', label: 'Name:', value: '', placeholder:'John Smith', type: 'text_input', dependent: { key: 'additional_info', parentKey: '', value: true }},
+      { key: 'email', parentKey: '', inputType:'email', label: 'Email:', value: '', placeholder:'john@gmail.com', type: 'text_input', dependent: { key: 'additional_info', parentKey: '', value: true }},
+      { key: 'phone', parentKey: '', inputType:'tel', label: 'Phone Number:', value: '', placeholder:'+33XXXXXXXXX', type: 'text_input', dependent: { key: 'additional_info', parentKey: '', value: true }}
     ]
   }
 

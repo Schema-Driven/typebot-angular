@@ -1,0 +1,22 @@
+<div class="mb-4 input-field relative">
+  <label class="block mb-1 text-base font-medium text-gray-700 dark:text-gray-300">
+    {{data.label}}
+  </label>
+  <button
+    (click)="toggleDropDown($event)"
+    class="hide-modal block w-full h-10 p-2 text-gray-700 border border-gray-300 rounded-lg relative
+  bg-gray-50 text-base focus:bg-gray-200 text-left font-medium hover:bg-gray-200">
+    {{data.value}}
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5 absolute right-2 top-2 hide-modal">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+    </svg>
+  </button>
+  <div
+    class="absolute w-full py-2 z-10 text-sm bg-white overflow-y-auto
+     text-gray-700 shadow-lg border rounded-lg max-h-[35vh] custom-select-dropdown
+     hide-modal mt-2 hidden
+    ">
+    <button [id]="data.dropDownValue == '+ Connect New' ? 'connect_new' : data.dropDownValue" class="p-2 text-left hover:bg-gray-100 hide-modal block w-full stripe-modal-content" (click)="getValue($event)">{{data.dropDownValue}}</button>
+  </div>
+</div>
+

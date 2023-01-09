@@ -134,7 +134,6 @@ export const structuredBlocks: GroupStructuredBlock[] = [
         options: {
           currency: 'USD',
           labels: { button: 'Pay', success: 'Success' },
-          providers: 'stripe',
         },
         type: 'payment_input',
       },

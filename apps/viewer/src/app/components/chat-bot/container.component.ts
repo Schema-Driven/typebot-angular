@@ -12,7 +12,7 @@ export class ContainerComponent implements OnInit {
   blocks: any = [];
   chatBotblocks: any = [];
   fields = {
-    bubbles: ['text', 'image', 'video', 'embed'],
+    bubbles: ['text', 'image', 'video', 'embed','audio'],
     inputs: [
       'text_input',
       'number_input',
@@ -132,7 +132,6 @@ export class ContainerComponent implements OnInit {
       if(this.blocks[this.botCounter].type === 'embed'){
         let block = this.blocks[this.botCounter]
         let url = block.content.url.toString();
-        console.log(url)
         if(url.startsWith("http")){
           this.iframeCheck = false;
         }

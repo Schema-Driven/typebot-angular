@@ -254,3 +254,15 @@ svg.endpointOnTarget.grouper.jtk-endpoint.jtk-endpoint-connected {
 ::ng-deep .recieveDragedBox .draggable-custom-placeholder{
   opacity: 0;
 }
+
+::ng-deep .payment_input-field app-editor-fields div:nth-child(3) {
+  width: 50%;
+  float: left;
+  padding-right: 2.5px;
+}
+
+::ng-deep .payment_input-field app-editor-fields div:nth-child(4) {
+  width: 50%;
+  float: left;
+  padding-left: 2.5px;
+}

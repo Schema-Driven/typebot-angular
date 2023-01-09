@@ -88,10 +88,6 @@ export class EditorComponent extends Editor {
       }
     });
 
-    // this.editorService.selectedGroupBlocks$.subscribe((group)=>{
-    //   this.Group = group;
-    // })
-
 
     this.createInstance(this.wrapper);
 
@@ -883,5 +879,31 @@ export class EditorComponent extends Editor {
 
   editorSettingsToggle() {
     this.editorSettings = !this.editorSettings;
+  }
+
+  /* Stripe Modal Fields Validation */
+  checkStripeField(){
+    const account = document.getElementById('account') as HTMLInputElement;
+    const pkTest = document.getElementById('pk_test') as HTMLInputElement;
+    const skTest = document.getElementById('sk_test') as HTMLInputElement;
+    const pkLive = document.getElementById('pk_live') as HTMLInputElement;
+    const skLive = document.getElementById('sk_live') as HTMLInputElement;
+
+    let ele = document.getElementById('connect_stripe_btn') as HTMLInputElement;
+    let check = false;
+
+    if(account.value != '' && pkTest.value != '' && skTest.value != '' && pkLive.value != '' && skLive.value != ''){
+      check = true;
+    }else{
+      check = false;
+    }
+
+    if(check){
+      ele.classList.remove('bg-opacity-50');
+      ele.removeAttribute('disabled');
+    }else{
+      ele.classList.add('bg-opacity-50');
+      ele.setAttribute('disabled','disabled');
+    }
   }
 }
